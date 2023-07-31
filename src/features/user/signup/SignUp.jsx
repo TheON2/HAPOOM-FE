@@ -1,6 +1,6 @@
 const SignUp = () => {
   return (
-   <></>
+   <>사인업</>
   );
 };
 
