@@ -6,48 +6,13 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import Image from 'next/image';
 import axios from 'axios';
-import { debounce } from 'lodash';
-import { useDropzone } from 'react-dropzone';
-import {
-  GlobalStyle,
-  StyledAuthInput,
-  StyledButton,
-  StyledDevider,
-  StyledForm,
-  StyledHeader,
-  StyledSection,
-  StyledSpan,
-  StyledTextField,
-} from '../../styles/write';
+import { GlobalStyle, StyledAuthInput, StyledButton } from '../../styles/write';
 import Script from 'next/script';
 import styled from 'styled-components';
 import Dropzone from '@/components/Write/Dropzone';
 import ImagePreview from '@/components/Write/ImagePreview';
-
-const SuggestionBox = styled.ul`
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-  width: 300px; // 원하는 너비로 설정
-  box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
-  border-radius: 4px;
-  overflow: hidden;
-`;
-
-const SuggestionItem = styled.li`
-  padding: 10px;
-  background-color: white;
-  border-bottom: 1px solid #f1f1f1;
-  cursor: pointer;
-  &:hover {
-    background-color: #f1f1f1;
-  }
-  &:last-child {
-    border-bottom: none;
-  }
-`;
+import { YouTubeSearch } from '@/components/Write/YoutubeSearchInput';
 
 const PreviewContainer = styled.div`
   display: flex;
@@ -68,53 +33,6 @@ const Write = () => {
   const handlePostSubmit = (event: FormEvent) => {
     event.preventDefault();
   };
-  const [searchTerm, setSearchTerm] = useState<string>('');
-  const [searchSuggestions, setSearchSuggestions] = useState<string[]>([]);
-
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(event.target.value);
-  };
-
-  const searchYoutube = async (term: string) => {
-    if (term.length >= 2) {
-      const response = await axios.get(
-        `https://www.googleapis.com/youtube/v3/search`,
-        {
-          params: {
-            part: 'snippet',
-            maxResults: 5,
-            key: process.env.NEXT_PUBLIC_YOUTUBE_API_KEY,
-            q: term,
-            type: 'video',
-          },
-        }
-      );
-      setSearchSuggestions(
-        response.data.items.map((item: any) => {
-          return {
-            title: item.snippet.title,
-            url: `https://www.youtube.com/watch?v=${item.id.videoId}`,
-          };
-        })
-      );
-    }
-  };
-
-  const debouncedSearchYoutube = debounce(searchYoutube, 100);
-
-  const handleKeyUp = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    const value = event.currentTarget.value;
-    if (value.trim() === '') {
-      setSearchSuggestions([]);
-    } else {
-      debouncedSearchYoutube(value);
-    }
-  };
-
-  const handleSuggestionClick = (url: string) => {
-    setVideoId(url);
-    setSearchSuggestions([]);
-  };
 
   // 이미지 제거 함수
   const removeImage = (index: number) => {
@@ -129,28 +47,23 @@ const Write = () => {
     setMapOpen(true);
   };
 
-  const handleMapClick = async (event) => {
+  const handleMapClick = useCallback(async (event) => {
     const coord = event.coord;
-    alert(coord);
-
     try {
       const response = await axios.get(
-        'https://naveropenapi.apigw.ntruss.com/map-reversegeocode/v2/gc',
+        'http://localhost:3001/map/reversegeocode',
         {
           params: {
-            request: 'coordsToaddr',
-            coords: `${coord.x},${coord.y}`,
-            orders: 'roadaddr',
-            output: 'json',
-          },
-          headers: {
-            'X-NCP-APIGW-API-KEY-ID': `${process.env.NEXT_PUBLIC_GEO_API_KEY}`,
-            'X-NCP-APIGW-API-KEY': `${process.env.NEXT_PUBLIC_GEO_SECRET_API_KEY}`,
+            x: coord.x,
+            y: coord.y,
           },
         }
       );
 
-      const roadAddress = response.data.results[0]?.region?.area1?.name;
+      const result = response.data.results[0];
+
+      const roadAddress = `${result?.region?.area1?.name} ${result?.region?.area2?.name} ${result?.region?.area3?.name} ${result?.land?.name} ${result?.land?.number1} ${result?.land?.number2} ${result?.land?.addition0?.value}`;
+
       if (!roadAddress) {
         throw new Error('주소를 가져올 수 없습니다.');
       }
@@ -163,17 +76,20 @@ const Write = () => {
     } catch (error) {
       console.error('Geocoding API 호출 중 오류가 발생했습니다:', error);
     }
-  };
+  }, []);
 
   const handleConfirmClick = () => {
-    setLocationInput(`${location.name}(${location.x},${location.y})`);
+    setLocationInput(location.name);
     setMapOpen(false);
   };
 
+  const mapContainerRef = useRef(null);
+  const mapRef = useRef(null);
+
   useEffect(() => {
     if (mapOpen && window.naver) {
-      const map = new window.naver.maps.Map('map');
-      window.naver.maps.Event.once(map, 'click', handleMapClick);
+      mapRef.current = new window.naver.maps.Map(mapContainerRef.current);
+      window.naver.maps.Event.once(mapRef.current, 'click', handleMapClick);
     }
   }, [mapOpen, handleMapClick]);
 
@@ -223,30 +139,12 @@ const Write = () => {
           </PreviewContainer>
         </ImageContainer>
       </form>
-
       <ImageContainer>
         <input
           type="textarea"
           style={{ width: '600px', height: '100px', resize: 'none' }}
         />
-        <StyledAuthInput
-          type="text"
-          placeholder="음악 제목"
-          value={searchTerm}
-          onChange={handleChange}
-          onKeyUp={handleKeyUp}
-          style={{ width: '600px' }}
-        />
-        <SuggestionBox>
-          {searchSuggestions.map((suggestion, index) => (
-            <SuggestionItem
-              key={index}
-              onClick={() => handleSuggestionClick(suggestion.url)}
-            >
-              {suggestion.title}
-            </SuggestionItem>
-          ))}
-        </SuggestionBox>
+        <YouTubeSearch setVideoId={setVideoId} />
         <StyledAuthInput
           type="text"
           placeholder="URL"
@@ -264,7 +162,7 @@ const Write = () => {
         <Script
           src={`https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NEXT_PUBLIC_NAVERMAP_API_KEY}`}
         />
-        <input
+        <StyledAuthInput
           type="text"
           placeholder="🔍️"
           value={locationInput}
@@ -273,19 +171,14 @@ const Write = () => {
         />
         {mapOpen && (
           <div>
-            <div id="map" style={{ width: '600px', height: '400px' }} />
+            <div
+              ref={mapContainerRef}
+              id="map"
+              style={{ width: '600px', height: '400px' }}
+            />
             <button onClick={handleConfirmClick}>확인</button>
           </div>
         )}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-          var map = new naver.maps.Map('map');
-          naver.maps.Event.addListener(map, 'click', ${handleMapClick.toString()});
-        `,
-          }}
-        />
-
         <StyledButton type="submit">사진 올리기</StyledButton>
       </ImageContainer>
     </div>
