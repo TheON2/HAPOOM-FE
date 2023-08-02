@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import Script from 'next/script';
+import { StyledAuthInput } from '@/styles/write';
 
 interface Location {
   name: string;
@@ -13,6 +14,10 @@ interface MapClickEvent {
     x: number;
     y: number;
   };
+}
+
+interface Marker {
+  setMap: (map: any | null) => void;
 }
 
 interface MapComponentProps {
@@ -28,12 +33,14 @@ declare global {
       maps: {
         Map: any;
         Event: {
-          once: (
+          addListener: (
             instance: any,
             eventName: string,
             handler: (...args: any[]) => void
           ) => void;
         };
+        Marker: any;
+        LatLng: any;
       };
     };
   }
@@ -46,6 +53,9 @@ export const MapComponent: React.FC<MapComponentProps> = ({
   location,
 }) => {
   const [mapOpen, setMapOpen] = useState(false);
+  const mapContainerRef = useRef(null);
+  const mapRef = useRef(null);
+  const markerRef = useRef<Marker | null>(null);
 
   const handleSearchIconClick = () => {
     setMapOpen(true);
@@ -69,14 +79,19 @@ export const MapComponent: React.FC<MapComponentProps> = ({
 
         const roadAddress = `${result?.region?.area1?.name} ${result?.region?.area2?.name} ${result?.region?.area3?.name} ${result?.land?.name} ${result?.land?.number1} ${result?.land?.number2} ${result?.land?.addition0?.value}`;
 
-        if (result?.region?.area1?.name === undefined) {
-          throw new Error('주소를 가져올 수 없습니다.');
-        }
-
         setLocation({
           name: roadAddress,
           x: coord.x,
           y: coord.y,
+        });
+
+        if (markerRef.current) {
+          markerRef.current.setMap(null);
+        }
+
+        markerRef.current = new window.naver.maps.Marker({
+          position: new window.naver.maps.LatLng(coord.y, coord.x),
+          map: mapRef.current,
         });
       } catch (error) {
         console.error('Geocoding API 호출 중 오류가 발생했습니다:', error);
@@ -86,17 +101,49 @@ export const MapComponent: React.FC<MapComponentProps> = ({
   );
 
   const handleConfirmClick = () => {
-    setLocationInput(location.name);
+    if (location.name.includes('undefined')) {
+      const userConfirmed = window.confirm(
+        '이 주소는 도로명을 확인할 수 없습니다. 이 위치로 하시겠어요?'
+      );
+      if (userConfirmed) {
+        setLocationInput('Undefined address');
+      } else {
+        return;
+      }
+    } else {
+      setLocationInput(location.name);
+    }
     setMapOpen(false);
   };
 
-  const mapContainerRef = useRef(null);
-  const mapRef = useRef(null);
-
   useEffect(() => {
     if (mapOpen && window.naver) {
-      mapRef.current = new window.naver.maps.Map(mapContainerRef.current);
-      window.naver.maps.Event.once(mapRef.current, 'click', handleMapClick);
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+          const userLocation = {
+            x: position.coords.longitude,
+            y: position.coords.latitude,
+          };
+          mapRef.current = new window.naver.maps.Map(mapContainerRef.current, {
+            center: new window.naver.maps.LatLng(
+              userLocation.y,
+              userLocation.x
+            ),
+          });
+          window.naver.maps.Event.addListener(
+            mapRef.current,
+            'click',
+            handleMapClick
+          );
+        });
+      } else {
+        mapRef.current = new window.naver.maps.Map(mapContainerRef.current);
+        window.naver.maps.Event.addListener(
+          mapRef.current,
+          'click',
+          handleMapClick
+        );
+      }
     }
   }, [mapOpen, handleMapClick]);
 
@@ -105,12 +152,13 @@ export const MapComponent: React.FC<MapComponentProps> = ({
       <Script
         src={`https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NEXT_PUBLIC_NAVERMAP_API_KEY}`}
       />
-      <input
+      <StyledAuthInput
         type="text"
         placeholder="🔍️"
         value={locationInput}
         onClick={handleSearchIconClick}
         readOnly
+        style={{ width: '600px' }}
       />
       {mapOpen && (
         <div>

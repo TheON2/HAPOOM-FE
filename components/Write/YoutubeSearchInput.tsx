@@ -17,7 +17,7 @@ const SuggestionBox = styled.ul`
   list-style-type: none;
   padding: 0;
   margin: 0;
-  width: 300px; // 원하는 너비로 설정
+  width: 300px;
   box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
   border-radius: 4px;
   overflow: hidden;

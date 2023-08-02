@@ -40,8 +40,8 @@ const Dropzone: React.FC<DropzoneProps> = ({ images, setImages }) => {
         justifyContent: 'center',
         alignItems: 'center',
         marginBottom: '20px',
-        position: 'relative', // position 속성을 추가해야 Image 컴포넌트를 절대 위치로 설정할 수 있습니다.
-        overflow: 'hidden', // 컨테이너를 벗어나는 이미지 부분을 숨깁니다.
+        position: 'relative',
+        overflow: 'hidden',
       }}
     >
       <input {...getInputProps()} />
