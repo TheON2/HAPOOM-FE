@@ -1,13 +1,23 @@
-import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { debounce } from 'lodash';
 import styled from 'styled-components';
+import { StyledAuthInput } from '@/styles/write';
+
+interface Suggestion {
+  title: string;
+  url: string;
+}
+
+interface YouTubeSearchProps {
+  setVideoId: React.Dispatch<React.SetStateAction<string>>;
+}
 
 const SuggestionBox = styled.ul`
   list-style-type: none;
   padding: 0;
   margin: 0;
-  width: 300px;
+  width: 300px; // 원하는 너비로 설정
   box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
   border-radius: 4px;
   overflow: hidden;
@@ -26,34 +36,21 @@ const SuggestionItem = styled.li`
   }
 `;
 
-interface YouTubeSearchInputProps {
-  onSelected: (url: string) => void;
-}
-
-const YouTubeSearchInput: React.FC<YouTubeSearchInputProps> = ({
-  onSelected,
-}) => {
+export const YouTubeSearch = ({ setVideoId }: YouTubeSearchProps) => {
   const [searchTerm, setSearchTerm] = useState<string>('');
-  const [searchSuggestions, setSearchSuggestions] = useState<string[]>([]);
+  const [searchSuggestions, setSearchSuggestions] = useState<Suggestion[]>([]);
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
   };
 
   const searchYoutube = async (term: string) => {
     if (term.length >= 2) {
-      const response = await axios.get(
-        `https://www.googleapis.com/youtube/v3/search`,
-        {
-          params: {
-            part: 'snippet',
-            maxResults: 5,
-            key: process.env.NEXT_PUBLIC_YOUTUBE_API_KEY,
-            q: term,
-            type: 'video',
-          },
-        }
-      );
+      const response = await axios.get(`http://localhost:3001/youtube/search`, {
+        params: {
+          term: term,
+        },
+      });
       setSearchSuggestions(
         response.data.items.map((item: any) => {
           return {
@@ -77,18 +74,19 @@ const YouTubeSearchInput: React.FC<YouTubeSearchInputProps> = ({
   };
 
   const handleSuggestionClick = (url: string) => {
-    onSelected(url);
+    setVideoId(url);
     setSearchSuggestions([]);
   };
 
   return (
-    <div>
-      <input
+    <>
+      <StyledAuthInput
         type="text"
         placeholder="음악 제목"
         value={searchTerm}
         onChange={handleChange}
         onKeyUp={handleKeyUp}
+        style={{ width: '600px' }}
       />
       <SuggestionBox>
         {searchSuggestions.map((suggestion, index) => (
@@ -100,8 +98,6 @@ const YouTubeSearchInput: React.FC<YouTubeSearchInputProps> = ({
           </SuggestionItem>
         ))}
       </SuggestionBox>
-    </div>
+    </>
   );
 };
-
-export default YouTubeSearchInput;
