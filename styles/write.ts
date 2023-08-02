@@ -18,6 +18,20 @@ export const GlobalStyle = createGlobalStyle`
   }
   `;
 
+export const PreviewContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  max-width: 600px;
+`;
+
+export const ImageContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
 export const StyledAuthInput = styled.input`
   display: block;
   width: 400px;
