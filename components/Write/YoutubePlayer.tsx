@@ -2,16 +2,20 @@ import { StyledAuthInput } from '@/styles/write';
 import Script from 'next/script';
 import React, { useEffect, useRef, useState } from 'react';
 
-const YoutubePlayer = ({ videoId }) => {
-  const [player, setPlayer] = useState(null);
-  const playerRef = useRef(null);
+interface YoutubePlayerProps {
+  videoId: string;
+}
+
+const YoutubePlayer = ({ videoId }: YoutubePlayerProps) => {
+  const [player, setPlayer] = useState<YT.Player | null>(null);
+  const playerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (!videoId && player) {
       player.destroy();
       setPlayer(null);
     }
-    if (videoId && !player) {
+    if (videoId && !player && playerRef.current) {
       const url = new URL(videoId);
       const videoIdParam = url.searchParams.get('v');
 
@@ -28,6 +32,7 @@ const YoutubePlayer = ({ videoId }) => {
       }
     }
   }, [videoId, player]);
+
   return (
     <>
       <StyledAuthInput

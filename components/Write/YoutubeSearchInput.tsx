@@ -4,6 +4,15 @@ import { debounce } from 'lodash';
 import styled from 'styled-components';
 import { StyledAuthInput } from '@/styles/write';
 
+interface Suggestion {
+  title: string;
+  url: string;
+}
+
+interface YouTubeSearchProps {
+  setVideoId: React.Dispatch<React.SetStateAction<string>>;
+}
+
 const SuggestionBox = styled.ul`
   list-style-type: none;
   padding: 0;
@@ -27,11 +36,11 @@ const SuggestionItem = styled.li`
   }
 `;
 
-export const YouTubeSearch = ({ setVideoId }) => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [searchSuggestions, setSearchSuggestions] = useState([]);
+export const YouTubeSearch = ({ setVideoId }: YouTubeSearchProps) => {
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [searchSuggestions, setSearchSuggestions] = useState<Suggestion[]>([]);
 
-  const handleChange = (event) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
   };
 
