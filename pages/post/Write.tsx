@@ -32,12 +32,11 @@ const Write = () => {
     }
   );
 
-
   const handlePostSubmit = (event: FormEvent) => {
     event.preventDefault();
     const formData = new FormData();
-    images.forEach((image, index) => {
-      formData.append(`image${index+1}`, image);
+    images.forEach((image) => {
+      formData.append('image', image);
     });
     formData.append('content', content);
     formData.append('musicTitle', selectedTitle);
