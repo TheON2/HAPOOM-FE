@@ -1,10 +1,11 @@
 import Image from 'next/image';
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-
+import { SliderImage } from '@/public/data';
 const DEFAULT_INTERVAL = 5 * 1000;
 const FAST_INTERVAL = 500;
 
+//TODO: 메인배너 빈번한 크기 조정으로 인한 성능 이슈
 const MainBannerLayout = styled.section`
   width: 100%;
   height: 70vh;
@@ -12,28 +13,30 @@ const MainBannerLayout = styled.section`
 `;
 
 type SliderListProps = {
-  slideindex: number;
+  $slideindex: number;
   width?: number;
-  sliedsum: number;
+  $sliedsum: number;
 };
 const SliderList = styled.ul<SliderListProps>`
   width: ${(props) =>
-    props.width ? `${props.width * props.sliedsum}px` : `100%`};
+    props.width ? `${props.width * props.$sliedsum}px` : `100%`};
   /* width: auto; */
   /* position: relative; */
   height: 70vh;
   display: flex;
   transform: ${(props) =>
     props.width
-      ? `translateX(${props.slideindex * props.width * -1}px)`
+      ? `translateX(${props.$slideindex * props.width * -1}px)`
       : 'translateX(0px)'};
   transition: all 0.3s ease-in-out;
   list-style: none;
-  will-change: transform;
+  /* will-change: transform; */
 `;
+
 type SliderItemProps = {
   width?: number;
 };
+
 const SliderItem = styled.li<SliderItemProps>`
   width: ${(props) => (props.width ? `${props.width}px` : `100%`)};
   height: 70vh;
@@ -50,8 +53,13 @@ const SliderItem = styled.li<SliderItemProps>`
   }
 `;
 
-const MainBannerSlider = () => {
-  const copiedArr = [1, 2, 3];
+type Props = {
+  data: SliderImage[];
+};
+
+const MainBannerSlider: React.FC<Props> = ({ data }) => {
+  // console.log(data);
+  const copiedArr = [...data];
   const SLIDE_NUM = copiedArr.length;
   const beforeSlide = copiedArr[SLIDE_NUM - 1];
   const afterSlide = copiedArr[0];
@@ -62,7 +70,7 @@ const MainBannerSlider = () => {
   const sliedContainerRef = useRef<HTMLElement | null>(null);
 
   let sliedArr = [beforeSlide, ...copiedArr, afterSlide];
-
+  //무한 로드 슬라이드
   useEffect(() => {
     const interval = setInterval(
       () => setSlideIndex((prev) => prev + 1),
@@ -95,6 +103,7 @@ const MainBannerSlider = () => {
     }
   }, [slideIndex]);
 
+  //리사이징 이벤트
   useEffect(() => {
     const handleResize = () => {
       if (sliedContainerRef.current) {
@@ -107,19 +116,30 @@ const MainBannerSlider = () => {
 
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
   return (
     <MainBannerLayout ref={sliedContainerRef}>
       <SliderList
         ref={sliedListRef}
-        slideindex={slideIndex}
-        sliedsum={sliedArr.length}
+        $slideindex={slideIndex}
+        $sliedsum={sliedArr.length}
         width={slideItemWidth && slideItemWidth}
       >
         {sliedArr.map((slide, index) => {
+          // console.log(slide);
           return (
             <SliderItem key={index} width={slideItemWidth && slideItemWidth}>
-              <Image src="/example.jpg" alt="v13 image" layout="fill" />
-              <p>MainBannerSlider</p>
+              <Image
+                src={slide.src}
+                alt="v13 image"
+                fill
+                loading="eager"
+                sizes="(max-width: 1440px) 100vw"
+                // priority="high"
+                placeholder="blur"
+                blurDataURL={slide.src}
+              />
+              <p>{slide.alt}</p>
             </SliderItem>
           );
         })}
