@@ -5,6 +5,7 @@ const MainLayout = styled.main`
   margin: 0 auto;
   max-width: 1440px;
   width: 100%;
+  /* overflow: hidden; */
 `;
 
 type MainProps = {
