@@ -8,6 +8,24 @@ export const SignUpSection = styled.section`
   align-items: center;
   flex-direction: column;
 `
+export const MainHeadText = styled.h1`
+  color: #000;
+  text-align: center;
+  font-family: Inter;
+  font-size: 48px;
+  font-style: normal;
+  font-weight: 900;
+  line-height: normal;
+`
+export const SubHeadText = styled.h2`
+  color: #000;
+  font-family: Inter;
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  text-align: left;
+`
 
 export const SignUpSocialSignUpBox = styled.div``
 

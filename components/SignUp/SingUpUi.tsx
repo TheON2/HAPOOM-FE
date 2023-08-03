@@ -1,20 +1,50 @@
-import { Checkbox, SignEmailBox, SignUpCheckBox, SignUpCheckBoxLayout, SignUpEmailBtn, SignUpEmailInput, SignUpNickNameBox, SignUpNickNameInput, SignUpPasswordBox, SignUpSection, SignUpSocialSignUpBox, SingUpPasswordInput, SingUpPasswordValidInput, StyledLabel} from '@/styles/signup'
-import React from 'react'
+import {
+  Checkbox,
+  SignEmailBox,
+  SignUpCheckBox,
+  SignUpCheckBoxLayout,
+  SignUpEmailBtn,
+  SignUpEmailInput,
+  SignUpNickNameBox,
+  SignUpNickNameInput,
+  SignUpPasswordBox,
+  SignUpSection,
+  SignUpSocialSignUpBox,
+  SingUpPasswordInput,
+  SingUpPasswordValidInput,
+  StyledLabel,
+  MainHeadText,
+  SubHeadText,
+} from '@/styles/signup';
+import React, { useState } from 'react';
 
+interface signup {
+  email: string;
+  password: string;
+  passwordValid: string;
+  nickname: string;
+}
 const SignUpUi = () => {
+  const [signUpState, setSignUpState] = useState<signup>({
+    email: '',
+    password: '',
+    passwordValid: '',
+    nickname: '',
+  });
+
   return (
     <SignUpSection>
-      <h1>HAPOOM</h1>
-      <h2>회원가입</h2>
-      
+      <MainHeadText>HAPOOM</MainHeadText>
+      <SubHeadText>회원가입</SubHeadText>
+
       <SignUpSocialSignUpBox>
         <p>sns계정으로 간편 로그인/회원가입</p>
         <div>구글</div>
         <div>카카오</div>
         <div>인스타</div>
       </SignUpSocialSignUpBox>
-      
-      <form name='register'>
+
+      <form name="register">
         <SignEmailBox>
           <p>이메일</p>
           <SignUpEmailInput />
@@ -37,29 +67,27 @@ const SignUpUi = () => {
 
         <SignUpCheckBoxLayout>
           <p>약관동의</p>
-        <SignUpCheckBox>
-
-          <Checkbox/>
+          <SignUpCheckBox>
+            <Checkbox />
             <label htmlFor="check-all"></label>
-          <StyledLabel>전체동의</StyledLabel>
+            <StyledLabel>전체동의</StyledLabel>
 
-          <Checkbox/>
+            <Checkbox />
             <label htmlFor="check-terms"></label>
             <StyledLabel>이용약관 (필수)</StyledLabel>
 
-          <Checkbox/>
+            <Checkbox />
             <label htmlFor="check-personalInfo"></label>
             <StyledLabel>개인정보 수집/이용 동의 (필수)</StyledLabel>
-        
-          <Checkbox/>
+
+            <Checkbox />
             <label htmlFor="check-newsletter"></label>
             <StyledLabel>개인정보 마케팅 활용 동의 (선택)</StyledLabel>
           </SignUpCheckBox>
         </SignUpCheckBoxLayout>
-
       </form>
     </SignUpSection>
-  )
-}
+  );
+};
 
-export default SignUpUi
+export default SignUpUi;
