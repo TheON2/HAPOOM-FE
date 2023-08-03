@@ -15,6 +15,7 @@ interface YouTubeSearchProps {
   setVideoId: React.Dispatch<React.SetStateAction<string>>;
   selectedTitle: string;
   setSelectedTitle: React.Dispatch<React.SetStateAction<string>>;
+  update:boolean;
 }
 
 const InputContainer = styled.div`
@@ -60,7 +61,7 @@ const SuggestionItem = styled.li`
   }
 `;
 
-export const YouTubeSearch = ({ setVideoId,selectedTitle,setSelectedTitle }: YouTubeSearchProps) => {
+export const YouTubeSearch = ({ setVideoId,selectedTitle,setSelectedTitle,update }: YouTubeSearchProps) => {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [searchSuggestions, setSearchSuggestions] = useState<Suggestion[]>([]);
   const [isInputActive, setIsInputActive] = useState(true);
@@ -112,6 +113,12 @@ export const YouTubeSearch = ({ setVideoId,selectedTitle,setSelectedTitle }: You
     setSelectedTitle('');
     setVideoId('');
   };
+
+  useEffect(()=>{
+    if(update){
+      setIsInputActive(false);
+    }
+  },[update])
 
   return (
     <>
