@@ -5,8 +5,8 @@ export const SignUpSection = styled.section`
   width: 100%;
   margin: 0 auto;
   display: flex;
-  justify-content: center;
-  /* align-items: center; */
+  align-items: center;
+  flex-direction: column;
 `
 
 export const SignUpSocialSignUpBox = styled.div``

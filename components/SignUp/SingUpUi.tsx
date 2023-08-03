@@ -4,12 +4,8 @@ import React from 'react'
 const SignUpUi = () => {
   return (
     <SignUpSection>
-      <h1>
-          HAPOOM
-      </h1>
-      <h2>
-          회원가입
-      </h2>
+      <h1>HAPOOM</h1>
+      <h2>회원가입</h2>
       
       <SignUpSocialSignUpBox>
         <p>sns계정으로 간편 로그인/회원가입</p>
