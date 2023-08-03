@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { styled } from "styled-components";
 
 const textColor = "#000";
@@ -42,4 +43,29 @@ export const SignUpBtn = styled.button`
   font-family: ${fontFamily};
   font-size: 16px;
   font-weight: 400;
+`;
+
+export const TextParagraph = styled.p`
+  color: ${textColor};
+  font-family: ${fontFamily};
+  font-size: 16px;
+  font-weight: 700;
+`;
+export const TextParagraphSns = styled(TextParagraph)`
+  margin-top: 20px;
+`;
+export const SignUpSocialSignUpBox = styled.div`
+  width: ${inputBtnBoxWidth};
+  height: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+`;
+export const SocialBoxImg = styled(Image)`
+  width: 84px;
+  height: 84px;
+  object-fit: cover;
+  border-radius: 100%;
+  cursor: pointer;
 `;

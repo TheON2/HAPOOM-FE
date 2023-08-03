@@ -7,6 +7,7 @@ import {
   StyledInputBox,
 } from '@/styles/signIn';
 import React, { useState } from 'react';
+// import SocialLogin from './SocialLogIn';
 
 interface SignIn {
   email: string;
@@ -68,6 +69,7 @@ const SignInUi = () => {
         >
           로그인
         </SignUpBtn>
+        {/* <SocialLogin /> */}
       </SignInContainer>
     </SignInSection>
   );
