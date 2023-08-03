@@ -2,14 +2,12 @@ import Image from 'next/image';
 import { useState } from 'react';
 
 interface ImagePreviewProps {
-  images: string[];
+  images: File[];
   removeImage: (index: number) => void;
 }
 
 const ImagePreview: React.FC<ImagePreviewProps> = ({ images, removeImage }) => {
-  const [isMouseOver, setIsMouseOver] = useState<{ [key: number]: boolean }>(
-    {}
-  );
+  const [isMouseOver, setIsMouseOver] = useState<{ [key: number]: boolean }>({});
 
   const handleMouseOver = (index: number) => {
     setIsMouseOver((prev) => ({ ...prev, [index]: true }));
@@ -30,10 +28,11 @@ const ImagePreview: React.FC<ImagePreviewProps> = ({ images, removeImage }) => {
           onMouseOut={() => handleMouseOut(index)}
         >
           <Image
-            src={image}
+            src={URL.createObjectURL(image)}
             alt={`Upload preview ${index + 2}`}
             width={50}
             height={50}
+            objectFit='fixed'
           />
           {isMouseOver[index] && (
             <div
