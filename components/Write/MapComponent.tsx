@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import Script from 'next/script';
 import { StyledAuthInput } from '@/styles/write';
+import styled from 'styled-components';
 
 interface Location {
   name: string;
@@ -22,8 +23,6 @@ interface Marker {
 
 interface MapComponentProps {
   setLocation: React.Dispatch<React.SetStateAction<Location>>;
-  locationInput: string;
-  setLocationInput: React.Dispatch<React.SetStateAction<string>>;
   location: Location;
 }
 
@@ -46,13 +45,22 @@ declare global {
   }
 }
 
+const CloseButton = styled.button`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  color: #888;
+`;
+
 export const MapComponent: React.FC<MapComponentProps> = ({
   setLocation,
-  locationInput,
-  setLocationInput,
   location,
 }) => {
   const [mapOpen, setMapOpen] = useState(false);
+  const [locationInput, setLocationInput] = useState('');
   const mapContainerRef = useRef(null);
   const mapRef = useRef(null);
   const markerRef = useRef<Marker | null>(null);
@@ -64,6 +72,7 @@ export const MapComponent: React.FC<MapComponentProps> = ({
   const handleMapClick = useCallback(
     async (event: MapClickEvent) => {
       const coord = event.coord;
+
       try {
         const response = await axios.get(
           'http://localhost:3001/map/reversegeocode',
@@ -95,12 +104,23 @@ export const MapComponent: React.FC<MapComponentProps> = ({
           position: new window.naver.maps.LatLng(coord.y, coord.x),
           map: mapRef.current,
         });
+
+        if (roadAddress === '도로명 없음') {
+          setLocationInput(`도로명 없음 x좌표:${coord.x} y좌표:${coord.y}`);
+        } else {
+          setLocationInput(roadAddress);
+        }
+
+        setMapOpen(false);
       } catch (error) {
         console.error('Geocoding API 호출 중 오류가 발생했습니다:', error);
       }
     },
-    [setLocation]
+    [setLocation, setLocationInput]
   );
+  const handleCloseClick = () => {
+    setMapOpen(false);
+  };
 
   const handleConfirmClick = () => {
     if (location.name === '도로명 없음') {
@@ -164,13 +184,13 @@ export const MapComponent: React.FC<MapComponentProps> = ({
         style={{ width: '600px' }}
       />
       {mapOpen && (
-        <div>
+        <div style={{ position: 'relative', width: '600px', height: '400px' }}>
           <div
             ref={mapContainerRef}
             id="map"
-            style={{ width: '600px', height: '400px' }}
+            style={{ width: '100%', height: '100%' }}
           />
-          <button onClick={handleConfirmClick}>확인</button>
+          <CloseButton onClick={handleCloseClick}>X</CloseButton>
         </div>
       )}
     </>

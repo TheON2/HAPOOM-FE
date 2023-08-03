@@ -13,7 +13,28 @@ interface Suggestion {
 
 interface YouTubeSearchProps {
   setVideoId: React.Dispatch<React.SetStateAction<string>>;
+  selectedTitle: string;
+  setSelectedTitle: React.Dispatch<React.SetStateAction<string>>;
 }
+
+const InputContainer = styled.div`
+  position: relative;
+  width: 600px;
+`;
+
+const ClearButton = styled.button`
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  color: #888;
+  margin: 0;
+  padding: 0;
+`;
 
 const SuggestionBox = styled.ul`
   list-style-type: none;
@@ -39,9 +60,10 @@ const SuggestionItem = styled.li`
   }
 `;
 
-export const YouTubeSearch = ({ setVideoId }: YouTubeSearchProps) => {
+export const YouTubeSearch = ({ setVideoId,selectedTitle,setSelectedTitle }: YouTubeSearchProps) => {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [searchSuggestions, setSearchSuggestions] = useState<Suggestion[]>([]);
+  const [isInputActive, setIsInputActive] = useState(true);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
@@ -77,38 +99,55 @@ export const YouTubeSearch = ({ setVideoId }: YouTubeSearchProps) => {
     }
   };
 
-  const handleSuggestionClick = (url: string) => {
-    setVideoId(url);
+  const handleSuggestionClick = (suggestion: Suggestion) => {
+    setIsInputActive(false);
+    setSelectedTitle(suggestion.title); 
+    setVideoId(suggestion.url);
     setSearchSuggestions([]);
+  };
+
+  const handleClear = () => {
+    setIsInputActive(true);
+    setSearchTerm('');
+    setSelectedTitle('');
+    setVideoId('');
   };
 
   return (
     <>
-      <StyledAuthInput
-        type="text"
-        placeholder="음악 제목"
-        value={searchTerm}
-        onChange={handleChange}
-        onKeyUp={handleKeyUp}
-        style={{ width: '600px' }}
-      />
-      <SuggestionBox>
-        {searchSuggestions.map((suggestion, index) => (
-          <SuggestionItem
-            key={index}
-            onClick={() => handleSuggestionClick(suggestion.url)}
-          >
-            <Image
-              src={suggestion.thumbnail}
-              alt={suggestion.title}
-              style={{ marginRight: '10px' }}
-              width={100}
-              height={100}
-            />
-            {suggestion.title}
-          </SuggestionItem>
-        ))}
-      </SuggestionBox>
+      <InputContainer>
+        <StyledAuthInput
+          type="text"
+          placeholder="음악 제목"
+          value={isInputActive ? searchTerm : selectedTitle}
+          onChange={handleChange}
+          onKeyUp={isInputActive ? handleKeyUp : undefined}
+          style={{ width: '100%' ,margin:'5px 0'}}
+          disabled={!isInputActive}
+        />
+        {selectedTitle && !isInputActive && (
+          <ClearButton onClick={handleClear}>X</ClearButton>
+        )}
+      </InputContainer>
+      {isInputActive && (
+        <SuggestionBox>
+          {searchSuggestions.map((suggestion, index) => (
+            <SuggestionItem
+              key={index}
+              onClick={() => handleSuggestionClick(suggestion)}
+            >
+              <Image
+                src={suggestion.thumbnail}
+                alt={suggestion.title}
+                style={{ marginRight: '10px' }}
+                width={100}
+                height={100}
+              />
+              {suggestion.title}
+            </SuggestionItem>
+          ))}
+        </SuggestionBox>
+      )}
     </>
   );
 };

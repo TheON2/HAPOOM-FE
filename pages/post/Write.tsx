@@ -12,17 +12,41 @@ import { MapComponent } from '@/components/Write/MapComponent';
 import YoutubePlayer from '@/components/Write/YoutubePlayer';
 import ContentArea from '@/components/Write/ContentArea';
 import TagInput from '@/components/Write/TagInput';
+import { useMutation, useQueryClient } from 'react-query';
+import { addPost } from '@/api/post';
 
 const Write = () => {
-  const [videoId, setVideoId] = useState<string>('');
-  const [images, setImages] = useState<string[]>([]);
-  const [tags, setTags] = useState<string[]>([]);
-  const [locationInput, setLocationInput] = useState('');
-  const [location, setLocation] = useState({ name: '', x: 0, y: 0 });
+  const [images, setImages] = useState<File[]>([]);
   const [content,setContent] = useState<string>('');
+  const [selectedTitle, setSelectedTitle] = useState<string>('');
+  const [videoId, setVideoId] = useState<string>('');
+  const [tags, setTags] = useState<string[]>([]);
+  const [location, setLocation] = useState({ name: '', x: 0, y: 0 });
+  const queryClient = useQueryClient();
+  const { mutate: addPost_Mutate, isLoading: addPostLoading } = useMutation(
+    addPost,
+    {
+      onSuccess: (data) => {
+        queryClient.invalidateQueries("");
+      },
+    }
+  );
+
 
   const handlePostSubmit = (event: FormEvent) => {
     event.preventDefault();
+    const formData = new FormData();
+    images.forEach((image, index) => {
+      formData.append(`image${index+1}`, image);
+    });
+    formData.append('content', content);
+    formData.append('musicTitle', selectedTitle);
+    formData.append('musicUrl', videoId);
+    formData.append('tag', tags.join(', '));
+    formData.append('latitude', String(location.x));
+    formData.append('longitude', String(location.y));
+    formData.append('placeName', location.name);
+    addPost_Mutate(formData);
   };
   const removeImage = (index: number) => {
     setImages((images) => images.filter((_, i) => i !== index));
@@ -44,13 +68,15 @@ const Write = () => {
         </ImageContainer>
         <ImageContainer>
         <ContentArea content={content} setContent={setContent}/>
-          <YouTubeSearch setVideoId={setVideoId} />
+          <YouTubeSearch 
+            setVideoId={setVideoId} 
+            selectedTitle={selectedTitle} 
+            setSelectedTitle={setSelectedTitle} 
+          />
           <YoutubePlayer videoId={videoId} />
           <TagInput tags={tags} setTags={setTags} />
           <MapComponent
             setLocation={setLocation}
-            locationInput={locationInput}
-            setLocationInput={setLocationInput}
             location={location}
           />
           <StyledButton type="submit">사진 올리기</StyledButton>

@@ -1,4 +1,3 @@
-// TagInput.tsx
 import { StyledAuthInput } from '@/styles/write';
 import React, { KeyboardEvent, useState } from 'react';
 import Tag from './Tag';
