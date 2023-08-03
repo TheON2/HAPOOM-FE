@@ -48,7 +48,9 @@ const SignUpUi = () => {
 
       <form name="register" onSubmit={(e: any) => e.preventDefault()}>
         <WriteInput signUpState={signUpState} setSignUpState={setSignUpState} />
+
         <CheckBox checkboxes={checkboxes} setCheckboxes={setCheckboxes} />
+
         <SignUpBtn
           onClick={(e: React.MouseEvent) => {
             e.preventDefault();
