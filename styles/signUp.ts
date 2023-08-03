@@ -52,6 +52,7 @@ export const SocialBoxImg = styled(Image)`
   height: 84px;
   object-fit: cover;
   border-radius: 100%;
+  cursor: pointer;
 `;
 export const StyledInputBox = styled.div`
   width: ${inputBtnBoxWidth};
@@ -75,7 +76,6 @@ export const SignUpBtn = styled.button`
   font-size: 16px;
   font-weight: 400;
 `;
-
 export const SignUpCheckBoxLayout = styled.div`
   width: ${inputBtnBoxWidth};
   height: 184px;

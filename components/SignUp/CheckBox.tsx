@@ -9,22 +9,15 @@ import {
   StyledLabelAll,
   Line,
 } from '@/styles/signUp';
+import { CheckBoxInterface } from './SingUpUi';
 
-interface CheckBox {
-  checkAll: boolean;
-  checkTerms: boolean;
-  checkPersonalInfo: boolean;
-  checkNewsletter: boolean;
+interface CheckBoxProps {
+  checkboxes: CheckBoxInterface;
+  setCheckboxes: React.Dispatch<React.SetStateAction<CheckBoxInterface>>;
 }
 
-const CheckBox = () => {
-  const [checkboxes, setCheckboxes] = useState<CheckBox>({
-    checkAll: false,
-    checkTerms: false,
-    checkPersonalInfo: false,
-    checkNewsletter: false,
-  });
-  const handleCheckboxChange = (e: any) => {
+const CheckBox: React.FC<CheckBoxProps> = ({ checkboxes, setCheckboxes }) => {
+  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = e.target;
 
     if (name === 'checkAll') {
@@ -43,6 +36,7 @@ const CheckBox = () => {
       });
     }
   };
+
   return (
     <>
       <TextParagraph>약관동의</TextParagraph>
@@ -93,7 +87,6 @@ const CheckBox = () => {
           <StyledLabel>개인정보 마케팅 활용 동의 (선택)</StyledLabel>
         </SignUpCheckBox>
       </SignUpCheckBoxLayout>
-      <SignUpBtn>회원가입하기</SignUpBtn>
     </>
   );
 };

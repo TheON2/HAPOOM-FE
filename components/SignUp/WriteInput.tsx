@@ -1,24 +1,56 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   StyledInputBox,
   StyledInput,
   SignUpBtn,
   TextParagraph,
 } from '@/styles/signUp';
+import { Signup } from './SingUpUi';
 
-interface Signup {
-  email: string;
-  password: string;
-  passwordValid: string;
-  nickname: string;
+interface WriteInputProps {
+  signUpState: Signup;
+  setSignUpState: React.Dispatch<React.SetStateAction<Signup>>;
 }
-const WriteInput = () => {
-  const [signUpState, setSignUpState] = useState<Signup>({
-    email: '',
-    password: '',
-    passwordValid: '',
-    nickname: '',
-  });
+
+const WriteInput: React.FC<WriteInputProps> = ({
+  signUpState,
+  setSignUpState,
+}) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setSignUpState((prevSignUpState) => ({
+      ...prevSignUpState,
+      [name]: value,
+    }));
+  };
+
+  const validateEmail = (email: string) => {
+    const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
+    return emailRegex.test(email);
+  };
+
+  const validatePassword = (password: string) => {
+    const passwordPattern = /^(?=.*\d)(?=.*[a-zA-Z]).{8,}$/;
+    return passwordPattern.test(password);
+  };
+
+  const validatePasswordMatch = (password: string, passwordValid: string) => {
+    return password === passwordValid;
+  };
+
+  const validateNickname = (nickname: string) => {
+    const nicknamePattern = /^.{2,15}$/;
+    return nicknamePattern.test(nickname);
+  };
+
+  const emailCheckSubmit = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (validateEmail(signUpState.email)) {
+      alert('중복확인 되었습니다.');
+    } else {
+      alert('이메일이 유효하지 않습니다. 다시 입력해 주세요.');
+    }
+  };
 
   return (
     <>
@@ -28,8 +60,9 @@ const WriteInput = () => {
           type="email"
           name="email"
           placeholder="example@gmail.com"
+          onChange={handleInputChange}
         />
-        <SignUpBtn>이메일 인증하기</SignUpBtn>
+        <SignUpBtn onClick={emailCheckSubmit}>이메일 인증하기</SignUpBtn>
       </StyledInputBox>
 
       <StyledInputBox>
@@ -39,12 +72,14 @@ const WriteInput = () => {
           type="password"
           name="password"
           placeholder="비밀번호를 입력해 주세요"
+          onChange={handleInputChange}
         />
         <TextParagraph>비밀번호 확인</TextParagraph>
         <StyledInput
           type="password"
           name="passwordValid"
           placeholder="비밀번호 확인"
+          onChange={handleInputChange}
         />
       </StyledInputBox>
 
@@ -55,6 +90,7 @@ const WriteInput = () => {
           type="text"
           name="nickname"
           placeholder="닉네임을 입력해 주세요"
+          onChange={handleInputChange}
         />
       </StyledInputBox>
     </>
