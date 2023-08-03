@@ -24,6 +24,7 @@ interface Marker {
 interface MapComponentProps {
   setLocation: React.Dispatch<React.SetStateAction<Location>>;
   location: Location;
+  update: boolean;
 }
 
 declare global {
@@ -58,6 +59,7 @@ const CloseButton = styled.button`
 export const MapComponent: React.FC<MapComponentProps> = ({
   setLocation,
   location,
+  update,
 }) => {
   const [mapOpen, setMapOpen] = useState(false);
   const [locationInput, setLocationInput] = useState('');
@@ -122,23 +124,6 @@ export const MapComponent: React.FC<MapComponentProps> = ({
     setMapOpen(false);
   };
 
-  const handleConfirmClick = () => {
-    if (location.name === '도로명 없음') {
-      const userConfirmed = window.confirm(
-        '이 주소는 도로명을 확인할 수 없습니다. 이 위치로 하시겠어요?'
-      );
-      if (userConfirmed) {
-        setLocationInput(`도로명 없음 x좌표:${location.x} y좌표:${location.y}`);
-      } else {
-        return;
-      }
-    } else {
-      setLocationInput(location.name);
-    }
-    console.log(location);
-    setMapOpen(false);
-  };
-
   useEffect(() => {
     if (mapOpen && window.naver) {
       if (navigator.geolocation) {
@@ -169,6 +154,10 @@ export const MapComponent: React.FC<MapComponentProps> = ({
       }
     }
   }, [mapOpen, handleMapClick]);
+
+  useEffect(() => {
+    if (update) setLocationInput(location.name + ' ' + location.x + location.y);
+  }, [update, location]);
 
   return (
     <>

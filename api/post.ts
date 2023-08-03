@@ -11,13 +11,36 @@ interface PostData {
   placeName: string;
 }
 
-const addPost = async (postData: FormData) => {
+interface UpdateData {
+  updateId: string;
+  formData: FormData;
+}
+
+const addPost = async (postData: UpdateData) => {
   const config = {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
   };
-  const response = await api.post('/api/post', postData, config);
+  const response = await api.post('/api/post', postData.formData, config);
 };
 
-export { addPost };
+const updatePost = async (postData: UpdateData) => {
+  const config = {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  };
+  const response = await api.put(
+    `/api/post/${postData.updateId}`,
+    postData.formData,
+    config
+  );
+};
+
+const getPost = async (id: string) => {
+  const response = await api.get(`/api/post/${id}`);
+  return response.data;
+};
+
+export { addPost, updatePost, getPost };
