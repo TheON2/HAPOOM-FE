@@ -67,14 +67,13 @@ export const MapComponent: React.FC<MapComponentProps> = ({
   const mapRef = useRef(null);
   const markerRef = useRef<Marker | null>(null);
 
-  const handleSearchIconClick = () => {
+  const handleSearchIconClick = useCallback(() => {
     setMapOpen(true);
-  };
+  }, []);
 
   const handleMapClick = useCallback(
     async (event: MapClickEvent) => {
       const coord = event.coord;
-
       try {
         const response = await axios.get(
           'http://localhost:3001/map/reversegeocode',
@@ -120,9 +119,9 @@ export const MapComponent: React.FC<MapComponentProps> = ({
     },
     [setLocation, setLocationInput]
   );
-  const handleCloseClick = () => {
+  const handleCloseClick = useCallback(() => {
     setMapOpen(false);
-  };
+  }, []);
 
   useEffect(() => {
     if (mapOpen && window.naver) {

@@ -1,5 +1,5 @@
 import { StyledAuthInput } from '@/styles/write';
-import React, { KeyboardEvent, useState } from 'react';
+import React, { KeyboardEvent, useState, useCallback } from 'react';
 import Tag from './Tag';
 
 interface TagInputProps {
@@ -11,37 +11,45 @@ const MAX_TAGS = 5;
 
 const TagInput: React.FC<TagInputProps> = ({ tags, setTags }) => {
   const [inputValue, setInputValue] = useState('');
-  const handleDelete = (tagToDelete: string) => {
-    setTags(tags.filter((tag) => tag !== tagToDelete));
-  };
-  const handleTagChange = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter' || e.key === ',') {
-      e.preventDefault();
 
-      const newTag = e.currentTarget.value.trim();
+  const handleDelete = useCallback(
+    (tagToDelete: string) => {
+      setTags(tags.filter((tag) => tag !== tagToDelete));
+    },
+    [tags, setTags]
+  );
 
-      if (newTag && !tags.includes(newTag)) {
-        if (newTag.length > 5) {
-          alert('해시태그는 5글자를 넘길 수 없습니다!');
-          return;
+  const handleTagChange = useCallback(
+    (e: KeyboardEvent<HTMLInputElement>) => {
+      if (e.key === 'Enter' || e.key === ',') {
+        e.preventDefault();
+
+        const newTag = e.currentTarget.value.trim();
+
+        if (newTag && !tags.includes(newTag)) {
+          if (newTag.length > 5) {
+            alert('해시태그는 5글자를 넘길 수 없습니다!');
+            return;
+          }
+
+          if (newTag.length < 2) {
+            alert('해시태그는 최소 2글자 이상이어야 합니다!');
+            return;
+          }
+
+          if (tags.length >= MAX_TAGS) {
+            alert(`You can only have up to ${MAX_TAGS} tags.`);
+            return;
+          }
+
+          setTags([...tags, newTag]);
+
+          setInputValue('');
         }
-
-        if (newTag.length < 2) {
-          alert('해시태그는 최소 2글자 이상이어야 합니다!');
-          return;
-        }
-
-        if (tags.length >= MAX_TAGS) {
-          alert(`You can only have up to ${MAX_TAGS} tags.`);
-          return;
-        }
-
-        setTags([...tags, newTag]);
-
-        setInputValue('');
       }
-    }
-  };
+    },
+    [tags, setTags]
+  );
 
   const isMaxTags = tags.length >= MAX_TAGS;
   const color = isMaxTags ? 'red' : 'black';

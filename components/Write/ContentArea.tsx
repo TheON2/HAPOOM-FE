@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 
 interface ContentAreaProps {
   content: string;
@@ -7,11 +7,15 @@ interface ContentAreaProps {
 
 const ContentArea: React.FC<ContentAreaProps> = ({ content, setContent }) => {
   const maxLength = 140;
-  const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    if (event.currentTarget.value.length <= maxLength) {
-      setContent(event.currentTarget.value);
-    }
-  };
+
+  const handleInputChange = useCallback(
+    (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+      if (event.currentTarget.value.length <= maxLength) {
+        setContent(event.currentTarget.value);
+      }
+    },
+    [setContent]
+  );
 
   const isMaxLength = content.length >= maxLength;
   const color = isMaxLength ? 'red' : 'black';
