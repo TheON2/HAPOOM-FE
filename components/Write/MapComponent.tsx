@@ -77,7 +77,9 @@ export const MapComponent: React.FC<MapComponentProps> = ({
 
         const result = response.data.results[0];
 
-        const roadAddress = `${result?.region?.area1?.name} ${result?.region?.area2?.name} ${result?.region?.area3?.name} ${result?.land?.name} ${result?.land?.number1} ${result?.land?.number2} ${result?.land?.addition0?.value}`;
+        let roadAddress = `${result?.region?.area1?.name} ${result?.region?.area2?.name} ${result?.region?.area3?.name} ${result?.land?.name} ${result?.land?.number1} ${result?.land?.number2} ${result?.land?.addition0?.value}`;
+
+        if (roadAddress.includes('undefined')) roadAddress = '도로명 없음';
 
         setLocation({
           name: roadAddress,
@@ -101,18 +103,19 @@ export const MapComponent: React.FC<MapComponentProps> = ({
   );
 
   const handleConfirmClick = () => {
-    if (location.name.includes('undefined')) {
+    if (location.name === '도로명 없음') {
       const userConfirmed = window.confirm(
         '이 주소는 도로명을 확인할 수 없습니다. 이 위치로 하시겠어요?'
       );
       if (userConfirmed) {
-        setLocationInput('Undefined address');
+        setLocationInput(`도로명 없음 x좌표:${location.x} y좌표:${location.y}`);
       } else {
         return;
       }
     } else {
       setLocationInput(location.name);
     }
+    console.log(location);
     setMapOpen(false);
   };
 

@@ -3,10 +3,12 @@ import axios from 'axios';
 import { debounce } from 'lodash';
 import styled from 'styled-components';
 import { StyledAuthInput } from '@/styles/write';
+import Image from 'next/image';
 
 interface Suggestion {
   title: string;
   url: string;
+  thumbnail: string;
 }
 
 interface YouTubeSearchProps {
@@ -17,10 +19,11 @@ const SuggestionBox = styled.ul`
   list-style-type: none;
   padding: 0;
   margin: 0;
-  width: 300px;
+  width: 600px;
   box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
   border-radius: 4px;
   overflow: hidden;
+  text-align: left;
 `;
 
 const SuggestionItem = styled.li`
@@ -52,10 +55,11 @@ export const YouTubeSearch = ({ setVideoId }: YouTubeSearchProps) => {
         },
       });
       setSearchSuggestions(
-        response.data.items.map((item: any) => {
+        response.data.map((item: any) => {
           return {
-            title: item.snippet.title,
-            url: `https://www.youtube.com/watch?v=${item.id.videoId}`,
+            title: item.title,
+            url: `https://www.youtube.com/watch?v=${item.videoId}`,
+            thumbnail: item.thumbnail,
           };
         })
       );
@@ -94,6 +98,13 @@ export const YouTubeSearch = ({ setVideoId }: YouTubeSearchProps) => {
             key={index}
             onClick={() => handleSuggestionClick(suggestion.url)}
           >
+            <Image
+              src={suggestion.thumbnail}
+              alt={suggestion.title}
+              style={{ marginRight: '10px' }}
+              width={100}
+              height={100}
+            />
             {suggestion.title}
           </SuggestionItem>
         ))}

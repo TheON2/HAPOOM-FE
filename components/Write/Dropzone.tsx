@@ -1,6 +1,7 @@
 import { useDropzone } from 'react-dropzone';
 import Image from 'next/image';
 import { useCallback } from 'react';
+import  plus  from '../../public/addImage.png';
 
 interface DropzoneProps {
   images: string[];
@@ -58,7 +59,11 @@ const Dropzone: React.FC<DropzoneProps> = ({ images, setImages }) => {
       ) : isDragActive ? (
         <h1>그렇지 이미지를 여기다가 드랍해</h1>
       ) : (
-        <h1>이미지를 여따가 올려라 인마</h1>
+        <>
+        <Image src={plus} alt={`Upload preview 1`} width={50} height={50} />
+        <h1>이미지 업로드</h1>
+        <h4>jpg,png/5개 까지 업로드됩니다.</h4>
+        </>
       )}
     </div>
   );
