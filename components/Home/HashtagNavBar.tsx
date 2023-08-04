@@ -8,28 +8,35 @@ const HashtagNavBarLayout = styled.nav`
   height: 200px;
   /* padding: 54px 0; */
   /* height: 10vh; */
-  background-color: #efefef;
+  background-color: #fff;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 54px;
   position: sticky;
-  top: 0;
-  z-index: 999;
+  top: 10vh;
+  z-index: 10;
 `;
 
 const HashtagList = styled.ul`
-  width: 100%;
+  /* width: 100%; */
   display: flex;
   justify-content: center;
   gap: 46px;
-  background: #fff;
+  /* background: #fff; */
   list-style: none;
+  @media screen and (max-width: 786px) {
+    gap: 2%;
+  }
 `;
 
 const HashtagItem = styled.li`
-  width: 100px;
-  text-align: center;
+  /* width: 100px; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* text-align: center; */
+
   figure {
     position: relative;
     width: 100px;
@@ -37,6 +44,11 @@ const HashtagItem = styled.li`
     margin-bottom: 12px;
     overflow: hidden;
     border-radius: 8px;
+    border: 2px solid #fff;
+    @media screen and (max-width: 786px) {
+      width: 60px;
+      height: 60px;
+    }
     img {
       object-fit: cover;
     }
