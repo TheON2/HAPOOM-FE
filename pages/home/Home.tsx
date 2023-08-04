@@ -4,6 +4,7 @@ import HashtagNavBar from '@/components/Home/HashtagNavBar';
 import HashtagContents from '@/components/Home/HashtagContents';
 import Main from '@/components/Home/Main';
 import PopularContents from '@/components/Home/PopularContents';
+import Header from '@/components/common/Header';
 import {
   sliderImages,
   SliderImage,
@@ -12,7 +13,7 @@ import {
   popularContentsImages,
 } from '../../public/data';
 import { GetStaticProps, NextPage } from 'next';
-
+import MobileBottomNav from '@/components/common/MobileBottomNav';
 interface Props {
   data: SliderImage[];
   hashtagData: SliderImage[];
@@ -29,6 +30,8 @@ const Home: NextPage<Props> = ({
   // console.log(data);
   return (
     <Main>
+      <Header />
+      <MobileBottomNav />
       <MainBannerSlider data={data} />
       <HashtagNavBar data={hashtagData} />
       <HashtagContents data={hashContent} />
