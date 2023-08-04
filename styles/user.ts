@@ -2,14 +2,17 @@ import { styled } from "styled-components";
 import Image from "next/image";
 import Link from "next/link";
 
-
 export const UserPageSection = styled.section`
-  width: 1440px; 
+  max-width: 1440px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center; 
   justify-content: center;
   margin: 0 auto;
+  @media (max-width: 500px) {
+   padding: 0 20px; 
+  }
 `;
 export const UserPageContainer = styled.div`
   width: 730px;
@@ -20,17 +23,27 @@ export const UserPageContainer = styled.div`
     text-align: left;
     margin-top: 20px;
   }
+  @media (max-width: 500px) {
+   padding: 0 20px; 
+   width: 100%;
+  }
 `;
 export const UserProfileCardBox = styled.div`
   width: 730px;
-  height: 280px;
   display: flex;
   border: 1px solid black;
+  @media (max-width: 500px) {
+    width: 100%;
+    flex-direction: column;
+  }
 `;
 export const UserImage = styled(Image)`
 width: 264px;
 height: 280px;
 object-fit: cover;
+@media (max-width: 500px) {
+    width: 100%;
+  }
 `
 export const ProfileContentsBox = styled.div`
   margin-left: 10px;
@@ -92,6 +105,9 @@ height: 40px;
 export const PostBox = styled.div`
   width: 726px;
   margin: 0 auto;
+  @media (max-width: 500px) {
+   width: 100%;
+  }
 `
 export const PostContentBox = styled.div`
   display: flex;
@@ -116,6 +132,10 @@ export const PostImageBox = styled.div`
   gap: 12px;
   justify-content: flex-start ;
   align-items: center;
+  @media (max-width: 500px) {
+    width: 100%;
+    justify-content: center;
+  }
 `;
 export const PostImage = styled(Image)`
   width:232px;
