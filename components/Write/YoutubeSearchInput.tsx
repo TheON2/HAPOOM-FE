@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+  useMemo,
+} from 'react';
 import axios from 'axios';
 import { debounce } from 'lodash';
 import styled from 'styled-components';
@@ -15,7 +21,7 @@ interface YouTubeSearchProps {
   setVideoId: React.Dispatch<React.SetStateAction<string>>;
   selectedTitle: string;
   setSelectedTitle: React.Dispatch<React.SetStateAction<string>>;
-  update:boolean;
+  update: boolean;
 }
 
 const InputContainer = styled.div`
@@ -61,14 +67,22 @@ const SuggestionItem = styled.li`
   }
 `;
 
-export const YouTubeSearch = ({ setVideoId,selectedTitle,setSelectedTitle,update }: YouTubeSearchProps) => {
+export const YouTubeSearch = ({
+  setVideoId,
+  selectedTitle,
+  setSelectedTitle,
+  update,
+}: YouTubeSearchProps) => {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [searchSuggestions, setSearchSuggestions] = useState<Suggestion[]>([]);
   const [isInputActive, setIsInputActive] = useState(true);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(event.target.value);
-  };
+  const handleChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setSearchTerm(event.target.value);
+    },
+    []
+  );
 
   const searchYoutube = async (term: string) => {
     if (term.length >= 2) {
@@ -89,36 +103,45 @@ export const YouTubeSearch = ({ setVideoId,selectedTitle,setSelectedTitle,update
     }
   };
 
-  const debouncedSearchYoutube = debounce(searchYoutube, 100);
+  const debouncedSearchYoutube = useMemo(
+    () => debounce(searchYoutube, 300),
+    []
+  );
 
-  const handleKeyUp = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    const value = event.currentTarget.value;
-    if (value.trim() === '') {
+  const handleKeyUp = useCallback(
+    (event: React.KeyboardEvent<HTMLInputElement>) => {
+      const value = event.currentTarget.value;
+      if (value.trim() === '') {
+        setSearchSuggestions([]);
+      } else {
+        debouncedSearchYoutube(value);
+      }
+    },
+    [debouncedSearchYoutube]
+  );
+
+  const handleSuggestionClick = useCallback(
+    (suggestion: Suggestion) => {
+      setIsInputActive(false);
+      setSelectedTitle(suggestion.title);
+      setVideoId(suggestion.url);
       setSearchSuggestions([]);
-    } else {
-      debouncedSearchYoutube(value);
-    }
-  };
+    },
+    [setVideoId, setSelectedTitle]
+  );
 
-  const handleSuggestionClick = (suggestion: Suggestion) => {
-    setIsInputActive(false);
-    setSelectedTitle(suggestion.title); 
-    setVideoId(suggestion.url);
-    setSearchSuggestions([]);
-  };
-
-  const handleClear = () => {
+  const handleClear = useCallback(() => {
     setIsInputActive(true);
     setSearchTerm('');
     setSelectedTitle('');
     setVideoId('');
-  };
+  }, [setSelectedTitle, setVideoId]);
 
-  useEffect(()=>{
-    if(update){
+  useEffect(() => {
+    if (update) {
       setIsInputActive(false);
     }
-  },[update])
+  }, [update]);
 
   return (
     <>
@@ -129,7 +152,7 @@ export const YouTubeSearch = ({ setVideoId,selectedTitle,setSelectedTitle,update
           value={isInputActive ? searchTerm : selectedTitle}
           onChange={handleChange}
           onKeyUp={isInputActive ? handleKeyUp : undefined}
-          style={{ width: '100%' ,margin:'5px 0'}}
+          style={{ width: '100%', margin: '5px 0' }}
           disabled={!isInputActive}
         />
         {selectedTitle && !isInputActive && (

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 interface TagProps {
   tag: string;
@@ -7,9 +7,8 @@ interface TagProps {
 
 const Tag: React.FC<TagProps> = ({ tag, onDelete }) => {
   const [isHovered, setIsHovered] = useState(false);
-  const handleMouseOver = () => setIsHovered(true);
-  const handleMouseOut = () => setIsHovered(false);
-
+  const handleMouseOver = useCallback(() => setIsHovered(true), []);
+  const handleMouseOut = useCallback(() => setIsHovered(false), []);
   const color = isHovered ? 'red' : 'blue';
 
   return (

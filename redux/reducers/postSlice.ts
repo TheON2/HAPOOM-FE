@@ -9,15 +9,15 @@ const postSlice = createSlice({
   name: 'post',
   initialState,
   reducers: {
-    toggleUpdate: (state) => {
+    TOGGLE_UPDATE: (state) => {
       state.update = !state.update;
     },
-    setUpdateId: (state, action: PayloadAction<string>) => {
+    SET_UPDATEID: (state, action: PayloadAction<string>) => {
       state.updateId = action.payload;
     },
   },
 });
 
-export const { toggleUpdate } = postSlice.actions;
+export const { TOGGLE_UPDATE, SET_UPDATEID } = postSlice.actions;
 
 export default postSlice.reducer;
