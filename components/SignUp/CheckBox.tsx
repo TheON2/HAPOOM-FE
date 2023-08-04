@@ -36,7 +36,7 @@ const CheckBox: React.FC<CheckBoxProps> = ({ checkboxes, setCheckboxes }) => {
       });
     }
   };
-
+  console.log('Check');
   return (
     <>
       <TextParagraph>약관동의</TextParagraph>
