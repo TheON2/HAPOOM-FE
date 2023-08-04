@@ -46,11 +46,7 @@ const SignUpUi = () => {
 
       <SocialLogin />
 
-      <form
-        style={{ width: '100%' }}
-        name="register"
-        onSubmit={(e: any) => e.preventDefault()}
-      >
+      <form name="register" onSubmit={(e: any) => e.preventDefault()}>
         <WriteInput signUpState={signUpState} setSignUpState={setSignUpState} />
 
         <CheckBox checkboxes={checkboxes} setCheckboxes={setCheckboxes} />
@@ -58,7 +54,7 @@ const SignUpUi = () => {
         <SignUpBtn
           onClick={(e: React.MouseEvent) => {
             e.preventDefault();
-            alert('준비중입니다.');
+            alert('준비 중');
           }}
         >
           회원가입하기

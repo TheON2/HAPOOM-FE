@@ -15,7 +15,10 @@ export const SignUpSection = styled.section`
   flex-direction: column;
   @media (max-width: 500px) {
     padding: 0 20px;
-
+  }
+  form {
+    max-width: 533px;
+    width: 100%;
   }
 `;
 export const MainHeadText = styled.h1`
