@@ -2,10 +2,10 @@ import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
 import SideNav from './SideNav';
+import Link from 'next/link';
 const HeaderLayout = styled.header`
   width: 100%;
   height: 10vh;
-  padding: 0 20px;
   position: sticky;
   z-index: 20;
   top: 0;
@@ -14,9 +14,12 @@ const HeaderLayout = styled.header`
   justify-content: space-between;
   align-items: center;
   gap: 12px;
+  @media screen and (max-width: 1260px) {
+    padding: 0 20px;
+  }
 `;
 
-const LogoBox = styled.div`
+const LogoBox = styled(Link)`
   width: 20%;
   height: 50px;
   position: relative;
@@ -28,7 +31,7 @@ const LogoBox = styled.div`
 `;
 
 type Props = {
-  isSearch: boolean;
+  $isSearch: boolean;
 };
 
 const SearchInputBox = styled.div<Props>`
@@ -53,9 +56,9 @@ const SearchInputBox = styled.div<Props>`
 
     input {
       position: relative;
-      left: ${(props) => (props.isSearch ? '0' : '100%')};
-      width: ${(props) => (props.isSearch ? '100%' : '0')};
-      opacity: ${(props) => (props.isSearch ? '1' : '0')};
+      left: ${(props) => (props.$isSearch ? '0' : '100%')};
+      width: ${(props) => (props.$isSearch ? '100%' : '0')};
+      opacity: ${(props) => (props.$isSearch ? '1' : '0')};
       transition: all 0.3s ease-in-out;
     }
   }
@@ -80,11 +83,13 @@ const AccountActionsContainer = styled.div`
   gap: 12px;
   width: 80%;
 `;
-const GoWriteButton = styled.button`
+const GoWriteLink = styled(Link)`
   width: 100px;
   padding: 12px 18px;
-  /* height: 50px; */
   border-radius: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 const ProfileBox = styled.div`
   width: 50px;
@@ -92,6 +97,9 @@ const ProfileBox = styled.div`
   border-radius: 50%;
   position: relative;
   overflow: hidden;
+  button {
+    cursor: pointer;
+  }
   img {
     object-fit: cover;
   }
@@ -110,9 +118,6 @@ const AuthButtonBox = styled.div`
 const MobileBox = styled.div`
   display: flex;
   gap: 12px;
-  button {
-    /* background: #000; */
-  }
 `;
 
 const Header = () => {
@@ -139,24 +144,27 @@ const Header = () => {
   return (
     <>
       <HeaderLayout>
-        <LogoBox>
-          <Image src={'/20230804_105922.jpeg'} alt="logo" fill />
+        <LogoBox href={'/home/Home'}>
+          <Image src={'/inflearn.jpg'} alt="logo" fill />
         </LogoBox>
         {isMobile ? (
           <>
             <AccountActionsContainer>
-              <SearchInputBox isSearch={isSearch}>
+              <SearchInputBox $isSearch={isSearch}>
                 <input type="text" />
                 <IconBox onClick={onClickSearchIconHandler}>
                   <Image src={'/example.jpg'} alt="icon" fill />
                 </IconBox>
               </SearchInputBox>
-              <GoWriteButton>글쓰기</GoWriteButton>
+              <GoWriteLink href={'/home/Home'}>글쓰기</GoWriteLink>
               <AuthButtonBox>
-                <button>로그인</button>|<button>회원가입</button>
+                <Link href={'/auth/SignIn'}>로그인</Link>|
+                <Link href={'/auth/SignUp'}>회원가입</Link>
               </AuthButtonBox>
               <ProfileBox onClick={onClickShowMenuHandler}>
-                <Image src={'/example.jpg'} alt="prpfile image" fill />
+                <button>
+                  <Image src={'/example.jpg'} alt="prpfile image" fill />
+                </button>
               </ProfileBox>
             </AccountActionsContainer>
           </>

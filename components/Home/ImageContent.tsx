@@ -2,15 +2,14 @@ import React from 'react';
 import Image from 'next/image';
 import styled from 'styled-components';
 import { NextPage } from 'next';
+import { likePost } from '@/api/post';
+import { useMutation } from 'react-query';
+import Link from 'next/link';
 
-const IMAGE_SIZE = 288;
-
-const ImageContentLayout = styled.div`
+const ImageContentLayout = styled(Link)`
+  display: block;
   padding-bottom: 100%;
   width: 100%;
-  /* width: ${IMAGE_SIZE}px;
-  height: ${IMAGE_SIZE}px; */
-  background-color: pink;
   border: 1px solid black;
   position: relative;
   img {
@@ -33,8 +32,12 @@ type Props = {
 };
 
 const ImageContent: NextPage<Props> = ({ src, alt }) => {
+  const mutation = useMutation((postId: string) => likePost(postId));
+  const onClickHeartHandler = async (postId: string) => {
+    await mutation.mutateAsync(postId);
+  };
   return (
-    <ImageContentLayout>
+    <ImageContentLayout href={'/home/Home'}>
       <Image
         src={src}
         alt={alt}
@@ -43,7 +46,7 @@ const ImageContent: NextPage<Props> = ({ src, alt }) => {
         placeholder="blur"
         blurDataURL={src}
       />
-      <HeartIcon></HeartIcon>
+      <HeartIcon onClick={() => onClickHeartHandler(`1`)}></HeartIcon>
     </ImageContentLayout>
   );
 };

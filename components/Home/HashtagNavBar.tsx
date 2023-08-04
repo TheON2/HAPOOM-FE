@@ -36,7 +36,11 @@ const HashtagItem = styled.li`
   flex-direction: column;
   align-items: center;
   /* text-align: center; */
-
+  button {
+    border: none;
+    background: none;
+    cursor: pointer;
+  }
   figure {
     position: relative;
     width: 100px;
@@ -64,18 +68,20 @@ const HashtagNavBar: React.FC<Props> = ({ data }) => {
         {data.map((hashtag, index) => {
           return (
             <HashtagItem key={index}>
-              <figure>
-                <Image
-                  src={hashtag.src}
-                  alt="v13 image"
-                  fill
-                  sizes="(max-width: 100px) 100vw"
-                  loading="eager"
-                  placeholder="blur"
-                  blurDataURL={hashtag.src}
-                />
-              </figure>
-              <figcaption>#해시태그다</figcaption>
+              <button>
+                <figure>
+                  <Image
+                    src={hashtag.src}
+                    alt="v13 image"
+                    fill
+                    sizes="(max-width: 100px) 100vw"
+                    loading="eager"
+                    placeholder="blur"
+                    blurDataURL={hashtag.src}
+                  />
+                </figure>
+                <figcaption>#해시태그다</figcaption>
+              </button>
             </HashtagItem>
           );
         })}

@@ -15,6 +15,9 @@ const SideNavLayout = styled.nav`
   @media screen and (max-width: 768px) {
     width: 50%;
   }
+  button {
+    cursor: pointer;
+  }
 `;
 
 const SideNavMenuList = styled.ul`
@@ -25,7 +28,7 @@ const SideNavMenuList = styled.ul`
 
 const SideNavMenuItem = styled.li`
   width: 100%;
-  padding: 20px 30px;
+  /* padding: 20px 30px; */
   border: 1px solid #000;
   &.none-padding {
     padding: 0;
@@ -35,6 +38,11 @@ const SideNavMenuItem = styled.li`
     height: 100%;
     padding: 20px 30px;
     text-align: start;
+  }
+  a {
+    display: block;
+    width: 100%;
+    padding: 20px 30px;
   }
 `;
 
