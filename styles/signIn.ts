@@ -7,11 +7,16 @@ const inputBtnBoxWidth = "533px";
 const inputBtnHeight = "63px";
 
 export const SignInSection = styled.section`
-width:1440px;
-margin: 0 auto;
+  width:1440px;
+  margin: 0 auto;
 `
 export const SignInContainer = styled.div`
-width: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+
 `
 export const MainHeadText = styled.h1`
   color: ${textColor};
@@ -33,7 +38,7 @@ export const StyledInput = styled.input`
   height: ${inputBtnHeight};
   outline: none;
 `;
-export const SignUpBtn = styled.button`
+export const SignInBtn = styled.button`
   width: ${inputBtnBoxWidth};
   height: ${inputBtnHeight};
   border-radius: 20px;
@@ -43,8 +48,8 @@ export const SignUpBtn = styled.button`
   font-family: ${fontFamily};
   font-size: 16px;
   font-weight: 400;
+  cursor: pointer;
 `;
-
 export const TextParagraph = styled.p`
   color: ${textColor};
   font-family: ${fontFamily};
@@ -53,6 +58,9 @@ export const TextParagraph = styled.p`
 `;
 export const TextParagraphSns = styled(TextParagraph)`
   margin-top: 20px;
+  color: #868686;
+  font-family: Inter;
+  font-size: 14px;
 `;
 export const SignUpSocialSignUpBox = styled.div`
   width: ${inputBtnBoxWidth};
@@ -69,3 +77,12 @@ export const SocialBoxImg = styled(Image)`
   border-radius: 100%;
   cursor: pointer;
 `;
+export const PwdSignUpSettinPageLink =styled.div`
+display: flex;
+gap: 18px;
+margin-top: 20px;
+color: #868686;
+font-family: Inter;
+font-size: 20px;
+cursor: pointer;
+`
