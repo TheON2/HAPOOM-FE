@@ -3,12 +3,16 @@ import { styled } from "styled-components";
 
 const textColor = "#000";
 const fontFamily = "Inter";
-const inputBtnBoxWidth = "533px";
+const inputBtnBoxWidth = "100%";
 const inputBtnHeight = "63px";
 
 export const SignInSection = styled.section`
-  width:1440px;
+  max-width: 500px;
+  width: 100%;
   margin: 0 auto;
+  @media (max-width: 500px) {
+    padding: 0 20px;
+  }
 `
 export const SignInContainer = styled.div`
   display: flex;
@@ -16,7 +20,6 @@ export const SignInContainer = styled.div`
   justify-content: center;
   align-items: center;
   height: 100vh;
-
 `
 export const MainHeadText = styled.h1`
   color: ${textColor};
