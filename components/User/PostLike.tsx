@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Line,
   PostBox,
@@ -95,9 +95,13 @@ const PostLike = () => {
     updateIndicator();
   }, [selectedTab]);
 
-  const handleTabClick = (index: number, width: number, left: number) => {
+  const handleTabClick = (
+    index: number,
+    width: number,
+    leftPercentage: number
+  ) => {
     setSelectedTab(index);
-    setIndicatorStyle({ width, left });
+    setIndicatorStyle({ width, left: leftPercentage });
     if (index === 0) {
       setDisplayedPosts(cloudImage);
     } else {
@@ -111,11 +115,9 @@ const PostLike = () => {
         <TabButton
           className="tab-button"
           onClick={(e) => {
-            handleTabClick(
-              0,
-              e.currentTarget.offsetWidth,
-              e.currentTarget.offsetLeft
-            );
+            const leftPercentage =
+              (e.currentTarget.offsetLeft / window.innerWidth) * 100;
+            handleTabClick(0, e.currentTarget.offsetWidth, leftPercentage);
           }}
           style={selectedTab === 0 ? { color: '#333' } : undefined}
         >
@@ -124,18 +126,16 @@ const PostLike = () => {
         <TabButton
           className="tab-button"
           onClick={(e) => {
-            handleTabClick(
-              1,
-              e.currentTarget.offsetWidth,
-              e.currentTarget.offsetLeft
-            );
+            const leftPercentage =
+              (e.currentTarget.offsetLeft / window.innerWidth) * 100;
+            handleTabClick(1, e.currentTarget.offsetWidth, leftPercentage);
           }}
           style={selectedTab === 1 ? { color: '#333' } : undefined}
         >
           좋아요
         </TabButton>
+        <TabIndicator width={indicatorStyle.width} left={indicatorStyle.left} />
       </PostContentBox>
-      {/* <TabIndicator width={indicatorStyle.width} left={indicatorStyle.left} /> */}
       <Line></Line>
       <PostImageBox>
         {displayedPosts.map((image) => (

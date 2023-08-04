@@ -52,6 +52,7 @@ export const ProfileContentsBox = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-between;
+  width: 100%;  
 `;
 export const FollowBox = styled.div`
   width: 300px;
@@ -103,7 +104,8 @@ height: 40px;
 `
 
 export const PostBox = styled.div`
-  width: 726px;
+  max-width: 726px;
+  width: 100%;
   margin: 0 auto;
   @media (max-width: 500px) {
    width: 100%;
@@ -112,6 +114,7 @@ export const PostBox = styled.div`
 export const PostContentBox = styled.div`
   display: flex;
   gap: 15px;
+  /* width: 100%; */
 `
 export const PostParagraph = styled.p`
   text-align: center;
@@ -169,7 +172,7 @@ export const TabButton = styled.div`
   `
 export const TabIndicator = styled.span<{ width: number; left: number }>`
   position: absolute;
-  bottom: 182px; 
+  bottom: 195px; 
   height: 4px;
   transition: 0.4s;
   height: 5px;
