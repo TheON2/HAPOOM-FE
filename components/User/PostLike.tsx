@@ -135,7 +135,7 @@ const PostLike = () => {
           좋아요
         </TabButton>
       </PostContentBox>
-      <TabIndicator width={indicatorStyle.width} left={indicatorStyle.left} />
+      {/* <TabIndicator width={indicatorStyle.width} left={indicatorStyle.left} /> */}
       <Line></Line>
       <PostImageBox>
         {displayedPosts.map((image) => (
