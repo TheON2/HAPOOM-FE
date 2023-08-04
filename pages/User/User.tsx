@@ -1,7 +1,8 @@
+import UserUi from '@/components/User/UserUi';
 import React from 'react';
 
 const User = () => {
-  return <div>유저 페이지</div>;
+  return <UserUi />;
 };
 
 export default User;
