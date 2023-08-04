@@ -46,7 +46,11 @@ const SignUpUi = () => {
 
       <SocialLogin />
 
-      <form name="register" onSubmit={(e: any) => e.preventDefault()}>
+      <form
+        style={{ width: '100%' }}
+        name="register"
+        onSubmit={(e: any) => e.preventDefault()}
+      >
         <WriteInput signUpState={signUpState} setSignUpState={setSignUpState} />
 
         <CheckBox checkboxes={checkboxes} setCheckboxes={setCheckboxes} />

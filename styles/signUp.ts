@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const textColor = "#000";
 const fontFamily = "Inter";
-const inputBtnBoxWidth = "533px";
+const inputBtnBoxWidth = "100%";
 const inputBtnHeight = "63px";
 
 export const SignUpSection = styled.section`
@@ -13,6 +13,10 @@ export const SignUpSection = styled.section`
   display: flex;
   align-items: center;
   flex-direction: column;
+  @media (max-width: 500px) {
+    padding: 0 20px;
+
+  }
 `;
 export const MainHeadText = styled.h1`
   color: ${textColor};
@@ -53,6 +57,7 @@ export const SocialBoxImg = styled(Image)`
   object-fit: cover;
   border-radius: 100%;
   cursor: pointer;
+
 `;
 export const StyledInputBox = styled.div`
   width: ${inputBtnBoxWidth};
@@ -91,7 +96,7 @@ export const SignUpCheckBox = styled.div`
   margin-bottom: 15px;
 `
 export const Checkbox = styled.input`
- display: inline-block;
+  display: inline-block;
   width: 14px;
   height: 14px;
   margin-right: 12px;
@@ -115,7 +120,7 @@ export const StyledLabel = styled.div`
   font-weight: 400;
 `
 export const Line = styled.div`
-  width: 485px;
+  width: 100%;
   border: 1px solid black;
   height: 0;
   margin-bottom: 13px;
