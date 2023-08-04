@@ -9,7 +9,6 @@ import Dropzone from '@/components/Write/Dropzone';
 import ImagePreview from '@/components/Write/ImagePreview';
 import { YouTubeSearch } from '@/components/Write/YoutubeSearchInput';
 import { MapComponent } from '@/components/Write/MapComponent';
-import YoutubePlayer from '@/components/Write/YoutubePlayer';
 import ContentArea from '@/components/Write/ContentArea';
 import TagInput from '@/components/Write/TagInput';
 import { useMutation, useQuery, useQueryClient } from 'react-query';

@@ -17,7 +17,7 @@ const Dropzone: React.FC<DropzoneProps> = ({ images, setImages }) => {
         alert(`You can only upload ${MAX_IMAGES} images.`);
         return;
       }
-      setImages((prev:any) => [...prev, ...acceptedFiles]);
+      setImages((prev: any) => [...prev, ...acceptedFiles]);
     },
     [images, setImages]
   );

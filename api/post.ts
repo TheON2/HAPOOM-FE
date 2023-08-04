@@ -43,4 +43,14 @@ const getPost = async (id: string) => {
   return response.data;
 };
 
-export { addPost, updatePost, getPost };
+const likePost = async (postId: string) => {
+  const response = await api.post(`/api/post/${postId}/like`);
+  return response.data;
+};
+
+const reportPost = async (postId: string) => {
+  const response = await api.post(`/api/report/${postId}`);
+  return response.data;
+};
+
+export { addPost, updatePost, getPost, likePost, reportPost };
