@@ -97,14 +97,12 @@ p {
   font-size: 30px;
   margin: 5px 0;
 }`
-export const IconImage = styled(Image)`
-width: 40px;
-height: 40px;
-`
+
 export const PostBox = styled.div`
   max-width: 726px;
 `
 export const PostContentBox = styled.div`
+  position: relative;
   display: flex;
   gap: 15px;
 `
@@ -164,7 +162,7 @@ export const TabButton = styled.div`
   `
 export const TabIndicator = styled.span<{ width: number; left: number }>`
   position: absolute;
-  bottom: 195px; 
+  bottom: -12px; 
   height: 4px;
   transition: 0.4s;
   height: 5px;
@@ -173,7 +171,4 @@ export const TabIndicator = styled.span<{ width: number; left: number }>`
   left: ${({ left }) => `${left}px`};
   z-index: 1;
   border-radius: 8px 8px 0 0;
-  @media (max-width:1173px){
-    display: none;
-  }
 `
