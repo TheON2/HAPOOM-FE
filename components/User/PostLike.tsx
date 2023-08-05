@@ -95,13 +95,9 @@ const PostLike = () => {
     updateIndicator();
   }, [selectedTab]);
 
-  const handleTabClick = (
-    index: number,
-    width: number,
-    leftPercentage: number
-  ) => {
+  const handleTabClick = (index: number, width: number, left: number) => {
     setSelectedTab(index);
-    setIndicatorStyle({ width, left: leftPercentage });
+    setIndicatorStyle({ width, left });
     if (index === 0) {
       setDisplayedPosts(cloudImage);
     } else {
@@ -115,9 +111,11 @@ const PostLike = () => {
         <TabButton
           className="tab-button"
           onClick={(e) => {
-            const leftPercentage =
-              (e.currentTarget.offsetLeft / window.innerWidth) * 100;
-            handleTabClick(0, e.currentTarget.offsetWidth, leftPercentage);
+            handleTabClick(
+              0,
+              e.currentTarget.offsetWidth,
+              e.currentTarget.offsetLeft
+            );
           }}
           style={selectedTab === 0 ? { color: '#333' } : undefined}
         >
@@ -126,9 +124,11 @@ const PostLike = () => {
         <TabButton
           className="tab-button"
           onClick={(e) => {
-            const leftPercentage =
-              (e.currentTarget.offsetLeft / window.innerWidth) * 100;
-            handleTabClick(1, e.currentTarget.offsetWidth, leftPercentage);
+            handleTabClick(
+              1,
+              e.currentTarget.offsetWidth,
+              e.currentTarget.offsetLeft
+            );
           }}
           style={selectedTab === 1 ? { color: '#333' } : undefined}
         >

@@ -4,7 +4,6 @@ import Link from "next/link";
 
 export const UserPageSection = styled.section`
   max-width: 1440px;
-  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center; 
@@ -102,19 +101,12 @@ export const IconImage = styled(Image)`
 width: 40px;
 height: 40px;
 `
-
 export const PostBox = styled.div`
   max-width: 726px;
-  width: 100%;
-  margin: 0 auto;
-  @media (max-width: 500px) {
-   width: 100%;
-  }
 `
 export const PostContentBox = styled.div`
   display: flex;
   gap: 15px;
-  /* width: 100%; */
 `
 export const PostParagraph = styled.p`
   text-align: center;
@@ -141,7 +133,7 @@ export const PostImageBox = styled.div`
   }
 `;
 export const PostImage = styled(Image)`
-  width:232px;
+  width: 232px;
   height: 228px;
   object-fit: cover;
   position: relative;
@@ -181,4 +173,7 @@ export const TabIndicator = styled.span<{ width: number; left: number }>`
   left: ${({ left }) => `${left}px`};
   z-index: 1;
   border-radius: 8px 8px 0 0;
+  @media (max-width:1173px){
+    display: none;
+  }
 `
