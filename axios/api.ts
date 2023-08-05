@@ -9,9 +9,11 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      config.headers['Authorization'] = 'Bearer ' + token;
+    if (typeof window !== 'undefined') {
+      const token = localStorage.getItem('token');
+      if (token) {
+        config.headers['Authorization'] = 'Bearer ' + token;
+      }
     }
     return config;
   },
@@ -58,7 +60,9 @@ instance.interceptors.response.use(
         const { data } = await instance.get(
           `${process.env.NEXT_PUBLIC_LOCAL_SERVER}/refreshToken`
         );
-        localStorage.setItem('token', data.token);
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('token', data.token);
+        }
         originalRequest.headers['Authorization'] = 'Bearer ' + data.token;
         return instance(originalRequest);
       } catch (err) {

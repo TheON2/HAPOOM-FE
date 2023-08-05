@@ -22,6 +22,7 @@ interface YouTubeSearchProps {
   selectedTitle: string;
   setSelectedTitle: React.Dispatch<React.SetStateAction<string>>;
   update: boolean;
+  videoId: string;
 }
 
 const InputContainer = styled.div`
@@ -72,6 +73,7 @@ export const YouTubeSearch = ({
   selectedTitle,
   setSelectedTitle,
   update,
+  videoId,
 }: YouTubeSearchProps) => {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [searchSuggestions, setSearchSuggestions] = useState<Suggestion[]>([]);
@@ -138,10 +140,10 @@ export const YouTubeSearch = ({
   }, [setSelectedTitle, setVideoId]);
 
   useEffect(() => {
-    if (update) {
+    if (update && videoId !== '') {
       setIsInputActive(false);
     }
-  }, [update]);
+  }, [update, videoId]);
 
   return (
     <>
