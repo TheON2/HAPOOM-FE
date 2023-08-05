@@ -11,7 +11,11 @@ import profile from '../../public/profile.jpg';
 const UserProfileCard = () => {
   return (
     <UserProfileCardBox>
-      <UserImage src={profile} alt="프로필사진" />
+      <UserImage
+        style={{ width: '264px', height: '280px', objectFit: 'cover' }}
+        src={profile}
+        alt="프로필사진"
+      />
       <ProfileContentsBox>
         <p>멋쟁이 도영</p>
         <p>나는 멋쟁이 공룡이얌</p>
