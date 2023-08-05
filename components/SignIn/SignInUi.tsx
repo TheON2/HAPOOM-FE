@@ -11,7 +11,6 @@ import {
 } from '@/styles/signIn';
 import React, { useState } from 'react';
 import SocialLogin from './SocialLogIn';
-// import Link from 'next/link';
 
 interface SignIn {
   email: string;
