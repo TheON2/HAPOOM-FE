@@ -1,10 +1,9 @@
 import React from 'react';
-import { LikePostSuggestionBox, IconImage, ImageBox } from '@/styles/user';
+import { LikePostSuggestionBox, ImageBox } from '@/styles/user';
 import cloud from '../../public/🦆 icon _cloud_.svg';
 import square from '../../public/🦆 icon _image_.svg';
 import star from '../../public/🦆 icon _star_.svg';
 import Image from 'next/image';
-import styled from 'styled-components';
 
 const UserLikePostSuggestion = () => {
   return (
