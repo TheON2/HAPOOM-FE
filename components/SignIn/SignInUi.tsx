@@ -71,7 +71,7 @@ const SignInUi = () => {
           onClick={(e: React.MouseEvent) => {
             e.preventDefault();
             handleLogin();
-            alert('준비 중');
+            alert('준비');
           }}
         >
           로그인
