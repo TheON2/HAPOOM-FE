@@ -44,6 +44,7 @@
   integrity sha512-5UamI7xkUcJ3i9qVDS+KFDEK8/7oJ55/sJMB1Ge7IEapr7KfdfV/HErR+koZwOfd+SgtFKOKRhRakdg++DcJpQ==
 
 "@babel/core@^7.0.0", "@babel/core@^7.0.0-0", "@babel/core@^7.0.0-0 || ^8.0.0-0 <8.0.0", "@babel/core@^7.12.0", "@babel/core@^7.13.0", "@babel/core@^7.21.0", "@babel/core@^7.21.3", "@babel/core@^7.4.0 || ^8.0.0-0 <8.0.0":
+
   version "7.22.9"
   resolved "https://registry.npmjs.org/@babel/core/-/core-7.22.9.tgz"
   integrity sha512-G2EgeufBcYw27U4hhoIwFcgc1XU7TlXJ3mv04oOv1WCuo900U/anZSPzEqNjwdjgffkk2Gs0AN0dW1CKVLcG7w==
@@ -4614,6 +4615,7 @@ styled-components@^6.0.0-rc.6, "styled-components@>= 2":
   version "6.0.5"
   resolved "https://registry.npmjs.org/styled-components/-/styled-components-6.0.5.tgz"
   integrity sha512-308zi5o7LrA9cVaP4nPD0TaUpOjGPePkAUFb/OGB0xRI3I9ozpW5UyASvRVi9wJcYASG+Y3mLDLDUZC7nqzimw==
+
   dependencies:
     "@babel/cli" "^7.21.0"
     "@babel/core" "^7.21.0"

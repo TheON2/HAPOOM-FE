@@ -1,10 +1,13 @@
+import SignInUi from '@/components/SignIn/SignInUi';
+import { GlobalStyle } from '@/styles/write';
 import React from 'react';
 
 const SignIn = () => {
   return (
-    <div>
-      <div>사인인</div>
-    </div>
+    <>
+      <GlobalStyle />
+      <SignInUi />
+    </>
   );
 };
 
