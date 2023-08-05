@@ -75,7 +75,7 @@ const Write = () => {
           data.images.map(async (image: Image, idx: string) => {
             const response = await fetch(image.url);
             const blob = await response.blob();
-            return new File([blob], idx); // TODO: 실제 파일 이름 제공
+            return new File([blob], idx);
           })
         );
         setImages(imageFiles);
