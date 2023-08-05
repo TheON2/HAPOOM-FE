@@ -13,7 +13,7 @@ const UserProfileCard = () => {
     <UserProfileCardBox>
       <UserImage src={profile} alt="프로필사진" />
       <ProfileContentsBox>
-        <p>멋쟁이 도영</p>
+        <p>나는 멋쟁이 도영</p>
         <p>나는 멋쟁이 공룡이얌</p>
         <FollowBox>
           <p>팔로워 3</p>
