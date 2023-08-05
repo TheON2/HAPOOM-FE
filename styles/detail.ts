@@ -68,6 +68,7 @@ export const UserHeaderBox = styled.div`
 `;
 
 export const UserPictureBox = styled.div`
+  display: flex;
   border: 1px solid black;
   width: 100%;
   height: 500px;
