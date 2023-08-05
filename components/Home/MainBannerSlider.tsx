@@ -1,74 +1,27 @@
 import Image from 'next/image';
 import React, { useEffect, useRef, useState } from 'react';
-import styled from 'styled-components';
+import { MainBannerLayout, SliderItem, SliderList, SlideDotBox } from '@/styles/home';
 import { SliderImage } from '@/public/data';
-const DEFAULT_INTERVAL = 5 * 1000;
-const FAST_INTERVAL = 500;
-
+import styled from 'styled-components';
 //TODO: 메인배너 빈번한 크기 조정으로 인한 성능 이슈
-const MainBannerLayout = styled.section`
-  width: 100%;
-  height: 70vh;
-  overflow: hidden;
-`;
-
-type SliderListProps = {
-  $slideindex: number;
-  width?: number;
-  $sliedsum: number;
-};
-const SliderList = styled.ul<SliderListProps>`
-  width: ${(props) =>
-    props.width ? `${props.width * props.$sliedsum}px` : `100%`};
-  /* width: auto; */
-  /* position: relative; */
-  height: 70vh;
-  display: flex;
-  transform: ${(props) =>
-    props.width
-      ? `translateX(${props.$slideindex * props.width * -1}px)`
-      : 'translateX(0px)'};
-  transition: all 0.3s ease-in-out;
-  list-style: none;
-  /* will-change: transform; */
-`;
-
-type SliderItemProps = {
-  width?: number;
-};
-
-const SliderItem = styled.li<SliderItemProps>`
-  width: ${(props) => (props.width ? `${props.width}px` : `100%`)};
-  height: 70vh;
-  position: relative;
-  padding: 50px 160px;
-  border: 1px solid #000;
-  img {
-    object-fit: cover;
-  }
-  p {
-    position: absolute;
-    top: 10vh;
-    font-size: 3rem;
-  }
-`;
+const DEFAULT_INTERVAL = 5 * 1000;
+const FAST_INTERVAL = 100;
 
 type Props = {
-  data: SliderImage[];
+  data: any;
 };
 
 const MainBannerSlider: React.FC<Props> = ({ data }) => {
-  // console.log(data);
   const copiedArr = [...data];
   const SLIDE_NUM = copiedArr.length;
   const beforeSlide = copiedArr[SLIDE_NUM - 1];
   const afterSlide = copiedArr[0];
-  const [slideIndex, setSlideIndex] = useState<number>(0);
+  const [slideIndex, setSlideIndex] = useState<number>(1);
   const [slideItemWidth, setSlideItemWidth] = useState<number>();
   const [currentInterval, setCurrentInterval] = useState(DEFAULT_INTERVAL);
   const sliedListRef = useRef<HTMLUListElement | null>(null);
   const sliedContainerRef = useRef<HTMLElement | null>(null);
-
+  // console.log(slideIndex);
   let sliedArr = [beforeSlide, ...copiedArr, afterSlide];
   //무한 로드 슬라이드
   useEffect(() => {
@@ -117,6 +70,10 @@ const MainBannerSlider: React.FC<Props> = ({ data }) => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  const onClickSlideDotHandle = (idx: number) => {
+    setSlideIndex(idx);
+  };
+
   return (
     <MainBannerLayout ref={sliedContainerRef}>
       <SliderList
@@ -135,7 +92,6 @@ const MainBannerSlider: React.FC<Props> = ({ data }) => {
                 fill
                 loading="eager"
                 sizes="(max-width: 1440px) 100vw"
-                // priority="high"
                 placeholder="blur"
                 blurDataURL={slide.src}
               />
@@ -144,6 +100,17 @@ const MainBannerSlider: React.FC<Props> = ({ data }) => {
           );
         })}
       </SliderList>
+      <SlideDotBox>
+      {copiedArr.map((slide, index) => {
+          return (
+            <span
+            onClick={() => onClickSlideDotHandle(index +1)}
+            className={slideIndex === index +1 ? `active` : ``}
+            key={index}
+          ></span>
+          );
+        })}
+      </SlideDotBox>
     </MainBannerLayout>
   );
 };

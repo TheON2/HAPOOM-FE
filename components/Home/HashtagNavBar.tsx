@@ -2,62 +2,8 @@ import Image from 'next/image';
 import React from 'react';
 import styled from 'styled-components';
 import { SliderImage } from '@/public/data';
+import { HashtagNavBarLayout, HashtagList, HashtagItem } from '@/styles/home';
 
-const HashtagNavBarLayout = styled.nav`
-  width: 100%;
-  height: 200px;
-  /* padding: 54px 0; */
-  /* height: 10vh; */
-  background-color: #fff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 54px;
-  position: sticky;
-  top: 10vh;
-  z-index: 10;
-`;
-
-const HashtagList = styled.ul`
-  /* width: 100%; */
-  display: flex;
-  justify-content: center;
-  gap: 46px;
-  /* background: #fff; */
-  list-style: none;
-  @media screen and (max-width: 786px) {
-    gap: 2%;
-  }
-`;
-
-const HashtagItem = styled.li`
-  /* width: 100px; */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  /* text-align: center; */
-  button {
-    border: none;
-    background: none;
-    cursor: pointer;
-  }
-  figure {
-    position: relative;
-    width: 100px;
-    height: 100px;
-    margin-bottom: 12px;
-    overflow: hidden;
-    border-radius: 8px;
-    border: 2px solid #fff;
-    @media screen and (max-width: 786px) {
-      width: 60px;
-      height: 60px;
-    }
-    img {
-      object-fit: cover;
-    }
-  }
-`;
 type Props = {
   data: SliderImage[];
 };

@@ -3,122 +3,7 @@ import styled from 'styled-components';
 import Image from 'next/image';
 import SideNav from './SideNav';
 import Link from 'next/link';
-const HeaderLayout = styled.header`
-  width: 100%;
-  height: 10vh;
-  position: sticky;
-  z-index: 20;
-  top: 0;
-  background-color: #fff;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  @media screen and (max-width: 1260px) {
-    padding: 0 20px;
-  }
-`;
-
-const LogoBox = styled(Link)`
-  width: 20%;
-  height: 50px;
-  position: relative;
-  border: 1px solid #000;
-  img {
-    width: 100%;
-    object-fit: contain;
-  }
-`;
-
-type Props = {
-  $isSearch: boolean;
-};
-
-const SearchInputBox = styled.div<Props>`
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 30%;
-  height: 50px;
-  input {
-    width: 100%;
-    height: 100%;
-    border-radius: 25px;
-    border: none;
-    background: none;
-    border: 1px solid black;
-  }
-  @media screen and (max-width: 1260px) {
-    position: relative;
-    left: 0;
-    transform: translateX(0);
-    width: 50%;
-
-    input {
-      position: relative;
-      left: ${(props) => (props.$isSearch ? '0' : '100%')};
-      width: ${(props) => (props.$isSearch ? '100%' : '0')};
-      opacity: ${(props) => (props.$isSearch ? '1' : '0')};
-      transition: all 0.3s ease-in-out;
-    }
-  }
-`;
-
-const IconBox = styled.div`
-  width: 35px;
-  height: 35px;
-  position: absolute;
-  top: 50%;
-  right: 12px;
-  transform: translateY(-50%);
-  border-radius: 50%;
-  overflow: hidden;
-  img {
-    object-fit: cover;
-  }
-`;
-const AccountActionsContainer = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  gap: 12px;
-  width: 80%;
-`;
-const GoWriteLink = styled(Link)`
-  width: 100px;
-  padding: 12px 18px;
-  border-radius: 25px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-const ProfileBox = styled.div`
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  position: relative;
-  overflow: hidden;
-  button {
-    cursor: pointer;
-  }
-  img {
-    object-fit: cover;
-  }
-`;
-
-const AuthButtonBox = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  button {
-    border: none;
-    background: none;
-  }
-`;
-
-const MobileBox = styled.div`
-  display: flex;
-  gap: 12px;
-`;
+import {HeaderLayout, LogoBox, SearchInputBox, IconBox, AccountActionsContainer, GoWriteLink, ProfileBox, AuthButtonBox, MobileBox} from '@/styles/header'
 
 const Header = () => {
   const [isSearch, setIsSearch] = useState<boolean>(false);
@@ -153,7 +38,7 @@ const Header = () => {
               <SearchInputBox $isSearch={isSearch}>
                 <input type="text" />
                 <IconBox onClick={onClickSearchIconHandler}>
-                  <Image src={'/example.jpg'} alt="icon" fill />
+                  <Image src={'/🦆 icon _star_.svg'} alt="icon" fill />
                 </IconBox>
               </SearchInputBox>
               <GoWriteLink href={'/home/Home'}>글쓰기</GoWriteLink>
@@ -163,7 +48,7 @@ const Header = () => {
               </AuthButtonBox>
               <ProfileBox onClick={onClickShowMenuHandler}>
                 <button>
-                  <Image src={'/example.jpg'} alt="prpfile image" fill />
+                  <Image src={'/inflearn.jpg'} alt="prpfile image" fill />
                 </button>
               </ProfileBox>
             </AccountActionsContainer>

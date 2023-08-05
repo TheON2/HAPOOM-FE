@@ -1,60 +1,12 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import Link from 'next/link';
-const SideNavLayout = styled.nav`
-  position: fixed;
-  right: 0;
-  width: 30%;
-  height: calc(100vh - 10vh);
-  padding: 0 0 50px 0;
-  background-color: #fff;
-  z-index: 20;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  @media screen and (max-width: 768px) {
-    width: 50%;
-  }
-  button {
-    cursor: pointer;
-  }
-`;
-
-const SideNavMenuList = styled.ul`
-  width: 100%;
-  /* padding: 20px 30px; */
-  border: 1px solid #000;
-`;
-
-const SideNavMenuItem = styled.li`
-  width: 100%;
-  /* padding: 20px 30px; */
-  border: 1px solid #000;
-  &.none-padding {
-    padding: 0;
-  }
-  button {
-    width: 100%;
-    height: 100%;
-    padding: 20px 30px;
-    text-align: start;
-  }
-  a {
-    display: block;
-    width: 100%;
-    padding: 20px 30px;
-  }
-`;
-
-const SubMenuList = styled.ul`
-  width: 100%;
-  /* padding: 20px 30px; */
-  li {
-    width: 100%;
-    /* padding: 20px 30px; */
-    border: 1px solid #000;
-  }
-`;
+import {
+  SideNavLayout,
+  SideNavMenuList,
+  SideNavMenuItem,
+  SubMenuList,
+} from '@/styles/navbar';
 
 interface SubmenuProps {
   children: React.ReactNode;
