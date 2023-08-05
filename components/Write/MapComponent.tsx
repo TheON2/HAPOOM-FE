@@ -111,8 +111,6 @@ export const MapComponent: React.FC<MapComponentProps> = ({
         } else {
           setLocationInput(roadAddress);
         }
-
-        setMapOpen(false);
       } catch (error) {
         console.error('Geocoding API 호출 중 오류가 발생했습니다:', error);
       }
