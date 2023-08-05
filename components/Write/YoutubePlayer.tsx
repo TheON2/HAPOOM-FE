@@ -15,17 +15,6 @@ const YoutubePlayer = ({ videoId }: YoutubePlayerProps) => {
   const playerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      if ('YT' in window) {
-        createPlayer();
-      } else {
-        let { onYouTubeIframeAPIReady } = window as Windows;
-        onYouTubeIframeAPIReady = () => {
-          createPlayer();
-        };
-      }
-    }
-
     function createPlayer() {
       if (!videoId && player) {
         player.destroy();
@@ -46,6 +35,16 @@ const YoutubePlayer = ({ videoId }: YoutubePlayerProps) => {
           });
           setPlayer(newPlayer);
         }
+      }
+    }
+
+    if (typeof window !== 'undefined') {
+      if ('YT' in window) {
+        createPlayer();
+      } else {
+        (window as Windows).onYouTubeIframeAPIReady = () => {
+          createPlayer();
+        };
       }
     }
   }, [videoId, player]);

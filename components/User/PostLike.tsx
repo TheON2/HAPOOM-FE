@@ -143,7 +143,13 @@ const PostLike = () => {
             key={image.id}
             style={{ position: 'relative', display: 'inline-block' }}
           >
-            <PostImage src={image.src} alt={image.alt} />
+            <Image
+              src={image.src}
+              alt={image.alt}
+              width={232}
+              height={228}
+              objectFit={'cover'}
+            />
             {selectedTab === 1 && (
               <Image
                 src={cloud}
