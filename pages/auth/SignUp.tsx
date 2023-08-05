@@ -4,10 +4,10 @@ import React from 'react';
 
 const SignUp = () => {
   return (
-    <div>
+    <>
       <GlobalStyle />
       <SignUpUi />
-    </div>
+    </>
   );
 };
 
