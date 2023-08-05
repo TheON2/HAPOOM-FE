@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-// import WriteInput from './WriteInput';
-// import CheckBox from './CheckBox';
 import SocialLogin from './SocialLogin';
 import {
   SignUpSection,
@@ -20,7 +18,6 @@ import {
 } from '@/styles/signUp';
 import { useMutation } from 'react-query';
 import { addUser } from '@/api/user';
-import { PreviewContainer } from '../../styles/write';
 import { useRouter } from 'next/router';
 
 export interface Signup {
@@ -60,7 +57,6 @@ const SignUpUi = () => {
 
   const addUserMutation = useMutation(addUser, {
     onSuccess: () => {
-      console.log('회원가입 성공');
       router.push('/auth/SignIn');
     },
     onError: (error) => {
@@ -68,7 +64,6 @@ const SignUpUi = () => {
     },
   });
 
-  //인풋창들 함수
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement & { name: TextInputType }>
   ) => {
