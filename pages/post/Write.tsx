@@ -16,6 +16,7 @@ import { addPost, getPost, updatePost } from '@/api/post';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/config/configStore';
 import dynamic from 'next/dynamic';
+import { useRouter } from 'next/router';
 
 const DynamicComponentWithNoSSR = dynamic(
   () => import('@/components/Write/YoutubePlayer'),
@@ -34,6 +35,7 @@ const Write = () => {
   const [tags, setTags] = useState<string[]>([]);
   const [location, setLocation] = useState({ name: '', x: 0, y: 0 });
   const queryClient = useQueryClient();
+  const router = useRouter();
 
   const removeImage = (index: number) => {
     setImages((images) => images.filter((_, i) => i !== index));
@@ -41,6 +43,12 @@ const Write = () => {
 
   const handlePostSubmit = (event: FormEvent) => {
     event.preventDefault();
+
+    if (images.length === 0) {
+      alert('최소한 한 장의 사진을 업로드해야 합니다.');
+      return;
+    }
+
     const formData = new FormData();
     images.forEach((image) => {
       formData.append('image', image);
@@ -58,6 +66,13 @@ const Write = () => {
   const mutationOptions = {
     onSuccess: () => {
       queryClient.invalidateQueries('posts');
+      if (update) {
+        alert('게시물이 수정되었습니다!');
+        router.push('/test/main');
+      } else {
+        alert('게시물이 추가되었습니다!');
+        router.push('/test/main');
+      }
     },
   };
 
@@ -75,7 +90,7 @@ const Write = () => {
           data.images.map(async (image: Image, idx: string) => {
             const response = await fetch(image.url);
             const blob = await response.blob();
-            return new File([blob], idx); // TODO: 실제 파일 이름 제공
+            return new File([blob], idx);
           })
         );
         setImages(imageFiles);
@@ -116,6 +131,7 @@ const Write = () => {
             selectedTitle={selectedTitle}
             setSelectedTitle={setSelectedTitle}
             update={update}
+            videoId={videoId}
           />
           <DynamicComponentWithNoSSR videoId={videoId} />
           <TagInput tags={tags} setTags={setTags} />

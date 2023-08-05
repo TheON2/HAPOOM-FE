@@ -3,21 +3,25 @@ import {
   FollowBox,
   ProfileContentsBox,
   SettingPageLink,
-  UserImage,
   UserProfileCardBox,
 } from '@/styles/user';
 import profile from '../../public/profile.jpg';
+import Image from 'next/image';
 
 const UserProfileCard = () => {
   return (
     <UserProfileCardBox>
-      <UserImage
-        style={{ width: '264px', height: '280px', objectFit: 'cover' }}
+      <Image
         src={profile}
-        alt="프로필사진"
+        alt={'프로필사진'}
+        width={264}
+        height={280}
+        objectFit={'cover'}
+        quality={70}
+        loading="eager"
       />
       <ProfileContentsBox>
-        <p>멋쟁이 도영</p>
+        <p>나는 멋쟁이 도영</p>
         <p>나는 멋쟁이 공룡이얌</p>
         <FollowBox>
           <p>팔로워 3</p>

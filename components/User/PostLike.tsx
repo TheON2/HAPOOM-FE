@@ -3,7 +3,6 @@ import {
   Line,
   PostBox,
   PostContentBox,
-  PostImage,
   PostImageBox,
   TabButton,
   TabIndicator,
@@ -143,10 +142,12 @@ const PostLike = () => {
             key={image.id}
             style={{ position: 'relative', display: 'inline-block' }}
           >
-            <PostImage
-              style={{ width: '232px', height: '228px', objectFit: 'cover' }}
+            <Image
               src={image.src}
               alt={image.alt}
+              width={232}
+              height={228}
+              objectFit={'cover'}
             />
             {selectedTab === 1 && (
               <Image
