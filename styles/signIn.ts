@@ -14,7 +14,7 @@ export const SignInSection = styled.section`
     padding: 0 20px;
   }
 `
-export const SignInContainer = styled.div`
+export const SignInContainer = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -74,8 +74,8 @@ export const SignUpSocialSignUpBox = styled.div`
   gap: 15px;
 `;
 export const SocialBoxImg = styled(Image)`
-  width: 84px;
-  height: 84px;
+  /* width: 84px;
+  height: 84px; */
   object-fit: cover;
   border-radius: 100%;
   cursor: pointer;
