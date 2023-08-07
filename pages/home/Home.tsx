@@ -5,7 +5,7 @@ import HashtagContents from '@/components/Home/HashtagContents';
 import Main from '@/components/Home/Main';
 import PopularContents from '@/components/Home/PopularContents';
 import Header from '@/components/common/Header';
-import Footer from '@/components/common/Footer'
+import Footer from '@/components/common/Footer';
 import {
   sliderImages,
   SliderImage,
@@ -30,8 +30,6 @@ const Home: NextPage<Props> = ({
   hashContent,
   popularContent,
 }) => {
-  console.log(data);
-  console.log(popularContent);
   return (
     <>
       <Main>
@@ -49,13 +47,11 @@ const Home: NextPage<Props> = ({
 
 export default Home;
 
-const MainPost = async () => {
-  const response = await axios.get(`http://localhost:3001/api/main`);
-  console.log(response);
-  return response.data;
-};
-MainPost();
-console.log(MainPost());
+// const MainPost = async () => {
+//   const response = await axios.get(`http://localhost:3001/api/main`);
+//   return response.data;
+// };
+// MainPost();
 
 export const getStaticProps: GetStaticProps = async () => {
   const response = await axios.get(`http://localhost:3001/api/main`);
