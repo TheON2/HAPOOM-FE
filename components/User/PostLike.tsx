@@ -3,7 +3,6 @@ import {
   Line,
   PostBox,
   PostContentBox,
-  PostImage,
   PostImageBox,
   TabButton,
   TabIndicator,
