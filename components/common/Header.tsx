@@ -10,7 +10,7 @@ import {
   IconBox,
   AccountActionsContainer,
   GoWriteLink,
-  ProfileBox,
+  ProfileButton,
   AuthButtonBox,
   MobileBox,
 } from '@/styles/header';
@@ -102,7 +102,7 @@ const Header = () => {
             alt="logo"
             fill
             loading="eager"
-            sizes="(max-width: 1440px) 193px"
+            sizes="(max-width: 1440px) 280px"
             placeholder="blur"
             blurDataURL={'/inflearn.jpg'}
           />
@@ -136,26 +136,29 @@ const Header = () => {
                     <Link href={'/auth/SignUp'}>회원가입</Link>
                     <a onClick={onLogOut}>로그아웃</a>
                   </AuthButtonBox>
-                  <ProfileBox onClick={onClickShowMenuHandler}>
-                    <button>
-                      <Image src={'/inflearn.jpg'} alt="prpfile image" fill />
-                    </button>
-                  </ProfileBox>
-                </>
-              ) : (
-                <ProfileBox onClick={onClickShowMenuHandler}>
-                  <button>
+                  <ProfileButton onClick={onClickShowMenuHandler}>
                     <Image
                       src={'/inflearn.jpg'}
                       alt="prpfile image"
                       fill
-                      loading="eager"
-                      sizes="(max-width: 1440px) 50px"
+                      sizes="(max-width: 1440px) 51px"
                       placeholder="blur"
                       blurDataURL={'/inflearn.jpg'}
                     />
-                  </button>
-                </ProfileBox>
+                  </ProfileButton>
+                </>
+              ) : (
+                <ProfileButton onClick={onClickShowMenuHandler}>
+                  <Image
+                    src={'/inflearn.jpg'}
+                    alt="prpfile image"
+                    fill
+                    loading="eager"
+                    sizes="(max-width: 1440px) 50px"
+                    placeholder="blur"
+                    blurDataURL={'/inflearn.jpg'}
+                  />
+                </ProfileButton>
               )}
             </AccountActionsContainer>
           </>
