@@ -15,6 +15,10 @@ export const HeaderLayout = styled.header`
   @media screen and (max-width: 1260px) {
     padding: 0 20px;
   }
+  /* @media screen and (max-width: 786px) {
+    position: fixed;
+    background: none;
+  } */
 `;
 
 export const LogoBox = styled(Link)`
@@ -54,6 +58,7 @@ export const SearchInputBox = styled.div<Props>`
 
     input {
       position: relative;
+      padding: 12px 20px;
       left: ${(props) => (props.$isSearch ? '0' : '100%')};
       width: ${(props) => (props.$isSearch ? '100%' : '0')};
       opacity: ${(props) => (props.$isSearch ? '1' : '0')};
@@ -116,4 +121,7 @@ export const AuthButtonBox = styled.div`
 export const MobileBox = styled.div`
   display: flex;
   gap: 12px;
+  button {
+    cursor: pointer;
+  }
 `;

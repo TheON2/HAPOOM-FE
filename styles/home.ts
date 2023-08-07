@@ -14,12 +14,12 @@ type SliderListProps = {
 
 export const SliderList = styled.ul<SliderListProps>`
   width: ${(props) =>
-    props.width ? `${props.width * props.$sliedsum}px` : `100%`};
+    props.width ? `${props.width * props.$sliedsum}px` : `500vw`};
   display: flex;
   transform: ${(props) =>
     props.width
       ? `translateX(${props.$slideindex * props.width * -1}px)`
-      : 'translateX(0px)'};
+      : `translateX(${props.$slideindex * 100 * -1}vw)`};
   transition: all 0.3s ease-in-out;
   list-style: none;
 `;
@@ -29,7 +29,7 @@ type SliderItemProps = {
 };
 
 export const SliderItem = styled.li<SliderItemProps>`
-  width: ${(props) => (props.width ? `${props.width}px` : `100%`)};
+  width: ${(props) => (props.width ? `${props.width}px` : `100vw`)};
   height: 70vh;
   position: relative;
   padding: 50px 100px;
@@ -40,10 +40,11 @@ export const SliderItem = styled.li<SliderItemProps>`
   p {
     position: absolute;
     font-size: 3rem;
+    color: #fff;
   }
   @media screen and (max-width: 786px) {
     height: 40vh;
-    padding: 20px 30px;
+    padding: 100px 30px;
   }
 `;
 
@@ -65,7 +66,6 @@ export const SlideDotBox = styled.div`
     }
   }
 `;
-
 
 //------hashtag contents styles--------
 
