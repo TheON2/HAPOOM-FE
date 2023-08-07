@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { SliderImage } from '@/public/data';
 import ImageContent from '@/components/Home/ImageContent';
 import {
   SectionTitle,
