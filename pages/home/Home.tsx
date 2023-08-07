@@ -5,6 +5,7 @@ import HashtagContents from '@/components/Home/HashtagContents';
 import Main from '@/components/Home/Main';
 import PopularContents from '@/components/Home/PopularContents';
 import Header from '@/components/common/Header';
+import Footer from '@/components/common/Footer'
 import {
   sliderImages,
   SliderImage,
@@ -32,14 +33,17 @@ const Home: NextPage<Props> = ({
   console.log(data);
   console.log(popularContent);
   return (
-    <Main>
-      <Header />
-      <MainBannerSlider data={data} />
-      <HashtagNavBar data={hashtagData} />
-      <MobileBottomNav />
-      <HashtagContents data={hashContent} />
-      <PopularContents data={popularContent} />
-    </Main>
+    <>
+      <Main>
+        <Header />
+        <MainBannerSlider data={data} />
+        <HashtagNavBar data={hashtagData} />
+        <MobileBottomNav />
+        <HashtagContents data={hashContent} />
+        <PopularContents data={popularContent} />
+      </Main>
+      <Footer></Footer>
+    </>
   );
 };
 
