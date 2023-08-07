@@ -3,7 +3,6 @@ import {
   Line,
   PostBox,
   PostContentBox,
-  PostImage,
   PostImageBox,
   TabButton,
   TabIndicator,
@@ -134,8 +133,8 @@ const PostLike = () => {
         >
           좋아요
         </TabButton>
+        <TabIndicator width={indicatorStyle.width} left={indicatorStyle.left} />
       </PostContentBox>
-      <TabIndicator width={indicatorStyle.width} left={indicatorStyle.left} />
       <Line></Line>
       <PostImageBox>
         {displayedPosts.map((image) => (
