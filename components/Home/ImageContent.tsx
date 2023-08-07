@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Image from 'next/image';
 import styled from 'styled-components';
 import { NextPage } from 'next';
 import { likePost } from '@/api/post';
 import { useMutation } from 'react-query';
 import Link from 'next/link';
-// import HeartIcon from './HeartIcon';
-const ImageContentLayout = styled.div`
+
+const ImageContentLayout = styled(Link)`
+  display: block;
   padding-bottom: 100%;
   width: 100%;
   border: 1px solid black;
@@ -15,25 +16,14 @@ const ImageContentLayout = styled.div`
     object-fit: cover;
   }
 `;
-
-type iconType = {
-  $isLike: boolean;
-};
-
-const ImageBox = styled(Link)`
-  display: block;
-`;
-
-const HeartIcon = styled.div<iconType>`
+const HeartIcon = styled.div`
   width: 36px;
   height: 36px;
-  background-color: ${(props) => (props.$isLike ? `black` : `white`)};
+  background-color: black;
   border-radius: 50%;
-  border: 2px solid black;
   position: absolute;
   top: 10px;
   right: 10px;
-  cursor: pointer;
 `;
 
 type Props = {
@@ -42,28 +32,21 @@ type Props = {
 };
 
 const ImageContent: NextPage<Props> = ({ src, alt }) => {
-  const [isLike, setIsLike] = useState<boolean>(false);
   const mutation = useMutation((postId: string) => likePost(postId));
-  const onClickHeartHandler = (postId: string, event: React.MouseEvent) => {
-    event.stopPropagation();
-    setIsLike(!isLike);
+  const onClickHeartHandler = async (postId: string) => {
+    await mutation.mutateAsync(postId);
   };
   return (
-    <ImageContentLayout>
-      <ImageBox href="/home/Home">
-        <Image
-          src={src}
-          alt={alt}
-          fill
-          sizes="(max-width: 1440px) 288px"
-          placeholder="blur"
-          blurDataURL={src}
-        />
-      </ImageBox>
-      <HeartIcon
-        onClick={(event) => onClickHeartHandler(`1`, event)}
-        $isLike={isLike}
-      ></HeartIcon>
+    <ImageContentLayout href={'/home/Home'}>
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        sizes="(max-width: 1440px) 288px"
+        placeholder="blur"
+        blurDataURL={src}
+      />
+      <HeartIcon onClick={() => onClickHeartHandler(`1`)}></HeartIcon>
     </ImageContentLayout>
   );
 };
