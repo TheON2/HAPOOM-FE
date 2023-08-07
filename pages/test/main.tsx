@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { SET_UPDATEID, TOGGLE_UPDATE } from '@/redux/reducers/postSlice';
 import Link from 'next/link';
 import { useMutation, useQueryClient } from 'react-query';
-import { likePost, reportPost } from '@/api/post';
+import { likePost, reportPost } from '@/api/main/post';
 
 export default function TestMain() {
   const dispatch = useDispatch();
