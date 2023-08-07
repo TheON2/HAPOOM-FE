@@ -76,6 +76,7 @@ export const IconBox = styled.button`
   transform: translateY(-50%);
   border-radius: 50%;
   overflow: hidden;
+  cursor: pointer;
   img {
     object-fit: contain;
   }
@@ -94,15 +95,14 @@ export const GoWriteLink = styled(Link)`
   justify-content: center;
   align-items: center;
 `;
-export const ProfileBox = styled.div`
+export const ProfileButton = styled.button`
   width: 50px;
   height: 50px;
   border-radius: 50%;
   position: relative;
   overflow: hidden;
-  button {
-    cursor: pointer;
-  }
+  border: none;
+  cursor: pointer;
   img {
     object-fit: cover;
   }

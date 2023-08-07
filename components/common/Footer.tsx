@@ -16,7 +16,7 @@ const Footer = () => {
             src={'/inflearn.jpg'}
             alt="logo-img"
             fill
-            sizes="(max-width: 1440px) 100vw"
+            sizes="(max-width: 1440px) 200px"
             placeholder="blur"
             blurDataURL={'/inflearn.jpg'}
           />
