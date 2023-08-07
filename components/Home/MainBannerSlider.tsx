@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import React, { useEffect, useRef, useState } from 'react';
 import { MainBannerLayout, SliderItem, SliderList, SlideDotBox } from '@/styles/home';
-import { SliderImage } from '@/public/data';
 import styled from 'styled-components';
 //TODO: 메인배너 빈번한 크기 조정으로 인한 성능 이슈
 const DEFAULT_INTERVAL = 5 * 1000;

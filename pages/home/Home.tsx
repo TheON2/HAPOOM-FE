@@ -4,8 +4,6 @@ import HashtagNavBar from '@/components/Home/HashtagNavBar';
 import HashtagContents from '@/components/Home/HashtagContents';
 import Main from '@/components/Home/Main';
 import PopularContents from '@/components/Home/PopularContents';
-import Header from '@/components/common/Header';
-import Footer from '@/components/common/Footer'
 import {
   sliderImages,
   SliderImage,
@@ -14,9 +12,11 @@ import {
   popularContentsImages,
 } from '../../public/data';
 import { GetStaticProps, NextPage, GetServerSideProps } from 'next';
-import MobileBottomNav from '@/components/common/MobileBottomNav';
 import { useQuery } from 'react-query';
 import axios from 'axios';
+import Header from '@/components/Common/Header';
+import MobileBottomNav from '@/components/Common/MobileBottomNav';
+import Footer from '@/components/Common/Footer';
 interface Props {
   data: SliderImage[];
   hashtagData: SliderImage[];
