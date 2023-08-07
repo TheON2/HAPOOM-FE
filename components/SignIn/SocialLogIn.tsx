@@ -1,5 +1,4 @@
 import React from 'react';
-// import { SignUpSocialSignUpBox, SocialBoxImg } from '@/styles/signUp';
 import googleLogo from '../../public/googleLogo.png';
 import kakaoLogo from '../../public/kakaoLogo.png';
 import instaLogo from '../../public/pngegg.png';

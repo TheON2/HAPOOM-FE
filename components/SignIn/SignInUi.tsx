@@ -22,6 +22,7 @@ const SignInUi = () => {
     email: '',
     password: '',
   });
+
   const validateEmail = (email: string): boolean => {
     const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
     return emailRegex.test(email);
@@ -51,7 +52,7 @@ const SignInUi = () => {
           <StyledInput
             type="email"
             name="email"
-            placeholder="example@gmail.com"
+            placeholder="이메일을 입력해 주세요"
             onChange={handleInputChange}
           />
         </StyledInputBox>
