@@ -14,7 +14,7 @@ import TagInput from '@/components/Write/TagInput';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { addPost, getPost, updatePost } from '@/api/post';
 import { useSelector } from 'react-redux';
-import { RootState } from '@/redux/config/configStore';
+import { RootState, wrapper } from '@/redux/config/configStore';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 
@@ -26,7 +26,7 @@ interface Image {
   url: string;
 }
 
-const Write = () => {
+function Write() {
   const { update, updateId } = useSelector((state: RootState) => state.post);
   const [images, setImages] = useState<File[]>([]);
   const [content, setContent] = useState<string>('');
@@ -147,6 +147,6 @@ const Write = () => {
       </form>
     </div>
   );
-};
+}
 
-export default Write;
+export default wrapper.withRedux(Write);
