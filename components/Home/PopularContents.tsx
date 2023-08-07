@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import ImageContent from '@/components/Home/ImageContent';
-import { SliderImage } from '@/public/data';
 import {
   SectionTitle,
   PopularContentsLayout,
