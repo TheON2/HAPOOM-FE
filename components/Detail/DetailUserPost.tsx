@@ -7,15 +7,41 @@ import {
   UserPictureBox,
 } from '@/styles/detail';
 import Image from 'next/image';
+import axios from 'axios';
 
-const DetailUserPost: React.FC = () => {
+export async function getServerSideProps(_) {
+  const res = await fetch('http://localhost:3001/api/main');
+  const data = await res.json();
+
+  if (!data) {
+    return {
+      notFound: true,
+    };
+  }
+
+  return {
+    props: { data }, // will be passed to the page component as props
+  };
+}
+
+const DetailUserPost: React.FC<{ data: any }> = ({ data }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [images, setImages] = useState([]);
+  const [userPic, setUserPic] = useState(null);
 
   const imagesPerPage = 1;
   const totalPages = Math.ceil(images.length / imagesPerPage);
 
+  useEffect(() => {
+    if (data && data.posts) {
+      const userImages = data.posts.map((post) => post.image.url);
+      setImages(userImages);
+      setUserPic(data.posts[0].image.url);
+    }
+  }, [data]);
+
+  // 드롭다운 클릭 이벤트 핸들러
   const handleDropdownClick = () => {
     setIsDropdownOpen((prevState) => !prevState);
   };
@@ -32,20 +58,7 @@ const DetailUserPost: React.FC = () => {
     setCurrentPage(index + 1);
   };
 
-  // const fetchImages = async () => {
-  //   사용자가 등록한 이미지를 가져오는 API를 호출합니다.
-  //   예를 들어, 다음과 같이 사용자의 ID를 사용해 이미지를 가져올 수 있습니다.
-  //   const response = await fetch(`/api/user/${userId}/images`);
-  //   const userImages = await response.json();
-
-  //   가져온 이미지를 상태로 저장합니다.
-  //   setImages(userImages);
-  // };
-
-  // useEffect(() => {
-  //   fetchImages();
-  // }, []);
-
+  // 드롭다운 컴포넌트
   const DropdownComponent = memo(() => (
     <Dropdown className="dropdown">
       <ul>
@@ -56,11 +69,14 @@ const DetailUserPost: React.FC = () => {
   ));
   DropdownComponent.displayName = 'DropdownComponent';
 
+  // 사용자 헤더 컴포넌트
   const UserHeaderComponent = memo(() => (
     <UserHeaderBox>
       <UserContainer>
-        <p className="userPic">사진</p>
-        <p className="userNickname">닉네임</p>
+        <p className="userPic">
+          <img src={userPic} alt="User profile" />
+        </p>
+        <p className="userNickname">{/* User nickname placeholder */}</p>
       </UserContainer>
       <button onClick={handleDropdownClick}>햄버거 모양 아이콘</button>
       {isDropdownOpen && <DropdownComponent />}
@@ -68,11 +84,15 @@ const DetailUserPost: React.FC = () => {
   ));
   UserHeaderComponent.displayName = 'UserHeaderComponent';
 
+  // 사용자 이미지 박스 컴포넌트
   const UserPictureBoxComponent = () => {
     const currentImage = images[currentPage - 1];
 
+    const gotoImage = (index) => {
+      setCurrentPage(index + 1);
+    };
+
     useEffect(() => {
-      // 버튼을 클릭할 때만 gotoImage 함수를 호출합니다.
       if (currentPage !== 1) {
         gotoImage(currentPage - 1);
       }
@@ -106,26 +126,13 @@ const DetailUserPost: React.FC = () => {
     );
   };
 
+  // 사용자 댓글 박스 컴포넌트
   const UserCommentBoxComponent = () => {
     const [comments, setComments] = useState([
-      // 임시적인 더미 데이터입니다.
       'This is a user comment',
       'This is another user comment',
       'This is yet another user comment',
     ]);
-
-    // Fetch comments from an API
-    /*
-    useEffect(() => {
-      const fetchComments = async () => {
-        const response = await fetch(`/api/user/${userId}/comments`);
-        const userComments = await response.json();
-        setComments(userComments);
-      };
-  
-      fetchComments();
-    }, []);
-    */
 
     const [borderColor, setBorderColor] = useState('black'); // 기본 테두리 색상을 설정합니다.
     useEffect(() => {

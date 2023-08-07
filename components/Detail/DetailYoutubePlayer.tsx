@@ -1,19 +1,89 @@
-import React, { useState, useEffect } from 'react';
-import YoutubePlayer from '../Write/YoutubePlayer'; // YoutubePlayer의 경로를 적절하게 수정해주세요.
+import React, { useEffect, useState } from 'react';
+import { DetailYoutubePlayerComponent } from '@/styles/detail';
 
-const DetailYoutubePlayer: React.FC = () => {
-  const [videoId, setVideoId] = useState<string>('');
+const DetailYoutubePlayer = () => {
+  const [videoId, setVideoId] = useState('');
+  const [data, setData] = useState({});
+  const [posts, setPosts] = useState([]);
 
-  // 비디오 ID를 가져오는 로직
   useEffect(() => {
-    // 예를 들어, 여기에 비디오 ID를 가져오는 API 호출 또는 로직을 넣어주세요.
-    // 예시: setVideoId(retrievedVideoId);
+    fetch('http://localhost:3001/api/main')
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('API Response:', data);
+
+        // Find the item with id: 1 in the posts array
+        const itemWithIdOne = data.posts.find((item) => item.id === 1);
+
+        // Access the musicTitle and musicUrl from the found item
+        if (itemWithIdOne) {
+          const { musicTitle, musicUrl } = itemWithIdOne;
+          console.log('musicTitle:', musicTitle);
+          console.log('musicUrl:', musicUrl);
+        }
+
+        setVideoId(data.videoId);
+        setData(data);
+        setPosts(data.likePosts);
+      });
   }, []);
+
+  useEffect(() => {
+    // Load the YouTube API script
+    const script = document.createElement('script');
+    script.src = 'https://www.youtube.com/iframe_api';
+    document.body.appendChild(script);
+
+    // Cleanup function to remove the script when the component unmounts
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
+
+  useEffect(() => {
+    // YouTube Player 생성
+    if (videoId && window.YT) {
+      const player = new window.YT.Player('player', {
+        videoId: videoId,
+        height: '150',
+        width: '600',
+        playerVars: {
+          autoplay: 1,
+        },
+      });
+
+      // Optional: Add an event listener for when the player is ready
+      player.addEventListener('onReady', () => {
+        // Do something when the player is ready
+      });
+
+      // Cleanup function to remove the player when the component unmounts
+      return () => {
+        player.destroy();
+      };
+    }
+  }, [videoId]);
+
+  const { musicTitle, musicUrl } = data;
 
   return (
     <div>
-      <h1>Detail Youtube Player</h1>
-      {videoId && <YoutubePlayer videoId={videoId} />}
+      {/* Render the YouTube player in this div */}
+      <div id="player" />
+
+      {/* Display the musicTitle and musicUrl */}
+      <h2>Music Title: {musicTitle}</h2>
+      <p>Music URL: {musicUrl}</p>
+
+      {/* You can pass other data to the DetailYoutubePlayerComponent */}
+      {musicTitle && musicUrl && (
+        <DetailYoutubePlayerComponent
+          posts={posts}
+          videoId={videoId}
+          musicTitle={musicTitle}
+          musicUrl={musicUrl}
+        />
+      )}
     </div>
   );
 };
