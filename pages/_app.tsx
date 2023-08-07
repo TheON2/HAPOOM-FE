@@ -1,6 +1,7 @@
 import '@/styles/globals.css';
 import type { AppProps } from 'next/app';
-import { wrapper } from '../redux/config/configStore';
+import { createWrapper } from 'next-redux-wrapper';
+import store from '../redux/config/configStore';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 
@@ -14,5 +15,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     </QueryClientProvider>
   );
 }
+
+const wrapper = createWrapper(() => store);
 
 export default wrapper.withRedux(MyApp);
