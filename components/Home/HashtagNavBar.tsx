@@ -20,7 +20,7 @@ const HashtagNavBar: React.FC<Props> = ({ data }) => {
                     src={hashtag.src}
                     alt="v13 image"
                     fill
-                    sizes="(max-width: 100px) 100vw"
+                    sizes="(max-width: 1440px) 100px"
                     loading="eager"
                     placeholder="blur"
                     blurDataURL={hashtag.src}
