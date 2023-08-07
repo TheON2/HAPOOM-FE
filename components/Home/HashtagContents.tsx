@@ -29,7 +29,6 @@ interface Post {
 }
 
 const HashtagContents: React.FC<Props> = ({ data }) => {
-  console.log(data);
   return (
     <HashtagContentsLayout>
       <SectionTitle>#랜덤글</SectionTitle>
