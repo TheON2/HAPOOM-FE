@@ -9,7 +9,7 @@ import {
 import Image from 'next/image';
 import axios from 'axios';
 
-export async function getServerSideProps(_) {
+export async function getServerSideProps() {
   const res = await fetch('http://localhost:3001/api/main');
   const data = await res.json();
 
