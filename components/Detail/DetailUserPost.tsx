@@ -7,35 +7,25 @@ import {
   UserPictureBox,
 } from '@/styles/detail';
 import Image from 'next/image';
-import axios from 'axios';
 
-export async function getServerSideProps() {
-  const res = await fetch('http://localhost:3001/api/main');
-  const data = await res.json();
-
-  if (!data) {
-    return {
-      notFound: true,
-    };
-  }
-
-  return {
-    props: { data }, // will be passed to the page component as props
+type Post = {
+  image: {
+    url: string;
   };
-}
+};
 
 const DetailUserPost: React.FC<{ data: any }> = ({ data }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [images, setImages] = useState([]);
-  const [userPic, setUserPic] = useState(null);
+  const [userPic, setUserPic] = useState<string>('');
 
   const imagesPerPage = 1;
   const totalPages = Math.ceil(images.length / imagesPerPage);
 
   useEffect(() => {
     if (data && data.posts) {
-      const userImages = data.posts.map((post) => post.image.url);
+      const userImages = data.posts.map((post: Post) => post.image.url);
       setImages(userImages);
       setUserPic(data.posts[0].image.url);
     }
@@ -54,7 +44,7 @@ const DetailUserPost: React.FC<{ data: any }> = ({ data }) => {
     setCurrentPage((oldPage) => Math.min(oldPage + 1, totalPages));
   };
 
-  const gotoImage = (index) => {
+  const gotoImage = (index: number) => {
     setCurrentPage(index + 1);
   };
 
@@ -74,7 +64,13 @@ const DetailUserPost: React.FC<{ data: any }> = ({ data }) => {
     <UserHeaderBox>
       <UserContainer>
         <p className="userPic">
-          <img src={userPic} alt="User profile" />
+          <Image
+            src={userPic}
+            alt="User Profile"
+            width={500}
+            height={500}
+            loading="eager"
+          />
         </p>
         <p className="userNickname">{/* User nickname placeholder */}</p>
       </UserContainer>
@@ -88,7 +84,7 @@ const DetailUserPost: React.FC<{ data: any }> = ({ data }) => {
   const UserPictureBoxComponent = () => {
     const currentImage = images[currentPage - 1];
 
-    const gotoImage = (index) => {
+    const gotoImage = (index: number) => {
       setCurrentPage(index + 1);
     };
 
