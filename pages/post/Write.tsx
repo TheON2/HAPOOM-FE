@@ -17,6 +17,8 @@ import { useSelector } from 'react-redux';
 import { RootState, wrapper } from '@/redux/config/configStore';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
+import Header from '@/components/common/Header';
+import Footer from '@/components/common/Footer';
 
 const DynamicComponentWithNoSSR = dynamic(
   () => import('@/components/Write/YoutubePlayer'),
@@ -111,41 +113,45 @@ function Write() {
   if (update && !isSuccess) return <div>Loading...</div>;
 
   return (
-    <div>
-      <GlobalStyle />
-      <form
-        onSubmit={handlePostSubmit}
-        style={{ display: 'block', textAlign: 'center' }}
-      >
-        <ImageContainer>
-          {update ? <h1>게시글 수정</h1> : <h1>새 게시글</h1>}
-          <Dropzone images={images} setImages={setImages} />
-          <PreviewContainer>
-            <ImagePreview images={images} removeImage={removeImage} />
-          </PreviewContainer>
-        </ImageContainer>
-        <ImageContainer>
-          <ContentArea content={content} setContent={setContent} />
-          <YouTubeSearch
-            setVideoId={setVideoId}
-            selectedTitle={selectedTitle}
-            setSelectedTitle={setSelectedTitle}
-            update={update}
-            videoId={videoId}
-          />
-          <DynamicComponentWithNoSSR videoId={videoId} />
-          <TagInput tags={tags} setTags={setTags} />
-          <MapComponent
-            setLocation={setLocation}
-            location={location}
-            update={update}
-          />
-          <StyledButton type="submit">
-            {update ? <h1>사진 수정하기</h1> : <h1>사진 올리기</h1>}
-          </StyledButton>
-        </ImageContainer>
-      </form>
-    </div>
+    <>
+      <Header />
+      <div style={{ minHeight: '800px' }}>
+        <GlobalStyle />
+        <form
+          onSubmit={handlePostSubmit}
+          style={{ display: 'block', textAlign: 'center' }}
+        >
+          <ImageContainer>
+            {update ? <h1>게시글 수정</h1> : <h1>새 게시글</h1>}
+            <Dropzone images={images} setImages={setImages} />
+            <PreviewContainer>
+              <ImagePreview images={images} removeImage={removeImage} />
+            </PreviewContainer>
+          </ImageContainer>
+          <ImageContainer>
+            <ContentArea content={content} setContent={setContent} />
+            <YouTubeSearch
+              setVideoId={setVideoId}
+              selectedTitle={selectedTitle}
+              setSelectedTitle={setSelectedTitle}
+              update={update}
+              videoId={videoId}
+            />
+            <DynamicComponentWithNoSSR videoId={videoId} />
+            <TagInput tags={tags} setTags={setTags} />
+            <MapComponent
+              setLocation={setLocation}
+              location={location}
+              update={update}
+            />
+            <StyledButton type="submit">
+              {update ? <h1>사진 수정하기</h1> : <h1>사진 올리기</h1>}
+            </StyledButton>
+          </ImageContainer>
+        </form>
+      </div>
+      <Footer />
+    </>
   );
 }
 

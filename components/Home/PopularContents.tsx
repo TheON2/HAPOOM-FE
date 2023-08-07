@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import ImageContent from '@/components/Home/ImageContent';
 import {
@@ -49,7 +49,8 @@ const PopularContents: React.FC<Props> = ({ data }) => {
       setSlideIndex(slideIndex + num);
     }
   };
-  const handleResize = () => {
+
+  const handleResize = useCallback(() => {
     showContentNumHandler();
     if (slideRef.current) {
       const width = slideRef.current.clientWidth / showContentsNum;
@@ -57,12 +58,13 @@ const PopularContents: React.FC<Props> = ({ data }) => {
       setSlideListWidth(ListWidth);
       setSlideWidth(width);
     }
-  };
+  }, [showContentsNum]);
+
   useEffect(() => {
     handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, [showContentsNum]);
+  }, [handleResize]);
 
   const showContentNumHandler = () => {
     if (window.innerWidth <= 768) {

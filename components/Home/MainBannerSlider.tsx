@@ -94,7 +94,7 @@ const MainBannerSlider: React.FC<Props> = ({ data }) => {
       setSlideItemWidth(width);
     }
     console.log('debounced');
-  }, [sliedContainerRef.current]);
+  }, []);
 
   //리사이징 이벤트
   useEffect(() => {
@@ -103,7 +103,7 @@ const MainBannerSlider: React.FC<Props> = ({ data }) => {
     window.addEventListener('resize', debouncedResize);
 
     return () => window.removeEventListener('resize', debouncedResize);
-  }, []);
+  }, [handleResize]);
 
   const onClickSlideDotHandle = (idx: number) => {
     setSlideIndex(idx);
