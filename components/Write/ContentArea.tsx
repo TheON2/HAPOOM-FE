@@ -22,6 +22,7 @@ const ContentArea: React.FC<ContentAreaProps> = ({ content, setContent }) => {
 
   return (
     <div style={{ position: 'relative', width: 600, height: 100 }}>
+      <label>aa</label>
       <textarea
         style={{
           width: '100%',

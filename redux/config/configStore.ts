@@ -14,12 +14,12 @@ const rootReducer = combineReducers({
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
-export type RootAction = Parameters<typeof rootReducer>[1];
+export type RootAction = ReturnType<typeof rootReducer>;
 export type HydrateAction = PayloadAction<RootState, typeof HYDRATE>;
 
 const reducer = (
   state: RootState | undefined,
-  action: RootAction | HydrateAction
+  action: PayloadAction<any> | HydrateAction
 ): RootState => {
   if (action.type === HYDRATE) {
     const nextState = {
