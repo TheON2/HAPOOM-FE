@@ -76,14 +76,7 @@ const DetailYoutubePlayer = () => {
       <p>Music URL: {musicUrl}</p>
 
       {/* You can pass other data to the DetailYoutubePlayerComponent */}
-      {musicTitle && musicUrl && (
-        <DetailYoutubePlayerComponent
-          posts={posts}
-          videoId={videoId}
-          musicTitle={musicTitle}
-          musicUrl={musicUrl}
-        />
-      )}
+      {musicTitle && musicUrl && <DetailYoutubePlayerComponent />}
     </div>
   );
 };
