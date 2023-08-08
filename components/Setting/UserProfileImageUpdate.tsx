@@ -121,8 +121,9 @@ const UserProfileImageUpdate = () => {
               <Image
                 src={userProfile ? userProfile : '/inflearn.jpg'}
                 alt="preset"
-                width={54}
-                height={54}
+                width={100}
+                height={100}
+                quality={100}
               />
             </figure>
           </ProfileItem>
@@ -133,7 +134,13 @@ const UserProfileImageUpdate = () => {
                 onClick={() => onClickProfileHandler(idx + 1, profile)}
               >
                 <figure className={selectProfile === idx + 1 ? 'active' : ''}>
-                  <Image src={profile} alt="preset" width={54} height={54} />
+                  <Image
+                    src={profile}
+                    alt="preset"
+                    width={100}
+                    height={100}
+                    quality={100}
+                  />
                 </figure>
               </ProfileItem>
             );
