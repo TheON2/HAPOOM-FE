@@ -28,13 +28,12 @@ const BackgroundGradient = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  background: rgb(2, 0, 36);
   background: linear-gradient(
-    180deg,
-    rgba(2, 0, 36, 1) 0%,
+    36deg,
+    rgba(2, 0, 36, 0.2) 0%,
     rgba(0, 212, 255, 0) 100%
   );
-  opacity: 0.3;
+  /* opacity: 0.3; */
 `;
 
 const MainBannerSlider: React.FC<Props> = ({ data }) => {
@@ -130,7 +129,7 @@ const MainBannerSlider: React.FC<Props> = ({ data }) => {
                 blurDataURL={slide.src}
               />
               <BackgroundGradient></BackgroundGradient>
-              <p>{slide.alt}</p>
+              <p>집에 가고 싶다 집 떠나면 개고생이다.</p>
             </SliderItem>
           );
         })}

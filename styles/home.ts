@@ -4,6 +4,7 @@ import styled from 'styled-components';
 export const MainBannerLayout = styled.section`
   width: 100%;
   overflow: hidden;
+  position: relative;
 `;
 
 type SliderListProps = {
@@ -32,37 +33,43 @@ export const SliderItem = styled.li<SliderItemProps>`
   width: ${(props) => (props.width ? `${props.width}px` : `100vw`)};
   height: 70vh;
   position: relative;
-  padding: 50px 100px;
-  border: 1px solid #000;
+  /* padding: 50px 100px; */
   img {
     object-fit: cover;
   }
   p {
     position: absolute;
-    font-size: 3rem;
+    width: 50%;
+    word-wrap: break-word;
+    bottom: 24px;
+    left: 24px;
+    font-size: 20px;
+    line-height: 30px;
     color: #fff;
   }
   @media screen and (max-width: 786px) {
-    height: 40vh;
+    height: 335px;
     padding: 100px 30px;
   }
 `;
 
 export const SlideDotBox = styled.div`
   width: 100%;
-  height: 10px;
   display: flex;
-  justify-content: center;
-  gap: 20px;
-  padding: 20px 0;
+  justify-content: flex-end;
+  padding: 0 24px;
+  gap: 4px;
+  position: absolute;
+  bottom: 24px;
   span {
     display: block;
-    width: 20px;
-    height: 20px;
-    background-color: gray;
+    width: 8px;
+    height: 8px;
+    background-color: #fff;
+    border-radius: 4px;
     cursor: pointer;
     &.active {
-      background-color: #000;
+      background-color: #0084ff;
     }
   }
 `;

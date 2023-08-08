@@ -4,6 +4,9 @@ import { styled } from 'styled-components';
 const IconButtonStyle = styled.button`
   width: 36px;
   height: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background: none;
   border: none;
 `;

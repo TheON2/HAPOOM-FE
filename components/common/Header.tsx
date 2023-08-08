@@ -36,7 +36,7 @@ const HamburgerButton = styled.button`
   }
 `;
 
-const Header = () => {
+const Header = ({ sticky }: any) => {
   const [isSearch, setIsSearch] = useState<boolean>(false);
   const [isMobile, setIsMobile] = useState<boolean>(true);
   const [isShowMenu, setIsShowMenu] = useState<boolean>(false);
@@ -47,23 +47,9 @@ const Header = () => {
     setIsShowMenu(!isShowMenu);
   };
 
-  // const handleResize = () => {
-  //   if (window.innerWidth <= 768) {
-  //     setIsMobile(false);
-  //   } else {
-  //     setIsMobile(true);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   handleResize();
-  //   window.addEventListener('resize', handleResize);
-  //   return () => window.removeEventListener('resize', handleResize);
-  // }, []);
-
   return (
     <>
-      <HeaderLayout>
+      <HeaderLayout sticky={sticky}>
         <LogoBox href={'/'}>
           <Image
             src={'/inflearn.jpg'}
