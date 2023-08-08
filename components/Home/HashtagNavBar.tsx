@@ -14,20 +14,18 @@ const HashtagNavBar: React.FC<Props> = ({ data }) => {
         {data.map((hashtag, index) => {
           return (
             <HashtagItem key={index}>
-              <button>
-                <figure>
-                  <Image
-                    src={hashtag.src}
-                    alt="v13 image"
-                    fill
-                    sizes="(max-width: 100px) 100vw"
-                    loading="eager"
-                    placeholder="blur"
-                    blurDataURL={hashtag.src}
-                  />
-                </figure>
-                <figcaption>#해시태그다</figcaption>
-              </button>
+              <figure>
+                <Image
+                  src={hashtag.src}
+                  alt="v13 image"
+                  fill
+                  sizes="(max-width: 1440px) 100px"
+                  loading="eager"
+                  placeholder="blur"
+                  blurDataURL={hashtag.src}
+                />
+              </figure>
+              <figcaption>#해시태그다</figcaption>
             </HashtagItem>
           );
         })}

@@ -6,32 +6,29 @@ const fontFamily = "Inter";
 const inputBtnBoxWidth = "100%";
 const inputBtnHeight = "63px";
 
-const theme = {
-  textColor: "#000",
-  fontFamily: "Inter",
-  primaryColor: "#0084FF",
-};
 export const SignUpSection = styled.section`
-  /* max-width: 360px; */
+  max-width: 1440px;
   width: 100%;
   margin: 0 auto;
   display: flex;
   align-items: center;
   flex-direction: column;
-  padding: 0 24px;
+  @media (max-width: 500px) {
+    padding: 0 20px;
+  }
   form {
-    width: 100%; 
-  } 
+    max-width: 533px;
+    width: 100%;
+  }
 `;
 export const MainHeadText = styled.h1`
-  color: ${theme.primaryColor};
+  color: ${textColor};
   text-align: center;
   font-family: ${fontFamily};
   font-size: 48px;
   font-style: normal;
   font-weight: 900;
   line-height: normal;
-  margin-top: 56px;
 `;
 export const SubHeadText = styled.h2`
   color: ${textColor};

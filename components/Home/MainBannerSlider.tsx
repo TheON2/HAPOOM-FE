@@ -1,9 +1,20 @@
 import Image from 'next/image';
-import React, { useEffect, useRef, useState } from 'react';
-import { MainBannerLayout, SliderItem, SliderList, SlideDotBox } from '@/styles/home';
-import { SliderImage } from '@/public/data';
-import styled from 'styled-components';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
+import {
+  MainBannerLayout,
+  SliderItem,
+  SliderList,
+  SlideDotBox,
+} from '@/styles/home';
+import { debounce } from 'lodash';
 //TODO: 메인배너 빈번한 크기 조정으로 인한 성능 이슈
+import styled from 'styled-components';
 const DEFAULT_INTERVAL = 5 * 1000;
 const FAST_INTERVAL = 100;
 
@@ -11,18 +22,39 @@ type Props = {
   data: any;
 };
 
+const BackgroundGradient = styled.div`
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgb(2, 0, 36);
+  background: linear-gradient(
+    180deg,
+    rgba(2, 0, 36, 1) 0%,
+    rgba(0, 212, 255, 0) 100%
+  );
+  opacity: 0.3;
+`;
+
 const MainBannerSlider: React.FC<Props> = ({ data }) => {
-  const copiedArr = [...data];
+  const copiedArr: [any] = data;
   const SLIDE_NUM = copiedArr.length;
   const beforeSlide = copiedArr[SLIDE_NUM - 1];
   const afterSlide = copiedArr[0];
   const [slideIndex, setSlideIndex] = useState<number>(1);
   const [slideItemWidth, setSlideItemWidth] = useState<number>();
-  const [currentInterval, setCurrentInterval] = useState(DEFAULT_INTERVAL);
-  const sliedListRef = useRef<HTMLUListElement | null>(null);
-  const sliedContainerRef = useRef<HTMLElement | null>(null);
+  const [currentInterval, setCurrentInterval] =
+    useState<number>(DEFAULT_INTERVAL);
+  const sliedListRef = useRef<HTMLUListElement>(null);
+  const sliedContainerRef = useRef<HTMLElement>(null);
   // console.log(slideIndex);
-  let sliedArr = [beforeSlide, ...copiedArr, afterSlide];
+  const sliedArr = useMemo(
+    () => [beforeSlide, ...copiedArr, afterSlide],
+    [beforeSlide, copiedArr, afterSlide]
+  );
+
+  // let sliedArr = [beforeSlide, ...copiedArr, afterSlide];
   //무한 로드 슬라이드
   useEffect(() => {
     const interval = setInterval(
@@ -38,7 +70,7 @@ const MainBannerSlider: React.FC<Props> = ({ data }) => {
     } else {
       setCurrentInterval(DEFAULT_INTERVAL);
     }
-  }, [slideIndex]);
+  }, [slideIndex, sliedArr.length]);
 
   useEffect(() => {
     if (slideIndex === sliedArr.length) {
@@ -54,21 +86,24 @@ const MainBannerSlider: React.FC<Props> = ({ data }) => {
         });
       });
     }
-  }, [slideIndex]);
+  }, [slideIndex, sliedArr.length]);
+
+  const handleResize = useCallback(() => {
+    if (sliedContainerRef.current) {
+      const width = sliedContainerRef.current.clientWidth;
+      setSlideItemWidth(width);
+    }
+    console.log('debounced');
+  }, []);
 
   //리사이징 이벤트
   useEffect(() => {
-    const handleResize = () => {
-      if (sliedContainerRef.current) {
-        const width = sliedContainerRef.current.clientWidth;
-        setSlideItemWidth(width);
-      }
-    };
-    handleResize();
-    window.addEventListener('resize', handleResize);
+    // handleResize();
+    const debouncedResize = debounce(handleResize, 500);
+    window.addEventListener('resize', debouncedResize);
 
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+    return () => window.removeEventListener('resize', debouncedResize);
+  }, [handleResize]);
 
   const onClickSlideDotHandle = (idx: number) => {
     setSlideIndex(idx);
@@ -83,7 +118,6 @@ const MainBannerSlider: React.FC<Props> = ({ data }) => {
         width={slideItemWidth && slideItemWidth}
       >
         {sliedArr.map((slide, index) => {
-          // console.log(slide);
           return (
             <SliderItem key={index} width={slideItemWidth && slideItemWidth}>
               <Image
@@ -91,23 +125,24 @@ const MainBannerSlider: React.FC<Props> = ({ data }) => {
                 alt="v13 image"
                 fill
                 loading="eager"
-                sizes="(max-width: 1440px) 100vw"
+                sizes="(max-width: 1440px) 1440px"
                 placeholder="blur"
                 blurDataURL={slide.src}
               />
+              <BackgroundGradient></BackgroundGradient>
               <p>{slide.alt}</p>
             </SliderItem>
           );
         })}
       </SliderList>
       <SlideDotBox>
-      {copiedArr.map((slide, index) => {
+        {copiedArr.map((slide, index) => {
           return (
             <span
-            onClick={() => onClickSlideDotHandle(index +1)}
-            className={slideIndex === index +1 ? `active` : ``}
-            key={index}
-          ></span>
+              onClick={() => onClickSlideDotHandle(index + 1)}
+              className={slideIndex === index + 1 ? `active` : ``}
+              key={index}
+            ></span>
           );
         })}
       </SlideDotBox>

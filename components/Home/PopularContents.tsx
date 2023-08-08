@@ -1,7 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import ImageContent from '@/components/Home/ImageContent';
-import { SliderImage } from '@/public/data';
 import {
   SectionTitle,
   PopularContentsLayout,
@@ -10,6 +9,7 @@ import {
   PopularContentItem,
   SlideButtonBox,
 } from '@/styles/home';
+import { debounce } from 'lodash';
 
 type Props = {
   data: Post[];
@@ -39,10 +39,6 @@ const PopularContents: React.FC<Props> = ({ data }) => {
   const [slideWidth, setSlideWidth] = useState<number>();
   const [slideListWidth, setSlideListWidth] = useState<number>();
   const [showContentsNum, setShowContentsNum] = useState<number>(4);
-  // const SHOW_CONTENTS_NUM = 4;
-  // console.log(slideIndex);
-  // console.log(data.length);
-  // console.log(data.length);
 
   const onClickSlideButtonHandler = (num: number) => {
     if (slideIndex + num < 0) {
@@ -54,20 +50,21 @@ const PopularContents: React.FC<Props> = ({ data }) => {
     }
   };
 
+  const handleResize = useCallback(() => {
+    showContentNumHandler();
+    if (slideRef.current) {
+      const width = slideRef.current.clientWidth / showContentsNum;
+      const ListWidth = width * 10;
+      setSlideListWidth(ListWidth);
+      setSlideWidth(width);
+    }
+  }, [showContentsNum]);
+
   useEffect(() => {
-    const handleResize = () => {
-      showContentNumHandler();
-      if (slideRef.current) {
-        const width = slideRef.current.clientWidth / showContentsNum;
-        const ListWidth = width * 10;
-        setSlideListWidth(ListWidth);
-        setSlideWidth(width);
-      }
-    };
     handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, [showContentsNum]);
+  }, [handleResize]);
 
   const showContentNumHandler = () => {
     if (window.innerWidth <= 768) {
