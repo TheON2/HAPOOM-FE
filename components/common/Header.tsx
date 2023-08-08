@@ -76,7 +76,7 @@ const Header = () => {
   return (
     <>
       <HeaderLayout>
-        <LogoBox href={'/home/Home'}>
+        <LogoBox href={'/'}>
           <Image
             src={'/inflearn.jpg'}
             alt="logo"
