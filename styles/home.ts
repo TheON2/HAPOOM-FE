@@ -73,7 +73,7 @@ export const HashtagContentsLayout = styled.section`
   width: 100%;
   padding: 50px 100px;
   @media screen and (max-width: 786px) {
-    padding: 20px 30px;
+    padding: 20px 24px;
   }
 `;
 
@@ -109,7 +109,7 @@ export const PopularContentsLayout = styled.section`
   padding: 50px 100px;
   position: relative;
   @media screen and (max-width: 786px) {
-    padding: 20px 30px;
+    padding: 20px 24px;
   }
 `;
 
@@ -170,29 +170,28 @@ export const SlideButtonBox = styled.div`
 //hashtag navbar style
 export const HashtagNavBarLayout = styled.nav`
   width: 100%;
-  height: 200px;
-  /* padding: 54px 0; */
+  padding: 20px 24px;
   /* height: 10vh; */
   background-color: #fff;
   display: flex;
-  justify-content: center;
+  /* justify-content: space-between; */
   align-items: center;
   gap: 54px;
   position: sticky;
-  top: 10vh;
+  top: 54px;
   z-index: 10;
+  font-size: 10px;
 `;
 
 export const HashtagList = styled.ul`
-  /* width: 100%; */
+  width: 100%;
   display: flex;
-  justify-content: center;
-  gap: 46px;
-  /* background: #fff; */
+  justify-content: space-between;
+  /* gap: 46px; */
   list-style: none;
-  @media screen and (max-width: 786px) {
+  /* @media screen and (max-width: 786px) {
     gap: 2%;
-  }
+  } */
 `;
 
 export const HashtagItem = styled.li`
@@ -201,11 +200,7 @@ export const HashtagItem = styled.li`
   flex-direction: column;
   align-items: center;
   /* text-align: center; */
-  button {
-    border: none;
-    background: none;
-    cursor: pointer;
-  }
+  cursor: pointer;
   figure {
     position: relative;
     width: 100px;

@@ -84,11 +84,9 @@ const Header = () => {
               <Image
                 src={'/🦆 icon _star_.svg'}
                 alt="icon"
-                fill
                 loading="eager"
-                sizes="(max-width: 1440px) 31px"
-                placeholder="blur"
-                blurDataURL={'/🦆 icon _star_.svg'}
+                width={50}
+                height={50}
               />
             </IconBox>
           </SearchInputBox>
@@ -103,10 +101,9 @@ const Header = () => {
                 <Image
                   src={'/inflearn.jpg'}
                   alt="prpfile image"
-                  fill
-                  sizes="(max-width: 1440px) 51px"
-                  placeholder="blur"
-                  blurDataURL={'/inflearn.jpg'}
+                  loading="eager"
+                  width={50}
+                  height={50}
                 />
               </ProfileButton>
             </>
@@ -115,11 +112,9 @@ const Header = () => {
               <Image
                 src={'/inflearn.jpg'}
                 alt="prpfile image"
-                fill
                 loading="eager"
-                sizes="(max-width: 1440px) 50px"
-                placeholder="blur"
-                blurDataURL={'/inflearn.jpg'}
+                width={50}
+                height={50}
               />
             </ProfileButton>
           )}
@@ -145,7 +140,9 @@ const Header = () => {
           </HamburgerButton>
         </MobileBox>
       </HeaderLayout>
-      {isShowMenu && <SideNav />}
+      {isShowMenu && (
+        <SideNav setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu} />
+      )}
     </>
   );
 };
