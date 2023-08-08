@@ -3,14 +3,14 @@ import Link from 'next/link';
 
 export const MobileBottomNavLayout = styled.nav`
   position: fixed;
-  padding: 8px 24px;
+  padding: 20px 30px;
   bottom: 0;
   width: 100%;
   display: flex;
   justify-content: center;
   background: #fff;
   border-top: 1px solid #000;
-  z-index: 15;
+  z-index: 30;
 `;
 
 export const BottomNavList = styled.ul`
@@ -20,28 +20,16 @@ export const BottomNavList = styled.ul`
   justify-content: space-between;
   align-items: center;
 `;
-
 export const BottomNavItem = styled.li`
-  width: 36px;
-  height: 36px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width: 50px;
+  height: 50px;
 `;
-
 export const IconBox = styled(Link)`
   display: block;
-  width: 24px;
+  width: 100%;
   height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 10px;
-  /* position: relative; */
+  position: relative;
   img {
-    width: 100%;
-    height: 100%;
     object-fit: contain;
   }
 `;
@@ -51,7 +39,7 @@ export const SideNavLayout = styled.nav`
   position: fixed;
   right: 0;
   width: 30%;
-  height: 100vh;
+  height: calc(100vh - 10vh);
   padding: 0 0 50px 0;
   background-color: #fff;
   z-index: 20;
@@ -59,7 +47,7 @@ export const SideNavLayout = styled.nav`
   flex-direction: column;
   justify-content: space-between;
   @media screen and (max-width: 768px) {
-    width: 70%;
+    width: 50%;
   }
   button {
     cursor: pointer;

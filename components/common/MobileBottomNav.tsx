@@ -8,7 +8,7 @@ import {
   BottomNavItem,
   IconBox,
 } from '@/styles/navbar';
-
+import IconButton from '@/components/common/IconButton';
 const MobileBottomNav = () => {
   const [isMobile, setIsMobile] = useState<boolean>(false);
 
@@ -31,23 +31,51 @@ const MobileBottomNav = () => {
         <MobileBottomNavLayout>
           <BottomNavList>
             <BottomNavItem>
-              <IconBox href={'/home/Home'}>
-                <Image src={'/🦆 icon _cloud_.svg'} alt="icon" fill />
+              <IconBox href={'/'}>
+                <Image
+                  src={'/🦆 icon _cloud_.svg'}
+                  alt="icon"
+                  width={50}
+                  height={50}
+                  loading="eager"
+                />
+                <p>home</p>
+              </IconBox>
+            </BottomNavItem>
+            <BottomNavItem>
+              <IconBox href={'/'}>
+                <Image
+                  src={'/🦆 icon _image_.svg'}
+                  alt="icon"
+                  width={50}
+                  height={50}
+                  loading="eager"
+                />
+                <p>home</p>
+              </IconBox>
+            </BottomNavItem>
+            <BottomNavItem>
+              <IconBox href={'/post/Write'}>
+                <Image
+                  src={'/🦆 icon _star_.svg'}
+                  alt="icon"
+                  width={50}
+                  height={50}
+                  loading="eager"
+                />
+                <p>home</p>
               </IconBox>
             </BottomNavItem>
             <BottomNavItem>
               <IconBox href={'/home/Home'}>
-                <Image src={'/🦆 icon _image_.svg'} alt="icon" fill />
-              </IconBox>
-            </BottomNavItem>
-            <BottomNavItem>
-              <IconBox href={'/home/Home'}>
-                <Image src={'/🦆 icon _star_.svg'} alt="icon" fill />
-              </IconBox>
-            </BottomNavItem>
-            <BottomNavItem>
-              <IconBox href={'/home/Home'}>
-                <Image src={'/🦆 icon _star_.svg'} alt="icon" fill />
+                <Image
+                  src={'/🦆 icon _star_.svg'}
+                  alt="icon"
+                  width={50}
+                  height={50}
+                  loading="eager"
+                />
+                <p>home</p>
               </IconBox>
             </BottomNavItem>
           </BottomNavList>
