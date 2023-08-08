@@ -1,45 +1,45 @@
 import Image from 'next/image';
 import styled from 'styled-components';
 
-const textColor = "#000";
-const fontFamily = "Inter";
 const inputBtnBoxWidth = "100%";
-const inputBtnHeight = "63px";
-
+const inputBtnHeight = "36px";
+const theme = {
+  textColor: "#000",
+  fontFamily: "Inter",
+  primaryColor: "#0084FF",
+  inputBtnBoxWidth: "100%"
+};
 export const SignUpSection = styled.section`
-  max-width: 1440px;
+  max-width: 360px;
   width: 100%;
   margin: 0 auto;
   display: flex;
   align-items: center;
   flex-direction: column;
+  font-family: ${theme.fontFamily};
   @media (max-width: 500px) {
-    padding: 0 20px;
+    padding: 0 24px;
   }
   form {
-    max-width: 533px;
+    max-width: 312px;
     width: 100%;
   }
 `;
 export const MainHeadText = styled.h1`
-  color: ${textColor};
+  color: ${theme.primaryColor};
   text-align: center;
-  font-family: ${fontFamily};
   font-size: 48px;
-  font-style: normal;
   font-weight: 900;
-  line-height: normal;
+  margin-top: 56px;
 `;
 export const SubHeadText = styled.h2`
-  color: ${textColor};
-  font-family: ${fontFamily};
-  font-size: 30px;
-  font-weight: 400;
-  text-align: left;
+  color: ${theme.textColor};
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 11px ;
 `;
 export const TextParagraph = styled.p`
-  color: ${textColor};
-  font-family: ${fontFamily};
+  color: ${theme.textColor};
   font-size: 16px;
   font-weight: 700;
 `;
@@ -60,71 +60,90 @@ export const SocialBoxImg = styled(Image)`
   object-fit: cover;
   border-radius: 100%;
   cursor: pointer;
-
 `;
 export const StyledInputBox = styled.div`
-  width: ${inputBtnBoxWidth};
+  max-width: 312px;
   display: flex;
   flex-direction: column;
-  gap: 5px;
-  margin-bottom: 20px;
+  margin-bottom:12px;
 `;
 export const StyledInput = styled.input`
-  height: ${inputBtnHeight};
+  width: 100%; 
+  height: 36px;
   outline: none;
+  padding-left: 28px;
+  border: 1px solid ${theme.primaryColor};
+  border-radius: 8px;
+  &::placeholder{
+    font-size: 12px;
+  }
 `;
 export const SignUpBtn = styled.button`
   width: ${inputBtnBoxWidth};
   height: ${inputBtnHeight};
-  border-radius: 20px;
-  background: #5A5A5A;
+  border-radius: 8px;
+  background: ${theme.primaryColor};
+  border: 1px solid ${theme.primaryColor};
   color: #FFF;
   text-align: center;
-  font-family: ${fontFamily};
   font-size: 16px;
-  font-weight: 400;
+  font-weight: 700;
 `;
 export const SignUpCheckBoxLayout = styled.div`
-  width: ${inputBtnBoxWidth};
+  max-width: 312px; 
   height: 184px;
   display: flex;
   flex-direction: column;
-  border: 1px solid black;
-  margin-bottom: 10px;
-  padding: 10px;  
+  border: 1px solid ${theme.primaryColor};
+  border-radius: 4px;
 `
 export const SignUpCheckBox = styled.div`
-  display : flex;
+  display: flex;
   justify-content: flex-start;
-  margin-bottom: 15px;
+  margin-bottom: 11px;
 `
 export const Checkbox = styled.input`
   display: inline-block;
-  width: 14px;
-  height: 14px;
-  margin-right: 12px;
-  border: 1px solid #000;
-  background: #fff;
+  width: 16px;
+  height: 16px;
+  margin: 10px 12px 0 28px;
+  border: 1px solid ${theme.primaryColor};
   cursor: pointer;
 `
 export const StyledLabelAll = styled.div`
   color: #000;
-  font-family: Inter;
-  font-size: 16px;
-  font-style: normal;
+  font-size: 12px;
   font-weight: 700;
-  line-height: normal;
-  margin-right: 10px;
+  margin: 8px 0 0 -4px;
+  width: 88px;
+  height: 12px;
 `
 export const StyledLabel = styled.div`
-  color: #D9D9D9;
-  font-family: Inter;
-  font-size: 16px;
-  font-weight: 400;
+  color: #000;
+  font-size: 8px;
+  width: 150px;
+  height: 9px;
+  margin: 11px 0 0 -46px;
+`
+export const StyledLabelEssential = styled.div`
+  color: #000;
+  font-size: 12px;
+  width: 180px;
+  height: 9px;
+  margin: 8px 0 0 -4px;
 `
 export const Line = styled.div`
-  width: 100%;
-  border: 1px solid black;
-  height: 0;
-  margin-bottom: 13px;
+  width: 312px;
+  border: 1px solid ${theme.primaryColor};
+  margin-bottom: 16px;
 `
+export const TextErrorParagraph = styled.p`
+  max-width: 227px;
+  height: 28px; 
+  color: red;
+  font-family: ${theme.fontFamily};
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 2.5;
+  margin-left: 4px;
+`;
