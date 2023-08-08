@@ -20,7 +20,6 @@ import {
 } from '@/styles/signUp';
 import { useMutation } from 'react-query';
 import { addUser } from '@/api/user';
-import { PreviewContainer } from '../../styles/write';
 import { useRouter } from 'next/router';
 
 export interface Signup {

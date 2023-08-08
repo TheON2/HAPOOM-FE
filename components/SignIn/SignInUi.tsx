@@ -1,35 +1,63 @@
 import {
   MainHeadText,
-  PwdSignUpSettinPageLink,
+  PwdSignUpSettingPageLink,
+  Separator,
   SignInBtn,
   SignInContainer,
   SignInSection,
-  StyledInput,
+  StyledEmailInput,
   StyledInputBox,
+  StyledPasswordInput,
+  TextErrorParagraph,
   TextParagraph,
-  TextParagraphSns,
+  TextPwSetParagraph,
+  TextSignUpLinkParagraph,
 } from '@/styles/signIn';
 import React, { FormEvent, useState } from 'react';
 import SocialLogin from './SocialLogIn';
-import { useMutation } from 'react-query';
-import { userLogin } from '@/api/user';
+
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
+import { useMutation } from 'react-query';
+import { NextRouter } from 'next/router';
+import { FormEvent } from 'react';
 import { LOGIN_USER } from '@/redux/reducers/userSlice';
-// import Link from 'next/link';
+import { userLogin } from '@/api/user';
 
 interface SignIn {
   email: string;
   password: string;
 }
+interface ErrorMessage {
+  message: string;
+}
 
 const SignInUi = () => {
-  const dispatch = useDispatch();
-  const router = useRouter();
+  const dispatch: any = useDispatch();
+  const router: NextRouter = useRouter();
   const [signInState, setSignInState] = useState<SignIn>({
     email: '',
     password: '',
   });
+  const [error, setError] = useState<ErrorMessage>({
+    message: '',
+  });
+
+  const signInMutation = useMutation(userLogin, {
+    onSuccess: (data) => {
+      dispatch(LOGIN_USER(data));
+      router.push('/');
+    },
+    onError: (error: any) => {
+      if (error.response && error.response.data) {
+        setError((prev) => ({ ...prev, password: error.response.data }));
+      }
+    },
+  });
+
+  const moveSignUpBtn = () => {
+    router.push('/auth/SignUp');
+  };
   const validateEmail = (email: string): boolean => {
     const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
     return emailRegex.test(email);
@@ -46,39 +74,46 @@ const SignInUi = () => {
     }));
   };
 
-  const loginMutation = useMutation(userLogin, {
-    onSuccess: (data) => {
-      dispatch(LOGIN_USER(data));
-      alert('로그인 성공');
-      router.push('/');
-    },
-    onError: (error) => {
-      alert(error);
-    },
-  });
 
-  const handleLogin = (e: React.MouseEvent) => {
+  const handleLogin = (e: FormEvent) => {
     e.preventDefault();
-    loginMutation.mutate(signInState);
+    let errors: any = {};
+
+    if (!validateEmail(signInState.email)) {
+      if (!validatePassword(signInState.password)) {
+        errors.message = '아이디와 비밀번호를 다시 확인해주세요 ';
+      }
+    }
+
+    if (Object.keys(errors).length > 0) {
+      setError(errors);
+      return;
+    } else {
+      setError({ message: '' });
+    }
+    const sendData = {
+      email: signInState.email,
+      password: signInState.password,
+    };
+    signInMutation.mutate(sendData);
+
   };
+
   return (
     <SignInSection>
       <SignInContainer>
         <MainHeadText>HAPOOM</MainHeadText>
-
         <StyledInputBox>
-          <TextParagraph>이메일</TextParagraph>
-          <StyledInput
+          <StyledEmailInput
             type="email"
             name="email"
-            placeholder="example@gmail.com"
+            placeholder="이메일을 입력해 주세요"
             onChange={handleInputChange}
           />
         </StyledInputBox>
 
         <StyledInputBox>
-          <TextParagraph>비밀번호</TextParagraph>
-          <StyledInput
+          <StyledPasswordInput
             type="password"
             name="password"
             placeholder="비밀번호를 입력해 주세요"
@@ -86,12 +121,19 @@ const SignInUi = () => {
           />
         </StyledInputBox>
 
+        {error.message && (
+          <TextErrorParagraph>{error.message}</TextErrorParagraph>
+        )}
         <SignInBtn onClick={handleLogin}>로그인</SignInBtn>
-        <PwdSignUpSettinPageLink>
-          <p>비밀번호 재설정</p>
-          <p>회원가입</p>
-        </PwdSignUpSettinPageLink>
-        <TextParagraphSns>sns계정으로 간편로그인/회원가입</TextParagraphSns>
+        <PwdSignUpSettingPageLink>
+          <TextPwSetParagraph onClick={() => alert('준비중입니다.')}>
+            비밀번호 재설정
+          </TextPwSetParagraph>
+          <Separator />
+          <TextSignUpLinkParagraph onClick={moveSignUpBtn}>
+            회원가입
+          </TextSignUpLinkParagraph>
+        </PwdSignUpSettingPageLink>
 
         <SocialLogin />
       </SignInContainer>

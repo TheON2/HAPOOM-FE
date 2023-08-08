@@ -3,36 +3,27 @@ import Link from 'next/link';
 
 export const HeaderLayout = styled.header`
   width: 100%;
-  height: 58px;
-  padding: 0 24px;
-  position: fixed;
-  z-index: 15;
+  height: 10vh;
+  position: sticky;
+  z-index: 20;
   top: 0;
-  background: linear-gradient(
-    180deg,
-    rgba(0, 0, 0, 0.1) 0%,
-    rgba(255, 255, 255, 0) 100%
-  );
+  background-color: #fff;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 12px;
   @media screen and (max-width: 1260px) {
-    padding: 0 24px;
+    padding: 0 20px;
   }
-  /* @media screen and (max-width: 786px) {
-    position: fixed;
-    background: none;
-  } */
 `;
 
 export const LogoBox = styled(Link)`
-  /* width: 20%; */
-  height: 46px;
+  width: 20%;
+  height: 50px;
+  position: relative;
   border: 1px solid #000;
   img {
     width: 100%;
-    height: 100%;
     object-fit: contain;
   }
 `;
@@ -63,7 +54,6 @@ export const SearchInputBox = styled.div<Props>`
 
     input {
       position: relative;
-      padding: 12px 20px;
       left: ${(props) => (props.$isSearch ? '0' : '100%')};
       width: ${(props) => (props.$isSearch ? '100%' : '0')};
       opacity: ${(props) => (props.$isSearch ? '1' : '0')};
@@ -73,15 +63,14 @@ export const SearchInputBox = styled.div<Props>`
 `;
 
 export const IconBox = styled.button`
-  width: 36px;
-  height: 36px;
+  width: 35px;
+  height: 35px;
   position: absolute;
   top: 50%;
   right: 12px;
   transform: translateY(-50%);
   border-radius: 50%;
   overflow: hidden;
-  cursor: pointer;
   img {
     object-fit: contain;
   }
@@ -91,9 +80,6 @@ export const AccountActionsContainer = styled.div`
   justify-content: flex-end;
   gap: 12px;
   width: 80%;
-  @media screen and (max-width: 786px) {
-    display: none;
-  }
 `;
 export const GoWriteLink = styled(Link)`
   width: 100px;
@@ -103,14 +89,15 @@ export const GoWriteLink = styled(Link)`
   justify-content: center;
   align-items: center;
 `;
-export const ProfileButton = styled.button`
+export const ProfileBox = styled.div`
   width: 50px;
   height: 50px;
   border-radius: 50%;
   position: relative;
   overflow: hidden;
-  border: none;
-  cursor: pointer;
+  button {
+    cursor: pointer;
+  }
   img {
     object-fit: cover;
   }
@@ -127,8 +114,6 @@ export const AuthButtonBox = styled.div`
 `;
 
 export const MobileBox = styled.div`
-  display: none;
-  @media screen and (max-width: 786px) {
-    display: flex;
-  }
+  display: flex;
+  gap: 12px;
 `;
