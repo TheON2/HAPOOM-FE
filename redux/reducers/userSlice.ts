@@ -6,7 +6,7 @@ export enum LocalStorageKey {
 
 export interface UserState {
   user: {
-    email: string | null;
+    email: string | null ;
     nickName: string | null;
   };
 }
@@ -14,7 +14,6 @@ export interface UserState {
 export interface UserResponse {
   email: string | null;
   nickname: string | null;
-  token: string;
 }
 
 const initialState: UserState = {
@@ -28,7 +27,7 @@ const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    LOGIN_USER: (state: UserState, action: PayloadAction<UserResponse>) => {
+    LOGIN_USER: (state: UserState, action) => {
       state.user.email = action.payload.email;
       state.user.nickName = action.payload.nickname;
       localStorage.setItem(LocalStorageKey.Token, action.payload.token);
@@ -43,7 +42,7 @@ const userSlice = createSlice({
       state.user.nickName = action.payload.nickname;
     },
     UNAUTH_USER: (state: UserState) => {
-      state.user.email = null;
+      state.user.email = 'unauth';
       state.user.nickName = null;
       localStorage.removeItem(LocalStorageKey.Token);
     },

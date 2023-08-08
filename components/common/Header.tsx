@@ -1,4 +1,8 @@
-import React, { ReactNode, useEffect, useRef, useState } from 'react';
+
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+
+import React, { useCallback,ReactNode, useEffect, useRef, useState } from 'react';
+
 import styled from 'styled-components';
 import Image from 'next/image';
 import SideNav from './SideNav';
@@ -15,8 +19,14 @@ import {
   MobileBox,
 } from '@/styles/header';
 import useInput from '@/hooks/useInput';
-import IconButton from './IconButton';
 
+import { userLogOut } from '@/api/user';
+import { useMutation, useQueryClient } from 'react-query';
+import { LOGOUT_USER } from '@/redux/reducers/userSlice';
+import { useDispatch } from 'react-redux';
+import { useRouter } from 'next/router';
+
+import IconButton from './IconButton';
 const HamburgerButton = styled.button`
   width: 36px;
   height: 36px;
@@ -37,6 +47,9 @@ const HamburgerButton = styled.button`
 `;
 
 const Header = () => {
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const queryClient = useQueryClient();
   const [isSearch, setIsSearch] = useState<boolean>(false);
   const [isMobile, setIsMobile] = useState<boolean>(true);
   const [isShowMenu, setIsShowMenu] = useState<boolean>(false);
@@ -46,6 +59,32 @@ const Header = () => {
   const onClickShowMenuHandler = () => {
     setIsShowMenu(!isShowMenu);
   };
+
+
+  const {mutate:logOut_mutate} = useMutation(userLogOut, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('user');
+      dispatch(LOGOUT_USER())
+      router.push("/");
+    },
+  });
+
+  const onLogOut = useCallback(()=>{
+    logOut_mutate()
+  },[logOut_mutate])
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 768) {
+        setIsMobile(false);
+      } else {
+        setIsMobile(true);
+      }
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // const handleResize = () => {
   //   if (window.innerWidth <= 768) {
@@ -60,6 +99,7 @@ const Header = () => {
   //   window.addEventListener('resize', handleResize);
   //   return () => window.removeEventListener('resize', handleResize);
   // }, []);
+
 
   return (
     <>
@@ -105,10 +145,68 @@ const Header = () => {
                   width={50}
                   height={50}
                 />
-              </ProfileButton>
-            </>
-          ) : (
-            <ProfileButton onClick={onClickShowMenuHandler}>
+
+                <IconBox onClick={onClickSearchIconHandler}>
+                  <Image
+                    src={'/🦆 icon _star_.svg'}
+                    alt="icon"
+                    fill
+                    loading="eager"
+                    sizes="(max-width: 1440px) 31px"
+                    placeholder="blur"
+                    blurDataURL={'/🦆 icon _star_.svg'}
+                  />
+                </IconBox>
+              </SearchInputBox>
+              <GoWriteLink href={'/post/Write'}>글쓰기</GoWriteLink>
+              {!isAuth ? (
+                <>
+                  <AuthButtonBox>
+                    <Link href={'/auth/SignIn'}>로그인</Link>|
+                    <Link href={'/auth/SignUp'}>회원가입</Link>
+                    <a onClick={onLogOut}>로그아웃</a>
+                  </AuthButtonBox>
+                  <ProfileBox onClick={onClickShowMenuHandler}>
+                    <button>
+                      <Image src={'/inflearn.jpg'} alt="prpfile image" fill />
+                    </button>
+                  </ProfileBox>
+                </>
+              ) : (
+                <ProfileBox onClick={onClickShowMenuHandler}>
+                  <button>
+                    <Image
+                      src={'/inflearn.jpg'}
+                      alt="prpfile image"
+                      fill
+                      loading="eager"
+                      sizes="(max-width: 1440px) 50px"
+                      placeholder="blur"
+                      blurDataURL={'/inflearn.jpg'}
+                    />
+                  </button>
+                </ProfileBox>
+              )}
+            </AccountActionsContainer>
+          </>
+        ) : null}
+        {!isMobile ? (
+          <MobileBox>
+            <button
+              style={{
+                width: `32px`,
+                height: `32px`,
+                position: `relative`,
+                background: `none`,
+                border: `none`,
+              }}
+            >
+
+         //     </ProfileButton>
+         //   </>
+       //   ) : (
+         //   <ProfileButton onClick={onClickShowMenuHandler}>
+
               <Image
                 src={'/inflearn.jpg'}
                 alt="prpfile image"

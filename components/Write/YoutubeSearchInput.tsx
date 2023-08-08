@@ -78,6 +78,7 @@ export const YouTubeSearch = ({
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [searchSuggestions, setSearchSuggestions] = useState<Suggestion[]>([]);
   const [isInputActive, setIsInputActive] = useState(true);
+  const [isSearchComplete, setIsSearchComplete] = useState(false);
 
   const handleChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -88,11 +89,14 @@ export const YouTubeSearch = ({
 
   const searchYoutube = async (term: string) => {
     if (term.length >= 2) {
-      const response = await axios.get(`http://localhost:3001/youtube/search`, {
-        params: {
-          term: term,
-        },
-      });
+      const response = await axios.get(
+        `http://localhost:3001/test/youtube/search`,
+        {
+          params: {
+            term: term,
+          },
+        }
+      );
       setSearchSuggestions(
         response.data.map((item: any) => {
           return {
@@ -128,6 +132,7 @@ export const YouTubeSearch = ({
       setSelectedTitle(suggestion.title);
       setVideoId(suggestion.url);
       setSearchSuggestions([]);
+      setIsSearchComplete(true);
     },
     [setVideoId, setSelectedTitle]
   );
@@ -145,22 +150,33 @@ export const YouTubeSearch = ({
     }
   }, [update, videoId]);
 
+  useEffect(() => {
+    if (videoId === '') {
+      setIsSearchComplete(false);
+      setIsInputActive(true);
+      setSelectedTitle('');
+      setSearchTerm('');
+    }
+  }, [update, videoId, setSelectedTitle]);
+
   return (
     <>
-      <InputContainer>
-        <StyledAuthInput
-          type="text"
-          placeholder="음악 제목"
-          value={isInputActive ? searchTerm : selectedTitle}
-          onChange={handleChange}
-          onKeyUp={isInputActive ? handleKeyUp : undefined}
-          style={{ width: '100%', margin: '5px 0' }}
-          disabled={!isInputActive}
-        />
-        {selectedTitle && !isInputActive && (
-          <ClearButton onClick={handleClear}>X</ClearButton>
-        )}
-      </InputContainer>
+      {!isSearchComplete && (
+        <InputContainer>
+          <StyledAuthInput
+            type="text"
+            placeholder="음악 제목"
+            value={isInputActive ? searchTerm : selectedTitle}
+            onChange={handleChange}
+            onKeyUp={isInputActive ? handleKeyUp : undefined}
+            style={{ width: '100%', margin: '5px 0' }}
+            disabled={!isInputActive}
+          />
+          {selectedTitle && !isInputActive && (
+            <ClearButton onClick={handleClear}>X</ClearButton>
+          )}
+        </InputContainer>
+      )}
       {isInputActive && (
         <SuggestionBox>
           {searchSuggestions.map((suggestion, index) => (

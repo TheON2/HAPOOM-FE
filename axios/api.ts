@@ -25,10 +25,6 @@ instance.interceptors.request.use(
 
 instance.interceptors.response.use(
   (response) => {
-    if (response.status === 501) {
-      console.log('토큰이 존재하지 않습니다');
-      store.dispatch(UNAUTH_USER());
-    }
     return response;
   },
   (error) => {
@@ -38,6 +34,12 @@ instance.interceptors.response.use(
     ) {
       console.log('토큰이 존재하지 않습니다');
       store.dispatch(UNAUTH_USER());
+      
+      // 아래 라인을 추가하여 로그인 페이지로 리다이렉션합니다.
+      if (typeof window !== 'undefined') {
+        window.location.href = '/auth/SignIn';
+      }
+      return Promise.reject(error);
     }
     return Promise.reject(error);
   }
@@ -58,7 +60,7 @@ instance.interceptors.response.use(
       originalRequest._retry = true;
       try {
         const { data } = await instance.get(
-          `${process.env.NEXT_PUBLIC_LOCAL_SERVER}/refreshToken`
+          `${process.env.NEXT_PUBLIC_LOCAL_SERVER}/api/auth/refreshtoken`
         );
         if (typeof window !== 'undefined') {
           localStorage.setItem('token', data.token);
