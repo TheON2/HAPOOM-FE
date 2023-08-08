@@ -3,7 +3,7 @@ import Header from '@/components/common/Header';
 import React, { ReactNode, useState } from 'react';
 import styled from 'styled-components';
 import UpdateNickName from '@/components/Setting/UpdateNickName';
-import UserProfileImageUpdate from '@/components/Setting/UserProfileImageUpdate';
+import UserProfileImageUpdate from '@/components/Setting/UpdateUserProfile';
 import UpdatePassword from '@/components/Setting/UpdatePassword';
 import Image from 'next/image';
 import AccordianMenu from '@/components/common/AccordianMenu';
