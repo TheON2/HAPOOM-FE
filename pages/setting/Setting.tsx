@@ -2,12 +2,12 @@ import Main from '@/components/Home/Main';
 import Header from '@/components/common/Header';
 import React, { ReactNode, useState } from 'react';
 import styled from 'styled-components';
-import UserInfoUpdate from '@/components/Setting/UserInfoUpdate';
+import UpdateNickName from '@/components/Setting/UpdateNickName';
 import UserProfileImageUpdate from '@/components/Setting/UserProfileImageUpdate';
 import UpdatePassword from '@/components/Setting/UpdatePassword';
 import Image from 'next/image';
 import AccordianMenu from '@/components/common/AccordianMenu';
-
+// import Themes from '@/components/Setting/Themes';
 const SettingLayout = styled.section`
   display: flex;
   flex-direction: column;
@@ -34,7 +34,7 @@ const Setting = () => {
       <SettingLayout>
         <AccordianMenu tabText="별명 수정">
           <AccordianContent>
-            <div>드롭</div>
+            <UpdateNickName userData={userInfo.nickname} />
           </AccordianContent>
         </AccordianMenu>
         <AccordianMenu tabText="프로필 수정">
@@ -42,14 +42,12 @@ const Setting = () => {
             <UserProfileImageUpdate />
           </AccordianContent>
         </AccordianMenu>
-        <AccordianMenu tabText="테마 수정">
-          <AccordianContent>
-            <div>드롭</div>
-          </AccordianContent>
-        </AccordianMenu>
+        {/* <AccordianContent>
+          <Themes />
+        </AccordianContent> */}
         <AccordianMenu tabText="비밀번호 수정">
           <AccordianContent>
-            <div>드롭</div>
+            <UpdatePassword />
           </AccordianContent>
         </AccordianMenu>
       </SettingLayout>

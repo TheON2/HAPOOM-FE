@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Image from 'next/image';
 import { QueryClient, useMutation } from 'react-query';
 import Button from '@/components/common/Button';
-
+// import
 const ProfilePresetList = styled.ul`
   display: flex;
   justify-content: space-between;
@@ -95,10 +95,10 @@ const UserProfileImageUpdate = () => {
     }
   };
 
-  //   const mutation = useMutation((formData) => 기능(formData), {
-  //     onSuccess: (msg) => {
-  //         QueryClient.invalidateQueries('tradingItem');
-  //     },
+  // const mutation = useMutation((formData) => 기능(formData), {
+  //   onSuccess: (msg) => {
+  //     QueryClient.invalidateQueries('tradingItem');
+  //   },
   // });
 
   const onSubmitUserProfile = async (e: FormEvent) => {
