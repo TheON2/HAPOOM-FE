@@ -58,10 +58,10 @@ const SideNav = ({ isShowMenu, setIsShowMenu }: sideNavProps) => {
       <SideNavLayout>
         <SideNavMenuList>
           <SideNavMenuItem>
-            <Link href="/home/Home">마이페이지</Link>
+            <Link href="/setting/Setting">마이페이지</Link>
           </SideNavMenuItem>
           <SideNavMenuItem>
-            <Link href="/home/Home">유저페이지</Link>
+            <Link href="/User/User">유저페이지</Link>
           </SideNavMenuItem>
           <SideNavMenuItem className="none-padding">
             <SubMenu>
