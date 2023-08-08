@@ -81,7 +81,7 @@ export const StyledInput = styled.input`
 export const SignUpBtn = styled.button`
   width: ${inputBtnBoxWidth};
   height: ${inputBtnHeight};
-  border-radius: 8px;
+  border-radius: 4px;
   background: ${theme.primaryColor};
   border: 1px solid ${theme.primaryColor};
   color: #FFF;
