@@ -1,11 +1,4 @@
 import React, { FormEvent, useEffect, useState } from 'react';
-import {
-  FollowBox,
-  ProfileContentsBox,
-  SettingPageLink,
-  UserImage,
-  UserProfileCardBox,
-} from '@/styles/user';
 import profile from '../../public/profile.jpg';
 import styled from 'styled-components';
 import Image from 'next/image';
