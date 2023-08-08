@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { ReactNode, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
 import SideNav from './SideNav';
@@ -10,42 +10,29 @@ import {
   IconBox,
   AccountActionsContainer,
   GoWriteLink,
-  ProfileBox,
+  ProfileButton,
   AuthButtonBox,
   MobileBox,
 } from '@/styles/header';
 import useInput from '@/hooks/useInput';
+import IconButton from './IconButton';
+
 const HamburgerButton = styled.button`
-  width: 28px;
-  height: 28px;
-  padding: 3px 0;
+  width: 36px;
+  height: 36px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: flex-end;
   background: none;
   border: none;
-  position: relative;
+  cursor: pointer;
   span {
-    width: 100%;
-    height: 3px;
+    width: 18px;
+    height: 2px;
+    margin-bottom: 5px;
     background: #000;
     transition: all 0.3s ease-in-out;
-  }
-  &.active {
-    span:nth-child(1) {
-      position: absolute;
-      top: 50%;
-      left: 2px;
-      transform: rotate(-45deg) translateY(-50%);
-    }
-    span:nth-child(2) {
-      display: none;
-    }
-    span:nth-child(3) {
-      position: absolute;
-      top: 50%;
-      transform: rotate(45deg) translateY(-50%);
-    }
   }
 `;
 
@@ -60,18 +47,19 @@ const Header = () => {
     setIsShowMenu(!isShowMenu);
   };
 
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth <= 768) {
-        setIsMobile(false);
-      } else {
-        setIsMobile(true);
-      }
-    };
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  // const handleResize = () => {
+  //   if (window.innerWidth <= 768) {
+  //     setIsMobile(false);
+  //   } else {
+  //     setIsMobile(true);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   handleResize();
+  //   window.addEventListener('resize', handleResize);
+  //   return () => window.removeEventListener('resize', handleResize);
+  // }, []);
 
   return (
     <>
@@ -80,98 +68,81 @@ const Header = () => {
           <Image
             src={'/inflearn.jpg'}
             alt="logo"
-            fill
+            width={200}
+            height={50}
             loading="eager"
-            sizes="(max-width: 1440px) 193px"
-            placeholder="blur"
-            blurDataURL={'/inflearn.jpg'}
           />
         </LogoBox>
-        {isMobile ? (
-          <>
-            <AccountActionsContainer>
-              <SearchInputBox $isSearch={isSearch}>
-                <input
-                  type="text"
-                  value={search}
-                  onChange={onChangeSearchHandler}
-                />
-                <IconBox onClick={onClickSearchIconHandler}>
-                  <Image
-                    src={'/🦆 icon _star_.svg'}
-                    alt="icon"
-                    fill
-                    loading="eager"
-                    sizes="(max-width: 1440px) 31px"
-                    placeholder="blur"
-                    blurDataURL={'/🦆 icon _star_.svg'}
-                  />
-                </IconBox>
-              </SearchInputBox>
-              <GoWriteLink href={'/post/Write'}>글쓰기</GoWriteLink>
-              {!isAuth ? (
-                <>
-                  <AuthButtonBox>
-                    <Link href={'/auth/SignIn'}>로그인</Link>|
-                    <Link href={'/auth/SignUp'}>회원가입</Link>
-                  </AuthButtonBox>
-                  <ProfileBox onClick={onClickShowMenuHandler}>
-                    <button>
-                      <Image src={'/inflearn.jpg'} alt="prpfile image" fill />
-                    </button>
-                  </ProfileBox>
-                </>
-              ) : (
-                <ProfileBox onClick={onClickShowMenuHandler}>
-                  <button>
-                    <Image
-                      src={'/inflearn.jpg'}
-                      alt="prpfile image"
-                      fill
-                      loading="eager"
-                      sizes="(max-width: 1440px) 50px"
-                      placeholder="blur"
-                      blurDataURL={'/inflearn.jpg'}
-                    />
-                  </button>
-                </ProfileBox>
-              )}
-            </AccountActionsContainer>
-          </>
-        ) : null}
-        {!isMobile ? (
-          <MobileBox>
-            <button
-              style={{
-                width: `32px`,
-                height: `32px`,
-                position: `relative`,
-                background: `none`,
-                border: `none`,
-              }}
-            >
+        <AccountActionsContainer>
+          <SearchInputBox $isSearch={isSearch}>
+            <input
+              type="text"
+              value={search}
+              onChange={onChangeSearchHandler}
+            />
+            <IconBox onClick={onClickSearchIconHandler}>
               <Image
-                src={'/🦆 icon _cloud_.svg'}
-                alt="prpfile image"
-                fill
+                src={'/🦆 icon _star_.svg'}
+                alt="icon"
                 loading="eager"
-                sizes="(max-width: 786px) 28px"
-                placeholder="blur"
-                blurDataURL={'/🦆 icon _cloud_.svg'}
+                width={50}
+                height={50}
               />
-            </button>
-            <HamburgerButton
-              onClick={onClickShowMenuHandler}
-              className={isShowMenu ? 'active' : ''}
-            >
-              <span></span>
-              <span></span>
-              <span></span>
-            </HamburgerButton>
-          </MobileBox>
-        ) : null}
+            </IconBox>
+          </SearchInputBox>
+          <GoWriteLink href={'/post/Write'}>글쓰기</GoWriteLink>
+          {!isAuth ? (
+            <>
+              <AuthButtonBox>
+                <Link href={'/auth/SignIn'}>로그인</Link>|
+                <Link href={'/auth/SignUp'}>회원가입</Link>
+              </AuthButtonBox>
+              <ProfileButton onClick={onClickShowMenuHandler}>
+                <Image
+                  src={'/inflearn.jpg'}
+                  alt="prpfile image"
+                  loading="eager"
+                  width={50}
+                  height={50}
+                />
+              </ProfileButton>
+            </>
+          ) : (
+            <ProfileButton onClick={onClickShowMenuHandler}>
+              <Image
+                src={'/inflearn.jpg'}
+                alt="prpfile image"
+                loading="eager"
+                width={50}
+                height={50}
+              />
+            </ProfileButton>
+          )}
+        </AccountActionsContainer>
+
+        <MobileBox>
+          <IconButton>
+            <Image
+              src={'/🦆 icon _cloud_.svg'}
+              alt="prpfile image"
+              width={28}
+              height={28}
+              loading="eager"
+            />
+          </IconButton>
+          <HamburgerButton
+            onClick={onClickShowMenuHandler}
+            className={isShowMenu ? 'active' : ''}
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </HamburgerButton>
+        </MobileBox>
       </HeaderLayout>
-      {isShowMenu && <SideNav />}
+      {isShowMenu && (
+        <SideNav setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu} />
+      )}
     </>
   );
 };
