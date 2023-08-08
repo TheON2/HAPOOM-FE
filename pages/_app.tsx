@@ -4,6 +4,7 @@ import { createWrapper } from 'next-redux-wrapper';
 import store from '../redux/config/configStore';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
+import AuthChecker from '@/components/common/AuthChecker';
 
 const queryClient = new QueryClient();
 

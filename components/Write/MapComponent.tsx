@@ -76,7 +76,7 @@ export const MapComponent: React.FC<MapComponentProps> = ({
       const coord = event.coord;
       try {
         const response = await axios.get(
-          'http://localhost:3001/map/reversegeocode',
+          'http://localhost:3001/test/map/reversegeocode',
           {
             params: {
               x: coord.x,
