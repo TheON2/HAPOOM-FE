@@ -1,6 +1,6 @@
 import Main from '@/components/Home/Main';
 import Header from '@/components/common/Header';
-import React from 'react';
+import React, { ReactNode, useState } from 'react';
 import styled from 'styled-components';
 import UserInfoUpdate from '@/components/Setting/UserInfoUpdate';
 import UserProfileImageUpdate from '@/components/Setting/UserProfileImageUpdate';
@@ -18,8 +18,13 @@ const SettingLayout = styled.section`
   flex-direction: column;
   align-items: center;
   max-width: 1360px;
-  margin: 2rem auto 8rem;
-  padding: 0 5%;
+  /* margin: 2rem auto 8rem; */
+  padding: 0 24px;
+`;
+
+const AccordianLayout = styled.div`
+  /* display: flex; */
+  width: 100%;
 `;
 
 const userInfo = {
@@ -28,29 +33,80 @@ const userInfo = {
   password: 'password',
 };
 
+type accordianProps = {
+  isOpen: boolean;
+};
+
+const AccordianTab = styled.div<accordianProps>`
+  width: 100%;
+  /* height: 52px;  */
+  padding: 20px 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: ${(props) =>
+    props.isOpen ? '1px solid rgba(255, 255, 255, 0);' : '1px solid #333'};
+  font-weight: 700;
+`;
+
+const AccordianContent = styled.div`
+  width: 100%;
+  padding-bottom: 36px;
+`;
+
+const Icon = () => {
+  return (
+    <Image src={'/🦆 icon _cloud_.svg'} alt={'icon'} width={20} height={20} />
+  );
+};
+
+type DroptabProps = {
+  tabText: string;
+  children: ReactNode;
+};
+
+const AccordianMenu = ({ tabText, children }: DroptabProps) => {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  const onClickDropTabHandler = () => {
+    setIsOpen(!isOpen);
+  };
+
+  return (
+    <AccordianLayout>
+      <AccordianTab onClick={onClickDropTabHandler} isOpen={isOpen}>
+        {tabText} <Icon />
+      </AccordianTab>
+      {isOpen ? children : null}
+    </AccordianLayout>
+  );
+};
+
 const Setting = () => {
   return (
     <Main>
       <Header />
       <SettingLayout>
-        <h2>프로필 수정</h2>
-        <UserProfileCardBox>
-          <Image
-            src={'/inflearn.jpg'}
-            alt={'프로필사진'}
-            width={264}
-            height={280}
-            objectFit={'cover'}
-            quality={70}
-            loading="eager"
-          />
-          <ProfileContentsBox>
-            <UserInfoUpdate info={'닉네임'} infoData={userInfo.nickname} />
-            <UserInfoUpdate info={'소개글'} infoData={userInfo.introduceText} />
-          </ProfileContentsBox>
-        </UserProfileCardBox>
-        <UserProfileImageUpdate />
-        <UpdatePassword />
+        <AccordianMenu tabText="별명 수정">
+          <AccordianContent>
+            <div>드롭</div>
+          </AccordianContent>
+        </AccordianMenu>
+        <AccordianMenu tabText="프로필 수정">
+          <AccordianContent>
+            <UserProfileImageUpdate />
+          </AccordianContent>
+        </AccordianMenu>
+        <AccordianMenu tabText="테마 수정">
+          <AccordianContent>
+            <div>드롭</div>
+          </AccordianContent>
+        </AccordianMenu>
+        <AccordianMenu tabText="비밀번호 수정">
+          <AccordianContent>
+            <div>드롭</div>
+          </AccordianContent>
+        </AccordianMenu>
       </SettingLayout>
     </Main>
   );
