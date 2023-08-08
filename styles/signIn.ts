@@ -1,17 +1,17 @@
-import Image from "next/image";
 import { styled } from "styled-components";
 
-const textColor = "#000";
-const fontFamily = "Inter";
-const inputBtnBoxWidth = "100%";
-const inputBtnHeight = "63px";
-
+const theme = {
+  textColor: "#000",
+  fontFamily: "Inter",
+  primaryColor: "#0084FF",
+  inputBtnBoxWidth: "100%"
+};
 export const SignInSection = styled.section`
-  max-width: 500px;
+  max-width: 360px;
   width: 100%;
   margin: 0 auto;
   @media (max-width: 500px) {
-    padding: 0 20px;
+    padding: 0 24px;
   }
 `
 export const SignInContainer = styled.form`
@@ -22,67 +22,121 @@ export const SignInContainer = styled.form`
   height: 100vh;
 `
 export const MainHeadText = styled.h1`
-  color: ${textColor};
+  color: ${theme.primaryColor};
   text-align: center;
-  font-family: ${fontFamily};
-  font-size: 48px;
-  font-style: normal;
+  font-family: ${theme.fontFamily};
+  font-size: 40px;
   font-weight: 900;
-  line-height: normal;
+
 `;
 export const StyledInputBox = styled.div`
-  width: ${inputBtnBoxWidth};
+  max-width: 312px;
+  width: ${theme.inputBtnBoxWidth};
   display: flex;
   flex-direction: column;
   gap: 5px;
-  margin-bottom: 20px;
 `;
-export const StyledInput = styled.input`
-  height: ${inputBtnHeight};
+const StyledInput = styled.input`
+  height: 40px;
   outline: none;
+  padding-left: 28px;
+  border: 1px solid ${theme.primaryColor};
+  &::placeholder{
+    font-size: 12px;
+  }
+`;
+export const StyledEmailInput = styled(StyledInput)`
+  border-radius: 8px 8px 0 0;
+  border-bottom: none;
+`;
+export const StyledPasswordInput = styled(StyledInput)`
+  border-radius: 0 0 8px 8px;
 `;
 export const SignInBtn = styled.button`
-  width: ${inputBtnBoxWidth};
-  height: ${inputBtnHeight};
-  border-radius: 20px;
-  background: #5A5A5A;
+  max-width: 312px;
+  width: ${theme.inputBtnBoxWidth};
+  height: 36px;
+  border-radius: 8px;
+  border: 1px solid ${theme.primaryColor};
+  background: ${theme.primaryColor};
   color: #FFF;
+  outline: none;
   text-align: center;
-  font-family: ${fontFamily};
+  font-family: ${theme.fontFamily};
   font-size: 16px;
   font-weight: 400;
+  margin-top: 15px;
   cursor: pointer;
 `;
 export const TextParagraph = styled.p`
-  color: ${textColor};
-  font-family: ${fontFamily};
-  font-size: 16px;
+  color: ${theme.textColor};
+  font-family: ${theme.fontFamily};
+  font-size: 12px;
   font-weight: 700;
 `;
-export const TextParagraphSns = styled(TextParagraph)`
-  margin-top: 20px;
-  color: #868686;
-  font-family: Inter;
-  font-size: 14px;
+export const TextPwSetParagraph = styled(TextParagraph)`
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 91px;
+  height: 29px;
+  color: ${theme.textColor};
+  font-family: ${theme.fontFamily};
+  font-size: 12px;
+  font-weight: 700;
+  &::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0.5px;
+    height: 8px;
+    background-color: #000;
+  }
+`;
+export const TextSignUpLinkParagraph = styled(TextParagraph)`
+  display: flex;
+  align-items: center;
+  width: 46px;
+  height: 29px;
+  color: ${theme.textColor};
+  font-family: ${theme.fontFamily};
+  font-size: 12px;
+  font-weight: 700;
+  text-align: center;
+`;
+export const Separator = styled.span`
+  display: inline-flex;
+  align-items: center;
+  margin-left: -5px;
+  margin-right: 11px;
+  &:after {
+    content: "";
+    width: 1px;
+    height: 8px;
+    background-color: #000;
+  }
+`;
+export const TextErrorParagraph = styled.p`
+  max-width: 227px;
+  height: 27px; 
+  color: red;
+  font-family: ${theme.fontFamily};
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 2.5;
+  margin-top: 8px;
 `;
 export const SignUpSocialSignUpBox = styled.div`
-  width: ${inputBtnBoxWidth};
+  width: ${theme.inputBtnBoxWidth};
   height: 120px;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 15px;
 `;
-export const SocialBoxImg = styled(Image)`
-  /* width: 84px;
-  height: 84px; */
-  object-fit: cover;
-  border-radius: 100%;
-  cursor: pointer;
-`;
-export const PwdSignUpSettinPageLink =styled.div`
+export const PwdSignUpSettingPageLink =styled.div`
 display: flex;
-gap: 18px;
 margin-top: 20px;
 color: #868686;
 font-family: Inter;
