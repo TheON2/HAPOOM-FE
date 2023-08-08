@@ -1,4 +1,10 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, {
+  ReactNode,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
 import SideNav from './SideNav';
@@ -15,49 +21,48 @@ import {
   MobileBox,
 } from '@/styles/header';
 import useInput from '@/hooks/useInput';
-import { userLogOut } from '@/api/user';
-import { useMutation, useQueryClient } from 'react-query';
-import { LOGOUT_USER } from '@/redux/reducers/userSlice';
+import IconButton from './IconButton';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
+import { useMutation, useQueryClient } from 'react-query';
+import { userLogOut } from '@/api/user';
+import { LOGOUT_USER } from '@/redux/reducers/userSlice';
+
 const HamburgerButton = styled.button`
-  width: 28px;
-  height: 28px;
-  padding: 3px 0;
+  width: 36px;
+  height: 36px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: flex-end;
   background: none;
   border: none;
-  position: relative;
+  cursor: pointer;
   span {
-    width: 100%;
-    height: 3px;
+    width: 18px;
+    height: 2px;
+    margin-bottom: 5px;
     background: #000;
     transition: all 0.3s ease-in-out;
   }
-  &.active {
-    span:nth-child(1) {
-      position: absolute;
-      top: 50%;
-      left: 2px;
-      transform: rotate(-45deg) translateY(-50%);
-    }
-    span:nth-child(2) {
-      display: none;
-    }
-    span:nth-child(3) {
-      position: absolute;
-      top: 50%;
-      transform: rotate(45deg) translateY(-50%);
-    }
-  }
 `;
 
-const Header = () => {
+const Header = ({ sticky }: any) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const queryClient = useQueryClient();
+  const { mutate: logOut_mutate } = useMutation(userLogOut, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('user');
+      dispatch(LOGOUT_USER());
+      router.push('/');
+    },
+  });
+
+  const onLogOut = useCallback(() => {
+    logOut_mutate();
+  }, [logOut_mutate]);
+
   const [isSearch, setIsSearch] = useState<boolean>(false);
   const [isMobile, setIsMobile] = useState<boolean>(true);
   const [isShowMenu, setIsShowMenu] = useState<boolean>(false);
@@ -68,134 +73,90 @@ const Header = () => {
     setIsShowMenu(!isShowMenu);
   };
 
-  const {mutate:logOut_mutate} = useMutation(userLogOut, {
-    onSuccess: () => {
-      queryClient.invalidateQueries('user');
-      dispatch(LOGOUT_USER())
-      router.push("/");
-    },
-  });
-
-  const onLogOut = useCallback(()=>{
-    logOut_mutate()
-  },[logOut_mutate])
-
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth <= 768) {
-        setIsMobile(false);
-      } else {
-        setIsMobile(true);
-      }
-    };
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
   return (
     <>
-      <HeaderLayout>
+      <HeaderLayout sticky={sticky}>
         <LogoBox href={'/'}>
           <Image
             src={'/inflearn.jpg'}
             alt="logo"
-            fill
+            width={200}
+            height={50}
             loading="eager"
-            sizes="(max-width: 1440px) 280px"
-            placeholder="blur"
-            blurDataURL={'/inflearn.jpg'}
           />
         </LogoBox>
-        {isMobile ? (
-          <>
-            <AccountActionsContainer>
-              <SearchInputBox $isSearch={isSearch}>
-                <input
-                  type="text"
-                  value={search}
-                  onChange={onChangeSearchHandler}
-                />
-                <IconBox onClick={onClickSearchIconHandler}>
-                  <Image
-                    src={'/🦆 icon _star_.svg'}
-                    alt="icon"
-                    fill
-                    loading="eager"
-                    sizes="(max-width: 1440px) 31px"
-                    placeholder="blur"
-                    blurDataURL={'/🦆 icon _star_.svg'}
-                  />
-                </IconBox>
-              </SearchInputBox>
-              <GoWriteLink href={'/post/Write'}>글쓰기</GoWriteLink>
-              {!isAuth ? (
-                <>
-                  <AuthButtonBox>
-                    <Link href={'/auth/SignIn'}>로그인</Link>|
-                    <Link href={'/auth/SignUp'}>회원가입</Link>
-                    <a onClick={onLogOut}>로그아웃</a>
-                  </AuthButtonBox>
-                  <ProfileButton onClick={onClickShowMenuHandler}>
-                    <Image
-                      src={'/inflearn.jpg'}
-                      alt="prpfile image"
-                      fill
-                      sizes="(max-width: 1440px) 51px"
-                      placeholder="blur"
-                      blurDataURL={'/inflearn.jpg'}
-                    />
-                  </ProfileButton>
-                </>
-              ) : (
-                <ProfileButton onClick={onClickShowMenuHandler}>
-                  <Image
-                    src={'/inflearn.jpg'}
-                    alt="prpfile image"
-                    fill
-                    loading="eager"
-                    sizes="(max-width: 1440px) 50px"
-                    placeholder="blur"
-                    blurDataURL={'/inflearn.jpg'}
-                  />
-                </ProfileButton>
-              )}
-            </AccountActionsContainer>
-          </>
-        ) : null}
-        {!isMobile ? (
-          <MobileBox>
-            <button
-              style={{
-                width: `32px`,
-                height: `32px`,
-                position: `relative`,
-                background: `none`,
-                border: `none`,
-              }}
-            >
+        <AccountActionsContainer>
+          <SearchInputBox $isSearch={isSearch}>
+            <input
+              type="text"
+              value={search}
+              onChange={onChangeSearchHandler}
+            />
+            <IconBox onClick={onClickSearchIconHandler}>
               <Image
-                src={'/🦆 icon _cloud_.svg'}
-                alt="prpfile image"
-                fill
+                src={'/🦆 icon _star_.svg'}
+                alt="icon"
                 loading="eager"
-                sizes="(max-width: 786px) 28px"
-                placeholder="blur"
-                blurDataURL={'/🦆 icon _cloud_.svg'}
+                width={50}
+                height={50}
               />
-            </button>
-            <HamburgerButton
-              onClick={onClickShowMenuHandler}
-              className={isShowMenu ? 'active' : ''}
-            >
-              <span></span>
-              <span></span>
-              <span></span>
-            </HamburgerButton>
-          </MobileBox>
-        ) : null}
+            </IconBox>
+          </SearchInputBox>
+          <GoWriteLink href={'/post/Write'}>글쓰기</GoWriteLink>
+          {!isAuth ? (
+            <>
+              <AuthButtonBox>
+                <Link href={'/auth/SignIn'}>로그인</Link>|
+                <Link href={'/auth/SignUp'}>회원가입</Link>
+                <a href="#" onClick={onLogOut}>
+                  로그아웃
+                </a>
+              </AuthButtonBox>
+              <ProfileButton onClick={onClickShowMenuHandler}>
+                <Image
+                  src={'/inflearn.jpg'}
+                  alt="prpfile image"
+                  loading="eager"
+                  width={50}
+                  height={50}
+                />
+              </ProfileButton>
+            </>
+          ) : (
+            <ProfileButton onClick={onClickShowMenuHandler}>
+              <Image
+                src={'/inflearn.jpg'}
+                alt="prpfile image"
+                loading="eager"
+                width={50}
+                height={50}
+              />
+            </ProfileButton>
+          )}
+        </AccountActionsContainer>
+        <MobileBox>
+          <IconButton>
+            <Image
+              src={'/🦆 icon _cloud_.svg'}
+              alt="prpfile image"
+              width={28}
+              height={28}
+              loading="eager"
+            />
+          </IconButton>
+          <HamburgerButton
+            onClick={onClickShowMenuHandler}
+            className={isShowMenu ? 'active' : ''}
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </HamburgerButton>
+        </MobileBox>
       </HeaderLayout>
-      {isShowMenu && <SideNav />}
+      {isShowMenu && (
+        <SideNav setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu} />
+      )}
     </>
   );
 };
