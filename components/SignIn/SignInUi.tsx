@@ -9,8 +9,13 @@ import {
   TextParagraph,
   TextParagraphSns,
 } from '@/styles/signIn';
-import React, { useState } from 'react';
+import React, { FormEvent, useState } from 'react';
 import SocialLogin from './SocialLogIn';
+import { useMutation } from 'react-query';
+import { userLogin } from '@/api/user';
+import { useRouter } from 'next/router';
+import { useDispatch } from 'react-redux';
+import { LOGIN_USER } from '@/redux/reducers/userSlice';
 // import Link from 'next/link';
 
 interface SignIn {
@@ -19,6 +24,8 @@ interface SignIn {
 }
 
 const SignInUi = () => {
+  const dispatch = useDispatch();
+  const router = useRouter();
   const [signInState, setSignInState] = useState<SignIn>({
     email: '',
     password: '',
@@ -39,8 +46,20 @@ const SignInUi = () => {
     }));
   };
 
-  const handleLogin = () => {
-    console.log('로그인 처리 로직 작성');
+  const loginMutation = useMutation(userLogin, {
+    onSuccess: (data) => {
+      dispatch(LOGIN_USER(data));
+      alert('로그인 성공');
+      router.push('/');
+    },
+    onError: (error) => {
+      alert(error);
+    },
+  });
+
+  const handleLogin = (e: React.MouseEvent) => {
+    e.preventDefault();
+    loginMutation.mutate(signInState);
   };
   return (
     <SignInSection>
@@ -67,15 +86,7 @@ const SignInUi = () => {
           />
         </StyledInputBox>
 
-        <SignInBtn
-          onClick={(e: React.MouseEvent) => {
-            e.preventDefault();
-            handleLogin();
-            alert('준비중입니다.');
-          }}
-        >
-          로그인
-        </SignInBtn>
+        <SignInBtn onClick={handleLogin}>로그인</SignInBtn>
         <PwdSignUpSettinPageLink>
           <p>비밀번호 재설정</p>
           <p>회원가입</p>

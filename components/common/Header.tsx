@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
 import SideNav from './SideNav';
@@ -15,6 +15,11 @@ import {
   MobileBox,
 } from '@/styles/header';
 import useInput from '@/hooks/useInput';
+import { userLogOut } from '@/api/user';
+import { useMutation, useQueryClient } from 'react-query';
+import { LOGOUT_USER } from '@/redux/reducers/userSlice';
+import { useDispatch } from 'react-redux';
+import { useRouter } from 'next/router';
 const HamburgerButton = styled.button`
   width: 28px;
   height: 28px;
@@ -50,6 +55,9 @@ const HamburgerButton = styled.button`
 `;
 
 const Header = () => {
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const queryClient = useQueryClient();
   const [isSearch, setIsSearch] = useState<boolean>(false);
   const [isMobile, setIsMobile] = useState<boolean>(true);
   const [isShowMenu, setIsShowMenu] = useState<boolean>(false);
@@ -59,6 +67,18 @@ const Header = () => {
   const onClickShowMenuHandler = () => {
     setIsShowMenu(!isShowMenu);
   };
+
+  const {mutate:logOut_mutate} = useMutation(userLogOut, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('user');
+      dispatch(LOGOUT_USER())
+      router.push("/");
+    },
+  });
+
+  const onLogOut = useCallback(()=>{
+    logOut_mutate()
+  },[logOut_mutate])
 
   useEffect(() => {
     const handleResize = () => {
@@ -114,6 +134,7 @@ const Header = () => {
                   <AuthButtonBox>
                     <Link href={'/auth/SignIn'}>로그인</Link>|
                     <Link href={'/auth/SignUp'}>회원가입</Link>
+                    <a onClick={onLogOut}>로그아웃</a>
                   </AuthButtonBox>
                   <ProfileBox onClick={onClickShowMenuHandler}>
                     <button>
