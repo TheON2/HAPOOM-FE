@@ -6,7 +6,7 @@ export const HeaderLayout = styled.header`
   height: 58px;
   padding: 0 24px;
   position: fixed;
-  z-index: 20;
+  z-index: 15;
   top: 0;
   background: linear-gradient(
     180deg,
@@ -18,7 +18,7 @@ export const HeaderLayout = styled.header`
   align-items: center;
   gap: 12px;
   @media screen and (max-width: 1260px) {
-    padding: 0 20px;
+    padding: 0 24px;
   }
   /* @media screen and (max-width: 786px) {
     position: fixed;
