@@ -78,10 +78,12 @@ const ButtonBox = styled.div`
 const profileData = ['/inflearn.jpg', '/inflearn.jpg', '/inflearn.jpg'];
 
 type profileType = {
-  profileImage: string;
+  profileImage?: string;
 };
 
 const UserProfileImageUpdate = ({ profileImage }: profileType) => {
+  console.log('이미지 리렌더링');
+
   const [selectProfile, setSelectProfile] = useState<number>(0);
   const [userProfile, setUserProfile] = useState<string>('');
   const [image, setImage] = useState<File | Blob | null>(null);
