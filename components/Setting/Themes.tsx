@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import AccordianMenu from '@/components/common/AccordianMenu';
+import { useMutation } from 'react-query';
+import { updateUserSetting } from '@/api/user';
 
 const ThemesBox = styled.div`
   display: flex;
@@ -26,13 +28,30 @@ const ThemesBox = styled.div`
   }
 `;
 
-const Themes = () => {
+type settingProps = {
+  theme?: number;
+};
+
+const Themes = ({ theme }: settingProps) => {
+  const mutate = useMutation((formData: FormData) =>
+    updateUserSetting(formData)
+  );
+
+  const onClickThemesHandler = async (themes: string) => {
+    const formData = new FormData();
+    formData.append('theme', themes);
+    await mutate.mutateAsync(formData);
+  };
+
   return (
     <AccordianMenu tabText="Theme">
       <ThemesBox>
-        <button>Original Mode</button>
-        <button>Midnight Mode</button>
-        <button>Dark Mode</button>
+        <button onClick={() => onClickThemesHandler('original')}>
+          Original Mode
+        </button>
+        <button onClick={() => onClickThemesHandler('midnigth')}>
+          Midnight Mode
+        </button>
       </ThemesBox>
     </AccordianMenu>
   );
