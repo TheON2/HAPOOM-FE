@@ -12,4 +12,3 @@ module.exports = withPWA({
     domains: ['localhost', 'i.ytimg.com', 'avatars.githubusercontent.com'],
   },
 });
-<ImageContent src={content.image?.url} alt={'img'} />;
