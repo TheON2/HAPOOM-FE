@@ -8,8 +8,10 @@ import UpdatePassword from '@/components/Setting/UpdatePassword';
 import Image from 'next/image';
 import AccordianMenu from '@/components/common/AccordianMenu';
 import Themes from '@/components/Setting/Themes';
-import { getUserSetting, updateUserSetting } from '@/api/user';
+import { getAuthToken, getUserSetting, updateUserSetting } from '@/api/user';
 import { useQuery, useMutation } from 'react-query';
+import { useDispatch } from 'react-redux';
+import { AUTH_USER, UserResponse } from '@/redux/reducers/userSlice';
 
 const SettingLayout = styled.section`
   display: flex;
@@ -28,6 +30,17 @@ const Setting = () => {
   // const [nickName, setNickName] = useState<string>();
   // const [profileImage, setProfileImage] = useState();
   // const [theme, setTheme] = useState();
+  const dispatch = useDispatch();
+
+  const { data: userData, isSuccess: tokenSuccess } = useQuery(
+    'user',
+    getAuthToken,
+    {
+      onSuccess: (userData: UserResponse) => {
+        dispatch(AUTH_USER(userData));
+      },
+    }
+  );
   const { data } = useQuery('user', getUserSetting, {
     onSuccess: (data) => {
       // setNickName(data.user.nickname);
