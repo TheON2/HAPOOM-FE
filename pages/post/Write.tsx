@@ -137,7 +137,11 @@ function Write() {
               update={update}
               videoId={videoId}
             />
-            <DynamicComponentWithNoSSR videoId={videoId} setVideoId={setVideoId} setSelectedTitle={setSelectedTitle}/>
+            <DynamicComponentWithNoSSR
+              videoId={videoId}
+              setVideoId={setVideoId}
+              setSelectedTitle={setSelectedTitle}
+            />
             <TagInput tags={tags} setTags={setTags} />
             <MapComponent
               setLocation={setLocation}

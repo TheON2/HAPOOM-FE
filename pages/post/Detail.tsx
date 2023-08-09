@@ -11,11 +11,15 @@ type Props = {
 };
 
 const Detail: React.FC<Props> = ({ data }) => {
+  console.log(data.videoId);
   return (
     <DetailSection>
       <DetailUserPost data={data} />
-      <DetailYoutubePlayer />
-      <DetailMapComponent />
+      <DetailYoutubePlayer videoId={data.posts[0].musicUrl} />
+      <DetailMapComponent
+        location={{ name: '서울특별시 강남구', x: 127.02761, y: 37.495826 }}
+      />
+
       <DetailComments />
     </DetailSection>
   );
