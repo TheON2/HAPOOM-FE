@@ -7,6 +7,7 @@ import {
   UserPictureBox,
 } from '@/styles/detail';
 import Image from 'next/image';
+import axios from 'axios';
 
 type Post = {
   image: {
@@ -27,6 +28,7 @@ const DetailUserPost: React.FC<{ data: any }> = ({ data }) => {
     if (data && data.posts) {
       const userImages = data.posts.map((post: Post) => post.image.url);
       setImages(userImages);
+      setUserPic(data.posts[0].image.url);
     }
   }, [data]);
 
@@ -123,27 +125,26 @@ const DetailUserPost: React.FC<{ data: any }> = ({ data }) => {
 
   // 사용자 댓글 박스 컴포넌트
   const UserCommentBoxComponent = () => {
-    const [comments, setComments] = useState([
-      'This is a user comment',
-      'This is another user comment',
-      'This is yet another user comment',
-    ]);
+    const [content, setContent] = useState<string>('');
 
-    const [borderColor, setBorderColor] = useState('black');
     useEffect(() => {
-      if (comments.some((comment) => comment.length > 149)) {
-        setBorderColor('red');
-        alert('A comment exceeds the maximum length of 149 characters!');
-      } else {
-        setBorderColor('black');
-      }
-    }, [comments]);
+      const fetchContent = async () => {
+        try {
+          const response = await axios.get('http://localhost:3001/test/post/1');
+          if (response.data && response.data.content) {
+            setContent(response.data.content);
+          }
+        } catch (error) {
+          console.error('Error fetching content:', error);
+        }
+      };
+
+      fetchContent();
+    }, []);
 
     return (
-      <UserCommentBox style={{ borderColor: borderColor }}>
-        {comments.map((comment, index) => (
-          <p key={index}>{comment}</p>
-        ))}
+      <UserCommentBox>
+        <p>{content}</p>
       </UserCommentBox>
     );
   };

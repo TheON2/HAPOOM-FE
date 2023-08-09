@@ -1,4 +1,3 @@
-// Detail 페이지 컴포넌트
 import React from 'react';
 import DetailComments from '@/components/Detail/DetailComments';
 import DetailMapComponent from '@/components/Detail/DetailMapComponent';
@@ -7,17 +6,16 @@ import DetailYoutubePlayer from '@/components/Detail/DetailYoutubePlayer';
 import { DetailSection } from '@/styles/detail';
 
 type Props = {
-  data: any;
+  data: IData;
 };
 
 const Detail: React.FC<Props> = ({ data }) => {
-  console.log(data.videoId);
   return (
     <DetailSection>
       <DetailUserPost data={data} />
-      <DetailYoutubePlayer videoId={data.videoId} />
+      <DetailYoutubePlayer />
       <DetailMapComponent
-        location={{ name: '서울특별시 강남구', x: 127.02761, y: 37.495826 }}
+        location={{ name: data.placeName, x: data.longitude, y: data.latitude }}
       />
 
       <DetailComments />
@@ -26,18 +24,24 @@ const Detail: React.FC<Props> = ({ data }) => {
 };
 
 export async function getServerSideProps() {
-  const res = await fetch('http://localhost:3001/api/main');
-  const data = await res.json();
+  try {
+    const res = await fetch('http://localhost:3001/test/post/1');
 
-  if (!data) {
+    if (!res.ok) {
+      throw new Error('Network response was not ok');
+    }
+
+    const data = await res.json();
+
+    return {
+      props: { data }, // will be passed to the page component as props
+    };
+  } catch (error) {
+    console.error('Error fetching data:', error);
     return {
       notFound: true,
     };
   }
-
-  return {
-    props: { data }, // will be passed to the page component as props
-  };
 }
 
 export default Detail;
