@@ -8,78 +8,17 @@ import {
   TabIndicator,
 } from '@/styles/user';
 import cloud from '../../public/🦆 icon _cloud_.svg';
-import c1 from '../../public/c1.jpeg';
-import c2 from '../../public/c2.jpeg';
-import c3 from '../../public/c3.jpeg';
-import c4 from '../../public/c4.jpeg';
-import c5 from '../../public/c5.jpeg';
-import Image, { StaticImageData } from 'next/image';
+import Image from 'next/image';
+import { Post, UserData } from './UserUi';
 
-interface CloudImage {
-  id: number;
-  src: StaticImageData;
-  alt: string;
+interface PostLike {
+  data: UserData | undefined;
 }
-const cloudImage: CloudImage[] = [
-  {
-    id: 1,
-    src: c1,
-    alt: 'c1',
-  },
-  {
-    id: 2,
-    src: c2,
-    alt: 'c2',
-  },
-  {
-    id: 3,
-    src: c3,
-    alt: 'c3',
-  },
-  {
-    id: 4,
-    src: c4,
-    alt: 'c4',
-  },
-  {
-    id: 5,
-    src: c5,
-    alt: 'c5',
-  },
-];
-const cloudLikeImage: CloudImage[] = [
-  {
-    id: 1,
-    src: c1,
-    alt: 'c1',
-  },
-  {
-    id: 2,
-    src: c1,
-    alt: 'c1',
-  },
-  {
-    id: 3,
-    src: c1,
-    alt: 'c1',
-  },
-  {
-    id: 4,
-    src: c1,
-    alt: 'c1',
-  },
-  {
-    id: 5,
-    src: c1,
-    alt: 'c1',
-  },
-];
 
-const PostLike = () => {
+const PostLike: React.FC<PostLike> = ({ data }) => {
   const [selectedTab, setSelectedTab] = useState(0);
   const [indicatorStyle, setIndicatorStyle] = useState({ width: 0, left: 0 });
-  const [displayedPosts, setDisplayedPosts] =
-    useState<CloudImage[]>(cloudImage);
+  const [displayedPosts, setDisplayedPosts] = useState<Post[] | null>(null);
 
   useEffect(() => {
     const updateIndicator = () => {
@@ -98,9 +37,9 @@ const PostLike = () => {
     setSelectedTab(index);
     setIndicatorStyle({ width, left });
     if (index === 0) {
-      setDisplayedPosts(cloudImage);
+      setDisplayedPosts(data?.posts ?? null);
     } else {
-      setDisplayedPosts(cloudLikeImage);
+      setDisplayedPosts(data?.likePosts ?? null);
     }
   };
 
@@ -138,19 +77,34 @@ const PostLike = () => {
       <Line></Line>
 
       <PostImageBox>
-        {displayedPosts.map((image) => (
-          <div
-            key={image.id}
-            style={{ position: 'relative', display: 'inline-block' }}
-          >
-            <Image
-              src={image.src}
-              alt={image.alt}
-              width={232}
-              height={228}
-              objectFit={'cover'}
-            />
-            {selectedTab === 1 && (
+        {selectedTab === 0 &&
+          data?.posts?.map((post) => (
+            <div
+              key={post.id}
+              style={{ position: 'relative', display: 'inline-block' }}
+            >
+              <Image
+                src={post.image.url}
+                alt={'게시물 이미지'}
+                width={232}
+                height={228}
+                objectFit={'cover'}
+              />
+            </div>
+          ))}
+        {selectedTab === 1 &&
+          data?.likePosts?.map((post) => (
+            <div
+              key={post.id}
+              style={{ position: 'relative', display: 'inline-block' }}
+            >
+              <Image
+                src={post.image.url}
+                alt={'게시물 이미지'}
+                width={232}
+                height={228}
+                objectFit={'cover'}
+              />
               <Image
                 src={cloud}
                 alt="좋아요"
@@ -161,9 +115,8 @@ const PostLike = () => {
                   cursor: 'pointer',
                 }}
               />
-            )}
-          </div>
-        ))}
+            </div>
+          ))}
       </PostImageBox>
     </PostBox>
   );
