@@ -73,7 +73,6 @@ const SignInUi = () => {
     }));
   };
 
-
   const handleLogin = (e: FormEvent) => {
     e.preventDefault();
     let errors: any = {};
@@ -95,7 +94,6 @@ const SignInUi = () => {
       password: signInState.password,
     };
     signInMutation.mutate(sendData);
-
   };
 
   return (

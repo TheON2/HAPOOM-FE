@@ -19,10 +19,11 @@ export const GlobalStyle = createGlobalStyle`
   `;
 
 export const DetailSection = styled.section`
-  max-width: 900px;
-  height: 2386px;
+  max-width: 360px;
   border: 1px solid black;
   margin: auto;
+  padding-right: 24px;
+  padding-left: 24px;
 `;
 
 export const UserContainer = styled.div`
@@ -51,9 +52,9 @@ export const UserHeaderBox = styled.div`
   border: 1px solid black;
 
   .userPic {
-    width: 81px;
-    height: 81px;
-    border: 1px solid black;
+    width: 46px;
+    height: 46px;
+    border: 1pfx solid black;
     border-radius: 50%;
   }
 
@@ -71,13 +72,21 @@ export const UserPictureBox = styled.div`
   display: flex;
   border: 1px solid black;
   width: 100%;
-  height: 500px;
+  height: 212px;
   margin-bottom: 30px;
+  position: relative; // 상대 위치 설정
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 
   .dot-navigation {
     display: flex;
     justify-content: center;
-    padding: 10px;
+    z-index: 1001; // 높은 z-index 값 설정
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    right: 0;
   }
 
   .dot {
@@ -115,4 +124,33 @@ export const DetailYoutubePlayerComponent = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+// 댓글
+
+export const CommentContainer = styled.div`
+  display: flex;
+  gap: 15px;
+  padding: 10px;
+  border: 1px solid #e1e1e1;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+`;
+
+export const CommentContent = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: flex-start;
+`;
+
+export const CommentInputContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 10px;
+  border: 1px solid #e1e1e1;
+  border-radius: 10px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 `;

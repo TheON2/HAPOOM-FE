@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 const ButtonStyle = styled.button`
   /* height: 36px; */
+  width: 100%;
   padding: 12px 16px 8px;
   border-radius: 3px;
   color: #fff;
@@ -14,7 +15,8 @@ const ButtonStyle = styled.button`
 type buttonProps = {
   children: ReactNode;
   type?: 'button' | 'submit' | 'reset';
-  className: string;
+  className?: string;
+  onClick?: any;
 };
 
 const Button = ({ children, ...restProps }: buttonProps) => {
