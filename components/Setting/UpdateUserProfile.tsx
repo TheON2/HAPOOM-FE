@@ -9,6 +9,7 @@ import styled from 'styled-components';
 import Image from 'next/image';
 import { QueryClient, useMutation } from 'react-query';
 import Button from '@/components/common/Button';
+import { updateUserSetting } from '@/api/user';
 // import
 const ProfilePresetList = styled.ul`
   display: flex;
@@ -76,12 +77,15 @@ const ButtonBox = styled.div`
 
 const profileData = ['/inflearn.jpg', '/inflearn.jpg', '/inflearn.jpg'];
 
-const UserProfileImageUpdate = () => {
+type profileType = {
+  profileImage: string;
+};
+
+const UserProfileImageUpdate = ({ profileImage }: profileType) => {
   const [selectProfile, setSelectProfile] = useState<number>(0);
   const [userProfile, setUserProfile] = useState<string>('');
   const [image, setImage] = useState<File | Blob | null>(null);
   const imageRef = useRef<File | null>(null);
-
   const onClickProfileHandler = (idx: number, src?: string | File | null) => {
     setSelectProfile(idx);
 
@@ -108,29 +112,30 @@ const UserProfileImageUpdate = () => {
     }
   };
 
-  // const mutation = useMutation((formData) => 기능(formData), {
-  //   onSuccess: (msg) => {
-  //     QueryClient.invalidateQueries('tradingItem');
-  //   },
-  // });
-
   const handleImageUpload = async (imagePath: any) => {
     const response = await fetch(imagePath);
     const imageData = await response.blob();
     setImage(imageData);
   };
 
+  const mutation = useMutation(
+    (formData: FormData) => updateUserSetting(formData),
+    {
+      onSuccess: (msg) => {
+        // QueryClient.invalidateQueries('tradingItem');
+      },
+    }
+  );
+
   const onSubmitUserProfile = async (e: FormEvent) => {
     e.preventDefault();
     const formData = new FormData();
     if (image) {
-      formData.append('profileImage', image);
-      // console.log('submit');
-      // console.log(image);
-      // console.log(formData);
-    } else {
-      formData.append('profileImage', '');
+      formData.append('userImage', image);
+      await mutation.mutateAsync(formData);
+      console.log(image);
     }
+    console.log('submit');
   };
 
   return (
