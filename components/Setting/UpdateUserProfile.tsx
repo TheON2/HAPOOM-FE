@@ -2,12 +2,13 @@ import React, {
   ChangeEvent,
   FormEvent,
   ReactNode,
+  useEffect,
   useRef,
   useState,
 } from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
-import { QueryClient, useMutation } from 'react-query';
+import { QueryClient, useMutation, useQueryClient } from 'react-query';
 import Button from '@/components/common/Button';
 import { updateUserSetting } from '@/api/user';
 // import
@@ -82,30 +83,35 @@ type profileType = {
 };
 
 const UserProfileImageUpdate = ({ profileImage }: profileType) => {
-  console.log('이미지 리렌더링');
-
   const [selectProfile, setSelectProfile] = useState<number>(0);
   const [userProfile, setUserProfile] = useState<string>('');
-  const [image, setImage] = useState<File | Blob | null>(null);
-  const imageRef = useRef<File | null>(null);
-  const onClickProfileHandler = (idx: number, src?: string | File | null) => {
-    setSelectProfile(idx);
+  const [image, setImage] = useState<any>(null);
+  const [sendImage, setSendImage] = useState<any>('');
+  const imageRef = useRef<any>(null);
 
-    if (idx === 0) {
-      setImage(imageRef.current);
-    } else if (idx === 4) {
-      setImage(null);
-    } else {
-      handleImageUpload(src);
-    }
+  //프리셋 2-5는 다르게 보내기
+  const onClickProfileHandler = (idx: number, src?: string | undefined) => {
+    setSelectProfile(idx);
+    // setSendImage(src);
+    // if (idx === 0) {
+    //   setImage(imageRef.current);
+    // } else if (idx === 4) {
+    //   setImage(null);
+    // } else {
+    //   handleImageUpload(src);
+    // }
   };
 
   const onChangeProfileUpdate = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files;
-    console.log(file);
     if (file) {
-      imageRef.current = file[0];
+      // const tmpPath = URL.createObjectURL(file[0]);
+      // const imageURL = tmpPath.replace(/^blob:/i, '');
+      // console.log(imageURL);
+      // setImage(tmpPath);
       setImage(file[0]);
+      setSendImage(file[0]);
+
       const reader = new FileReader();
       reader.readAsDataURL(file[0]);
       reader.onloadend = () => {
@@ -113,38 +119,47 @@ const UserProfileImageUpdate = ({ profileImage }: profileType) => {
       };
     }
   };
+  // const handleImageUpload = async (imagePath: any) => {
+  //   const response = await fetch(imagePath);
+  //   const imageData = await response.blob();
+  //   setImage(imageData);
+  // };
 
-  const handleImageUpload = async (imagePath: any) => {
-    const response = await fetch(imagePath);
-    const imageData = await response.blob();
-    setImage(imageData);
-  };
+  const queryClient = useQueryClient();
 
-  const mutation = useMutation(
+  const mutate = useMutation(
     (formData: FormData) => updateUserSetting(formData),
     {
-      onSuccess: (msg) => {
-        // QueryClient.invalidateQueries('tradingItem');
+      onSuccess: () => {
+        queryClient.invalidateQueries('userSetting');
       },
     }
   );
 
   const onSubmitUserProfile = async (e: FormEvent) => {
     e.preventDefault();
+    if (userProfile === '') {
+      return alert('프로필 이미지를 업로드 해주세요');
+    }
     const formData = new FormData();
-    if (image) {
-      formData.append('userImage', image);
-      await mutation.mutateAsync(formData);
+    const freeformData = new FormData();
+
+    freeformData.append('userImage', selectProfile.toString());
+    await mutate.mutateAsync(formData);
+
+    if (selectProfile === 0) {
+      formData.append('image', image);
+      await mutate.mutateAsync(formData);
+      // console.log(sendImage);
       console.log(image);
     }
-    console.log('submit');
   };
 
   return (
     <>
       <form action="" onSubmit={onSubmitUserProfile}>
         <ProfilePresetList>
-          <ProfileItem onClick={() => onClickProfileHandler(0)}>
+          <ProfileItem onClick={() => onClickProfileHandler(0, image)}>
             <figure className={selectProfile === 0 ? 'active' : ''}>
               <Image
                 src={userProfile ? userProfile : '/inflearn.jpg'}
@@ -159,7 +174,7 @@ const UserProfileImageUpdate = ({ profileImage }: profileType) => {
             return (
               <ProfileItem
                 key={idx}
-                onClick={() => onClickProfileHandler(idx + 1, profile)}
+                onClick={() => onClickProfileHandler(idx + 1)}
               >
                 <figure className={selectProfile === idx + 1 ? 'active' : ''}>
                   <Image

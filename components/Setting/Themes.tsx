@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import AccordianMenu from '@/components/common/AccordianMenu';
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import { updateUserSetting } from '@/api/user';
 
 const ThemesBox = styled.div`
@@ -33,8 +33,15 @@ type settingProps = {
 };
 
 const Themes = ({ theme }: settingProps) => {
-  const mutate = useMutation((formData: FormData) =>
-    updateUserSetting(formData)
+  const queryClient = useQueryClient();
+
+  const mutate = useMutation(
+    (formData: FormData) => updateUserSetting(formData),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('userSetting');
+      },
+    }
   );
 
   const onClickThemesHandler = async (themes: number) => {
