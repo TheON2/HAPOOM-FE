@@ -18,6 +18,9 @@ import { GetStaticProps, NextPage, GetServerSideProps } from 'next';
 import { useQuery } from 'react-query';
 import axios from 'axios';
 import MobileBottomNav from '@/components/common/MobileBottomNav';
+import { getAuthToken } from '@/api/user';
+import { AUTH_USER, UserResponse } from '@/redux/reducers/userSlice';
+import { useDispatch } from 'react-redux';
 interface Props {
   data: SliderImage[];
   hashtagData: SliderImage[];
@@ -31,6 +34,20 @@ const Home: NextPage<Props> = ({
   hashContent,
   popularContent,
 }) => {
+  const dispatch = useDispatch();
+  const isClientSide = typeof window !== 'undefined';
+  const tokenExists = isClientSide ? !!localStorage.getItem('token') : false;
+
+  const { data: userData, isSuccess: tokenSuccess } = useQuery(
+    'user',
+    getAuthToken,
+    {
+      onSuccess: (userData: UserResponse) => {
+        dispatch(AUTH_USER(userData));
+      },
+      enabled: tokenExists, // 클라이언트 측에서만 토큰 존재 여부 확인
+    }
+  );
   return (
     <>
       <Main>

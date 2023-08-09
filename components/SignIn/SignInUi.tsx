@@ -13,13 +13,13 @@ import {
   TextPwSetParagraph,
   TextSignUpLinkParagraph,
 } from '@/styles/signIn';
-import React, { useState } from 'react';
+import React, { FormEvent, useState } from 'react';
 import SocialLogin from './SocialLogIn';
+
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 import { useMutation } from 'react-query';
 import { NextRouter } from 'next/router';
-import { FormEvent } from 'react';
 import { LOGIN_USER } from '@/redux/reducers/userSlice';
 import { userLogin } from '@/api/user';
 
@@ -73,6 +73,7 @@ const SignInUi = () => {
     }));
   };
 
+
   const handleLogin = (e: FormEvent) => {
     e.preventDefault();
     let errors: any = {};
@@ -94,6 +95,7 @@ const SignInUi = () => {
       password: signInState.password,
     };
     signInMutation.mutate(sendData);
+
   };
 
   return (
@@ -117,6 +119,7 @@ const SignInUi = () => {
             onChange={handleInputChange}
           />
         </StyledInputBox>
+
         {error.message && (
           <TextErrorParagraph>{error.message}</TextErrorParagraph>
         )}
