@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import useInput from '@/hooks/useInput';
 import Button from '@/components/common/Button';
 import { StyledInputBox, StyledInput } from '@/styles/signUp';
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import { updateUserSetting } from '@/api/user';
 
 export interface Signup {
@@ -52,8 +52,15 @@ const UpdatePassword = () => {
     return passwordPattern.test(password);
   };
 
-  const mutate = useMutation((formData: FormData) =>
-    updateUserSetting(formData)
+  const queryClient = useQueryClient();
+
+  const mutate = useMutation(
+    (formData: FormData) => updateUserSetting(formData),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('userSetting');
+      },
+    }
   );
 
   const submitUser = async (event: any) => {
@@ -82,7 +89,7 @@ const UpdatePassword = () => {
 
     if (Object.keys(errors).length === 0) {
       const formData = new FormData();
-      formData.append('theme', signUpState.password);
+      formData.append('password', signUpState.password);
       await mutate.mutateAsync(formData);
     }
   };

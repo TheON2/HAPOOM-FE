@@ -26,6 +26,25 @@ const AccordianContent = styled.div`
   padding-bottom: 36px;
 `;
 
+const ProfileBox = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 20px 30px;
+  gap: 30px;
+  /* height: 10vh; */
+  div {
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
+    overflow: hidden;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+`;
+
 const Setting = () => {
   const [nickName, setNickName] = useState<string>();
   const [profileImage, setProfileImage] = useState();
@@ -49,12 +68,31 @@ const Setting = () => {
       // setTheme(data.theme);
     },
   });
-  console.log(userSetting);
+
   return (
     <Main>
       <Header />
       <SettingLayout>
-        {userSetting?.user.nickname}
+        <ProfileBox>
+          <div>
+            <Image
+              src={'/inflearn.jpg'}
+              alt={'image'}
+              width={100}
+              height={100}
+            />
+          </div>
+          <h2>{userSetting?.user.nickname}</h2>
+        </ProfileBox>
+        {userSetting?.user.userImage} <br />
+        {userSetting?.user.theme} <br />
+        {userSetting?.user.password} <br />
+        {/* <Image
+          src={userSetting?.user.userImage}
+          alt={'image'}
+          width={100}
+          height={100}
+        /> */}
         <AccordianMenu tabText="별명 수정">
           <AccordianContent>
             <UpdateNickName nickname={userSetting?.user.nickname} />

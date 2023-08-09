@@ -19,7 +19,7 @@ type settingProps = {
 };
 
 const UpdateNickName: NextPage<settingProps> = ({ nickname }) => {
-  console.log('리렌더링');
+  // console.log('리렌더링');
   const [nickName, onClickNickName, setNickName] = useInput<string | undefined>(
     nickname
   );
