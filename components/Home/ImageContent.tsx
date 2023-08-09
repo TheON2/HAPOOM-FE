@@ -56,8 +56,8 @@ const ImageContent: NextPage<Props> = ({ src, alt }) => {
           alt={alt}
           fill
           sizes="(max-width: 1440px) 288px"
-          placeholder="blur"
-          blurDataURL={src}
+          // placeholder="blur"
+          // blurDataURL={src}
         />
       </ImageBox>
       <HeartIcon
