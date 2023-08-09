@@ -45,6 +45,7 @@ export interface UserData {
 
 const UserUi = () => {
   const { data } = useQuery<UserData>('users', getUserProfile);
+
   return (
     <UserPageSection>
       <UserPageContainer>
