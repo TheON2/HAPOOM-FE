@@ -22,7 +22,7 @@ const addPost = async (postData: UpdateData) => {
       'Content-Type': 'multipart/form-data',
     },
   };
-  const response = await api.post('/api/post', postData.formData, config);
+  const response = await api.post('/test/post', postData.formData, config);
 };
 
 const updatePost = async (postData: UpdateData) => {
@@ -32,14 +32,14 @@ const updatePost = async (postData: UpdateData) => {
     },
   };
   const response = await api.put(
-    `/api/post/${postData.updateId}`,
+    `/test/post/${postData.updateId}`,
     postData.formData,
     config
   );
 };
 
 const getPost = async (id: string) => {
-  const response = await api.get(`/api/post/${id}`);
+  const response = await api.get(`/test/post/${id}`);
   return response.data;
 };
 
