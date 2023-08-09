@@ -50,9 +50,9 @@ const Home: NextPage<Props> = ({
   );
   return (
     <>
+      <Header sticky={'sticky'} />
+      <MainBannerSlider data={data} />
       <Main>
-        <Header />
-        <MainBannerSlider data={data} />
         <HashtagNavBar data={hashtagData} />
         <MobileBottomNav />
         <HashtagContents data={hashContent} />

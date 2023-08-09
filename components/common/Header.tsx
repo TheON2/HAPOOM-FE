@@ -1,4 +1,10 @@
-import React, { ReactNode, useCallback, useEffect, useRef, useState } from 'react';
+import React, {
+  ReactNode,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
 import SideNav from './SideNav';
@@ -71,13 +77,29 @@ const Header = ({ sticky }: any) => {
     <>
       <HeaderLayout sticky={sticky}>
         <LogoBox href={'/'}>
-          <Image src={'/inflearn.jpg'} alt="logo" width={200} height={50} loading="eager" />
+          <Image
+            src={'/inflearn.jpg'}
+            alt="logo"
+            width={200}
+            height={50}
+            loading="eager"
+          />
         </LogoBox>
         <AccountActionsContainer>
           <SearchInputBox $isSearch={isSearch}>
-            <input type="text" value={search} onChange={onChangeSearchHandler} />
+            <input
+              type="text"
+              value={search}
+              onChange={onChangeSearchHandler}
+            />
             <IconBox onClick={onClickSearchIconHandler}>
-              <Image src={'/🦆 icon _star_.svg'} alt="icon" loading="eager" width={50} height={50} />
+              <Image
+                src={'/🦆 icon _star_.svg'}
+                alt="icon"
+                loading="eager"
+                width={50}
+                height={50}
+              />
             </IconBox>
           </SearchInputBox>
           <GoWriteLink href={'/post/Write'}>글쓰기</GoWriteLink>
@@ -114,16 +136,27 @@ const Header = ({ sticky }: any) => {
         </AccountActionsContainer>
         <MobileBox>
           <IconButton>
-            <Image src={'/🦆 icon _cloud_.svg'} alt="prpfile image" width={28} height={28} loading="eager" />
+            <Image
+              src={'/🦆 icon _cloud_.svg'}
+              alt="prpfile image"
+              width={28}
+              height={28}
+              loading="eager"
+            />
           </IconButton>
-          <HamburgerButton onClick={onClickShowMenuHandler} className={isShowMenu ? 'active' : ''}>
+          <HamburgerButton
+            onClick={onClickShowMenuHandler}
+            className={isShowMenu ? 'active' : ''}
+          >
             <span></span>
             <span></span>
             <span></span>
           </HamburgerButton>
         </MobileBox>
       </HeaderLayout>
-      {isShowMenu && <SideNav setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu} />}
+      {isShowMenu && (
+        <SideNav setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu} />
+      )}
     </>
   );
 };

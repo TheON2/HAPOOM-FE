@@ -7,40 +7,70 @@ import {
   SideNavMenuItem,
   SubMenuList,
 } from '@/styles/navbar';
-
+import IconButton from './IconButton';
 interface SubmenuProps {
   children: React.ReactNode;
 }
-const SubMenu = ({ children }: SubmenuProps) => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-  const handleClick = () => {
-    setIsOpen(!isOpen);
-  };
-  return (
-    <>
-      <button onClick={handleClick}>
-        테마 선택
-        <span className="right">
-          {isOpen ? (
-            <i className="fa fa-caret-down"></i>
-          ) : (
-            <i className="fa fa-caret-up"></i>
-          )}
-        </span>
-      </button>
-      {isOpen && <SubMenuList>{children}</SubMenuList>}
-    </>
-  );
-};
 
+import AccordianMenu, { AccordianTab } from './AccordianMenu';
+import Image from 'next/image';
+import Themes from '@/components/Setting/Themes';
 const OverlayBox = styled.div`
   width: 100%;
   height: 100vh;
   background: #000;
   opacity: 0.4;
   position: fixed;
+  top: 0;
   z-index: 19;
   cursor: pointer;
+`;
+
+const ThemesBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  button {
+    padding: 10px 0 8px;
+    border-radius: 24px;
+    font-size: 12px;
+    border: none;
+    &:nth-child(1) {
+      background-color: #fff;
+      border: 1px solid #5f7ba6;
+    }
+    &:nth-child(2) {
+      background-color: #132b4f;
+      color: #fff;
+    }
+    &:nth-child(3) {
+      background-color: #000;
+      color: #fff;
+    }
+  }
+`;
+
+const NavbarTab = styled(Link)`
+  width: 100%;
+  padding: 20px 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 700;
+  color: #8995a7;
+`;
+
+const ProfileBox = styled.div`
+  width: 100%;
+  height: 80px;
+`;
+
+const IconBox = styled.div`
+  width: 100%;
+  height: 54px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 `;
 
 type sideNavProps = {
@@ -57,30 +87,38 @@ const SideNav = ({ isShowMenu, setIsShowMenu }: sideNavProps) => {
       <OverlayBox onClick={onClickOverlayHandler}></OverlayBox>
       <SideNavLayout>
         <SideNavMenuList>
-          <SideNavMenuItem>
-            <Link href="/setting/Setting">마이페이지</Link>
-          </SideNavMenuItem>
-          <SideNavMenuItem>
-            <Link href="/User/User">유저페이지</Link>
-          </SideNavMenuItem>
-          <SideNavMenuItem className="none-padding">
-            <SubMenu>
-              <li>
-                <button>아침</button>
-              </li>
-              <li>
-                <button>점심</button>
-              </li>
-              <li>
-                <button>저녁</button>
-              </li>
-            </SubMenu>
-          </SideNavMenuItem>
-          <SideNavMenuItem>
-            <Link href="/home/Home">무언가 추가된다면</Link>
-          </SideNavMenuItem>
+          <IconBox>
+            <IconButton>
+              <Image
+                src={'/🦆 icon _cloud_.svg'}
+                alt={'icon'}
+                width={26}
+                height={26}
+              />
+            </IconButton>
+          </IconBox>
+          <ProfileBox></ProfileBox>
+          <NavbarTab href="/setting/Setting">
+            My page
+            <Image
+              src={'/🦆 icon _cloud_.svg'}
+              alt={'icon'}
+              width={20}
+              height={20}
+            />
+          </NavbarTab>
+          <Themes />
         </SideNavMenuList>
-        <button>로그아웃</button>
+        <IconBox>
+          <IconButton>
+            <Image
+              src={'/🦆 icon _cloud_.svg'}
+              alt={'icon'}
+              width={26}
+              height={26}
+            />
+          </IconButton>
+        </IconBox>
       </SideNavLayout>
     </>
   );

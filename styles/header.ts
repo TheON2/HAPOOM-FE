@@ -1,11 +1,15 @@
 import styled from 'styled-components';
 import Link from 'next/link';
 
-export const HeaderLayout = styled.header`
+type HeaderProps = {
+  sticky: string;
+};
+
+export const HeaderLayout = styled.header<HeaderProps>`
   width: 100%;
   height: 58px;
   padding: 0 24px;
-  position: fixed;
+  position: ${(props) => (props.sticky ? 'fixed' : 'sticky')};
   z-index: 15;
   top: 0;
   background: linear-gradient(
