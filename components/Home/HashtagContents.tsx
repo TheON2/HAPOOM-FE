@@ -35,7 +35,7 @@ const HashtagContents: React.FC<Props> = ({ data }) => {
       <HashtagContentsContainer>
         {data.map((content, index) => {
           return (
-            <ImageContent key={index} src={content.image.url} alt={'date'} />
+            <ImageContent key={index} src={content.image?.url} alt={'date'} />
           );
         })}
       </HashtagContentsContainer>
