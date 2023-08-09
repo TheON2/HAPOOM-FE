@@ -95,6 +95,10 @@ const YoutubePlayer = ({
             width: '0',
             playerVars: {
               autoplay: 1,
+              start: 30, // 재생 시작 시간 (초)
+              end: 60, // 재생 종료 시간 (초)
+              loop: 1, // 반복 재생 활성화
+              playlist: videoIdParam, // 반복 재생할 비디오 ID (동일한 ID로 설정)
             },
             events: {
               onReady: (event) => {
