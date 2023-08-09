@@ -136,6 +136,7 @@ const PostLike = () => {
         <TabIndicator width={indicatorStyle.width} left={indicatorStyle.left} />
       </PostContentBox>
       <Line></Line>
+
       <PostImageBox>
         {displayedPosts.map((image) => (
           <div
