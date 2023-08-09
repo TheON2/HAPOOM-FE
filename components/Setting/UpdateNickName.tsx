@@ -6,26 +6,42 @@ import useInput from '@/hooks/useInput';
 import { NextPage } from 'next';
 import Input from '@/components/Setting/Input';
 import Button from '@/components/common/Button';
+import {
+  useQuery,
+  useMutation,
+  QueryClient,
+  useQueryClient,
+} from 'react-query';
+import { updateUserSetting } from '@/api/user';
 
 type settingProps = {
-  userData: string;
+  nickname?: string;
 };
 
-const UpdateNickName: NextPage<settingProps> = ({ userData }) => {
-  const [nickName, onClickNickName, setNickName] = useInput<string>(userData);
+const UpdateNickName: NextPage<settingProps> = ({ nickname }) => {
+  // console.log('리렌더링');
+  const [nickName, onClickNickName, setNickName] = useInput<string | undefined>(
+    nickname
+  );
   const [error, setError] = useState<string>('');
-  //   const mutation = useMutation((formData) => 기능(formData), {
-  //     onSuccess: () => {
-  //         QueryClient.invalidateQueries('');
-  //     },
-  // });
+
+  const queryClient = useQueryClient();
+
+  const mutate = useMutation(
+    (formData: FormData) => updateUserSetting(formData),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('userSetting');
+      },
+    }
+  );
 
   const validateNickname = (nickname: string) => {
     const nicknamePattern = /^.{2,15}$/;
     return nicknamePattern.test(nickname);
   };
 
-  const onSubmitNickNameHandler = (e: FormEvent) => {
+  const onSubmitNickNameHandler = async (e: FormEvent) => {
     e.preventDefault();
 
     let errors: string = '';
@@ -44,8 +60,10 @@ const UpdateNickName: NextPage<settingProps> = ({ userData }) => {
     }
 
     if (errors === '') {
-      alert('nickName');
-      // addUserMutation.mutate(nickName);
+      const formData = new FormData();
+      formData.append('nickname', nickName ?? '');
+      await mutate.mutateAsync(formData);
+      console.log(nickName);
     }
   };
 

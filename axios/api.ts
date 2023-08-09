@@ -34,7 +34,7 @@ instance.interceptors.response.use(
     ) {
       console.log('토큰이 존재하지 않습니다');
       store.dispatch(UNAUTH_USER());
-      
+
       // 아래 라인을 추가하여 로그인 페이지로 리다이렉션합니다.
       if (typeof window !== 'undefined') {
         window.location.href = '/auth/SignIn';
@@ -70,6 +70,9 @@ instance.interceptors.response.use(
       } catch (err) {
         console.log('리프레시토큰이 만료되었습니다.');
         store.dispatch(UNAUTH_USER());
+        if (typeof window !== 'undefined') {
+          window.location.href = '/auth/SignIn';
+        }
         return Promise.reject(err);
       }
     }

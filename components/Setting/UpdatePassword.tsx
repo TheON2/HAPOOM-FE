@@ -4,7 +4,8 @@ import styled from 'styled-components';
 import useInput from '@/hooks/useInput';
 import Button from '@/components/common/Button';
 import { StyledInputBox, StyledInput } from '@/styles/signUp';
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
+import { updateUserSetting } from '@/api/user';
 
 export interface Signup {
   password: string;
@@ -25,13 +26,11 @@ const InputBox = styled.div`
 `;
 
 const UpdatePassword = () => {
-  // const [password, handlePasswordChange, setPasswordValue] =
-  //   useInput<string>('');
-  // const [confirm, handleConfirmChange, setConfirmValue] = useInput<string>('');
   const [signUpState, setSignUpState] = useState<Signup>({
     password: '',
     passwordConfirm: '',
   });
+
   const [error, setError] = useState<Signup>({
     password: '',
     passwordConfirm: '',
@@ -53,16 +52,18 @@ const UpdatePassword = () => {
     return passwordPattern.test(password);
   };
 
-  // const addUserMutation = useMutation(addUser, {
-  //   onSuccess: () => {
-  //     console.log('수정 성공');
-  //   },
-  //   onError: (error) => {
-  //     console.error('회원가입 실패');
-  //   },
-  // });
+  const queryClient = useQueryClient();
 
-  const submitUser = (event: any) => {
+  const mutate = useMutation(
+    (formData: FormData) => updateUserSetting(formData),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('userSetting');
+      },
+    }
+  );
+
+  const submitUser = async (event: any) => {
     event.preventDefault();
 
     let errors: any = {};
@@ -87,12 +88,9 @@ const UpdatePassword = () => {
     }
 
     if (Object.keys(errors).length === 0) {
-      const sendData = {
-        password: signUpState.password,
-      };
-      alert(sendData);
-
-      // addUserMutation.mutate(sendData);
+      const formData = new FormData();
+      formData.append('password', signUpState.password);
+      await mutate.mutateAsync(formData);
     }
   };
 

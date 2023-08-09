@@ -51,7 +51,14 @@ const ImageContent: NextPage<Props> = ({ src, alt }) => {
   return (
     <ImageContentLayout>
       <ImageBox href="/home/Home">
-        <Image src={src} alt={alt} fill sizes="(max-width: 1440px) 288px" />
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          sizes="(max-width: 1440px) 288px"
+          // placeholder="blur"
+          // blurDataURL={src}
+        />
       </ImageBox>
       <HeartIcon
         onClick={(event) => onClickHeartHandler(`1`, event)}
