@@ -19,6 +19,7 @@ type settingProps = {
 };
 
 const UpdateNickName: NextPage<settingProps> = ({ nickname }) => {
+  console.log('리렌더링');
   const [nickName, onClickNickName, setNickName] = useInput<string | undefined>(
     nickname
   );
@@ -30,7 +31,7 @@ const UpdateNickName: NextPage<settingProps> = ({ nickname }) => {
     (formData: FormData) => updateUserSetting(formData),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries('user');
+        queryClient.invalidateQueries('userSetting');
       },
     }
   );

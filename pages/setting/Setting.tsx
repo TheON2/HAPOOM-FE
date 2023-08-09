@@ -27,9 +27,9 @@ const AccordianContent = styled.div`
 `;
 
 const Setting = () => {
-  // const [nickName, setNickName] = useState<string>();
-  // const [profileImage, setProfileImage] = useState();
-  // const [theme, setTheme] = useState();
+  const [nickName, setNickName] = useState<string>();
+  const [profileImage, setProfileImage] = useState();
+  const [theme, setTheme] = useState();
   const dispatch = useDispatch();
 
   const { data: userData, isSuccess: tokenSuccess } = useQuery(
@@ -41,31 +41,32 @@ const Setting = () => {
       },
     }
   );
-  const { data } = useQuery('user', getUserSetting, {
+  const { data: userSetting } = useQuery('userSetting', getUserSetting, {
     onSuccess: (data) => {
+      console.log(data);
       // setNickName(data.user.nickname);
       // setProfileImage(data.userImage);
       // setTheme(data.theme);
     },
   });
-
+  console.log(userSetting);
   return (
     <Main>
       <Header />
       <SettingLayout>
-        {data?.user.nickname}
+        {userSetting?.user.nickname}
         <AccordianMenu tabText="별명 수정">
           <AccordianContent>
-            <UpdateNickName nickname={data?.user.nickname} />
+            <UpdateNickName nickname={userSetting?.user.nickname} />
           </AccordianContent>
         </AccordianMenu>
         <AccordianMenu tabText="프로필 수정">
           <AccordianContent>
-            <UpdateUserProfile profileImage={data?.user.userImage} />
+            <UpdateUserProfile />
           </AccordianContent>
         </AccordianMenu>
         <AccordianContent>
-          <Themes theme={data?.user.theme} />
+          <Themes />
         </AccordianContent>
         <AccordianMenu tabText="비밀번호 수정">
           <AccordianContent>
