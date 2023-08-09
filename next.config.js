@@ -3,11 +3,12 @@ const withPWA = require('next-pwa')({
   dest: 'public',
   register: true,
   skipWaiting: true,
+  disable: true,
 });
 
 module.exports = withPWA({
   reactStrictMode: true,
   images: {
-    domains: ['i.ytimg.com', 'avatars.githubusercontent.com'],
+    domains: ['localhost', 'i.ytimg.com', 'avatars.githubusercontent.com'],
   },
 });
