@@ -67,8 +67,8 @@ const DetailUserPost: React.FC<{ data: any }> = ({ data }) => {
           <Image
             src={userPic}
             alt="User Profile"
-            width={500}
-            height={500}
+            width={46}
+            height={46}
             loading="eager"
           />
         </p>
@@ -99,11 +99,11 @@ const DetailUserPost: React.FC<{ data: any }> = ({ data }) => {
         <div>
           {images.map((img, index) => (
             <Image
-              key={img}
+              key={index}
               src={img}
               alt="User uploaded"
-              width={500}
-              height={500}
+              width={100}
+              height={100}
               loading="eager"
               style={{ display: index + 1 === currentPage ? 'block' : 'none' }}
             />
@@ -130,9 +130,8 @@ const DetailUserPost: React.FC<{ data: any }> = ({ data }) => {
       'This is yet another user comment',
     ]);
 
-    const [borderColor, setBorderColor] = useState('black'); // 기본 테두리 색상을 설정합니다.
+    const [borderColor, setBorderColor] = useState('black');
     useEffect(() => {
-      // 댓글 중 하나라도 149자를 초과하면 테두리 색상을 변경합니다.
       if (comments.some((comment) => comment.length > 149)) {
         setBorderColor('red');
         alert('A comment exceeds the maximum length of 149 characters!');

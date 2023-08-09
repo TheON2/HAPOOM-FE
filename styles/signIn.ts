@@ -1,10 +1,10 @@
-import { styled } from "styled-components";
+import { styled } from 'styled-components';
 
 const theme = {
-  textColor: "#000",
-  fontFamily: "Inter",
-  primaryColor: "#0084FF",
-  inputBtnBoxWidth: "100%"
+  textColor: '#000',
+  fontFamily: 'Inter',
+  primaryColor: '#0084FF',
+  inputBtnBoxWidth: '100%',
 };
 export const SignInSection = styled.section`
   max-width: 360px;
@@ -13,21 +13,20 @@ export const SignInSection = styled.section`
   @media (max-width: 500px) {
     padding: 0 24px;
   }
-`
+`;
 export const SignInContainer = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100vh;
-`
+`;
 export const MainHeadText = styled.h1`
   color: ${theme.primaryColor};
   text-align: center;
   font-family: ${theme.fontFamily};
   font-size: 40px;
   font-weight: 900;
-
 `;
 export const StyledInputBox = styled.div`
   max-width: 312px;
@@ -41,7 +40,7 @@ const StyledInput = styled.input`
   outline: none;
   padding-left: 28px;
   border: 1px solid ${theme.primaryColor};
-  &::placeholder{
+  &::placeholder {
     font-size: 12px;
   }
 `;
@@ -59,7 +58,7 @@ export const SignInBtn = styled.button`
   border-radius: 8px;
   border: 1px solid ${theme.primaryColor};
   background: ${theme.primaryColor};
-  color: #FFF;
+  color: #fff;
   outline: none;
   text-align: center;
   font-family: ${theme.fontFamily};
@@ -85,7 +84,7 @@ export const TextPwSetParagraph = styled(TextParagraph)`
   font-size: 12px;
   font-weight: 700;
   &::after {
-    content: "";
+    content: '';
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -111,7 +110,7 @@ export const Separator = styled.span`
   margin-left: -5px;
   margin-right: 11px;
   &:after {
-    content: "";
+    content: '';
     width: 1px;
     height: 8px;
     background-color: #000;
@@ -119,7 +118,7 @@ export const Separator = styled.span`
 `;
 export const TextErrorParagraph = styled.p`
   max-width: 227px;
-  height: 27px; 
+  height: 27px;
   color: red;
   font-family: ${theme.fontFamily};
   font-size: 10px;
@@ -135,11 +134,11 @@ export const SignUpSocialSignUpBox = styled.div`
   align-items: center;
   gap: 15px;
 `;
-export const PwdSignUpSettingPageLink =styled.div`
-display: flex;
-margin-top: 20px;
-color: #868686;
-font-family: Inter;
-font-size: 20px;
-cursor: pointer;
-`
+export const PwdSignUpSettingPageLink = styled.div`
+  display: flex;
+  margin-top: 20px;
+  color: #868686;
+  font-family: Inter;
+  font-size: 20px;
+  cursor: pointer;
+`;

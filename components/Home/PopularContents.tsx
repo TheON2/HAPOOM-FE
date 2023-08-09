@@ -93,7 +93,7 @@ const PopularContents: React.FC<Props> = ({ data }) => {
                 key={index}
                 $slideItemWidth={slideWidth && slideWidth}
               >
-                <ImageContent src={content.image.url} alt={'img'} />
+                <ImageContent src={content.image?.url} alt={'img'} />
               </PopularContentItem>
             );
           })}
