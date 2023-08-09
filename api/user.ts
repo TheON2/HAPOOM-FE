@@ -40,7 +40,12 @@ const getUserSetting = async () => {
 };
 
 const updateUserSetting = async (userData: FormData) => {
-  const response = await api.put(`/test/user`, userData);
+  const response = await api.patch(`/test/user`, userData);
+  return response.data;
+};
+
+const getUserProfile = async () => {
+  const response = await api.get(`/test/user/profile`);
   return response.data;
 };
 
@@ -87,4 +92,5 @@ export {
   userLogOut,
   getUserSetting,
   updateUserSetting,
+  getUserProfile,
 };
