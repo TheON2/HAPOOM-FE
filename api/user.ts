@@ -39,8 +39,8 @@ const getUserSetting = async () => {
   return response.data;
 };
 
-const updateUserSetting = async () => {
-  const response = await api.patch(`/test/user`);
+const updateUserSetting = async (userData: FormData) => {
+  const response = await api.put(`/test/user`, userData);
   return response.data;
 };
 

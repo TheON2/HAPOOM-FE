@@ -58,8 +58,8 @@ const getComment = async (postId: string) => {
   return response.data;
 };
 
-const addComment = async () => {
-  const response = await api.post(`/test/post/comment`);
+const addComment = async (comment: FormData) => {
+  const response = await api.post(`/test/post/comment`, comment);
   return response.data;
 };
 
