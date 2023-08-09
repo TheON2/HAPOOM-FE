@@ -15,6 +15,7 @@
 /public/sw.js
 /public/ws.js.map
 yarn.lock
+.map
 
 # production
 /build
