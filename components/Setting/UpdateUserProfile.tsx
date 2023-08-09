@@ -1,9 +1,15 @@
-import React, { ChangeEvent, FormEvent, ReactNode, useState } from 'react';
+import React, {
+  ChangeEvent,
+  FormEvent,
+  ReactNode,
+  useRef,
+  useState,
+} from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
 import { QueryClient, useMutation } from 'react-query';
 import Button from '@/components/common/Button';
-
+// import
 const ProfilePresetList = styled.ul`
   display: flex;
   justify-content: space-between;
@@ -73,19 +79,26 @@ const profileData = ['/inflearn.jpg', '/inflearn.jpg', '/inflearn.jpg'];
 const UserProfileImageUpdate = () => {
   const [selectProfile, setSelectProfile] = useState<number>(0);
   const [userProfile, setUserProfile] = useState<string>('');
-  const [image, setImage] = useState<File | null>(null);
-  const [selectedImageSrc, setSelectedImageSrc] = useState<
-    File | string | null
-  >('');
+  const [image, setImage] = useState<File | Blob | null>(null);
+  const imageRef = useRef<File | null>(null);
 
-  const onClickProfileHandler = (idx: number, src: string | File | null) => {
+  const onClickProfileHandler = (idx: number, src?: string | File | null) => {
     setSelectProfile(idx);
-    setSelectedImageSrc(src);
+
+    if (idx === 0) {
+      setImage(imageRef.current);
+    } else if (idx === 4) {
+      setImage(null);
+    } else {
+      handleImageUpload(src);
+    }
   };
 
   const onChangeProfileUpdate = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files;
+    console.log(file);
     if (file) {
+      imageRef.current = file[0];
       setImage(file[0]);
       const reader = new FileReader();
       reader.readAsDataURL(file[0]);
@@ -95,28 +108,36 @@ const UserProfileImageUpdate = () => {
     }
   };
 
-  //   const mutation = useMutation((formData) => 기능(formData), {
-  //     onSuccess: (msg) => {
-  //         QueryClient.invalidateQueries('tradingItem');
-  //     },
+  // const mutation = useMutation((formData) => 기능(formData), {
+  //   onSuccess: (msg) => {
+  //     QueryClient.invalidateQueries('tradingItem');
+  //   },
   // });
+
+  const handleImageUpload = async (imagePath: any) => {
+    const response = await fetch(imagePath);
+    const imageData = await response.blob();
+    setImage(imageData);
+  };
 
   const onSubmitUserProfile = async (e: FormEvent) => {
     e.preventDefault();
     const formData = new FormData();
     if (image) {
       formData.append('profileImage', image);
-      // await mutation.mutateAsync(formData);
-      console.log(formData);
+      // console.log('submit');
+      // console.log(image);
+      // console.log(formData);
+    } else {
+      formData.append('profileImage', '');
     }
-    console.log('submit');
   };
 
   return (
     <>
       <form action="" onSubmit={onSubmitUserProfile}>
         <ProfilePresetList>
-          <ProfileItem onClick={() => onClickProfileHandler(0, image && image)}>
+          <ProfileItem onClick={() => onClickProfileHandler(0)}>
             <figure className={selectProfile === 0 ? 'active' : ''}>
               <Image
                 src={userProfile ? userProfile : '/inflearn.jpg'}
@@ -145,8 +166,8 @@ const UserProfileImageUpdate = () => {
               </ProfileItem>
             );
           })}
-          <ProfileItem onClick={() => onClickProfileHandler(5, null)}>
-            <figure className={selectProfile === 5 ? 'active' : ''}>
+          <ProfileItem onClick={() => onClickProfileHandler(4)}>
+            <figure className={selectProfile === 4 ? 'active' : ''}>
               <Image src={'/addImage.png'} alt="preset" fill />
             </figure>
           </ProfileItem>
