@@ -67,8 +67,8 @@ const DetailUserPost: React.FC<{ data: any }> = ({ data }) => {
           <Image
             src={userPic}
             alt="User Profile"
-            width={500}
-            height={500}
+            width={46}
+            height={46}
             loading="eager"
           />
         </p>
@@ -99,11 +99,11 @@ const DetailUserPost: React.FC<{ data: any }> = ({ data }) => {
         <div>
           {images.map((img, index) => (
             <Image
-              key={img}
+              key={index}
               src={img}
               alt="User uploaded"
-              width={500}
-              height={500}
+              width={100}
+              height={100}
               loading="eager"
               style={{ display: index + 1 === currentPage ? 'block' : 'none' }}
             />
