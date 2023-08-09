@@ -53,4 +53,22 @@ const reportPost = async (postId: string) => {
   return response.data;
 };
 
-export { addPost, updatePost, getPost, likePost, reportPost };
+const getComment = async (postId: string) => {
+  const response = await api.get(`/test/post/comments/${postId}`);
+  return response.data;
+};
+
+const addComment = async (comment: FormData) => {
+  const response = await api.post(`/test/post/comment`, comment);
+  return response.data;
+};
+
+export {
+  addPost,
+  updatePost,
+  getPost,
+  likePost,
+  reportPost,
+  getComment,
+  addComment,
+};

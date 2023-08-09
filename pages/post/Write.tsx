@@ -13,12 +13,14 @@ import ContentArea from '@/components/Write/ContentArea';
 import TagInput from '@/components/Write/TagInput';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { addPost, getPost, updatePost } from '@/api/post';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState, wrapper } from '@/redux/config/configStore';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import Header from '@/components/common/Header';
 import Footer from '@/components/common/Footer';
+import { getAuthToken } from '@/api/user';
+import { AUTH_USER, UserResponse } from '@/redux/reducers/userSlice';
 
 const DynamicComponentWithNoSSR = dynamic(
   () => import('@/components/Write/YoutubePlayer'),
@@ -38,6 +40,18 @@ function Write() {
   const [location, setLocation] = useState({ name: '', x: 0, y: 0 });
   const queryClient = useQueryClient();
   const router = useRouter();
+
+  const dispatch = useDispatch();
+
+  const { data: userData, isSuccess: tokenSuccess } = useQuery(
+    'user',
+    getAuthToken,
+    {
+      onSuccess: (userData: UserResponse) => {
+        dispatch(AUTH_USER(userData));
+      },
+    }
+  );
 
   const removeImage = (index: number) => {
     setImages((images) => images.filter((_, i) => i !== index));
