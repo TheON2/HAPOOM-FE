@@ -34,6 +34,16 @@ const getUser = async (userEmail: string): Promise<UserResponse> => {
   return response.data;
 };
 
+const getUserSetting = async () => {
+  const response = await api.get(`/test/user`);
+  return response.data;
+};
+
+const updateUserSetting = async () => {
+  const response = await api.patch(`/test/user`);
+  return response.data;
+};
+
 const getUsers = async (): Promise<User[]> => {
   const response = await api.get(`/api/user`);
   return response.data;
@@ -75,4 +85,6 @@ export {
   deleteUser,
   userLogin,
   userLogOut,
+  getUserSetting,
+  updateUserSetting,
 };
