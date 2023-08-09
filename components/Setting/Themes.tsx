@@ -37,21 +37,18 @@ const Themes = ({ theme }: settingProps) => {
     updateUserSetting(formData)
   );
 
-  const onClickThemesHandler = async (themes: string) => {
+  const onClickThemesHandler = async (themes: number) => {
+    console.log(themes);
     const formData = new FormData();
-    formData.append('theme', themes);
+    formData.append('theme', themes.toString()); // themes를 문자열로 변환
     await mutate.mutateAsync(formData);
   };
 
   return (
     <AccordianMenu tabText="Theme">
       <ThemesBox>
-        <button onClick={() => onClickThemesHandler('original')}>
-          Original Mode
-        </button>
-        <button onClick={() => onClickThemesHandler('midnigth')}>
-          Midnight Mode
-        </button>
+        <button onClick={() => onClickThemesHandler(0)}>Original Mode</button>
+        <button onClick={() => onClickThemesHandler(1)}>Midnight Mode</button>
       </ThemesBox>
     </AccordianMenu>
   );
