@@ -1,4 +1,10 @@
-import React, { ReactNode, useEffect, useRef, useState } from 'react';
+import React, {
+  ReactNode,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
 import SideNav from './SideNav';
@@ -16,6 +22,11 @@ import {
 } from '@/styles/header';
 import useInput from '@/hooks/useInput';
 import IconButton from './IconButton';
+import { useDispatch } from 'react-redux';
+import { useRouter } from 'next/router';
+import { useMutation, useQueryClient } from 'react-query';
+import { userLogOut } from '@/api/user';
+import { LOGOUT_USER } from '@/redux/reducers/userSlice';
 
 const HamburgerButton = styled.button`
   width: 36px;
@@ -37,6 +48,21 @@ const HamburgerButton = styled.button`
 `;
 
 const Header = ({ sticky }: any) => {
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const queryClient = useQueryClient();
+  const { mutate: logOut_mutate } = useMutation(userLogOut, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('user');
+      dispatch(LOGOUT_USER());
+      router.push('/');
+    },
+  });
+
+  const onLogOut = useCallback(() => {
+    logOut_mutate();
+  }, [logOut_mutate]);
+
   const [isSearch, setIsSearch] = useState<boolean>(false);
   const [isMobile, setIsMobile] = useState<boolean>(true);
   const [isShowMenu, setIsShowMenu] = useState<boolean>(false);
@@ -82,6 +108,9 @@ const Header = ({ sticky }: any) => {
               <AuthButtonBox>
                 <Link href={'/auth/SignIn'}>로그인</Link>|
                 <Link href={'/auth/SignUp'}>회원가입</Link>
+                <a href="#" onClick={onLogOut}>
+                  로그아웃
+                </a>
               </AuthButtonBox>
               <ProfileButton onClick={onClickShowMenuHandler}>
                 <Image
@@ -105,7 +134,6 @@ const Header = ({ sticky }: any) => {
             </ProfileButton>
           )}
         </AccountActionsContainer>
-
         <MobileBox>
           <IconButton>
             <Image

@@ -20,7 +20,6 @@ import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 import { useMutation } from 'react-query';
 import { NextRouter } from 'next/router';
-import { FormEvent } from 'react';
 import { LOGIN_USER } from '@/redux/reducers/userSlice';
 import { userLogin } from '@/api/user';
 

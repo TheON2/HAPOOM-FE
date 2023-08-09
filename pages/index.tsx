@@ -38,16 +38,16 @@ const Home: NextPage<Props> = ({
   const isClientSide = typeof window !== 'undefined';
   const tokenExists = isClientSide ? !!localStorage.getItem('token') : false;
 
-const { data: userData, isSuccess: tokenSuccess } = useQuery(
-  'user',
-  getAuthToken,
-  {
-    onSuccess: (data: UserResponse) => {
-      dispatch(AUTH_USER(data));
-    },
-    enabled: tokenExists, // 클라이언트 측에서만 토큰 존재 여부 확인
-  }
-);
+  const { data: userData, isSuccess: tokenSuccess } = useQuery(
+    'user',
+    getAuthToken,
+    {
+      onSuccess: (userData: UserResponse) => {
+        dispatch(AUTH_USER(userData));
+      },
+      enabled: tokenExists, // 클라이언트 측에서만 토큰 존재 여부 확인
+    }
+  );
   return (
     <>
       <Header sticky={'sticky'} />
