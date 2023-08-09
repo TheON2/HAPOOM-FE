@@ -15,13 +15,18 @@ interface NewUser {
   nickname: string;
 }
 
-interface LoginUser {
+export interface LoginUser {
   email: string;
   password: string;
 }
 
+export interface AuthUser {
+  email: string;
+  nickname: string;
+}
+
 const addUser = async (newUser: NewUser): Promise<void> => {
-  await api.post(`/api/user/signup`, newUser);
+  await api.post(`/api/auth/signup`, newUser);
 };
 
 const getUser = async (userEmail: string): Promise<UserResponse> => {
@@ -34,18 +39,18 @@ const getUsers = async (): Promise<User[]> => {
   return response.data;
 };
 
-const getAuthToken = async (): Promise<string> => {
-  const response = await api.get(`/api/user/token`);
+const getAuthToken = async (): Promise<AuthUser> => {
+  const response = await api.get(`/api/auth/token`);
   return response.data;
 };
 
 const userLogin = async (loginUser: LoginUser): Promise<UserResponse> => {
-  const response = await api.post(`/api/user/login`, loginUser);
+  const response = await api.post(`/api/auth/login`, loginUser);
   return response.data;
 };
 
 const userLogOut = async (): Promise<void> => {
-  await api.post(`/api/user/logout`);
+  await api.get(`/api/auth/logout`);
 };
 
 const updateUser = async (sendData: {

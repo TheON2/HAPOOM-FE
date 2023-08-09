@@ -5,11 +5,21 @@ const InputBox = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+  span {
+    font-size: 10px;
+    font-weight: 700;
+    color: #868686;
+    padding: 8px 0 6px;
+  }
 `;
 
 const InputStyle = styled.input`
-  width: 80%;
-  padding: 8px 16px;
+  width: 100%;
+  font-size: 12px;
+  padding: 12px 28px 10px;
+  border-radius: 3px;
+  border: 1px solid #0084ff;
+  color: #999999;
 `;
 
 type ProfileInputProps = {
@@ -18,6 +28,7 @@ type ProfileInputProps = {
   name: string;
   placeholder: string;
   label?: string;
+  type?: 'password' | 'text';
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
@@ -30,7 +41,7 @@ const Input = ({
     <InputBox>
       {label ? <label htmlFor=""></label> : null}
       <InputStyle {...restProps} type="text" />
-      <span>*{updateText}을 수정해주세요.</span>
+      {updateText && <span>*{updateText}을 수정해주세요.</span>}
     </InputBox>
   );
 };

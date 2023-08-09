@@ -12,9 +12,13 @@
 /.next/
 /out/
 
+/public/sw.js
+/public/ws.js.map
+yarn.lock
+
 # production
 /build
-
+/docs
 # misc
 .DS_Store
 *.pem

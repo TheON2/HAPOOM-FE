@@ -52,10 +52,12 @@ export const SideNavLayout = styled.nav`
   right: 0;
   width: 30%;
   height: 100vh;
-  padding: 0 0 50px 0;
+  padding: 0 24px 50px;
   background-color: #fff;
   z-index: 20;
   display: flex;
+  top: 0;
+
   flex-direction: column;
   justify-content: space-between;
   @media screen and (max-width: 768px) {
@@ -68,12 +70,12 @@ export const SideNavLayout = styled.nav`
 
 export const SideNavMenuList = styled.ul`
   width: 100%;
-  border: 1px solid #000;
+  /* border: 1px solid #000; */
 `;
 
 export const SideNavMenuItem = styled.li`
   width: 100%;
-  border: 1px solid #000;
+  /* border: 1px solid #000; */
   &.none-padding {
     padding: 0;
   }
