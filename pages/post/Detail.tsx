@@ -15,7 +15,7 @@ const Detail: React.FC<Props> = ({ data }) => {
   return (
     <DetailSection>
       <DetailUserPost data={data} />
-      <DetailYoutubePlayer videoId={data.posts[0].musicUrl} />
+      <DetailYoutubePlayer />
       <DetailMapComponent
         location={{ name: '서울특별시 강남구', x: 127.02761, y: 37.495826 }}
       />

@@ -27,7 +27,6 @@ const DetailUserPost: React.FC<{ data: any }> = ({ data }) => {
     if (data && data.posts) {
       const userImages = data.posts.map((post: Post) => post.image.url);
       setImages(userImages);
-      setUserPic(data.posts[0].image.url);
     }
   }, [data]);
 

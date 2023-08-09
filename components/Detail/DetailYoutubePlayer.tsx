@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { DetailYoutubePlayerComponent } from '@/styles/detail';
+import YoutubePlayer from '../Write/YoutubePlayer';
 
 interface YoutubePlayerProps {
   videoId: string;
@@ -31,6 +32,7 @@ const DetailYoutubePlayer = ({ videoId }: YoutubePlayerProps) => {
   const playerRef = useRef<HTMLDivElement | null>(null);
   const [data, setData] = useState<IData | null>(null);
   const [posts, setPosts] = useState<IPost[]>([]);
+  const [selectedTitle, setSelectedTitle] = useState<string>('');
 
   useEffect(() => {
     fetch('http://localhost:3001/api/main')
@@ -90,7 +92,12 @@ const DetailYoutubePlayer = ({ videoId }: YoutubePlayerProps) => {
 
   return (
     <div>
-      <div id="player" ref={playerRef} />
+      {/* YoutubePlayer 컴포넌트 사용 */}
+      <YoutubePlayer
+        videoId={videoId}
+        setVideoId={() => {}}
+        setSelectedTitle={setSelectedTitle}
+      />
 
       <h2>Music Title: {musicTitle}</h2>
       <p>Music URL: {musicUrl}</p>
