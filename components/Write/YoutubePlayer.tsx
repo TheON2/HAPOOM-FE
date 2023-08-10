@@ -13,6 +13,10 @@ import {
 } from '@/styles/youtubeplayer';
 import Script from 'next/script';
 import React, { FormEvent, useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
+
+import playImage from '@/public/play.png';
+import pauseImage from '@/public/pause.png';
 
 interface YoutubePlayerProps {
   videoId: string;
@@ -38,6 +42,7 @@ const YoutubePlayer = ({
   const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null);
   const [player, setPlayer] = useState<YT.Player | null>(null);
   const playerRef = useRef<HTMLDivElement | null>(null);
+  const [playing, setPlaying] = useState(false);
   const [seek, setSeek] = useState(0);
   const [duration, setDuration] = useState(0);
   const [title, setTitle] = useState<string | null>(null);
@@ -95,10 +100,6 @@ const YoutubePlayer = ({
             width: '0',
             playerVars: {
               autoplay: 1,
-              start: 30, // 재생 시작 시간 (초)
-              end: 60, // 재생 종료 시간 (초)
-              loop: 1, // 반복 재생 활성화
-              playlist: videoIdParam, // 반복 재생할 비디오 ID (동일한 ID로 설정)
             },
             events: {
               onReady: (event) => {
@@ -114,6 +115,14 @@ const YoutubePlayer = ({
                 }, 1000); // 매 초마다 업데이트
                 setIntervalId(interval);
                 setPlayer(playerInstance);
+              },
+              onStateChange: (event) => {
+                if (event.data === YT.PlayerState.PLAYING) {
+                  setPlaying(true);
+                } else if (event.data === YT.PlayerState.PAUSED) {
+                  setPlaying(false);
+                }
+                // 기존 코드 (예: 끝나면 특정 시간으로 이동)
               },
             },
           });
@@ -141,7 +150,13 @@ const YoutubePlayer = ({
 
         <PlayerControls>
           <PlayButtonGroup>
-            <PlayButton onClick={handlePlayPause}>Play/Pause</PlayButton>
+            <PlayButton onClick={handlePlayPause}>
+              {playing ? (
+                <Image src={pauseImage} alt="Pause" width={25} height={25} />
+              ) : (
+                <Image src={playImage} alt="Play" width={25} height={25} />
+              )}
+            </PlayButton>
           </PlayButtonGroup>
           <SeekSliderGroup>
             <TimeLabel>{formatTime(seek)}</TimeLabel>

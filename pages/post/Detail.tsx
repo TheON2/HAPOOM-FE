@@ -1,47 +1,112 @@
-import React from 'react';
-import DetailComments from '@/components/Detail/DetailComments';
-import DetailMapComponent from '@/components/Detail/DetailMapComponent';
-import DetailUserPost from '@/components/Detail/DetailUserPost';
-import DetailYoutubePlayer from '@/components/Detail/DetailYoutubePlayer';
-import { DetailSection } from '@/styles/detail';
 
-type Props = {
-  data: IData;
-};
+import React, { FormEvent, useState } from 'react';
+import {
+  GlobalStyle,
+  ImageContainer,
+  PreviewContainer,
+  StyledButton,
+} from '../../styles/write';
+import { MapComponent } from '@/components/Write/MapComponent';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { addPost, getPost, updatePost } from '@/api/post';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState, wrapper } from '@/redux/config/configStore';
+import dynamic from 'next/dynamic';
+import { useRouter } from 'next/router';
+import Header from '@/components/common/Header';
+import Footer from '@/components/common/Footer';
+import { getAuthToken } from '@/api/user';
+import { AUTH_USER, UserResponse } from '@/redux/reducers/userSlice';
 
-const Detail: React.FC<Props> = ({ data }) => {
-  return (
-    <DetailSection>
-      <DetailUserPost data={data} />
-      <DetailYoutubePlayer />
-      <DetailMapComponent
-        location={{ name: data.placeName, x: data.longitude, y: data.latitude }}
-      />
+const DynamicComponentWithNoSSR = dynamic(
+  () => import('@/components/Write/YoutubePlayer'),
+  { ssr: false }
+);
+interface Image {
+  url: string;
+}
 
-      <DetailComments />
-    </DetailSection>
-  );
-};
-
-export async function getServerSideProps() {
-  try {
-    const res = await fetch('http://localhost:3001/test/post/1');
-
-    if (!res.ok) {
-      throw new Error('Network response was not ok');
+function Detail() {
+  const { update, updateId } = useSelector((state: RootState) => state.post);
+  const [images, setImages] = useState<File[]>([]);
+  const [content, setContent] = useState<string>('');
+  const [selectedTitle, setSelectedTitle] = useState<string>('');
+  const [videoId, setVideoId] = useState<string>('');
+  const [tags, setTags] = useState<string>('');
+  const [location, setLocation] = useState({ name: '', x: 0, y: 0 });
+  const queryClient = useQueryClient();
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const { data: userData, isSuccess: tokenSuccess } = useQuery(
+    'user',
+    getAuthToken,
+    {
+      onSuccess: (userData: UserResponse) => {
+        dispatch(AUTH_USER(userData));
+      },
     }
+  );
 
-    const data = await res.json();
+  const { isError, data, isSuccess } = useQuery(
+    ['post', updateId],
+    () => getPost(updateId),
+    {
+      onSuccess: async (data) => {
+        setImages(data.images);
+        setContent(data.post.content);
+        setSelectedTitle(data.post.musicTitle);
+        setVideoId(data.post.musicUrl);
+        setTags(data.post.tag);
+        setLocation({
+          name: data.post.placeName,
+          x: data.post.latitude,
+          y: data.post.longitude,
+        });
+      },
+    }
+  );
 
-    return {
-      props: { data }, // will be passed to the page component as props
-    };
-  } catch (error) {
-    console.error('Error fetching data:', error);
-    return {
-      notFound: true,
-    };
-  }
+  if (update && !isSuccess) return <div>Loading...</div>;
+  return (
+    <>
+      <Header />
+      <div
+        style={{ minHeight: '800px', display: 'block', textAlign: 'center' }}
+      >
+        <div>{content}</div>
+        <div>
+          {tags.split(',').map((tag, index) => (
+            <span
+              key={index}
+              style={{
+                display: 'inline-block',
+                padding: '5px',
+                border: '1px solid #000',
+                marginRight: '5px',
+                borderRadius: '5px',
+              }}
+            >
+              #{tag.trim()}
+            </span>
+          ))}
+        </div>
+        <ImageContainer>
+          <DynamicComponentWithNoSSR
+            videoId={videoId}
+            setVideoId={setVideoId}
+            setSelectedTitle={setSelectedTitle}
+          />
+          <MapComponent
+            setLocation={setLocation}
+            location={location}
+            update={update}
+          />
+        </ImageContainer>
+      </div>
+      <Footer />
+    </>
+  );
+
 }
 
 export default Detail;
