@@ -35,7 +35,7 @@ export const StyledInputBox = styled.div`
   flex-direction: column;
   gap: 5px;
 `;
-const StyledInput = styled.input`
+export const StyledInput = styled.input`
   height: 40px;
   outline: none;
   padding-left: 28px;
@@ -44,12 +44,11 @@ const StyledInput = styled.input`
     font-size: 12px;
   }
 `;
-export const StyledEmailInput = styled(StyledInput)`
-  border-radius: 8px 8px 0 0;
-  border-bottom: none;
+export const StyledEmailInput = styled.input`
+border-radius: 8px 8px 0 0;
 `;
-export const StyledPasswordInput = styled(StyledInput)`
-  border-radius: 0 0 8px 8px;
+export const StyledPasswordInput = styled.input`
+ border-radius: 0 0 8px 8px;
 `;
 export const SignInBtn = styled.button`
   max-width: 312px;
@@ -128,7 +127,7 @@ export const TextErrorParagraph = styled.p`
 `;
 export const SignUpSocialSignUpBox = styled.div`
   width: ${theme.inputBtnBoxWidth};
-  height: 120px;
+  /* height: 120px; */
   display: flex;
   justify-content: center;
   align-items: center;

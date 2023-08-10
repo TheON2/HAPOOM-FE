@@ -14,11 +14,16 @@ import {
   Line,
   TextErrorParagraph,
   StyledLabelEssential,
+  TextParagraphSns,
+  SnsLine,
+  TextParagraphInfo,
+  TextParagrapValidate,
 } from '@/styles/signUp';
 import { useMutation } from 'react-query';
 import { addUser } from '@/api/user';
 import { useRouter } from 'next/router';
-import { StyledEmailInput, StyledPasswordInput } from '@/styles/signIn';
+import MobileBottomNav from '../common/MobileBottomNav';
+import SocialLogin from '../SignIn/SocialLogIn';
 
 export interface Signup {
   email: string;
@@ -63,7 +68,9 @@ const SignUpUi = () => {
       console.error('회원가입 실패:', error);
     },
   });
-
+  const moveSignInPageHandeler = () => {
+    router.push('/auth/SignIn');
+  };
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement & { name: TextInputType }>
   ) => {
@@ -118,7 +125,7 @@ const SignUpUi = () => {
     let errors: any = {};
 
     if (!signUpState.email) {
-      errors.email = '이메일을 입력해주세요.';
+      errors.email = '이메일 형식이 올바르지 않습니다.';
     } else if (!validateEmail(signUpState.email)) {
       errors.email = '이메일을 확인해주세요.';
     }
@@ -131,7 +138,6 @@ const SignUpUi = () => {
     }
 
     if (signUpState.password !== signUpState.passwordConfirm) {
-      errors.password = '비밀번호가 일치하지 않습니다.';
       errors.passwordConfirm = '비밀번호가 일치하지 않습니다.';
     }
 
@@ -160,15 +166,22 @@ const SignUpUi = () => {
   return (
     <SignUpSection>
       <MainHeadText>HAPOOM</MainHeadText>
-      <SubHeadText>회원가입</SubHeadText>
+      <SubHeadText color="#000" marginBottom="12px">
+        회원가입
+      </SubHeadText>
+      <SocialLogin />
+      <TextParagraphSns>SNS계정으로 간편 로그인/회원가입</TextParagraphSns>
+      <SnsLine></SnsLine>
 
       <form name="register" onSubmit={submitUser}>
         <StyledInputBox>
+          <TextParagraphInfo marginBottom="12px">이메일</TextParagraphInfo>
           <StyledInput
             type="email"
             name="email"
             value={signUpState.email}
             placeholder="example@gmail.com"
+            disabled
             onChange={handleInputChange}
           />
           {error.email && (
@@ -188,31 +201,43 @@ const SignUpUi = () => {
         </StyledInputBox>
 
         <StyledInputBox>
-          <StyledEmailInput
+          <TextParagraphInfo marginBottom="7px">비밀번호</TextParagraphInfo>
+          <TextParagrapValidate>
+            영문, 숫자를 포함한 8자 이상의 비밀번호를 입력해주세요.
+          </TextParagrapValidate>
+          <StyledInput
             type="password"
             name="password"
             value={signUpState.password}
-            placeholder="비밀번호를 입력해 주세요"
+            placeholder="비밀번호"
             onChange={handleInputChange}
           />
-          <StyledPasswordInput
+          {error.password && (
+            <TextErrorParagraph>{error.password}</TextErrorParagraph>
+          )}
+          <TextParagraphInfo>비밀번호 확인</TextParagraphInfo>
+          <StyledInput
             type="password"
             name="passwordConfirm"
             value={signUpState.passwordConfirm}
             placeholder="비밀번호 확인"
             onChange={handleInputChange}
           />
-          {error.password && (
-            <TextErrorParagraph>{error.password}</TextErrorParagraph>
+          {error.passwordConfirm && (
+            <TextErrorParagraph>{error.passwordConfirm}</TextErrorParagraph>
           )}
         </StyledInputBox>
 
         <StyledInputBox>
+          <TextParagraphInfo>닉네임</TextParagraphInfo>
+          <TextParagrapValidate>
+            다른 유저와 겹치지 않도록 입력해주세요.(2~15자)
+          </TextParagrapValidate>
           <StyledInput
             type="text"
             name="nickname"
             value={signUpState.nickname}
-            placeholder="닉네임을 입력해 주세요"
+            placeholder="닉네임은 2자에서 15자입니다."
             onChange={handleInputChange}
           />
           {error.nickname && (
@@ -280,6 +305,10 @@ const SignUpUi = () => {
           회원가입하기
         </SignUpBtn>
       </form>
+      <SubHeadText color="#0084FF" onClick={moveSignInPageHandeler}>
+        이미 아이디가 있으신가요? 로그인
+      </SubHeadText>
+      <MobileBottomNav />
     </SignUpSection>
   );
 };

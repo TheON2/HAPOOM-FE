@@ -9,42 +9,61 @@ const theme = {
   primaryColor: "#0084FF",
   inputBtnBoxWidth: "100%"
 };
+interface Props {
+  marginBottom?: string;
+  color?: string;
+}
 export const SignUpSection = styled.section`
   max-width: 360px;
   width: 100%;
+  height: 1202px;
   margin: 0 auto;
   display: flex;
   align-items: center;
   flex-direction: column;
   font-family: ${theme.fontFamily};
-  @media (max-width: 500px) {
-    padding: 0 24px;
-  }
+  padding: 0 24px;
   form {
     max-width: 312px;
     width: 100%;
   }
 `;
-export const MainHeadText = styled.h1`
-  color: ${theme.primaryColor};
+export const MainHeadText = styled.h1<Props>`
+  color: ${theme.textColor};
   text-align: center;
   font-size: 48px;
   font-weight: 900;
   margin-top: 56px;
 `;
-export const SubHeadText = styled.h2`
-  color: ${theme.textColor};
+export const SubHeadText = styled.h2<Props>`
+  color: ${({ color }) => color};
   font-size: 13px;
   font-weight: 700;
-  margin-bottom: 11px ;
+  margin-bottom: ${({ marginBottom }) => marginBottom || '0'};
 `;
 export const TextParagraph = styled.p`
   color: ${theme.textColor};
   font-size: 16px;
   font-weight: 700;
 `;
+export const TextParagraphInfo = styled(TextParagraph)<Props>`
+  color: ${theme.textColor};
+  font-size: 12px;
+  font-weight: 700;
+    margin-bottom: ${({ marginBottom }) => marginBottom || '0'};
+`;
 export const TextParagraphSns = styled(TextParagraph)`
-  margin-top: 20px;
+  margin-top: 4px;
+  color: #B1B1B1;
+  text-align: center;
+  font-size: 10px;
+  font-weight: 400;
+`;
+export const TextParagrapValidate = styled(TextParagraph)`
+  color: #828C8C;
+  font-size: 11px;
+  font-weight: 400;
+  margin-bottom: 10px;
 `;
 export const SignUpSocialSignUpBox = styled.div`
   width: ${inputBtnBoxWidth};
@@ -62,10 +81,11 @@ export const SocialBoxImg = styled(Image)`
   cursor: pointer;
 `;
 export const StyledInputBox = styled.div`
-  max-width: 312px;
+  /* max-width: 312px; */
   display: flex;
   flex-direction: column;
   margin-bottom:12px;
+  
 `;
 export const StyledInput = styled.input`
   width: 100%; 
@@ -73,7 +93,7 @@ export const StyledInput = styled.input`
   outline: none;
   padding-left: 28px;
   border: 1px solid ${theme.primaryColor};
-  border-radius: 8px;
+  border-radius: 3px;
   &::placeholder{
     font-size: 12px;
   }
@@ -81,7 +101,7 @@ export const StyledInput = styled.input`
 export const SignUpBtn = styled.button`
   width: ${inputBtnBoxWidth};
   height: ${inputBtnHeight};
-  border-radius: 4px;
+  border-radius: 3px;
   background: ${theme.primaryColor};
   border: 1px solid ${theme.primaryColor};
   color: #FFF;
@@ -132,6 +152,13 @@ export const StyledLabelEssential = styled.div`
   height: 9px;
   margin: 8px 0 0 -4px;
 `
+export const SnsLine = styled.div`
+  stroke-width: 1px;
+  width: 100%;
+  height: 0px;
+  border: 1px solid #B3B3B3;
+  margin: 20px 0 22px 0;
+`
 export const Line = styled.div`
   width: 312px;
   border: 1px solid ${theme.primaryColor};
@@ -143,7 +170,7 @@ export const TextErrorParagraph = styled.p`
   color: red;
   font-family: ${theme.fontFamily};
   font-size: 10px;
-  font-weight: 700;
+  font-weight: 400;
   line-height: 2.5;
   margin-left: 4px;
-`;
+  `;
