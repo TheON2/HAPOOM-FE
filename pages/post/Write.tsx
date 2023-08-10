@@ -93,7 +93,7 @@ function Write() {
       } else {
         alert('게시물이 추가되었습니다!');
       }
-      router.push('/test/main');
+      router.push('/');
     },
   };
 
