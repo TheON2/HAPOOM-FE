@@ -65,9 +65,20 @@ export const SideNavLayout = styled.nav`
   justify-content: space-between;
   @media screen and (max-width: 768px) {
     width: 70%;
+    /* animation-duration: 0.3s; */
+    animation: slidein 1s ease-in-out;
   }
   button {
     cursor: pointer;
+  }
+  @keyframes slidein {
+    from {
+      transform: translateX(100%);
+    }
+
+    to {
+      transform: translateX(0);
+    }
   }
 `;
 

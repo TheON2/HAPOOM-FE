@@ -213,6 +213,7 @@ export const HashtagNavBarLayout = styled.nav<hashtagNavbarProps>`
   /* top: 54px; */
   z-index: 10;
   font-size: 10px;
+  color: #fff;
 `;
 
 export const HashtagList = styled.ul`

@@ -89,8 +89,6 @@ const SideNav = ({ isShowMenu, setIsShowMenu }: sideNavProps) => {
     (state: RootState) => state.user
   );
 
-  console.log(user);
-
   return (
     <>
       <OverlayBox onClick={onClickOverlayHandler}></OverlayBox>
@@ -107,9 +105,9 @@ const SideNav = ({ isShowMenu, setIsShowMenu }: sideNavProps) => {
             </IconButton>
           </IconBox>
           <Profile
-            userImage={user?.userImage}
-            preset={user?.preset}
-            nickname={user?.nickName}
+            userImage={user?.userImage || ''}
+            preset={user?.preset || 5}
+            nickname={user?.nickName || ''}
           />
 
           {user?.email !== null ? (
