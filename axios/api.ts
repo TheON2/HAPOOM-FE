@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { UNAUTH_USER } from '../redux/reducers/userSlice';
+import { LOGOUT_USER } from '../redux/reducers/userSlice';
 import store from '../redux/config/configStore';
 
 const instance = axios.create({
@@ -33,7 +33,7 @@ instance.interceptors.response.use(
       (error.response.status === 501 || error.response.status === 403)
     ) {
       console.log('토큰이 존재하지 않습니다');
-      store.dispatch(UNAUTH_USER());
+      store.dispatch(LOGOUT_USER());
 
       // 아래 라인을 추가하여 로그인 페이지로 리다이렉션합니다.
       if (typeof window !== 'undefined') {
@@ -69,7 +69,7 @@ instance.interceptors.response.use(
         return instance(originalRequest);
       } catch (err) {
         console.log('리프레시토큰이 만료되었습니다.');
-        store.dispatch(UNAUTH_USER());
+        store.dispatch(LOGOUT_USER());
         if (typeof window !== 'undefined') {
           window.location.href = '/auth/SignIn';
         }

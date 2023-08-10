@@ -28,7 +28,7 @@ interface Image {
 function Detail() {
   const router = useRouter();
   const id = typeof router.query.id === 'string' ? router.query.id : '';
-  const { update, updateId } = useSelector((state: RootState) => state.post);
+  const { update } = useSelector((state: RootState) => state.post);
   const [images, setImages] = useState<File[]>([]);
   const [content, setContent] = useState<string>('');
   const [selectedTitle, setSelectedTitle] = useState<string>('');
