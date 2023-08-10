@@ -44,7 +44,6 @@ function Detail() {
   };
 
   const dispatch = useDispatch();
-
   const { data: userData, isSuccess: tokenSuccess } = useQuery(
     'user',
     getAuthToken,

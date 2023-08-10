@@ -162,13 +162,12 @@ export const TabButton = styled.div`
   `
 export const TabIndicator = styled.span<{ width: number; left: number }>`
   position: absolute;
-  bottom: -12px; 
+  bottom: -13px; 
   height: 4px;
   transition: 0.4s;
   height: 5px;
-  background-color: red;
+  background-color: #0084FF;
   width: ${({ width }) => `${width}px`};
   left: ${({ left }) => `${left}px`};
   z-index: 1;
-  border-radius: 8px 8px 0 0;
 `

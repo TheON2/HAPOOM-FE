@@ -6,14 +6,17 @@ import {
   UserProfileCardBox,
 } from '@/styles/user';
 import Image from 'next/image';
-import { UserData } from './UserUi';
 import b1 from '../../public/b1.png';
+import { UserPageData } from './UserUi';
 
 interface UserProfileCardProps {
-  data: UserData | undefined;
+  data: UserPageData | undefined;
 }
 
 const UserProfileCard: React.FC<UserProfileCardProps> = ({ data }) => {
+  if (!data) {
+    return null;
+  }
   return (
     <UserProfileCardBox>
       <Image
