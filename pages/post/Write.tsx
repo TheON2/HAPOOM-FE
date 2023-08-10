@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from 'react';
+import React, { FormEvent, useEffect, useState } from 'react';
 import {
   GlobalStyle,
   ImageContainer,
@@ -13,12 +13,14 @@ import ContentArea from '@/components/Write/ContentArea';
 import TagInput from '@/components/Write/TagInput';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { addPost, getPost, updatePost } from '@/api/post';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState, wrapper } from '@/redux/config/configStore';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import Header from '@/components/common/Header';
 import Footer from '@/components/common/Footer';
+import { getAuthToken } from '@/api/user';
+import { AUTH_USER, UserResponse } from '@/redux/reducers/userSlice';
 
 const DynamicComponentWithNoSSR = dynamic(
   () => import('@/components/Write/YoutubePlayer'),
@@ -29,7 +31,8 @@ interface Image {
 }
 
 function Write() {
-  const { update, updateId } = useSelector((state: RootState) => state.post);
+  const [update, setUpdate] = useState<boolean>(false);
+  const [updateId, setUpdateId] = useState<string>('');
   const [images, setImages] = useState<File[]>([]);
   const [content, setContent] = useState<string>('');
   const [selectedTitle, setSelectedTitle] = useState<string>('');
@@ -38,6 +41,20 @@ function Write() {
   const [location, setLocation] = useState({ name: '', x: 0, y: 0 });
   const queryClient = useQueryClient();
   const router = useRouter();
+
+  const dispatch = useDispatch();
+
+  console.log(update, updateId);
+
+  const { data: userData, isSuccess: tokenSuccess } = useQuery(
+    'user',
+    getAuthToken,
+    {
+      onSuccess: (userData: UserResponse) => {
+        dispatch(AUTH_USER(userData));
+      },
+    }
+  );
 
   const removeImage = (index: number) => {
     setImages((images) => images.filter((_, i) => i !== index));
@@ -67,14 +84,16 @@ function Write() {
 
   const mutationOptions = {
     onSuccess: () => {
+      localStorage.removeItem('update');
+      localStorage.removeItem('updateId');
+
       queryClient.invalidateQueries('posts');
       if (update) {
         alert('게시물이 수정되었습니다!');
-        router.push('/test/main');
       } else {
         alert('게시물이 추가되었습니다!');
-        router.push('/test/main');
       }
+      router.push('/');
     },
   };
 
@@ -109,6 +128,16 @@ function Write() {
       enabled: update,
     }
   );
+
+  useEffect(() => {
+    const initialUpdate = localStorage.getItem('update') === 'true';
+    const initialUpdateId = localStorage.getItem('updateId')
+      ? JSON.parse(localStorage.getItem('updateId') || '')
+      : '';
+
+    setUpdate(initialUpdate);
+    setUpdateId(initialUpdateId);
+  }, []);
 
   if (update && !isSuccess) return <div>Loading...</div>;
 

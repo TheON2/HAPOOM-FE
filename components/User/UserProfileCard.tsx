@@ -5,14 +5,26 @@ import {
   SettingPageLink,
   UserProfileCardBox,
 } from '@/styles/user';
-import profile from '../../public/profile.jpg';
 import Image from 'next/image';
+import b1 from '../../public/b1.png';
+import { UserPageData } from './UserUi';
 
-const UserProfileCard = () => {
+interface UserProfileCardProps {
+  data: UserPageData | undefined;
+}
+
+const UserProfileCard: React.FC<UserProfileCardProps> = ({ data }) => {
+  if (!data) {
+    return null;
+  }
   return (
     <UserProfileCardBox>
       <Image
-        src={profile}
+        src={
+          data?.user.userImage && data.user.userImage.startsWith('http')
+            ? data.user.userImage
+            : b1
+        }
         alt={'프로필사진'}
         width={264}
         height={280}
@@ -21,12 +33,11 @@ const UserProfileCard = () => {
         loading="eager"
       />
       <ProfileContentsBox>
-        <p>나는 멋쟁이 도영</p>
-        <p>나는 멋쟁이 공룡이얌</p>
+        <p>{data?.user.nickname}</p>
         <FollowBox>
           <p>팔로워 3</p>
           <p>팔로잉 3</p>
-          <SettingPageLink href={'/'}>설정</SettingPageLink>
+          <SettingPageLink href={'/setting/Setting'}>설정</SettingPageLink>
         </FollowBox>
       </ProfileContentsBox>
     </UserProfileCardBox>
