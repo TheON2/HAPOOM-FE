@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from 'react';
+import React, { FormEvent, useEffect, useState } from 'react';
 import {
   GlobalStyle,
   ImageContainer,
@@ -31,7 +31,8 @@ interface Image {
 }
 
 function Write() {
-  const { update, updateId } = useSelector((state: RootState) => state.post);
+  const [update, setUpdate] = useState<boolean>(false);
+  const [updateId, setUpdateId] = useState<string>('');
   const [images, setImages] = useState<File[]>([]);
   const [content, setContent] = useState<string>('');
   const [selectedTitle, setSelectedTitle] = useState<string>('');
@@ -42,6 +43,8 @@ function Write() {
   const router = useRouter();
 
   const dispatch = useDispatch();
+
+  console.log(update, updateId);
 
   const { data: userData, isSuccess: tokenSuccess } = useQuery(
     'user',
@@ -81,14 +84,16 @@ function Write() {
 
   const mutationOptions = {
     onSuccess: () => {
+      localStorage.removeItem('update');
+      localStorage.removeItem('updateId');
+
       queryClient.invalidateQueries('posts');
       if (update) {
         alert('게시물이 수정되었습니다!');
-        router.push('/test/main');
       } else {
         alert('게시물이 추가되었습니다!');
-        router.push('/test/main');
       }
+      router.push('/test/main');
     },
   };
 
@@ -123,6 +128,16 @@ function Write() {
       enabled: update,
     }
   );
+
+  useEffect(() => {
+    const initialUpdate = localStorage.getItem('update') === 'true';
+    const initialUpdateId = localStorage.getItem('updateId')
+      ? JSON.parse(localStorage.getItem('updateId') || '')
+      : '';
+
+    setUpdate(initialUpdate);
+    setUpdateId(initialUpdateId);
+  }, []);
 
   if (update && !isSuccess) return <div>Loading...</div>;
 

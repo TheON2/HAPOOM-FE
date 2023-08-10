@@ -73,10 +73,19 @@ const Header = ({ sticky }: any) => {
     setIsShowMenu(!isShowMenu);
   };
 
+  const handleLogoClick = () => {
+    if (localStorage.getItem('update') && localStorage.getItem('updateId')) {
+      localStorage.removeItem('update');
+      localStorage.removeItem('updateId');
+    }
+
+    router.push('/');
+  };
+
   return (
     <>
       <HeaderLayout sticky={sticky}>
-        <LogoBox href={'/'}>
+        <LogoBox href={'/'} onClick={handleLogoClick}>
           <Image
             src={'/inflearn.jpg'}
             alt="logo"
