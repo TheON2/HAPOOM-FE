@@ -10,6 +10,8 @@ import {
 import cloud from '../../public/🦆 icon _cloud_.svg';
 import Image from 'next/image';
 import { UserPost, UserPageData } from './UserUi';
+import { useMutation, useQueryClient } from 'react-query';
+import { likePost } from '@/api/post';
 
 interface PostLike {
   data: UserPageData | undefined;
@@ -81,6 +83,29 @@ const PostLike: React.FC<PostLike> = ({ data }) => {
       }
     };
 
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation(
+    (postId: number) => likePost(postId.toString()),
+    {
+      onSuccess: (data) => {
+        console.log('API call succeeded:', data);
+        queryClient.invalidateQueries('likePosts');
+      },
+      onError: (error) => {
+        console.log('API call failed:', error);
+      },
+    }
+  );
+
+  const handleLikeToggle = (postId: number) => {
+    console.log('Toggling like for postId:', postId);
+    mutation.mutate(postId);
+    setDisplayedPosts(
+      (prevPosts) => prevPosts?.filter((post) => post.id !== postId) || null
+    );
+  };
+
   return (
     <PostBox>
       <PostContentBox>
@@ -103,12 +128,13 @@ const PostLike: React.FC<PostLike> = ({ data }) => {
       <Line />
       <PostImageBox>
         {displayedPosts?.map((post) => (
-          <Post
-            key={post.id}
-            imageUrl={post.image.url}
-            postId={post.id}
-            showLikeIcon={selectedTab === 1}
-          />
+          <div key={post.id} onClick={() => handleLikeToggle(post.id)}>
+            <Post
+              imageUrl={post.image.url}
+              postId={post.id}
+              showLikeIcon={selectedTab === 1}
+            />
+          </div>
         ))}
       </PostImageBox>
     </PostBox>
