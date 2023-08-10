@@ -41,15 +41,10 @@ const userSlice = createSlice({
       state.user.email = action.payload.email;
       state.user.nickName = action.payload.nickname;
     },
-    UNAUTH_USER: (state: UserState) => {
-      state.user.email = 'unauth';
-      state.user.nickName = null;
-      localStorage.removeItem(LocalStorageKey.Token);
-    },
   },
 });
 
-export const { LOGIN_USER, LOGOUT_USER, AUTH_USER, UNAUTH_USER } =
+export const { LOGIN_USER, LOGOUT_USER, AUTH_USER } =
   userSlice.actions;
 
 export default userSlice.reducer;
