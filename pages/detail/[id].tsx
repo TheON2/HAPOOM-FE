@@ -1,4 +1,3 @@
-
 import React, { FormEvent, useState } from 'react';
 import {
   GlobalStyle,
@@ -27,7 +26,9 @@ interface Image {
 }
 
 function Detail() {
-  const { update, updateId } = useSelector((state: RootState) => state.post);
+  const router = useRouter();
+  const id = typeof router.query.id === 'string' ? router.query.id : '';
+  const { update } = useSelector((state: RootState) => state.post);
   const [images, setImages] = useState<File[]>([]);
   const [content, setContent] = useState<string>('');
   const [selectedTitle, setSelectedTitle] = useState<string>('');
@@ -35,7 +36,13 @@ function Detail() {
   const [tags, setTags] = useState<string>('');
   const [location, setLocation] = useState({ name: '', x: 0, y: 0 });
   const queryClient = useQueryClient();
-  const router = useRouter();
+
+  const handleEditClick = () => {
+    localStorage.setItem('update', JSON.stringify(true));
+    localStorage.setItem('updateId', JSON.stringify(id));
+    router.push('/post/Write');
+  };
+
   const dispatch = useDispatch();
   const { data: userData, isSuccess: tokenSuccess } = useQuery(
     'user',
@@ -48,8 +55,8 @@ function Detail() {
   );
 
   const { isError, data, isSuccess } = useQuery(
-    ['post', updateId],
-    () => getPost(updateId),
+    ['post', id],
+    () => getPost(id),
     {
       onSuccess: async (data) => {
         setImages(data.images);
@@ -73,6 +80,7 @@ function Detail() {
       <div
         style={{ minHeight: '800px', display: 'block', textAlign: 'center' }}
       >
+        <button onClick={handleEditClick}>글 수정하기</button>
         <div>{content}</div>
         <div>
           {tags.split(',').map((tag, index) => (
@@ -106,7 +114,6 @@ function Detail() {
       <Footer />
     </>
   );
-
 }
 
 export default Detail;
