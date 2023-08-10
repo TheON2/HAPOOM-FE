@@ -1,3 +1,4 @@
+
 import React, { FormEvent, useState } from 'react';
 import {
   GlobalStyle,
@@ -35,9 +36,7 @@ function Detail() {
   const [location, setLocation] = useState({ name: '', x: 0, y: 0 });
   const queryClient = useQueryClient();
   const router = useRouter();
-
   const dispatch = useDispatch();
-
   const { data: userData, isSuccess: tokenSuccess } = useQuery(
     'user',
     getAuthToken,
@@ -107,6 +106,7 @@ function Detail() {
       <Footer />
     </>
   );
+
 }
 
 export default Detail;

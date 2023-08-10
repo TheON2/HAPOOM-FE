@@ -5,11 +5,11 @@ import PostLike from './PostLike';
 import { useQuery } from 'react-query';
 import { getUserProfile, getUsers } from '@/api/user';
 
-interface Image {
+interface PostImage {
   url: string;
 }
 
-interface User {
+interface UserProfile {
   createdAt: string;
   email: string;
   method: string;
@@ -21,11 +21,11 @@ interface User {
   userImage: string;
 }
 
-export interface Post {
+export interface UserPost {
   id: number;
   content: string;
   createdAt: string;
-  image: Image;
+  image: PostImage;
   latitude: number;
   longitude: number;
   musicTitle: string;
@@ -37,14 +37,14 @@ export interface Post {
   userId: number;
 }
 
-export interface UserData {
-  user: User;
-  posts: Post[];
-  likePosts: Post[];
+export interface UserPageData {
+  user: UserProfile;
+  posts: UserPost[];
+  likePosts: UserPost[];
 }
 
 const UserUi = () => {
-  const { data } = useQuery<UserData>('users', getUserProfile);
+  const { data } = useQuery<UserPageData>('users', getUserProfile);
 
   return (
     <UserPageSection>
