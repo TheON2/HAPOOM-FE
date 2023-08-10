@@ -4,9 +4,8 @@ import { UserResponse } from '../redux/reducers/userSlice';
 interface User {
   email: string | null;
   nickName: string | null;
-  imageUrl: string | null;
-  profileContent: string | null;
-  profileUrl: string | null;
+  userImage: string | null;
+  preset: number | null;
 }
 
 interface NewUser {
