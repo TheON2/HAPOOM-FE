@@ -5,7 +5,10 @@ const MainLayout = styled.main`
   margin: 0 auto;
   max-width: 1440px;
   width: 100%;
-  padding-bottom: 200px;
+  /* padding-bottom: 100px; */
+  height: calc(100vh - 252px);
+  overflow-y: auto;
+  transform: translateY(-100px);
 `;
 
 type MainProps = {

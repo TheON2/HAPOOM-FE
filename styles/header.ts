@@ -12,11 +12,11 @@ export const HeaderLayout = styled.header<HeaderProps>`
   position: ${(props) => (props.sticky ? 'fixed' : 'sticky')};
   z-index: 15;
   top: 0;
-  background: linear-gradient(
+  /* background: linear-gradient(
     180deg,
     rgba(0, 0, 0, 0.1) 0%,
     rgba(255, 255, 255, 0) 100%
-  );
+  ); */
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -33,7 +33,15 @@ export const HeaderLayout = styled.header<HeaderProps>`
 export const LogoBox = styled(Link)`
   /* width: 20%; */
   height: 46px;
-  border: 1px solid #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  color: #fff;
+  /* border: 1px solid #000; */
+  h1 {
+    font-size: 24px;
+  }
   img {
     width: 100%;
     height: 100%;

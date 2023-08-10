@@ -78,9 +78,9 @@ export const SlideDotBox = styled.div`
 
 export const HashtagContentsLayout = styled.section`
   width: 100%;
-  padding: 50px 100px;
+  /* padding: 50px 100px; */
   @media screen and (max-width: 786px) {
-    padding: 20px 24px;
+    /* padding: 20px 24px; */
   }
 `;
 
@@ -94,7 +94,7 @@ export const HashtagContentsContainer = styled.div`
   place-items: center;
   justify-content: center;
   align-items: center;
-  grid-gap: 16px;
+  grid-gap: 4px;
   @media screen and (max-width: 1260px) {
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(4, 1fr);
@@ -108,15 +108,29 @@ export const HashtagContentsContainer = styled.div`
 //popular contents section style
 export const SectionTitle = styled.h2`
   max-width: 1200px;
-  margin: 0 auto 30px;
+  padding: 26px 36px 24px;
+  color: #0084ff;
+  position: relative;
+  &::after {
+    content: '';
+    display: block;
+    width: 5px;
+    height: 20px;
+    position: absolute;
+    top: 50%;
+    left: 24px;
+    transform: translateY(-50%);
+    background-color: #0084ff;
+  }
+  /* margin: 0 auto 30px; */
 `;
 
 export const PopularContentsLayout = styled.section`
   width: 100%;
-  padding: 50px 100px;
+  /* padding: 50px 100px; */
   position: relative;
   @media screen and (max-width: 786px) {
-    padding: 20px 24px;
+    padding: 20px 0;
   }
 `;
 
@@ -174,18 +188,29 @@ export const SlideButtonBox = styled.div`
   }
 `;
 
+type hashtagNavbarProps = {
+  isClick: boolean;
+};
+
 //hashtag navbar style
-export const HashtagNavBarLayout = styled.nav`
+export const HashtagNavBarLayout = styled.nav<hashtagNavbarProps>`
   width: 100%;
-  padding: 20px 24px;
+  padding: 0px 24px 14px;
+  border-radius: 30px 30px 0 0;
   /* height: 10vh; */
-  background-color: #fff;
+  /* opacity: 0.5; */
+  /* background-color: #fff; */
   display: flex;
+  flex-direction: column;
+  justify-content: center;
   /* justify-content: space-between; */
   align-items: center;
-  gap: 54px;
-  position: sticky;
-  top: 54px;
+  /* gap: 54px; */
+  transform: translateY(-100%);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.22) 80%, #fff 90%);
+
+  /* position: fixed; */
+  /* top: 54px; */
   z-index: 10;
   font-size: 10px;
 `;
@@ -193,9 +218,10 @@ export const HashtagNavBarLayout = styled.nav`
 export const HashtagList = styled.ul`
   width: 100%;
   display: flex;
-  justify-content: space-between;
-  /* gap: 46px; */
+  justify-content: center;
+  gap: 12px;
   list-style: none;
+
   /* @media screen and (max-width: 786px) {
     gap: 2%;
   } */
@@ -206,21 +232,24 @@ export const HashtagItem = styled.li`
   display: flex;
   flex-direction: column;
   align-items: center;
+  font-size: 9px;
   /* text-align: center; */
   cursor: pointer;
   figure {
     position: relative;
     width: 100px;
     height: 100px;
-    margin-bottom: 12px;
+    margin-bottom: 2px;
     overflow: hidden;
     border-radius: 8px;
-    border: 2px solid #fff;
+    /* border: 2px solid #fff; */
     @media screen and (max-width: 786px) {
-      width: 60px;
-      height: 60px;
+      width: 44px;
+      height: 44px;
     }
     img {
+      width: 100%;
+      height: 100%;
       object-fit: cover;
     }
   }

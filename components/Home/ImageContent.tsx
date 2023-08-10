@@ -9,7 +9,7 @@ import Link from 'next/link';
 const ImageContentLayout = styled.div`
   padding-bottom: 100%;
   width: 100%;
-  border: 1px solid black;
+  /* border: 1px solid black; */
   position: relative;
   img {
     object-fit: cover;
@@ -44,11 +44,11 @@ type Props = {
 
 const ImageContent: NextPage<Props> = ({ src, alt, postId }) => {
   const [isLike, setIsLike] = useState<boolean>(false);
-  const mutation = useMutation((postId: number) => likePost(postId));
+  const mutation = useMutation((postId: string) => likePost(postId));
   const onClickHeartHandler = (postId: number, event: React.MouseEvent) => {
     event.stopPropagation();
     setIsLike(!isLike);
-    mutation.mutate(postId);
+    mutation.mutate(postId.toString());
   };
   return (
     <ImageContentLayout>
