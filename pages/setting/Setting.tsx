@@ -12,7 +12,7 @@ import { useQuery, useMutation } from 'react-query';
 import { useDispatch } from 'react-redux';
 import { AUTH_USER, UserResponse } from '@/redux/reducers/userSlice';
 import { SettingLayout, AccordianContent, ProfileBox } from '@/styles/setting';
-
+import Profile from '@/components/Setting/Profile';
 const Setting = () => {
   const dispatch = useDispatch();
 
@@ -33,23 +33,12 @@ const Setting = () => {
     <Main>
       <Header />
       <SettingLayout>
-        <ProfileBox>
-          <div>
-            <Image
-              src={
-                userSetting?.user.userImage
-                  ? userSetting?.user.userImage
-                  : '/inflearn.jpg'
-              }
-              alt={'image'}
-              width={100}
-              height={100}
-            />
-          </div>
-          <h2>{userSetting?.user.nickname}</h2>
-        </ProfileBox>
-        {userSetting?.user.theme} <br />
-        {userSetting?.user.password} <br />
+        <Profile
+          userImage={userSetting?.user.userImage}
+          preset={userSetting?.user.preset}
+        />
+        테마 : {userSetting?.user.theme} <br />
+        비밀번호 : {userSetting?.user.password} <br />
         <AccordianMenu tabText="별명 수정">
           <AccordianContent>
             <UpdateNickName nickname={userSetting?.user.nickname} />
