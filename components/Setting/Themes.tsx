@@ -54,8 +54,8 @@ const Themes = ({ theme }: settingProps) => {
   return (
     <AccordianMenu tabText="Theme">
       <ThemesBox>
-        <button onClick={() => onClickThemesHandler(0)}>Original Mode</button>
-        <button onClick={() => onClickThemesHandler(1)}>Midnight Mode</button>
+        <button onClick={() => onClickThemesHandler(1)}>Original Mode</button>
+        <button onClick={() => onClickThemesHandler(2)}>Midnight Mode</button>
       </ThemesBox>
     </AccordianMenu>
   );
