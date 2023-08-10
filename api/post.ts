@@ -44,12 +44,12 @@ const getPost = async (id: string) => {
 };
 
 const likePost = async (postId: string) => {
-  const response = await api.post(`/api/post/${postId}/like`);
+  const response = await api.post(`/test/post/${postId}/like`);
   return response.data;
 };
 
 const reportPost = async (postId: string) => {
-  const response = await api.post(`/api/report/${postId}`);
+  const response = await api.post(`/test/report/${postId}`);
   return response.data;
 };
 
