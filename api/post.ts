@@ -48,6 +48,16 @@ const likePost = async (postId: string) => {
   return response.data;
 };
 
+const getPostCount = async (postId: string) => {
+  const response = await api.get(`/api/post/${postId}/postsCount`);
+  return response.data;
+};
+
+const getPostLikeCount = async (postId: string) => {
+  const response = await api.get(`/api/post/${postId}/likePostsCount`);
+  return response.data;
+};
+
 const reportPost = async (postId: string) => {
   const response = await api.post(`/api/report/${postId}`);
   return response.data;
@@ -68,6 +78,8 @@ export {
   updatePost,
   getPost,
   likePost,
+  getPostCount,
+  getPostLikeCount,
   reportPost,
   getComment,
   addComment,

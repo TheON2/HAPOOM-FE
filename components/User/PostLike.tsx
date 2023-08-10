@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { MouseEventHandler, useEffect, useState } from 'react';
 import {
   Line,
   PostBox,
@@ -10,8 +10,8 @@ import {
 import cloud from '../../public/🦆 icon _cloud_.svg';
 import Image from 'next/image';
 import { UserPost, UserPageData } from './UserUi';
-import { useMutation, useQueryClient } from 'react-query';
-import { likePost } from '@/api/post';
+import { useMutation } from 'react-query';
+import { getPost, likePost } from '@/api/post';
 
 interface PostLike {
   data: UserPageData | undefined;
@@ -21,9 +21,15 @@ interface PostProps {
   imageUrl: string;
   postId: number;
   showLikeIcon?: boolean;
+  handleLikeClick: MouseEventHandler<HTMLImageElement>;
 }
 
-const Post: React.FC<PostProps> = ({ imageUrl, postId, showLikeIcon }) => (
+const Post: React.FC<PostProps> = ({
+  imageUrl,
+  postId,
+  showLikeIcon,
+  handleLikeClick,
+}) => (
   <div style={{ position: 'relative', display: 'inline-block' }}>
     <Image
       src={imageUrl}
@@ -36,6 +42,7 @@ const Post: React.FC<PostProps> = ({ imageUrl, postId, showLikeIcon }) => (
       <Image
         src={cloud}
         alt="좋아요"
+        onClick={handleLikeClick}
         style={{
           position: 'absolute',
           top: 10,
@@ -51,6 +58,24 @@ const PostLike: React.FC<PostLike> = ({ data }) => {
   const [selectedTab, setSelectedTab] = useState(0);
   const [indicatorStyle, setIndicatorStyle] = useState({ width: 0, left: 0 });
   const [displayedPosts, setDisplayedPosts] = useState<UserPost[] | null>(null);
+
+  const mutation = useMutation(likePost, {
+    onSuccess: () => {
+      console.log('Success');
+    },
+    onError: (error) => {
+      console.error('Failed to like the post', error);
+    },
+  });
+
+  const handleLikeClick: React.MouseEventHandler<HTMLImageElement> = (
+    event
+  ) => {
+    const postId = event.currentTarget.getAttribute('data-post-id');
+    if (postId) {
+      mutation.mutate(postId);
+    }
+  };
 
   useEffect(() => {
     if (data) {
@@ -83,29 +108,6 @@ const PostLike: React.FC<PostLike> = ({ data }) => {
       }
     };
 
-  const queryClient = useQueryClient();
-
-  const mutation = useMutation(
-    (postId: number) => likePost(postId.toString()),
-    {
-      onSuccess: (data) => {
-        console.log('API call succeeded:', data);
-        queryClient.invalidateQueries('likePosts');
-      },
-      onError: (error) => {
-        console.log('API call failed:', error);
-      },
-    }
-  );
-
-  const handleLikeToggle = (postId: number) => {
-    console.log('Toggling like for postId:', postId);
-    mutation.mutate(postId);
-    setDisplayedPosts(
-      (prevPosts) => prevPosts?.filter((post) => post.id !== postId) || null
-    );
-  };
-
   return (
     <PostBox>
       <PostContentBox>
@@ -128,13 +130,13 @@ const PostLike: React.FC<PostLike> = ({ data }) => {
       <Line />
       <PostImageBox>
         {displayedPosts?.map((post) => (
-          <div key={post.id} onClick={() => handleLikeToggle(post.id)}>
-            <Post
-              imageUrl={post.image.url}
-              postId={post.id}
-              showLikeIcon={selectedTab === 1}
-            />
-          </div>
+          <Post
+            key={post.id}
+            imageUrl={post.image?.url}
+            postId={post.id}
+            showLikeIcon={selectedTab === 1}
+            handleLikeClick={handleLikeClick}
+          />
         ))}
       </PostImageBox>
     </PostBox>
