@@ -45,16 +45,16 @@ const StyledInput = styled.input`
   }
 `;
 export const StyledEmailInput = styled(StyledInput)`
-  border-radius: 8px 8px 0 0;
+  border-radius: 5px 5px 0 0;
   border-bottom: none;
 `;
 export const StyledPasswordInput = styled(StyledInput)`
-  border-radius: 0 0 8px 8px;
+  border-radius: 0 0 5px 5px;
 `;
 export const SignInBtn = styled.button`
   max-width: 312px;
   width: ${theme.inputBtnBoxWidth};
-  height: 36px;
+  height: 44px;
   border-radius: 8px;
   border: 1px solid ${theme.primaryColor};
   background: ${theme.primaryColor};
