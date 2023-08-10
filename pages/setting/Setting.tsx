@@ -36,6 +36,7 @@ const Setting = () => {
         <Profile
           userImage={userSetting?.user.userImage}
           preset={userSetting?.user.preset}
+          nickname={userSetting?.user.nickname}
         />
         테마 : {userSetting?.user.theme} <br />
         비밀번호 : {userSetting?.user.password} <br />

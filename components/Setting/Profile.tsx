@@ -2,20 +2,22 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import styled from 'styled-components';
 import { ProfileBox } from '@/styles/setting';
-
+import { profilePreset } from '@/public/presetData';
 const ProfileImageBox = styled.div``;
 
-const profilePreset = ['/b1.png', '/b2.png', '/b3.png', '/c1.jpeg'];
+// const profilePreset = ['/b1.png', '/b2.png', '/b3.png', '/c1.jpeg'];
 // const UserImage = '/inflearn.jpg';
 // const PRESET = 2;
 
 type profileProps = {
   userImage: string;
   preset: number;
+  nickname: string;
 };
 
-const Profile = ({ userImage, preset }: profileProps) => {
+const Profile = ({ userImage, preset, nickname }: profileProps) => {
   const [profileImage, setProfileImage] = useState<string | undefined>();
+
   useEffect(() => {
     if (preset === 1) {
       setProfileImage(userImage);
@@ -26,14 +28,18 @@ const Profile = ({ userImage, preset }: profileProps) => {
       setProfileImage(foundPreset);
     }
   }, [preset]);
+
   return (
     <ProfileBox>
-      <div>
+      <div className="image">
         {profileImage && (
           <Image src={profileImage} alt={'image'} width={100} height={100} />
         )}
       </div>
-      <h2>닉네임</h2>
+      <div>
+        <h2>{nickname}</h2>
+        <p>aaa@gmail.com</p>
+      </div>
     </ProfileBox>
   );
 };

@@ -21,7 +21,7 @@ export const ProfileBox = styled.div`
   padding: 20px 30px;
   gap: 30px;
   /* height: 10vh; */
-  div {
+  .image {
     width: 100px;
     height: 100px;
     border-radius: 50px;

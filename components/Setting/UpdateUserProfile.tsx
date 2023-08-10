@@ -12,7 +12,7 @@ import { QueryClient, useMutation, useQueryClient } from 'react-query';
 import Button from '@/components/common/Button';
 import { updateUserSetting } from '@/api/user';
 import { ProfilePresetList, ProfileItem, ButtonBox } from '@/styles/setting';
-
+import { profilePreset } from '@/public/presetData';
 const profileData = ['/inflearn.jpg', '/inflearn.jpg', '/inflearn.jpg'];
 
 type profileType = {
@@ -26,7 +26,6 @@ const UserProfileImageUpdate = ({ profileImage, preset }: profileType) => {
   // const [sendI, setImage] = useState<any>(null);
   // const [sendImage, setSendImage] = useState<any>(null);
 
-  //프리셋 2-5는 다르게 보내기
   const onClickProfileHandler = (idx: number) => {
     setSelectPreset(idx + 1);
   };
@@ -94,7 +93,7 @@ const UserProfileImageUpdate = ({ profileImage, preset }: profileType) => {
               />
             </figure>
           </ProfileItem>
-          {profileData.map((profile, idx) => {
+          {profilePreset.map((profile, idx) => {
             return (
               <ProfileItem
                 key={idx}
@@ -112,11 +111,11 @@ const UserProfileImageUpdate = ({ profileImage, preset }: profileType) => {
               </ProfileItem>
             );
           })}
-          <ProfileItem onClick={() => onClickProfileHandler(4)}>
+          {/* <ProfileItem onClick={() => onClickProfileHandler(4)}>
             <figure className={selectPreset === 5 ? 'active' : ''}>
               <Image src={'/addImage.png'} alt="preset" fill />
             </figure>
-          </ProfileItem>
+          </ProfileItem> */}
         </ProfilePresetList>
         <div
           style={{
