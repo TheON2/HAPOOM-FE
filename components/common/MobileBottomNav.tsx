@@ -51,7 +51,7 @@ const MobileBottomNav = () => {
                   height={50}
                   loading="eager"
                 />
-                <p>home</p>
+                <p>search</p>
               </IconBox>
             </BottomNavItem>
             <BottomNavItem>
@@ -63,11 +63,11 @@ const MobileBottomNav = () => {
                   height={50}
                   loading="eager"
                 />
-                <p>home</p>
+                <p>feed</p>
               </IconBox>
             </BottomNavItem>
             <BottomNavItem>
-              <IconBox href={'/home/Home'}>
+              <IconBox href={'/User/User'}>
                 <Image
                   src={'/🦆 icon _star_.svg'}
                   alt="icon"
@@ -75,7 +75,7 @@ const MobileBottomNav = () => {
                   height={50}
                   loading="eager"
                 />
-                <p>home</p>
+                <p>my</p>
               </IconBox>
             </BottomNavItem>
           </BottomNavList>
