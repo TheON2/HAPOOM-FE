@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const initialState = {
-  update: false,
-  updateId: '10',
+  update: true,
+  updateId: '1',
 };
 
 const postSlice = createSlice({
