@@ -29,13 +29,19 @@ interface Post {
 }
 
 const HashtagContents: React.FC<Props> = ({ data }) => {
+  // console.log(data);
   return (
     <HashtagContentsLayout>
       <SectionTitle>#랜덤글</SectionTitle>
       <HashtagContentsContainer>
         {data.map((content, index) => {
           return (
-            <ImageContent key={index} src={content.image?.url} alt={'date'} />
+            <ImageContent
+              key={index}
+              src={content.image?.url}
+              alt={'date'}
+              postId={content.id}
+            />
           );
         })}
       </HashtagContentsContainer>
