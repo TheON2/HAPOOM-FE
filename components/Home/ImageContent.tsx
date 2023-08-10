@@ -47,10 +47,11 @@ const ImageContent: NextPage<Props> = ({ src, alt }) => {
   const onClickHeartHandler = (postId: string, event: React.MouseEvent) => {
     event.stopPropagation();
     setIsLike(!isLike);
+    mutation.mutate(postId);
   };
   return (
     <ImageContentLayout>
-      <ImageBox href="/home/Home">
+      <ImageBox href="/">
         <Image
           src={src}
           alt={alt}

@@ -21,8 +21,8 @@ const HashtagNavBar: React.FC<Props> = ({ data }) => {
                   fill
                   sizes="(max-width: 1440px) 100px"
                   loading="eager"
-                  placeholder="blur"
-                  blurDataURL={hashtag.src}
+                  // placeholder="blur"
+                  // blurDataURL={hashtag.src}
                 />
               </figure>
               <figcaption>#해시태그다</figcaption>
