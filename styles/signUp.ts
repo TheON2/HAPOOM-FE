@@ -12,6 +12,7 @@ const theme = {
 interface Props {
   marginBottom?: string;
   color?: string;
+  width?: string;
 }
 export const SignUpSection = styled.section`
   max-width: 360px;
@@ -161,8 +162,9 @@ export const SnsLine = styled.div`
   border: 1px solid #B3B3B3;
   margin: 20px 0 22px 0;
 `
-export const Line = styled.div`
-  width: 312px;
+export const Line = styled.div<Props>`
+  /* width: 312px; */
+  width: ${(props) => props.width ? props.width : '312px' };
   border: 1px solid ${theme.primaryColor};
   margin-bottom: 16px;
 `

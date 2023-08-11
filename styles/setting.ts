@@ -5,6 +5,7 @@ import styled from 'styled-components';
 export const SettingLayout = styled.section`
   display: flex;
   flex-direction: column;
+  height: auto;
   align-items: center;
   max-width: 1360px;
   padding: 0 24px;
@@ -97,5 +98,54 @@ export const ButtonBox = styled.div`
   input {
     width: 0;
     display: none;
+  }
+`;
+
+/* setting input conponent style */
+
+export const InputBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  span {
+    font-size: 10px;
+    font-weight: 700;
+    color: #868686;
+    padding: 8px 0 6px;
+  }
+`;
+
+export const InputStyle = styled.input`
+  width: 100%;
+  font-size: 12px;
+  padding: 12px 28px 10px;
+  border-radius: 3px;
+  border: 1px solid #0084ff;
+  color: #999999;
+`;
+
+/* setting ThemesBox conponent style */
+
+export const ThemesBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  button {
+    padding: 10px 0 8px;
+    border-radius: 24px;
+    font-size: 12px;
+    border: none;
+    &:nth-child(1) {
+      background-color: #fff;
+      border: 1px solid #5f7ba6;
+    }
+    &:nth-child(2) {
+      background-color: #132b4f;
+      color: #fff;
+    }
+    &:nth-child(3) {
+      background-color: #000;
+      color: #fff;
+    }
   }
 `;

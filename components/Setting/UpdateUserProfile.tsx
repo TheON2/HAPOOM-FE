@@ -1,14 +1,6 @@
-import React, {
-  ChangeEvent,
-  FormEvent,
-  ReactNode,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
-import styled from 'styled-components';
+import React, { ChangeEvent, FormEvent, useState } from 'react';
 import Image from 'next/image';
-import { QueryClient, useMutation, useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import Button from '@/components/common/Button';
 import { updateUserSetting } from '@/api/user';
 import { ProfilePresetList, ProfileItem, ButtonBox } from '@/styles/setting';
@@ -23,8 +15,6 @@ type profileType = {
 const UserProfileImageUpdate = ({ profileImage, preset }: profileType) => {
   const [selectPreset, setSelectPreset] = useState<number>(preset ? preset : 5);
   const [userProfile, setUserProfile] = useState<any>(profileImage);
-  // const [sendI, setImage] = useState<any>(null);
-  // const [sendImage, setSendImage] = useState<any>(null);
 
   const onClickProfileHandler = (idx: number) => {
     setSelectPreset(idx + 1);

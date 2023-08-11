@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
-import Input from '@/components/Setting/Input';
 import styled from 'styled-components';
-import useInput from '@/hooks/useInput';
 import Button from '@/components/common/Button';
-import { StyledInputBox, StyledInput } from '@/styles/signUp';
+import { StyledInput } from '@/styles/signUp';
 import { useMutation, useQueryClient } from 'react-query';
 import { updateUserSetting } from '@/api/user';
 
