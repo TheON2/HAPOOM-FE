@@ -1,10 +1,14 @@
 import styled from 'styled-components';
 
-/* setting page style */
+type FlexProps = {
+  direction?: 'column' | 'row';
+};
 
+/* setting page style */
 export const SettingLayout = styled.section`
   display: flex;
   flex-direction: column;
+  height: 1000px;
   align-items: center;
   max-width: 1360px;
   padding: 0 24px;
@@ -12,15 +16,33 @@ export const SettingLayout = styled.section`
 
 export const AccordianContent = styled.div`
   width: 100%;
-  padding-bottom: 36px;
 `;
 
-export const ProfileBox = styled.div`
+export const ProfileBox = styled.div<FlexProps>`
   display: flex;
+  flex-direction: ${(props) => props.direction || 'column'}; 
   align-items: center;
   padding: 20px 30px;
   gap: 30px;
-  /* height: 10vh; */
+  h2{
+    color: #000;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 700;
+  }
+  p {
+    color: rgba(0, 0, 0, 0.40);
+    font-size: 8px;
+    font-weight: 400;
+    text-align: center;
+  }
+  span {
+    display: block;
+    background: rgba(0, 0, 0, 0.70);
+    width: 100%;
+    height: 1px;
+    margin: 3px 0 3px 0;
+  }
   .image {
     width: 100px;
     height: 100px;
@@ -98,4 +120,64 @@ export const ButtonBox = styled.div`
     width: 0;
     display: none;
   }
+`;
+
+/* setting input conponent style */
+
+export const InputBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  span {
+    font-size: 10px;
+    font-weight: 700;
+    color: #868686;
+    padding: 8px 0 6px;
+  }
+`;
+
+export const InputStyle = styled.input`
+  width: 100%;
+  font-size: 12px;
+  padding: 12px 28px 10px;
+  border-radius: 3px;
+  border: 1px solid #0084ff;
+  color: #999999;
+  margin-bottom: 20px;
+`;
+
+/* setting ThemesBox conponent style */
+
+export const ThemesBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  button {
+    padding: 10px 0 8px;
+    border-radius: 24px;
+    font-size: 12px;
+    border: none;
+    &:nth-child(1) {
+      background-color: #fff;
+      border: 1px solid #5f7ba6;
+    }
+    &:nth-child(2) {
+      background-color: #132b4f;
+      color: #fff;
+    }
+    &:nth-child(3) {
+      background-color: #000;
+      color: #fff;
+    }
+  }
+`;
+
+// /* setting Text conponent style */
+
+export const TextParagraphPwdCheck = styled.p`
+  margin: 4px 0 10px 0;
+  color: #B1B1B1;
+  text-align: left;
+  font-size: 10px;
+  font-weight: 400;
 `;

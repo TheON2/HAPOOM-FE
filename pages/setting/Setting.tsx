@@ -1,18 +1,18 @@
-import Main from '@/components/Home/Main';
 import Header from '@/components/common/Header';
-import React, { ReactNode, useEffect, useState } from 'react';
+import React from 'react';
 import UpdateNickName from '@/components/Setting/UpdateNickName';
 import UpdateUserProfile from '@/components/Setting/UpdateUserProfile';
 import UpdatePassword from '@/components/Setting/UpdatePassword';
-import Image from 'next/image';
 import AccordianMenu from '@/components/common/AccordianMenu';
 import Themes from '@/components/Setting/Themes';
-import { getAuthToken, getUserSetting, updateUserSetting } from '@/api/user';
-import { useQuery, useMutation } from 'react-query';
+import { getAuthToken, getUserSetting } from '@/api/user';
+import { useQuery } from 'react-query';
 import { useDispatch } from 'react-redux';
 import { AUTH_USER, UserResponse } from '@/redux/reducers/userSlice';
-import { SettingLayout, AccordianContent, ProfileBox } from '@/styles/setting';
+import { SettingLayout, AccordianContent } from '@/styles/setting';
 import Profile from '@/components/Setting/Profile';
+import MobileBottomNav from '@/components/common/MobileBottomNav';
+
 const Setting = () => {
   const dispatch = useDispatch();
 
@@ -26,25 +26,30 @@ const Setting = () => {
     }
   );
   const { data: userSetting } = useQuery('userSetting', getUserSetting, {
-    onSuccess: (data) => {},
+    onSuccess: (data) => {
+      console.log(data.user?.email);
+    },
   });
 
   return (
-    <Main>
+    <>
       <Header />
       <SettingLayout>
         <Profile
+          direction="column"
+          email={userSetting?.user.email}
           userImage={userSetting?.user.userImage}
           preset={userSetting?.user.preset}
           nickname={userSetting?.user.nickname}
         />
-        테마 : {userSetting?.user.theme} <br />
-        비밀번호 : {userSetting?.user.password} <br />
-        <AccordianMenu tabText="별명 수정">
+        {/*  */}
+        <AccordianMenu tabText="닉네임 수정">
           <AccordianContent>
             <UpdateNickName nickname={userSetting?.user.nickname} />
           </AccordianContent>
         </AccordianMenu>
+
+        {/*  */}
         <AccordianMenu tabText="프로필 수정">
           <AccordianContent>
             <UpdateUserProfile
@@ -53,16 +58,22 @@ const Setting = () => {
             />
           </AccordianContent>
         </AccordianMenu>
+
+        {/*  */}
         <AccordianContent>
           <Themes />
         </AccordianContent>
+
+        {/*  */}
         <AccordianMenu tabText="비밀번호 수정">
           <AccordianContent>
             <UpdatePassword />
           </AccordianContent>
         </AccordianMenu>
+
+        <MobileBottomNav />
       </SettingLayout>
-    </Main>
+    </>
   );
 };
 

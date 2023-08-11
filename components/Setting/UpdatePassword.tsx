@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
-import Input from '@/components/Setting/Input';
 import styled from 'styled-components';
-import useInput from '@/hooks/useInput';
 import Button from '@/components/common/Button';
-import { StyledInputBox, StyledInput } from '@/styles/signUp';
+import {
+  StyledInput,
+  TextErrorParagraph,
+  TextParagraphSns,
+} from '@/styles/signUp';
 import { useMutation, useQueryClient } from 'react-query';
 import { updateUserSetting } from '@/api/user';
+import { TextParagraph } from '@/styles/signIn';
+import { TextParagraphPwdCheck } from '@/styles/setting';
 
 export interface Signup {
   password: string;
@@ -22,7 +26,7 @@ type TextInputType = 'email' | 'password' | 'passwordConfirm' | 'nickname';
 
 const InputBox = styled.div`
   width: 100%;
-  margin-bottom: 32px;
+  /* margin-bottom: 32px; */
 `;
 
 const UpdatePassword = () => {
@@ -76,8 +80,7 @@ const UpdatePassword = () => {
     }
 
     if (signUpState.password !== signUpState.passwordConfirm) {
-      errors.password = '비밀번호가 일치하지 않습니다.';
-      // errors.passwordConfirm = '비밀번호가 일치하지 않습니다.';
+      errors.passwordConfirm = '비밀번호가 일치하지 않습니다.';
     }
 
     if (Object.keys(errors).length > 0) {
@@ -98,6 +101,10 @@ const UpdatePassword = () => {
     <>
       <form action="" onSubmit={submitUser}>
         <InputBox>
+          <TextParagraph>비밀번호</TextParagraph>
+          <TextParagraphPwdCheck>
+            영문, 숫자를 포함한 8자 이상의 비밀번호를 입력해주세요.
+          </TextParagraphPwdCheck>
           <StyledInput
             type="password"
             name="password"
@@ -105,6 +112,12 @@ const UpdatePassword = () => {
             placeholder="비밀번호를 입력해 주세요"
             onChange={handleInputChange}
           />
+          {error.password && (
+            <TextErrorParagraph>{error.password}</TextErrorParagraph>
+          )}
+          <TextParagraph style={{ margin: '10px 0 7px 0' }}>
+            비밀번호 확인
+          </TextParagraph>
           <StyledInput
             type="password"
             name="passwordConfirm"
@@ -112,10 +125,13 @@ const UpdatePassword = () => {
             placeholder="비밀번호 확인"
             onChange={handleInputChange}
           />
-          <p style={{ color: 'red' }}>{error.password}</p>
-          <p style={{ color: 'red' }}>{error.passwordConfirm}</p>
+          {error.passwordConfirm && (
+            <TextErrorParagraph>{error.passwordConfirm}</TextErrorParagraph>
+          )}
         </InputBox>
-        <Button type="submit">비밀번호 수정</Button>
+        <Button type="submit" marginTop={'10px'}>
+          비밀번호 수정
+        </Button>
       </form>
     </>
   );

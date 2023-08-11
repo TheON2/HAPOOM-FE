@@ -1,20 +1,12 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import styled from 'styled-components';
-import Link from 'next/link';
-import { SideNavLayout, SideNavMenuBox, SubMenuList } from '@/styles/navbar';
+import { SideNavLayout, SideNavMenuBox } from '@/styles/navbar';
 import IconButton from './IconButton';
-interface SubmenuProps {
-  children: React.ReactNode;
-}
-
-import AccordianMenu, { AccordianTab } from './AccordianMenu';
-import Image from 'next/image';
 import Themes from '@/components/Setting/Themes';
 import Profile from '@/components/Setting/Profile';
 import { useSelector } from 'react-redux';
-import { AUTH_USER, UserState, UserResponse } from '@/redux/reducers/userSlice';
+import { UserState } from '@/redux/reducers/userSlice';
 import { RootState } from '@/redux/config/configStore';
-
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import { useMutation, useQueryClient } from 'react-query';
@@ -23,6 +15,9 @@ import { LOGOUT_USER } from '@/redux/reducers/userSlice';
 import NavbarTab from '@/components/common/TabBarLinkButton';
 import { Bell, Logout } from '@/components/common/SVG';
 
+interface SubmenuProps {
+  children: React.ReactNode;
+}
 const OverlayBox = styled.div`
   width: 100%;
   height: 100vh;
@@ -79,15 +74,11 @@ const SideNav = ({ isShowMenu, setIsShowMenu }: sideNavProps) => {
         <IconBox>
           <IconButton>
             <Bell fillColor="#000" />
-            {/* <Image
-                src={'/🦆 icon _cloud_.svg'}
-                alt={'icon'}
-                width={26}
-                height={26}
-              /> */}
           </IconButton>
         </IconBox>
         <Profile
+          direction="row"
+          email={user?.email || ''}
           userImage={user?.userImage || ''}
           preset={user?.preset || 5}
           nickname={user?.nickName || ''}
