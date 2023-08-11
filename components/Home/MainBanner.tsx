@@ -20,6 +20,7 @@ const MainBannerContainer = styled.div<mainBannerProps>`
     left: 24px;
     font-size: 20px;
     font-weight: 700;
+    line-height: 28px;
     color: #fff;
   }
   img {
@@ -36,7 +37,6 @@ const MainBanner = ({ data, isClick }: any) => {
   return (
     <MainBannerContainer isClick={isClick}>
       <p>집에 가고 싶다. 집 떠나면 개고생이다.</p>
-
       <Image
         src={data[0].src}
         alt="v13 image"

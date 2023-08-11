@@ -27,7 +27,7 @@ import { useRouter } from 'next/router';
 import { useMutation, useQueryClient } from 'react-query';
 import { userLogOut } from '@/api/user';
 import { LOGOUT_USER } from '@/redux/reducers/userSlice';
-import { Cloud } from '@/components/common/SVG';
+import { Hamburger, Bell } from '@/components/common/SVG';
 const HamburgerButton = styled.button`
   width: 36px;
   height: 36px;
@@ -71,6 +71,10 @@ const Header = ({ sticky }: any) => {
   const [isShowMenu, setIsShowMenu] = useState<boolean>(false);
   const [search, onChangeSearchHandler, setSearch] = useInput('');
   const [isAuth, setIsAuth] = useState<boolean>(false);
+
+  const homeIconColor = sticky ? '#fff' : '#CBCBCB';
+  const homeLogoColor = sticky ? '#fff' : '#0084FF';
+  console.log(homeIconColor);
   const onClickSearchIconHandler = () => [setIsSearch(!isSearch)];
   const onClickShowMenuHandler = () => {
     setIsShowMenu(!isShowMenu);
@@ -89,7 +93,7 @@ const Header = ({ sticky }: any) => {
     <>
       <HeaderLayout sticky={sticky}>
         <LogoBox href={'/'} onClick={handleLogoClick}>
-          <h1>HAPOOM</h1>
+          <h1 style={{ color: homeLogoColor }}>HAPOOM</h1>
           {/* <Image
             src={'/inflearn.jpg'}
             alt="logo"
@@ -149,16 +153,16 @@ const Header = ({ sticky }: any) => {
         </AccountActionsContainer>
         <MobileBox>
           <IconButton>
-            <Cloud />
+            <Bell fillColor={homeIconColor} />
           </IconButton>
-          <HamburgerButton
-            onClick={onClickShowMenuHandler}
-            className={isShowMenu ? 'active' : ''}
-          >
+          <IconButton onClick={onClickShowMenuHandler}>
+            <Hamburger fillColor={homeIconColor} />
+          </IconButton>
+          {/* <HamburgerButton className={isShowMenu ? 'active' : ''}>
             <span></span>
             <span></span>
             <span></span>
-          </HamburgerButton>
+          </HamburgerButton> */}
         </MobileBox>
       </HeaderLayout>
       {isShowMenu && (

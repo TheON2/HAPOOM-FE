@@ -1,12 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import Link from 'next/link';
-import {
-  SideNavLayout,
-  SideNavMenuList,
-  SideNavMenuItem,
-  SubMenuList,
-} from '@/styles/navbar';
+import { SideNavLayout, SideNavMenuBox, SubMenuList } from '@/styles/navbar';
 import IconButton from './IconButton';
 interface SubmenuProps {
   children: React.ReactNode;
@@ -25,6 +20,8 @@ import { useRouter } from 'next/router';
 import { useMutation, useQueryClient } from 'react-query';
 import { userLogOut } from '@/api/user';
 import { LOGOUT_USER } from '@/redux/reducers/userSlice';
+import NavbarTab from '@/components/common/TabBarLinkButton';
+import { Bell, Logout } from '@/components/common/SVG';
 
 const OverlayBox = styled.div`
   width: 100%;
@@ -37,24 +34,10 @@ const OverlayBox = styled.div`
   cursor: pointer;
 `;
 
-const NavbarTab = styled(Link)`
-  width: 100%;
-  padding: 20px 0 16px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-weight: 700;
-  color: #8995a7;
-`;
-
-const ProfileBox = styled.div`
-  width: 100%;
-  height: 80px;
-`;
-
 const IconBox = styled.div`
   width: 100%;
   height: 54px;
+  padding: 0 24px;
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -93,65 +76,36 @@ const SideNav = ({ isShowMenu, setIsShowMenu }: sideNavProps) => {
     <>
       <OverlayBox onClick={onClickOverlayHandler}></OverlayBox>
       <SideNavLayout>
-        <SideNavMenuList>
-          <IconBox>
-            <IconButton>
-              <Image
+        <IconBox>
+          <IconButton>
+            <Bell fillColor="#000" />
+            {/* <Image
                 src={'/🦆 icon _cloud_.svg'}
                 alt={'icon'}
                 width={26}
                 height={26}
-              />
-            </IconButton>
-          </IconBox>
-          <Profile
-            userImage={user?.userImage || ''}
-            preset={user?.preset || 5}
-            nickname={user?.nickName || ''}
-          />
-
+              /> */}
+          </IconButton>
+        </IconBox>
+        <Profile
+          userImage={user?.userImage || ''}
+          preset={user?.preset || 5}
+          nickname={user?.nickName || ''}
+        />
+        <SideNavMenuBox>
           {user?.email !== null ? (
-            <NavbarTab href="/setting/Setting">
-              My page
-              <Image
-                src={'/🦆 icon _cloud_.svg'}
-                alt={'icon'}
-                width={20}
-                height={20}
-              />
-            </NavbarTab>
+            <NavbarTab router="/setting/Setting">My page</NavbarTab>
           ) : (
             <>
-              <NavbarTab href="/auth/SignIn">
-                Login
-                <Image
-                  src={'/🦆 icon _cloud_.svg'}
-                  alt={'icon'}
-                  width={20}
-                  height={20}
-                />
-              </NavbarTab>
-              <NavbarTab href="/auth/SignUp">
-                Register
-                <Image
-                  src={'/🦆 icon _cloud_.svg'}
-                  alt={'icon'}
-                  width={20}
-                  height={20}
-                />
-              </NavbarTab>
+              <NavbarTab router="/auth/SignIn">Login</NavbarTab>
+              <NavbarTab router="/auth/SignUp"> Register</NavbarTab>
             </>
           )}
           <Themes />
-        </SideNavMenuList>
+        </SideNavMenuBox>
         <IconBox>
           <IconButton onClick={onLogOut}>
-            <Image
-              src={'/🦆 icon _cloud_.svg'}
-              alt={'icon'}
-              width={26}
-              height={26}
-            />
+            <Logout />
           </IconButton>
         </IconBox>
       </SideNavLayout>

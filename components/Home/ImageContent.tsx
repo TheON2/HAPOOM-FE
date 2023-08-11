@@ -5,7 +5,7 @@ import { NextPage } from 'next';
 import { likePost } from '@/api/post';
 import { useMutation } from 'react-query';
 import Link from 'next/link';
-// import HeartIcon from './HeartIcon';
+import HeartIcon from '@/components/common/HeartIcon';
 const ImageContentLayout = styled.div`
   padding-bottom: 100%;
   width: 100%;
@@ -24,17 +24,17 @@ const ImageBox = styled(Link)`
   display: block;
 `;
 
-const HeartIcon = styled.div<iconType>`
-  width: 36px;
-  height: 36px;
-  background-color: ${(props) => (props.$isLike ? `black` : `white`)};
-  border-radius: 50%;
-  border: 2px solid black;
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  cursor: pointer;
-`;
+// const HeartIcon = styled.div<iconType>`
+//   width: 36px;
+//   height: 36px;
+//   background-color: ${(props) => (props.$isLike ? `black` : `white`)};
+//   border-radius: 50%;
+//   border: 2px solid black;
+//   position: absolute;
+//   top: 10px;
+//   right: 10px;
+//   cursor: pointer;
+// `;
 
 type Props = {
   src: string;
@@ -64,10 +64,11 @@ const ImageContent: NextPage<Props> = ({ src, alt, postId }) => {
           // blurDataURL={src}
         />
       </ImageBox>
-      <HeartIcon
+      {/* <HeartIcon
         onClick={(event) => onClickHeartHandler(postId, event)}
         $isLike={isLike}
-      ></HeartIcon>
+      ></HeartIcon> */}
+      <HeartIcon postId={postId} />
     </ImageContentLayout>
   );
 };

@@ -8,7 +8,7 @@ const MainLayout = styled.main`
   /* padding-bottom: 100px; */
   height: calc(100vh - 252px);
   overflow-y: auto;
-  transform: translateY(-100px);
+  transform: translateY(-105px);
   &::-webkit-scrollbar {
     display: none;
   }
