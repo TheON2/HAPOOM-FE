@@ -47,10 +47,6 @@ export const UserImage = styled(Image)`
   width: 441px;
   height: 280px;
   object-fit: cover;
-
-  @media screen and (max-width: 1260px) {
-    padding: 0 24px;
-  }
 `;
 export const ProfileContentsBox = styled.div`
   margin-left: 10px;
@@ -99,6 +95,7 @@ export const ImageBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
   p {
     text-align: center;
     font-family: Inter;
@@ -109,6 +106,7 @@ export const ImageBox = styled.div`
 
 export const PostBox = styled.div`
   max-width: 320px;
+  padding: 0 24px;
 `;
 export const PostContentBox = styled.div`
   position: relative;
@@ -134,7 +132,7 @@ export const PostImageBox = styled.div`
   gap: 12px;
   justify-content: flex-start;
   align-items: center;
-  @media (max-width: 500px) {
+  @media (max-width: 1260px) {
     width: 100%;
     justify-content: center;
   }
