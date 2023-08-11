@@ -28,27 +28,6 @@ import { useMutation, useQueryClient } from 'react-query';
 import { userLogOut } from '@/api/user';
 import { LOGOUT_USER } from '@/redux/reducers/userSlice';
 import { Hamburger, Bell } from '@/components/common/SVG';
-const HamburgerButton = styled.button`
-  width: 36px;
-  height: 36px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-end;
-  background: none;
-  border: none;
-  cursor: pointer;
-  span {
-    width: 18px;
-    height: 2px;
-    margin-bottom: 5px;
-    background: #fff;
-    transition: all 0.3s ease-in-out;
-    &:nth-child(3) {
-      margin: 0;
-    }
-  }
-`;
 
 const Header = ({ sticky }: any) => {
   const dispatch = useDispatch();
@@ -74,7 +53,7 @@ const Header = ({ sticky }: any) => {
 
   const homeIconColor = sticky ? '#fff' : '#CBCBCB';
   const homeLogoColor = sticky ? '#fff' : '#0084FF';
-  console.log(homeIconColor);
+  // console.log(homeIconColor);
   const onClickSearchIconHandler = () => [setIsSearch(!isSearch)];
   const onClickShowMenuHandler = () => {
     setIsShowMenu(!isShowMenu);
@@ -94,13 +73,6 @@ const Header = ({ sticky }: any) => {
       <HeaderLayout sticky={sticky}>
         <LogoBox href={'/'} onClick={handleLogoClick}>
           <h1 style={{ color: homeLogoColor }}>HAPOOM</h1>
-          {/* <Image
-            src={'/inflearn.jpg'}
-            alt="logo"
-            width={200}
-            height={50}
-            loading="eager"
-          /> */}
         </LogoBox>
         <AccountActionsContainer>
           <SearchInputBox $isSearch={isSearch}>
