@@ -23,12 +23,12 @@ const Themes = ({ theme }: settingProps) => {
   const onClickThemesHandler = async (themes: number) => {
     console.log(themes);
     const formData = new FormData();
-    formData.append('theme', themes.toString()); // themes를 문자열로 변환
+    formData.append('theme', themes.toString());
     await mutate.mutateAsync(formData);
   };
 
   return (
-    <AccordianMenu tabText="Theme">
+    <AccordianMenu tabText="테마 수정">
       <ThemesBox>
         <button onClick={() => onClickThemesHandler(1)}>Original Mode</button>
         <button onClick={() => onClickThemesHandler(2)}>Midnight Mode</button>

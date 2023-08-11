@@ -118,7 +118,7 @@ const UserProfileImageUpdate = ({ profileImage, preset }: profileType) => {
               프로필 업로드
             </label>
             <input id="profile" type="file" onChange={onChangeProfileUpdate} />
-            <Button type="submit" className="profile-button">
+            <Button marginTop={'0'} type="submit" className="profile-button">
               프로필 변경
             </Button>
           </ButtonBox>

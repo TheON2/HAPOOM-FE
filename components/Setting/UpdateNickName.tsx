@@ -68,7 +68,9 @@ const UpdateNickName: NextPage<settingProps> = ({ nickname }) => {
         onChange={onClickNickName}
       />
       {error && <TextErrorParagraph>{error}</TextErrorParagraph>}
-      <Button type="submit">별명 수정</Button>
+      <Button type="submit" marginTop={'-12px'}>
+        닉네임변경하기
+      </Button>
     </form>
   );
 };

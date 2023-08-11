@@ -13,6 +13,7 @@ interface Props {
   marginBottom?: string;
   color?: string;
   width?: string;
+  borderColor?: string;
 }
 export const SignUpSection = styled.section`
   max-width: 360px;
@@ -88,12 +89,12 @@ export const StyledInputBox = styled.div`
   margin-bottom:12px;
   
 `;
-export const StyledInput = styled.input`
+export const StyledInput = styled.input<Props>`
   width: 100%; 
   height: 36px;
   outline: none;
   padding-left: 28px;
-  border: 1px solid ${theme.primaryColor};
+  border: 1px solid ${({borderColor}) => borderColor};
   border-radius: 3px;
   &::placeholder{
     font-size: 12px;
@@ -165,7 +166,7 @@ export const SnsLine = styled.div`
 export const Line = styled.div<Props>`
   /* width: 312px; */
   width: ${(props) => props.width ? props.width : '312px' };
-  border: 1px solid ${theme.primaryColor};
+  border: 1px solid ${(props) => props.borderColor ? props.borderColor : '#0084FF'};
   margin-bottom: 16px;
 `
 export const TextErrorParagraph = styled.p`
