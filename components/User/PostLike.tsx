@@ -34,8 +34,8 @@ const Post: React.FC<PostProps> = ({
     <Image
       src={imageUrl}
       alt="게시물 이미지"
-      width={232}
-      height={228}
+      width={157}
+      height={157}
       objectFit="cover"
     />
     {showLikeIcon && (
