@@ -9,6 +9,12 @@ import {
   IconBox,
 } from '@/styles/navbar';
 import IconButton from '@/components/common/IconButton';
+import { Home, Search, Upload, MyProfile } from '@/components/common/SVG';
+
+type mobileBottomNavProps = {
+  onClickEvent: () => void;
+};
+
 const MobileBottomNav = () => {
   const [isMobile, setIsMobile] = useState<boolean>(false);
 
@@ -32,50 +38,32 @@ const MobileBottomNav = () => {
           <BottomNavList>
             <BottomNavItem>
               <IconBox href={'/'}>
-                <Image
-                  src={'/🦆 icon _cloud_.svg'}
-                  alt="icon"
-                  width={50}
-                  height={50}
-                  loading="eager"
-                />
+                <Home />
                 <p>home</p>
               </IconBox>
             </BottomNavItem>
             <BottomNavItem>
               <IconBox href={'/'}>
-                <Image
-                  src={'/🦆 icon _image_.svg'}
-                  alt="icon"
-                  width={50}
-                  height={50}
-                  loading="eager"
-                />
-                <p>home</p>
+
+                <Search />
+
+                <p>search</p>
               </IconBox>
             </BottomNavItem>
             <BottomNavItem>
               <IconBox href={'/post/Write'}>
-                <Image
-                  src={'/🦆 icon _star_.svg'}
-                  alt="icon"
-                  width={50}
-                  height={50}
-                  loading="eager"
-                />
-                <p>home</p>
+
+                <Upload />
+                <p>upload</p>
+
               </IconBox>
             </BottomNavItem>
             <BottomNavItem>
-              <IconBox href={'/home/Home'}>
-                <Image
-                  src={'/🦆 icon _star_.svg'}
-                  alt="icon"
-                  width={50}
-                  height={50}
-                  loading="eager"
-                />
-                <p>home</p>
+              <IconBox href={'/User/User'}>
+
+                <MyProfile />
+
+                <p>my</p>
               </IconBox>
             </BottomNavItem>
           </BottomNavList>

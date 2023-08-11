@@ -9,7 +9,7 @@ import Link from 'next/link';
 const ImageContentLayout = styled.div`
   padding-bottom: 100%;
   width: 100%;
-  border: 1px solid black;
+  /* border: 1px solid black; */
   position: relative;
   img {
     object-fit: cover;
@@ -39,18 +39,22 @@ const HeartIcon = styled.div<iconType>`
 type Props = {
   src: string;
   alt: string;
+  postId: number;
 };
 
-const ImageContent: NextPage<Props> = ({ src, alt }) => {
+const ImageContent: NextPage<Props> = ({ src, alt, postId }) => {
   const [isLike, setIsLike] = useState<boolean>(false);
+
   const mutation = useMutation((postId: string) => likePost(postId));
-  const onClickHeartHandler = (postId: string, event: React.MouseEvent) => {
+  const onClickHeartHandler = (postId: number, event: React.MouseEvent) => {
     event.stopPropagation();
     setIsLike(!isLike);
+    mutation.mutate(postId.toString());
+
   };
   return (
     <ImageContentLayout>
-      <ImageBox href="/home/Home">
+      <ImageBox href={`/detail/${postId}`}>
         <Image
           src={src}
           alt={alt}
@@ -61,7 +65,7 @@ const ImageContent: NextPage<Props> = ({ src, alt }) => {
         />
       </ImageBox>
       <HeartIcon
-        onClick={(event) => onClickHeartHandler(`1`, event)}
+        onClick={(event) => onClickHeartHandler(postId, event)}
         $isLike={isLike}
       ></HeartIcon>
     </ImageContentLayout>
