@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import Link from 'next/link';
 import {
@@ -15,6 +15,17 @@ interface SubmenuProps {
 import AccordianMenu, { AccordianTab } from './AccordianMenu';
 import Image from 'next/image';
 import Themes from '@/components/Setting/Themes';
+import Profile from '@/components/Setting/Profile';
+import { useSelector } from 'react-redux';
+import { AUTH_USER, UserState, UserResponse } from '@/redux/reducers/userSlice';
+import { RootState } from '@/redux/config/configStore';
+
+import { useDispatch } from 'react-redux';
+import { useRouter } from 'next/router';
+import { useMutation, useQueryClient } from 'react-query';
+import { userLogOut } from '@/api/user';
+import { LOGOUT_USER } from '@/redux/reducers/userSlice';
+
 const OverlayBox = styled.div`
   width: 100%;
   height: 100vh;
@@ -24,30 +35,6 @@ const OverlayBox = styled.div`
   top: 0;
   z-index: 19;
   cursor: pointer;
-`;
-
-const ThemesBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  button {
-    padding: 10px 0 8px;
-    border-radius: 24px;
-    font-size: 12px;
-    border: none;
-    &:nth-child(1) {
-      background-color: #fff;
-      border: 1px solid #5f7ba6;
-    }
-    &:nth-child(2) {
-      background-color: #132b4f;
-      color: #fff;
-    }
-    &:nth-child(3) {
-      background-color: #000;
-      color: #fff;
-    }
-  }
 `;
 
 const NavbarTab = styled(Link)`
@@ -79,9 +66,29 @@ type sideNavProps = {
 };
 
 const SideNav = ({ isShowMenu, setIsShowMenu }: sideNavProps) => {
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const queryClient = useQueryClient();
+  const { mutate: logOut_mutate } = useMutation(userLogOut, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('user');
+      dispatch(LOGOUT_USER());
+      router.push('/');
+    },
+  });
+
+  const onLogOut = useCallback(() => {
+    logOut_mutate();
+    alert('로그아웃 되었습니다');
+  }, [logOut_mutate]);
+
   const onClickOverlayHandler = () => {
     setIsShowMenu(!isShowMenu);
   };
+  const { user }: { user: UserState['user'] } = useSelector(
+    (state: RootState) => state.user
+  );
+
   return (
     <>
       <OverlayBox onClick={onClickOverlayHandler}></OverlayBox>
@@ -97,20 +104,48 @@ const SideNav = ({ isShowMenu, setIsShowMenu }: sideNavProps) => {
               />
             </IconButton>
           </IconBox>
-          <ProfileBox></ProfileBox>
-          <NavbarTab href="/setting/Setting">
-            My page
-            <Image
-              src={'/🦆 icon _cloud_.svg'}
-              alt={'icon'}
-              width={20}
-              height={20}
-            />
-          </NavbarTab>
+          <Profile
+            userImage={user?.userImage || ''}
+            preset={user?.preset || 5}
+            nickname={user?.nickName || ''}
+          />
+
+          {user?.email !== null ? (
+            <NavbarTab href="/setting/Setting">
+              My page
+              <Image
+                src={'/🦆 icon _cloud_.svg'}
+                alt={'icon'}
+                width={20}
+                height={20}
+              />
+            </NavbarTab>
+          ) : (
+            <>
+              <NavbarTab href="/auth/SignIn">
+                Login
+                <Image
+                  src={'/🦆 icon _cloud_.svg'}
+                  alt={'icon'}
+                  width={20}
+                  height={20}
+                />
+              </NavbarTab>
+              <NavbarTab href="/auth/SignUp">
+                Register
+                <Image
+                  src={'/🦆 icon _cloud_.svg'}
+                  alt={'icon'}
+                  width={20}
+                  height={20}
+                />
+              </NavbarTab>
+            </>
+          )}
           <Themes />
         </SideNavMenuList>
         <IconBox>
-          <IconButton>
+          <IconButton onClick={onLogOut}>
             <Image
               src={'/🦆 icon _cloud_.svg'}
               alt={'icon'}
