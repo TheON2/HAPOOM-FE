@@ -20,6 +20,16 @@ export const sliderImages: SliderImage[] = [
     src: '/b3.png',
     alt: 'Image 3',
   },
+  {
+    id: 3,
+    src: '/c1.jpeg',
+    alt: 'Image 3',
+  },
+  {
+    id: 3,
+    src: '/c2.jpeg',
+    alt: 'Image 3',
+  },
 ];
 
 export const hashtagImages: SliderImage[] = [

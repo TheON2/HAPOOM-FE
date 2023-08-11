@@ -4,6 +4,10 @@ import UserLikePostSuggestion from './UserLikePostSuggestion';
 import PostLike from './PostLike';
 import { useQuery } from 'react-query';
 import { getUserProfile, getUsers } from '@/api/user';
+import Header from '../common/Header';
+import Footer from '../common/Footer';
+
+interface Post {}
 
 interface PostImage {
   url: string;
@@ -19,6 +23,7 @@ interface UserProfile {
   updatedAt: string;
   userId: number;
   userImage: string;
+  postsCount: number;
 }
 
 export interface UserPost {
@@ -38,24 +43,28 @@ export interface UserPost {
 }
 
 export interface UserPageData {
+  likePosts: Post[];
+  likePostsCount: number;
+  posts: Post[];
+  postsCount: number;
   user: UserProfile;
-  posts: UserPost[];
-  likePosts: UserPost[];
 }
 
 const UserUi = () => {
   const { data } = useQuery<UserPageData>('users', getUserProfile);
 
   return (
-    <UserPageSection>
-      <UserPageContainer>
-        <p>프로필</p>
-
-        <UserProfileCard data={data} />
-        <UserLikePostSuggestion />
-        <PostLike data={data} />
-      </UserPageContainer>
-    </UserPageSection>
+    <>
+      <Header />
+      <UserPageSection>
+        <UserPageContainer>
+          <UserProfileCard data={data} />
+          <UserLikePostSuggestion data={data} />
+          <PostLike data={data} />
+        </UserPageContainer>
+      </UserPageSection>
+      <Footer />
+    </>
   );
 };
 

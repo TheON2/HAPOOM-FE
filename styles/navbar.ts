@@ -11,6 +11,9 @@ export const MobileBottomNavLayout = styled.nav`
   background: #fff;
   border-top: 1px solid #000;
   z-index: 15;
+  color: #0084ff;
+  font-weight: 700;
+  text-transform: uppercase;
 `;
 
 export const BottomNavList = styled.ul`
@@ -62,9 +65,20 @@ export const SideNavLayout = styled.nav`
   justify-content: space-between;
   @media screen and (max-width: 768px) {
     width: 70%;
+    /* animation-duration: 0.3s; */
+    animation: slidein 1s ease-in-out;
   }
   button {
     cursor: pointer;
+  }
+  @keyframes slidein {
+    from {
+      transform: translateX(100%);
+    }
+
+    to {
+      transform: translateX(0);
+    }
   }
 `;
 

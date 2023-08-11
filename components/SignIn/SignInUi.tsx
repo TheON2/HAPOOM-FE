@@ -9,7 +9,7 @@ import {
   StyledInputBox,
   StyledPasswordInput,
   TextErrorParagraph,
-  TextParagraph,
+  TextSnsParagraph,
   TextPwSetParagraph,
   TextSignUpLinkParagraph,
 } from '@/styles/signIn';
@@ -124,14 +124,14 @@ const SignInUi = () => {
         <SignInBtn onClick={handleLogin}>로그인</SignInBtn>
         <PwdSignUpSettingPageLink>
           <TextPwSetParagraph onClick={() => alert('준비중입니다.')}>
-            비밀번호 재설정
+            비밀번호 찾기
           </TextPwSetParagraph>
           <Separator />
           <TextSignUpLinkParagraph onClick={moveSignUpBtn}>
             회원가입
           </TextSignUpLinkParagraph>
         </PwdSignUpSettingPageLink>
-
+        <TextSnsParagraph>SNS계정으로 간편 로그인/회원가입</TextSnsParagraph>
         <SocialLogin />
       </SignInContainer>
     </SignInSection>

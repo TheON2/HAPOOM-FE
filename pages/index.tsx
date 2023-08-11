@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import MainBannerSlider from '@/components/Home/MainBannerSlider';
 import HashtagNavBar from '@/components/Home/HashtagNavBar';
 import HashtagContents from '@/components/Home/HashtagContents';
 import Main from '@/components/Home/Main';
 import PopularContents from '@/components/Home/PopularContents';
-
+import MainBanner from '@/components/Home/MainBanner';
 import Header from '@/components/common/Header';
 import Footer from '@/components/common/Footer';
+import styled from 'styled-components';
 import {
   sliderImages,
   SliderImage,
@@ -28,6 +29,12 @@ interface Props {
   popularContent: any;
 }
 
+const HomePageLayout = styled.div`
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+`;
+
 const Home: NextPage<Props> = ({
   data,
   hashtagData,
@@ -48,18 +55,28 @@ const Home: NextPage<Props> = ({
       enabled: tokenExists, // 클라이언트 측에서만 토큰 존재 여부 확인
     }
   );
+  const [isClick, setIsClick] = useState<boolean>(false);
+  const onClickBottomNavHandler = () => {
+    setIsClick(!isClick);
+  };
+  console.log(isClick);
   return (
-    <>
+    <HomePageLayout>
       <Header sticky={'sticky'} />
-      <MainBannerSlider data={data} />
+      <MainBanner data={data} isClick={isClick} />
+      {/* <MainBannerSlider data={data} /> */}
+      <MobileBottomNav />
+      <HashtagNavBar
+        data={hashtagData}
+        isClick={isClick}
+        onClickEvent={onClickBottomNavHandler}
+      />
       <Main>
-        <HashtagNavBar data={hashtagData} />
-        <MobileBottomNav />
         <HashtagContents data={hashContent} />
         <PopularContents data={popularContent} />
+        <Footer></Footer>
       </Main>
-      <Footer></Footer>
-    </>
+    </HomePageLayout>
   );
 };
 

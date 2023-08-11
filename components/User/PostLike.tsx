@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { MouseEventHandler, useEffect, useState } from 'react';
 import {
   Line,
   PostBox,
@@ -10,6 +10,8 @@ import {
 import cloud from '../../public/🦆 icon _cloud_.svg';
 import Image from 'next/image';
 import { UserPost, UserPageData } from './UserUi';
+import { useMutation } from 'react-query';
+import { getPost, likePost } from '@/api/post';
 
 interface PostLike {
   data: UserPageData | undefined;
@@ -19,21 +21,28 @@ interface PostProps {
   imageUrl: string;
   postId: number;
   showLikeIcon?: boolean;
+  handleLikeClick: MouseEventHandler<HTMLImageElement>;
 }
 
-const Post: React.FC<PostProps> = ({ imageUrl, postId, showLikeIcon }) => (
+const Post: React.FC<PostProps> = ({
+  imageUrl,
+  postId,
+  showLikeIcon,
+  handleLikeClick,
+}) => (
   <div style={{ position: 'relative', display: 'inline-block' }}>
     <Image
       src={imageUrl}
       alt="게시물 이미지"
-      width={232}
-      height={228}
+      width={157}
+      height={157}
       objectFit="cover"
     />
     {showLikeIcon && (
       <Image
         src={cloud}
         alt="좋아요"
+        onClick={handleLikeClick}
         style={{
           position: 'absolute',
           top: 10,
@@ -49,6 +58,24 @@ const PostLike: React.FC<PostLike> = ({ data }) => {
   const [selectedTab, setSelectedTab] = useState(0);
   const [indicatorStyle, setIndicatorStyle] = useState({ width: 0, left: 0 });
   const [displayedPosts, setDisplayedPosts] = useState<UserPost[] | null>(null);
+
+  const mutation = useMutation(likePost, {
+    onSuccess: () => {
+      console.log('Success');
+    },
+    onError: (error) => {
+      console.error('Failed to like the post', error);
+    },
+  });
+
+  const handleLikeClick: React.MouseEventHandler<HTMLImageElement> = (
+    event
+  ) => {
+    const postId = event.currentTarget.getAttribute('data-post-id');
+    if (postId) {
+      mutation.mutate(postId);
+    }
+  };
 
   useEffect(() => {
     if (data) {
@@ -76,6 +103,7 @@ const PostLike: React.FC<PostLike> = ({ data }) => {
       setIndicatorStyle({ width: offsetWidth, left: offsetLeft });
       if (index === 0) {
         setDisplayedPosts(data?.posts ?? null);
+        ``;
       } else {
         setDisplayedPosts(data?.likePosts ?? null);
       }
@@ -108,6 +136,7 @@ const PostLike: React.FC<PostLike> = ({ data }) => {
             imageUrl={post.image?.url}
             postId={post.id}
             showLikeIcon={selectedTab === 1}
+            handleLikeClick={handleLikeClick}
           />
         ))}
       </PostImageBox>

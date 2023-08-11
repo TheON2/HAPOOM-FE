@@ -27,7 +27,7 @@ import { useRouter } from 'next/router';
 import { useMutation, useQueryClient } from 'react-query';
 import { userLogOut } from '@/api/user';
 import { LOGOUT_USER } from '@/redux/reducers/userSlice';
-
+import { Cloud } from '@/components/common/SVG';
 const HamburgerButton = styled.button`
   width: 36px;
   height: 36px;
@@ -42,8 +42,11 @@ const HamburgerButton = styled.button`
     width: 18px;
     height: 2px;
     margin-bottom: 5px;
-    background: #000;
+    background: #fff;
     transition: all 0.3s ease-in-out;
+    &:nth-child(3) {
+      margin: 0;
+    }
   }
 `;
 
@@ -86,13 +89,14 @@ const Header = ({ sticky }: any) => {
     <>
       <HeaderLayout sticky={sticky}>
         <LogoBox href={'/'} onClick={handleLogoClick}>
-          <Image
+          <h1>HAPOOM</h1>
+          {/* <Image
             src={'/inflearn.jpg'}
             alt="logo"
             width={200}
             height={50}
             loading="eager"
-          />
+          /> */}
         </LogoBox>
         <AccountActionsContainer>
           <SearchInputBox $isSearch={isSearch}>
@@ -145,13 +149,7 @@ const Header = ({ sticky }: any) => {
         </AccountActionsContainer>
         <MobileBox>
           <IconButton>
-            <Image
-              src={'/🦆 icon _cloud_.svg'}
-              alt="prpfile image"
-              width={28}
-              height={28}
-              loading="eager"
-            />
+            <Cloud />
           </IconButton>
           <HamburgerButton
             onClick={onClickShowMenuHandler}

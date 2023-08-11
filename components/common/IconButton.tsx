@@ -9,14 +9,18 @@ const IconButtonStyle = styled.button`
   align-items: center;
   background: none;
   border: none;
+  svg {
+    transform: scale(0.8);
+  }
 `;
 
 type buttonProps = {
   children: ReactNode;
+  onClick?: () => void;
 };
 
 const IconButton = ({ children, ...restProps }: buttonProps) => {
-  return <IconButtonStyle>{children}</IconButtonStyle>;
+  return <IconButtonStyle {...restProps}>{children}</IconButtonStyle>;
 };
 
 export default IconButton;
