@@ -9,8 +9,10 @@ const IconButtonStyle = styled.button`
   align-items: center;
   background: none;
   border: none;
+  transform: translateX(10px);
   svg {
-    transform: scale(0.8);
+    width: 20px;
+    height: 20px;
   }
 `;
 
