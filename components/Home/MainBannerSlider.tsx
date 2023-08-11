@@ -120,13 +120,11 @@ const MainBannerSlider: React.FC<Props> = ({ data }) => {
           return (
             <SliderItem key={index} width={slideItemWidth && slideItemWidth}>
               <Image
-                src={slide.src}
+                src={slide?.src}
                 alt="v13 image"
                 fill
                 loading="eager"
                 sizes="(max-width: 1440px) 1440px"
-                placeholder="blur"
-                blurDataURL={slide.src}
               />
               <BackgroundGradient></BackgroundGradient>
               <p>집에 가고 싶다 집 떠나면 개고생이다.</p>

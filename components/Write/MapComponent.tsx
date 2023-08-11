@@ -153,7 +153,10 @@ export const MapComponent: React.FC<MapComponentProps> = ({
   }, [mapOpen, handleMapClick]);
 
   useEffect(() => {
-    if (update) setLocationInput(location.name + ' ' + location.x + location.y);
+    if (update) {
+      setLocationInput(location.name + ' ' + location.x + location.y);
+      setMapOpen(true);
+    }
   }, [update, location]);
 
   return (

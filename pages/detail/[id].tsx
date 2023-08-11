@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from 'react';
+import React, { FormEvent, useEffect, useState } from 'react';
 import {
   GlobalStyle,
   ImageContainer,
@@ -16,6 +16,7 @@ import Header from '@/components/common/Header';
 import Footer from '@/components/common/Footer';
 import { getAuthToken } from '@/api/user';
 import { AUTH_USER, UserResponse } from '@/redux/reducers/userSlice';
+import MainBannerSlider from '@/components/Home/MainBannerSlider';
 
 const DynamicComponentWithNoSSR = dynamic(
   () => import('@/components/Write/YoutubePlayer'),
@@ -28,9 +29,9 @@ interface Image {
 function Detail() {
   const router = useRouter();
   const id = typeof router.query.id === 'string' ? router.query.id : '';
-  const { update } = useSelector((state: RootState) => state.post);
   const [images, setImages] = useState<File[]>([]);
   const [content, setContent] = useState<string>('');
+  const [update, setUpdate] = useState<boolean>(true);
   const [selectedTitle, setSelectedTitle] = useState<string>('');
   const [videoId, setVideoId] = useState<string>('');
   const [tags, setTags] = useState<string>('');
@@ -38,8 +39,8 @@ function Detail() {
   const queryClient = useQueryClient();
 
   const handleEditClick = () => {
-    localStorage.setItem('update', JSON.stringify(true));
     localStorage.setItem('updateId', JSON.stringify(id));
+    localStorage.setItem('update', JSON.stringify(true));
     router.push('/post/Write');
   };
 
@@ -73,16 +74,31 @@ function Detail() {
     }
   );
 
-  if (update && !isSuccess) return <div>Loading...</div>;
+  if (!isSuccess) return <div>Loading...</div>;
   return (
     <>
       <Header />
+      {/* <MainBannerSlider data={images} /> */}
       <div
-        style={{ minHeight: '800px', display: 'block', textAlign: 'center' }}
+        style={{
+          width: '600px',
+          minHeight: '600px',
+          display: 'block',
+          textAlign: 'center',
+        }}
       >
         <button onClick={handleEditClick}>글 수정하기</button>
-        <div>{content}</div>
-        <div>
+        <div
+          style={{
+            width: '600px',
+            height: '250px',
+            textAlign: 'left',
+            margin: '20px',
+          }}
+        >
+          {content}
+        </div>
+        <div style={{ width: '600px', textAlign: 'center', margin: '20px' }}>
           {tags.split(',').map((tag, index) => (
             <span
               key={index}
@@ -99,11 +115,11 @@ function Detail() {
           ))}
         </div>
         <ImageContainer>
-          <DynamicComponentWithNoSSR
+          {/* <DynamicComponentWithNoSSR
             videoId={videoId}
             setVideoId={setVideoId}
             setSelectedTitle={setSelectedTitle}
-          />
+          /> */}
           <MapComponent
             setLocation={setLocation}
             location={location}

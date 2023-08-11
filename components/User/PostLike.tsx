@@ -105,7 +105,7 @@ const PostLike: React.FC<PostLike> = ({ data }) => {
         {displayedPosts?.map((post) => (
           <Post
             key={post.id}
-            imageUrl={post.image.url}
+            imageUrl={post.image?.url}
             postId={post.id}
             showLikeIcon={selectedTab === 1}
           />
