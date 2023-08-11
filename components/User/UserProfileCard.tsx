@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   FollowBox,
+  NicknameBox,
   ProfileContentsBox,
   SettingPageLink,
   UserProfileCardBox,
@@ -33,11 +34,14 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({ data }) => {
         loading="eager"
       />
       <ProfileContentsBox>
-        <p>{data?.user.nickname}</p>
+        <NicknameBox>
+          <p>{data?.user.nickname}</p>
+          <SettingPageLink href={'/setting/Setting'}>설정</SettingPageLink>
+        </NicknameBox>
         <FollowBox>
           <p>팔로워 3</p>
+          <span>|</span>
           <p>팔로잉 3</p>
-          <SettingPageLink href={'/setting/Setting'}>설정</SettingPageLink>
         </FollowBox>
       </ProfileContentsBox>
     </UserProfileCardBox>
