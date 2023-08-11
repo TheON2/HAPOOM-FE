@@ -1,32 +1,42 @@
-import React, { useState } from 'react';
-// import WriteInput from './WriteInput';
-// import CheckBox from './CheckBox';
-import SocialLogin from './SocialLogin';
+import React, { useEffect, useState } from 'react';
 import {
   SignUpSection,
   MainHeadText,
   SubHeadText,
-  TextParagraphSns,
   SignUpBtn,
   StyledInputBox,
   StyledInput,
-  TextParagraph,
   Checkbox,
   SignUpCheckBox,
   SignUpCheckBoxLayout,
   StyledLabel,
   StyledLabelAll,
   Line,
+  TextErrorParagraph,
+  StyledLabelEssential,
+  TextParagraphSns,
+  SnsLine,
+  TextParagraphInfo,
+  TextParagrapValidate,
 } from '@/styles/signUp';
 import { useMutation } from 'react-query';
 import { addUser } from '@/api/user';
 import { useRouter } from 'next/router';
+import MobileBottomNav from '../common/MobileBottomNav';
+import SocialLogin from '../SignIn/SocialLogIn';
 
 export interface Signup {
   email: string;
   password: string;
   passwordConfirm: string;
   nickname: string;
+}
+export interface Error {
+  email: string;
+  password: string;
+  passwordConfirm: string;
+  nickname: string;
+  checkbox: string;
 }
 export interface CheckBoxInterface {
   checkAll: boolean;
@@ -44,11 +54,12 @@ const SignUpUi = () => {
     passwordConfirm: '',
     nickname: '',
   });
-  const [error, setError] = useState<Signup>({
+  const [error, setError] = useState<Error>({
     email: '',
     password: '',
     passwordConfirm: '',
     nickname: '',
+    checkbox: '',
   });
   const [checkboxes, setCheckboxes] = useState<CheckBoxInterface>({
     checkAll: false,
@@ -56,10 +67,10 @@ const SignUpUi = () => {
     checkPersonalInfo: false,
     checkNewsletter: false,
   });
+  const [checkboxErrorMessage, setCheckboxErrorMessage] = useState('');
 
   const addUserMutation = useMutation(addUser, {
     onSuccess: () => {
-      console.log('회원가입 성공');
       router.push('/auth/SignIn');
     },
     onError: (error) => {
@@ -67,7 +78,9 @@ const SignUpUi = () => {
     },
   });
 
-  //인풋창들 함수
+  const moveSignInPageHandeler = () => {
+    router.push('/auth/SignIn');
+  };
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement & { name: TextInputType }>
   ) => {
@@ -93,35 +106,41 @@ const SignUpUi = () => {
     const nicknamePattern = /^.{2,15}$/;
     return nicknamePattern.test(nickname);
   };
-  const validateForm = () => {
-    return checkboxes.checkAll;
-  };
-  // const emailCheckSubmit = (e: React.MouseEvent) => {
-  //   e.preventDefault();
-  //   if (validateEmail(signUpState.email)) {
-  //     alert('중복확인 되었습니다.');
-  //   } else {
-  //     alert('이메일이 유효하지 않습니다. 다시 입력해 주세요.');
-  //   }
-  // };
-  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+
+  const handleCheckboxChange = (
+    e: React.ChangeEvent<HTMLInputElement & { name: keyof CheckBoxInterface }>
+  ) => {
     const { name, checked } = e.target;
 
-    if (name === 'checkAll') {
-      setCheckboxes({
-        checkAll: checked,
-        checkTerms: checked,
-        checkPersonalInfo: checked,
-        checkNewsletter: checked,
-      });
-    } else {
-      setCheckboxes({
-        ...checkboxes,
+    setCheckboxes((prevState) => {
+      const newState = {
+        ...prevState,
         [name]: checked,
-        checkAll:
-          checkboxes.checkTerms && checkboxes.checkPersonalInfo && checked,
-      });
-    }
+      };
+
+      if (name === 'checkAll') {
+        newState.checkTerms = checked;
+        newState.checkPersonalInfo = checked;
+        newState.checkNewsletter = checked;
+      } else {
+        newState.checkAll =
+          newState.checkTerms &&
+          newState.checkPersonalInfo &&
+          newState.checkNewsletter;
+      }
+
+      if (
+        newState.checkTerms ||
+        newState.checkPersonalInfo ||
+        newState.checkNewsletter
+      ) {
+        setCheckboxErrorMessage('');
+      } else {
+        setCheckboxErrorMessage('필수 동의사항에 체크해주세요.');
+      }
+
+      return newState;
+    });
   };
 
   const submitUser = (event: any) => {
@@ -130,9 +149,9 @@ const SignUpUi = () => {
     let errors: any = {};
 
     if (!signUpState.email) {
-      errors.email = '이메일 주소를 입력해주세요.';
-    } else if (!validateEmail(signUpState.email)) {
       errors.email = '이메일 형식이 올바르지 않습니다.';
+    } else if (!validateEmail(signUpState.email)) {
+      errors.email = '이메일을 확인해주세요.';
     }
 
     if (!signUpState.password) {
@@ -143,7 +162,6 @@ const SignUpUi = () => {
     }
 
     if (signUpState.password !== signUpState.passwordConfirm) {
-      errors.password = '비밀번호가 일치하지 않습니다.';
       errors.passwordConfirm = '비밀번호가 일치하지 않습니다.';
     }
 
@@ -152,12 +170,27 @@ const SignUpUi = () => {
     } else if (!validateNickname(signUpState.nickname)) {
       errors.nickname = '2~15자를 입력해주세요.';
     }
+    if (
+      !checkboxes.checkTerms ||
+      !checkboxes.checkPersonalInfo ||
+      !checkboxes.checkNewsletter
+    ) {
+      setCheckboxErrorMessage('필수 동의사항에 체크해주세요.');
+      return;
+    }
+    setCheckboxErrorMessage('');
 
     if (Object.keys(errors).length > 0) {
       setError(errors);
       return;
     } else {
-      setError({ email: '', password: '', passwordConfirm: '', nickname: '' });
+      setError({
+        email: '',
+        password: '',
+        passwordConfirm: '',
+        nickname: '',
+        checkbox: '',
+      });
     }
     if (Object.keys(errors).length === 0) {
       const sendData = {
@@ -172,14 +205,16 @@ const SignUpUi = () => {
   return (
     <SignUpSection>
       <MainHeadText>HAPOOM</MainHeadText>
-      <SubHeadText>회원가입</SubHeadText>
-      <TextParagraphSns>sns계정으로 간편 로그인/회원가입</TextParagraphSns>
-
+      <SubHeadText color="#000" marginBottom="12px">
+        회원가입
+      </SubHeadText>
       <SocialLogin />
+      <TextParagraphSns>SNS계정으로 간편 로그인/회원가입</TextParagraphSns>
+      <SnsLine></SnsLine>
 
       <form name="register" onSubmit={submitUser}>
         <StyledInputBox>
-          <TextParagraph>이메일</TextParagraph>
+          <TextParagraphInfo marginBottom="12px">이메일</TextParagraphInfo>
           <StyledInput
             type="email"
             name="email"
@@ -187,31 +222,40 @@ const SignUpUi = () => {
             placeholder="example@gmail.com"
             onChange={handleInputChange}
           />
-          {error.email && <p style={{ color: 'red' }}>{error.email}</p>}
+          {error.email && (
+            <TextErrorParagraph style={{ marginBottom: '-12px' }}>
+              {error.email}
+            </TextErrorParagraph>
+          )}
           <SignUpBtn
-            onClick={(event: any) => {
-              event.preventDefault();
-              alert('준비중입니다.');
+            style={{
+              margin: '12px 0 20px 0',
+              backgroundColor: signUpState.email ? '#0078FF' : '#B3B3B3',
+              borderColor: signUpState.email ? '#0078FF' : '#B3B3B3',
             }}
+            onClick={() => alert('준비 중 입니다.')}
+            disabled={!signUpState.email}
           >
             이메일 인증하기
           </SignUpBtn>
         </StyledInputBox>
 
         <StyledInputBox>
-          <TextParagraph>비밀번호</TextParagraph>
-          {error.password ? null : (
-            <p>영문, 숫자를 포함한 8자이상의 비밀번호를 입력해주세요</p>
-          )}
+          <TextParagraphInfo marginBottom="7px">비밀번호</TextParagraphInfo>
+          <TextParagrapValidate>
+            영문, 숫자를 포함한 8자 이상의 비밀번호를 입력해주세요.
+          </TextParagrapValidate>
           <StyledInput
             type="password"
             name="password"
             value={signUpState.password}
-            placeholder="비밀번호를 입력해 주세요"
+            placeholder="비밀번호"
             onChange={handleInputChange}
           />
-          {error.password && <p style={{ color: 'red' }}>{error.password}</p>}
-          <TextParagraph>비밀번호 확인</TextParagraph>
+          {error.password && (
+            <TextErrorParagraph>{error.password}</TextErrorParagraph>
+          )}
+          <TextParagraphInfo>비밀번호 확인</TextParagraphInfo>
           <StyledInput
             type="password"
             name="passwordConfirm"
@@ -220,35 +264,37 @@ const SignUpUi = () => {
             onChange={handleInputChange}
           />
           {error.passwordConfirm && (
-            <p style={{ color: 'red' }}>{error.passwordConfirm}</p>
+            <TextErrorParagraph>{error.passwordConfirm}</TextErrorParagraph>
           )}
         </StyledInputBox>
 
         <StyledInputBox>
-          <TextParagraph>닉네임</TextParagraph>
-          {error.nickname ? null : (
-            <p>다른 유저와 겹치지 않도록 입력해 주세요(2~15자)</p>
-          )}
+          <TextParagraphInfo>닉네임</TextParagraphInfo>
+          <TextParagrapValidate>
+            다른 유저와 겹치지 않도록 입력해주세요.(2~15자)
+          </TextParagrapValidate>
           <StyledInput
             type="text"
             name="nickname"
             value={signUpState.nickname}
-            placeholder="닉네임을 입력해 주세요"
+            placeholder="닉네임은 2자에서 15자입니다."
             onChange={handleInputChange}
           />
-          {error.nickname && <p style={{ color: 'red' }}>{error.nickname}</p>}
+          {error.nickname && (
+            <TextErrorParagraph>{error.nickname}</TextErrorParagraph>
+          )}
         </StyledInputBox>
 
-        <TextParagraph>약관동의</TextParagraph>
         <SignUpCheckBoxLayout>
           <SignUpCheckBox>
             <Checkbox
+              id="checkAll"
               type="checkbox"
               name="checkAll"
               checked={checkboxes.checkAll}
               onChange={handleCheckboxChange}
             />
-            <label htmlFor="check-all"></label>
+            <label htmlFor="checkAll"></label>
             <StyledLabelAll>전체동의</StyledLabelAll>
             <StyledLabel>선택항목에 대한 동의 포함</StyledLabel>
           </SignUpCheckBox>
@@ -256,42 +302,83 @@ const SignUpUi = () => {
 
           <SignUpCheckBox>
             <Checkbox
+              id="check-terms"
               type="checkbox"
               name="checkTerms"
               checked={checkboxes.checkTerms}
               onChange={handleCheckboxChange}
             />
             <label htmlFor="check-terms"></label>
-            <StyledLabel>이용약관 (필수)</StyledLabel>
+            <StyledLabelEssential>이용약관 (필수)</StyledLabelEssential>
           </SignUpCheckBox>
 
           <SignUpCheckBox>
             <Checkbox
+              id="check-personalInfo"
               type="checkbox"
               name="checkPersonalInfo"
               checked={checkboxes.checkPersonalInfo}
               onChange={handleCheckboxChange}
             />
             <label htmlFor="check-personalInfo"></label>
-            <StyledLabel>개인정보 수집/이용 동의 (필수)</StyledLabel>
+            <StyledLabelEssential>
+              개인정보 수집/이용 동의 (필수)
+            </StyledLabelEssential>
           </SignUpCheckBox>
 
           <SignUpCheckBox>
             <Checkbox
+              id="check-newsletter"
               type="checkbox"
               name="checkNewsletter"
               checked={checkboxes.checkNewsletter}
               onChange={handleCheckboxChange}
             />
             <label htmlFor="check-newsletter"></label>
-            <StyledLabel>개인정보 마케팅 활용 동의 (선택)</StyledLabel>
+            <StyledLabelEssential>
+              개인정보 마케팅 활용 동의 (필수)
+            </StyledLabelEssential>
           </SignUpCheckBox>
         </SignUpCheckBoxLayout>
+        {checkboxErrorMessage && (
+          <TextErrorParagraph style={{ marginTop: '10px' }}>
+            {checkboxErrorMessage}
+          </TextErrorParagraph>
+        )}
 
-        <SignUpBtn type="submit" disabled={!validateForm()}>
+        <SignUpBtn
+          style={{
+            margin: '12px 0 20px 0',
+            backgroundColor:
+              signUpState.email &&
+              signUpState.password &&
+              signUpState.passwordConfirm &&
+              signUpState.nickname
+                ? '#0078FF'
+                : '#B3B3B3',
+            borderColor:
+              signUpState.email &&
+              signUpState.password &&
+              signUpState.passwordConfirm &&
+              signUpState.nickname
+                ? '#0078FF'
+                : '#B3B3B3',
+          }}
+          disabled={
+            !signUpState.email &&
+            !signUpState.password &&
+            !signUpState.passwordConfirm &&
+            !signUpState.nickname
+          }
+          type="submit"
+        >
           회원가입하기
         </SignUpBtn>
       </form>
+      <SubHeadText color="#0084FF" onClick={moveSignInPageHandeler}>
+        이미 아이디가 있으신가요? 로그인
+      </SubHeadText>
+      <MobileBottomNav />
     </SignUpSection>
   );
 };

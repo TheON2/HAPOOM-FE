@@ -135,6 +135,9 @@ export const TextErrorParagraph = styled.p`
 `;
 export const SignUpSocialSignUpBox = styled.div`
   width: ${theme.inputBtnBoxWidth};
+
+  /* height: 120px; */
+
   display: flex;
   justify-content: center;
   align-items: center;

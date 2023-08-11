@@ -13,7 +13,7 @@ const SocialLogin = () => {
     <SignUpSocialSignUpBox>
       <Image
         width={64}
-        height={64}
+        height={60}
         onClick={onSocialLogIn}
         src={googleLogo}
         alt="구글로고"
@@ -22,7 +22,7 @@ const SocialLogin = () => {
       />
       <Image
         width={64}
-        height={64}
+        height={60}
         onClick={onSocialLogIn}
         src={kakaoLogo}
         alt="카카오로고"
@@ -31,7 +31,7 @@ const SocialLogin = () => {
       />
       <Image
         width={64}
-        height={64}
+        height={60}
         onClick={onSocialLogIn}
         src={instaLogo}
         alt="인스타로고"

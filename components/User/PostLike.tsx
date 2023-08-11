@@ -103,6 +103,7 @@ const PostLike: React.FC<PostLike> = ({ data }) => {
       setIndicatorStyle({ width: offsetWidth, left: offsetLeft });
       if (index === 0) {
         setDisplayedPosts(data?.posts ?? null);
+        ``;
       } else {
         setDisplayedPosts(data?.likePosts ?? null);
       }
