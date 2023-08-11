@@ -33,7 +33,7 @@ const MainBannerContainer = styled.div<mainBannerProps>`
 `;
 
 const MainBanner = ({ data, isClick }: any) => {
-  console.log(isClick);
+  // console.log(isClick);
   return (
     <MainBannerContainer isClick={isClick}>
       <p>집에 가고 싶다. 집 떠나면 개고생이다.</p>

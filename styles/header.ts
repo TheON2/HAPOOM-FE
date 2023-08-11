@@ -10,6 +10,7 @@ export const HeaderLayout = styled.header<HeaderProps>`
   height: 58px;
   padding: 0 24px;
   position: ${(props) => (props.sticky ? 'fixed' : 'sticky')};
+  background: ${(props) => (props.sticky ? 'none' : '#fff')};
   z-index: 15;
   top: 0;
   /* background: linear-gradient(
