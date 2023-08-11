@@ -126,6 +126,14 @@ const PostLike: React.FC<PostLike> = ({ data }) => {
         >
           좋아요
         </TabButton>
+        <TabButton
+          className="tab-button"
+          onClick={handleTabClick(2)}
+          style={selectedTab === 2 ? { color: '#333' } : undefined}
+        >
+          좋아요
+        </TabButton>
+
         <TabIndicator width={indicatorStyle.width} left={indicatorStyle.left} />
       </PostContentBox>
       <Line />

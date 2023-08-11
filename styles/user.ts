@@ -21,21 +21,22 @@ export const UserPageContainer = styled.div`
     font-size: 16px;
     font-weight: 700;
     text-align: left;
-    margin-top: 20px;
+    /* margin-top: 20px; */
   }
 
   @media screen and (max-width: 1260px) {
   }
 `;
 export const UserProfileCardBox = styled.div`
-  width: 100%;
-  height: 203px;
+  margin: auto;
+  width: 90%;
   display: flex;
+  align-items: center;
   border: 1px solid black;
+  justify-content: center;
 
   @media screen and (max-width: 1260px) {
-    padding: 0 24px;
-    padding-top: 17px;
+    padding: 24px;
   }
 
   img {
@@ -49,20 +50,31 @@ export const UserImage = styled(Image)`
   object-fit: cover;
 `;
 export const ProfileContentsBox = styled.div`
-  margin-left: 10px;
-  position: relative;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  justify-content: space-between;
-  width: 100%;
+  align-items: flex-start; /* 왼쪽 정렬 */
+  width: 200px;
+  padding-left: 17px; /* 왼쪽 여백 추가 */
+  gap: 12px;
+
+  @media screen and (max-width: 500px) {
+    width: 70%;
+  }
 `;
-export const FollowBox = styled.div`
-  width: 300px;
+
+export const NicknameBox = styled.div`
   display: flex;
-  gap: 10px;
+  align-items: center; /* 세로 중앙 정렬 */
+  justify-content: center; /* 내부 내용 중앙 정렬 */
+  gap: 10px; /* 닉네임과 설정 링크 사이의 간격 */
+`;
+
+export const FollowBox = styled.div`
+  display: flex;
+  gap: 14px;
   align-items: center;
   p {
+    font-size: 16px;
     color: #c2c2c2;
   }
 `;
@@ -74,11 +86,11 @@ export const SettingPageLink = styled(Link)`
   font-family: Inter;
   font-size: 16px;
   font-weight: 700;
-  margin-top: 20px;
   width: 53px;
   height: 24px;
   text-align: center;
   line-height: 1.5;
+  margin-left: auto; /* 설정 링크를 오른쪽으로 정렬 */
 `;
 
 export const LikePostSuggestionBox = styled.div`
@@ -106,12 +118,11 @@ export const ImageBox = styled.div`
 
 export const PostBox = styled.div`
   max-width: 320px;
-  padding: 0 24px;
 `;
 export const PostContentBox = styled.div`
   position: relative;
   display: flex;
-  gap: 15px;
+  gap: 14px;
 `;
 export const PostParagraph = styled.p`
   text-align: center;
