@@ -45,16 +45,16 @@ const StyledInput = styled.input`
   }
 `;
 export const StyledEmailInput = styled(StyledInput)`
-  border-radius: 8px 8px 0 0;
+  border-radius: 5px 5px 0 0;
   border-bottom: none;
 `;
 export const StyledPasswordInput = styled(StyledInput)`
-  border-radius: 0 0 8px 8px;
+  border-radius: 0 0 5px 5px;
 `;
 export const SignInBtn = styled.button`
   max-width: 312px;
   width: ${theme.inputBtnBoxWidth};
-  height: 36px;
+  height: 44px;
   border-radius: 8px;
   border: 1px solid ${theme.primaryColor};
   background: ${theme.primaryColor};
@@ -72,6 +72,13 @@ export const TextParagraph = styled.p`
   font-family: ${theme.fontFamily};
   font-size: 12px;
   font-weight: 700;
+`;
+export const TextSnsParagraph = styled.p`
+  color: #B1B1B1;
+  text-align: center;
+  font-size: 10px;
+  font-weight: 400;
+  margin: 40px 0 5px 0;
 `;
 export const TextPwSetParagraph = styled(TextParagraph)`
   position: relative;
@@ -107,7 +114,7 @@ export const TextSignUpLinkParagraph = styled(TextParagraph)`
 export const Separator = styled.span`
   display: inline-flex;
   align-items: center;
-  margin-left: -5px;
+  margin-left: -18px;
   margin-right: 11px;
   &:after {
     content: '';
@@ -128,7 +135,9 @@ export const TextErrorParagraph = styled.p`
 `;
 export const SignUpSocialSignUpBox = styled.div`
   width: ${theme.inputBtnBoxWidth};
-  height: 120px;
+
+  /* height: 120px; */
+
   display: flex;
   justify-content: center;
   align-items: center;

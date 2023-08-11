@@ -26,8 +26,8 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({ data }) => {
             : b1
         }
         alt={'프로필사진'}
-        width={264}
-        height={280}
+        width={51}
+        height={51}
         objectFit={'cover'}
         quality={70}
         loading="eager"
