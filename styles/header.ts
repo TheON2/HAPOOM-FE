@@ -37,7 +37,6 @@ export const LogoBox = styled(Link)`
   justify-content: center;
   align-items: center;
   font-weight: 700;
-  color: #fff;
   /* border: 1px solid #000; */
   h1 {
     font-size: 24px;

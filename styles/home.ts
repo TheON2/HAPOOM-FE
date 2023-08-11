@@ -195,7 +195,7 @@ type hashtagNavbarProps = {
 //hashtag navbar style
 export const HashtagNavBarLayout = styled.nav<hashtagNavbarProps>`
   width: 100%;
-  padding: 0px 24px 14px;
+  padding: 0px 24px 20px;
   border-radius: 30px 30px 0 0;
   /* height: 10vh; */
   /* opacity: 0.5; */
@@ -206,10 +206,16 @@ export const HashtagNavBarLayout = styled.nav<hashtagNavbarProps>`
   /* justify-content: space-between; */
   align-items: center;
   /* gap: 54px; */
-  transform: translateY(-100%);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.22) 80%, #fff 90%);
+  transform: translateY(-95%);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.22) 80%,
+    #fff 90%,
+    #fff 95%,
+    rgba(255, 255, 255, 0.1) 100%
+  );
 
-  /* position: fixed; */
+  position: relative;
   /* top: 54px; */
   z-index: 10;
   font-size: 10px;
