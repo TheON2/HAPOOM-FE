@@ -29,7 +29,7 @@ export const SignUpSection = styled.section`
   }
 `;
 export const MainHeadText = styled.h1<Props>`
-  color: ${theme.textColor};
+  color: #0084FF;
   text-align: center;
   font-size: 48px;
   font-weight: 900;
@@ -108,6 +108,7 @@ export const SignUpBtn = styled.button`
   text-align: center;
   font-size: 16px;
   font-weight: 700;
+  cursor: pointer;
 `;
 export const SignUpCheckBoxLayout = styled.div`
   max-width: 312px; 
@@ -148,6 +149,7 @@ export const StyledLabel = styled.div`
 export const StyledLabelEssential = styled.div`
   color: #000;
   font-size: 12px;
+  font-weight: 700;
   width: 180px;
   height: 9px;
   margin: 8px 0 0 -4px;

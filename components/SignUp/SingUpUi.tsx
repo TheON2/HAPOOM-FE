@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   SignUpSection,
   MainHeadText,
@@ -31,6 +31,13 @@ export interface Signup {
   passwordConfirm: string;
   nickname: string;
 }
+export interface Error {
+  email: string;
+  password: string;
+  passwordConfirm: string;
+  nickname: string;
+  checkbox: string;
+}
 export interface CheckBoxInterface {
   checkAll: boolean;
   checkTerms: boolean;
@@ -47,11 +54,12 @@ const SignUpUi = () => {
     passwordConfirm: '',
     nickname: '',
   });
-  const [error, setError] = useState<Signup>({
+  const [error, setError] = useState<Error>({
     email: '',
     password: '',
     passwordConfirm: '',
     nickname: '',
+    checkbox: '',
   });
   const [checkboxes, setCheckboxes] = useState<CheckBoxInterface>({
     checkAll: false,
@@ -59,6 +67,7 @@ const SignUpUi = () => {
     checkPersonalInfo: false,
     checkNewsletter: false,
   });
+  const [checkboxErrorMessage, setCheckboxErrorMessage] = useState('');
 
   const addUserMutation = useMutation(addUser, {
     onSuccess: () => {
@@ -68,6 +77,7 @@ const SignUpUi = () => {
       console.error('회원가입 실패:', error);
     },
   });
+
   const moveSignInPageHandeler = () => {
     router.push('/auth/SignIn');
   };
@@ -96,27 +106,41 @@ const SignUpUi = () => {
     const nicknamePattern = /^.{2,15}$/;
     return nicknamePattern.test(nickname);
   };
-  const validateForm = () => {
-    return checkboxes.checkAll;
-  };
-  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+
+  const handleCheckboxChange = (
+    e: React.ChangeEvent<HTMLInputElement & { name: keyof CheckBoxInterface }>
+  ) => {
     const { name, checked } = e.target;
 
-    if (name === 'checkAll') {
-      setCheckboxes({
-        checkAll: checked,
-        checkTerms: checked,
-        checkPersonalInfo: checked,
-        checkNewsletter: checked,
-      });
-    } else {
-      setCheckboxes({
-        ...checkboxes,
+    setCheckboxes((prevState) => {
+      const newState = {
+        ...prevState,
         [name]: checked,
-        checkAll:
-          checkboxes.checkTerms && checkboxes.checkPersonalInfo && checked,
-      });
-    }
+      };
+
+      if (name === 'checkAll') {
+        newState.checkTerms = checked;
+        newState.checkPersonalInfo = checked;
+        newState.checkNewsletter = checked;
+      } else {
+        newState.checkAll =
+          newState.checkTerms &&
+          newState.checkPersonalInfo &&
+          newState.checkNewsletter;
+      }
+
+      if (
+        newState.checkTerms ||
+        newState.checkPersonalInfo ||
+        newState.checkNewsletter
+      ) {
+        setCheckboxErrorMessage('');
+      } else {
+        setCheckboxErrorMessage('필수 동의사항에 체크해주세요.');
+      }
+
+      return newState;
+    });
   };
 
   const submitUser = (event: any) => {
@@ -146,12 +170,27 @@ const SignUpUi = () => {
     } else if (!validateNickname(signUpState.nickname)) {
       errors.nickname = '2~15자를 입력해주세요.';
     }
+    if (
+      !checkboxes.checkTerms ||
+      !checkboxes.checkPersonalInfo ||
+      !checkboxes.checkNewsletter
+    ) {
+      setCheckboxErrorMessage('필수 동의사항에 체크해주세요.');
+      return;
+    }
+    setCheckboxErrorMessage('');
 
     if (Object.keys(errors).length > 0) {
       setError(errors);
       return;
     } else {
-      setError({ email: '', password: '', passwordConfirm: '', nickname: '' });
+      setError({
+        email: '',
+        password: '',
+        passwordConfirm: '',
+        nickname: '',
+        checkbox: '',
+      });
     }
     if (Object.keys(errors).length === 0) {
       const sendData = {
@@ -181,7 +220,6 @@ const SignUpUi = () => {
             name="email"
             value={signUpState.email}
             placeholder="example@gmail.com"
-            disabled
             onChange={handleInputChange}
           />
           {error.email && (
@@ -190,11 +228,13 @@ const SignUpUi = () => {
             </TextErrorParagraph>
           )}
           <SignUpBtn
-            style={{ margin: '12px 0 20px 0' }}
-            onClick={(event: any) => {
-              event.preventDefault();
-              alert('준비중입니다.');
+            style={{
+              margin: '12px 0 20px 0',
+              backgroundColor: signUpState.email ? '#0078FF' : '#B3B3B3',
+              borderColor: signUpState.email ? '#0078FF' : '#B3B3B3',
             }}
+            onClick={() => alert('준비 중 입니다.')}
+            disabled={!signUpState.email}
           >
             이메일 인증하기
           </SignUpBtn>
@@ -248,12 +288,13 @@ const SignUpUi = () => {
         <SignUpCheckBoxLayout>
           <SignUpCheckBox>
             <Checkbox
+              id="checkAll"
               type="checkbox"
               name="checkAll"
               checked={checkboxes.checkAll}
               onChange={handleCheckboxChange}
             />
-            <label htmlFor="check-all"></label>
+            <label htmlFor="checkAll"></label>
             <StyledLabelAll>전체동의</StyledLabelAll>
             <StyledLabel>선택항목에 대한 동의 포함</StyledLabel>
           </SignUpCheckBox>
@@ -261,6 +302,7 @@ const SignUpUi = () => {
 
           <SignUpCheckBox>
             <Checkbox
+              id="check-terms"
               type="checkbox"
               name="checkTerms"
               checked={checkboxes.checkTerms}
@@ -272,6 +314,7 @@ const SignUpUi = () => {
 
           <SignUpCheckBox>
             <Checkbox
+              id="check-personalInfo"
               type="checkbox"
               name="checkPersonalInfo"
               checked={checkboxes.checkPersonalInfo}
@@ -285,6 +328,7 @@ const SignUpUi = () => {
 
           <SignUpCheckBox>
             <Checkbox
+              id="check-newsletter"
               type="checkbox"
               name="checkNewsletter"
               checked={checkboxes.checkNewsletter}
@@ -296,11 +340,37 @@ const SignUpUi = () => {
             </StyledLabelEssential>
           </SignUpCheckBox>
         </SignUpCheckBoxLayout>
+        {checkboxErrorMessage && (
+          <TextErrorParagraph style={{ marginTop: '10px' }}>
+            {checkboxErrorMessage}
+          </TextErrorParagraph>
+        )}
 
         <SignUpBtn
-          style={{ margin: '8px 0 20px 0' }}
+          style={{
+            margin: '12px 0 20px 0',
+            backgroundColor:
+              signUpState.email &&
+              signUpState.password &&
+              signUpState.passwordConfirm &&
+              signUpState.nickname
+                ? '#0078FF'
+                : '#B3B3B3',
+            borderColor:
+              signUpState.email &&
+              signUpState.password &&
+              signUpState.passwordConfirm &&
+              signUpState.nickname
+                ? '#0078FF'
+                : '#B3B3B3',
+          }}
+          disabled={
+            !signUpState.email &&
+            !signUpState.password &&
+            !signUpState.passwordConfirm &&
+            !signUpState.nickname
+          }
           type="submit"
-          disabled={!validateForm()}
         >
           회원가입하기
         </SignUpBtn>
