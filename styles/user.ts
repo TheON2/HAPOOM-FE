@@ -9,12 +9,13 @@ export const UserPageSection = styled.section`
   align-items: center;
   justify-content: center;
   margin: 0 auto;
-  /* @media (max-width: 500px) {
-    padding: 0 20px;
-  } */
+
+  @media screen and (max-width: 1260px) {
+  }
 `;
 export const UserPageContainer = styled.div`
-  max-width: 100%;
+  width: 100%;
+
   p {
     font-family: Inter;
     font-size: 16px;
@@ -22,22 +23,20 @@ export const UserPageContainer = styled.div`
     text-align: left;
     margin-top: 20px;
   }
-  /* @media (max-width: 500px) {
-    padding: 0 20px;
-    width: 100%;
-  } */
+
+  @media screen and (max-width: 1260px) {
+  }
 `;
 export const UserProfileCardBox = styled.div`
-  padding-left: 24px;
-  padding-right: 24px;
   width: 100%;
-  height: 299px;
+  height: 203px;
   display: flex;
   border: 1px solid black;
-  /* @media (max-width: 500px) {
-    width: 100%;
-    flex-direction: column;
-  } */
+
+  @media screen and (max-width: 1260px) {
+    padding: 0 24px;
+    padding-top: 17px;
+  }
 
   img {
     border-radius: 50%;
@@ -48,9 +47,10 @@ export const UserImage = styled(Image)`
   width: 441px;
   height: 280px;
   object-fit: cover;
-  /* @media (max-width: 500px) {
-    width: 100%;
-  } */
+
+  @media screen and (max-width: 1260px) {
+    padding: 0 24px;
+  }
 `;
 export const ProfileContentsBox = styled.div`
   margin-left: 10px;
