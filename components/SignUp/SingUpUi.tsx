@@ -71,7 +71,7 @@ const SignUpUi = () => {
 
   const addUserMutation = useMutation(addUser, {
     onSuccess: () => {
-      router.push('/auth/SignIn');
+      router.push('/signUpComplete/SignUpComplete');
     },
     onError: (error) => {
       console.error('회원가입 실패:', error);
