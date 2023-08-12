@@ -60,7 +60,17 @@ const Home: NextPage<Props> = ({
   const onClickBottomNavHandler = () => {
     setIsClick(!isClick);
   };
+<<<<<<< HEAD
   // console.log(isClick);
+=======
+  console.log(isClick);
+
+  if (typeof window !== 'undefined') {
+    setCookie(null, 'update', '1', { path: '/' });
+    setCookie(null, 'updateId', '0', { path: '/' });
+  }
+
+>>>>>>> 8b69164f86f78169a0747d1ec732b510f2f733e0
   return (
     <HomePageLayout>
       <Header sticky={'sticky'} />
