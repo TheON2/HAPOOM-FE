@@ -101,11 +101,6 @@ const UserProfileImageUpdate = ({ profileImage, preset }: profileType) => {
               </ProfileItem>
             );
           })}
-          {/* <ProfileItem onClick={() => onClickProfileHandler(4)}>
-            <figure className={selectPreset === 5 ? 'active' : ''}>
-              <Image src={'/addImage.png'} alt="preset" fill />
-            </figure>
-          </ProfileItem> */}
         </ProfilePresetList>
         <div
           style={{
