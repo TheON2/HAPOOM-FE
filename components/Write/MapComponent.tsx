@@ -171,7 +171,7 @@ export const MapComponent: React.FC<MapComponentProps> = ({
     if (mapOpen) {
       initializeMap();
     }
-  }, [mapOpen, initializeMap]);
+  }, [mapOpen]);
 
   return (
     <>
