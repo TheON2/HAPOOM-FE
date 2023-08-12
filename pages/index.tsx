@@ -75,7 +75,7 @@ const Home: NextPage<Props> = ({
       />
       <Main>
         <HashtagContents data={hashContent} />
-        <PopularContentsCarousel />
+        <PopularContentsCarousel data={popularContent} />
         {/* <Slidetest /> */}
         {/* <PopularContents data={popularContent} /> */}
         <Footer />
