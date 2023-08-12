@@ -6,6 +6,7 @@ import { useQuery } from 'react-query';
 import { getUserProfile, getUsers } from '@/api/user';
 import Header from '../common/Header';
 import Footer from '../common/Footer';
+import FollowButton from './FollowButton';
 
 interface Post {}
 
@@ -59,6 +60,7 @@ const UserUi = () => {
       <UserPageSection>
         <UserPageContainer>
           <UserProfileCard data={data} />
+          <FollowButton currentPageUserEmail={data?.user?.email} />
           <UserLikePostSuggestion data={data} />
           <PostLike data={data} />
         </UserPageContainer>
