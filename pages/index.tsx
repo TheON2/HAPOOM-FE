@@ -7,6 +7,8 @@ import PopularContents from '@/components/Home/PopularContents';
 import MainBanner from '@/components/Home/MainBanner';
 import Header from '@/components/common/Header';
 import Footer from '@/components/common/Footer';
+import PopularContentsCarousel from '@/components/Home/PopularContentsCarousel';
+import Slidetest from '@/components/Home/Slidetest';
 import styled from 'styled-components';
 import {
   sliderImages,
@@ -68,6 +70,7 @@ const Home: NextPage<Props> = ({
     setCookie(null, 'updateId', '0', { path: '/' });
   }
 
+
   return (
     <HomePageLayout>
       <Header sticky={'sticky'} />
@@ -81,8 +84,10 @@ const Home: NextPage<Props> = ({
       />
       <Main>
         <HashtagContents data={hashContent} />
-        <PopularContents data={popularContent} />
-        <Footer></Footer>
+        <PopularContentsCarousel />
+        {/* <Slidetest /> */}
+        {/* <PopularContents data={popularContent} /> */}
+        <Footer />
       </Main>
     </HomePageLayout>
   );

@@ -1,26 +1,6 @@
+import { InputBox, InputStyle } from '@/styles/setting';
 import React from 'react';
 import styled from 'styled-components';
-
-const InputBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  span {
-    font-size: 10px;
-    font-weight: 700;
-    color: #868686;
-    padding: 8px 0 6px;
-  }
-`;
-
-const InputStyle = styled.input`
-  width: 100%;
-  font-size: 12px;
-  padding: 12px 28px 10px;
-  border-radius: 3px;
-  border: 1px solid #0084ff;
-  color: #999999;
-`;
 
 type ProfileInputProps = {
   updateText: string;

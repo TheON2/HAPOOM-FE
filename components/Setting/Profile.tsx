@@ -1,21 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
-import styled from 'styled-components';
 import { ProfileBox } from '@/styles/setting';
 import { profilePreset } from '@/public/presetData';
-const ProfileImageBox = styled.div``;
-
-// const profilePreset = ['/b1.png', '/b2.png', '/b3.png', '/c1.jpeg'];
-// const UserImage = '/inflearn.jpg';
-// const PRESET = 2;
 
 type profileProps = {
   userImage: string;
   preset: number;
-  nick: string;
+
+  nickname: string;
+  email: string;
+  direction?: 'column' | 'row';
 };
 
-const Profile = ({ userImage, preset, nick }: profileProps) => {
+const Profile = ({
+  userImage,
+  preset,
+  nickname,
+  email,
+  direction,
+}: profileProps) => {
+
   const [profileImage, setProfileImage] = useState<string | undefined>();
   const [nickname, setNickname] = useState<string>('nick');
 
@@ -35,15 +39,22 @@ const Profile = ({ userImage, preset, nick }: profileProps) => {
   }, [nick]);
 
   return (
-    <ProfileBox>
+    <ProfileBox direction={direction}>
       <div className="image">
         {profileImage && (
-          <Image src={profileImage} alt={'image'} width={100} height={100} />
+          <Image
+            src={profileImage}
+            alt={'image'}
+            width={74}
+            height={74}
+            objectFit="cover"
+          />
         )}
       </div>
       <div>
         <h2>{nickname}</h2>
-        <p>aaa@gmail.com</p>
+        <span></span>
+        <p>{email}</p>
       </div>
     </ProfileBox>
   );

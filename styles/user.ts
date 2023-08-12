@@ -9,35 +9,35 @@ export const UserPageSection = styled.section`
   align-items: center;
   justify-content: center;
   margin: 0 auto;
-  /* @media (max-width: 500px) {
-    padding: 0 20px;
-  } */
+
+  @media screen and (max-width: 1260px) {
+  }
 `;
 export const UserPageContainer = styled.div`
-  max-width: 100%;
+  width: 100%;
+
   p {
     font-family: Inter;
     font-size: 16px;
     font-weight: 700;
     text-align: left;
-    margin-top: 20px;
+    /* margin-top: 20px; */
   }
-  /* @media (max-width: 500px) {
-    padding: 0 20px;
-    width: 100%;
-  } */
+
+  @media screen and (max-width: 1260px) {
+  }
 `;
 export const UserProfileCardBox = styled.div`
-  padding-left: 24px;
-  padding-right: 24px;
-  width: 100%;
-  height: 299px;
+  margin: auto;
+  width: 90%;
   display: flex;
+  align-items: center;
   border: 1px solid black;
-  /* @media (max-width: 500px) {
-    width: 100%;
-    flex-direction: column;
-  } */
+  justify-content: center;
+
+  @media screen and (max-width: 1260px) {
+    padding: 24px;
+  }
 
   img {
     border-radius: 50%;
@@ -48,25 +48,33 @@ export const UserImage = styled(Image)`
   width: 441px;
   height: 280px;
   object-fit: cover;
-  /* @media (max-width: 500px) {
-    width: 100%;
-  } */
 `;
 export const ProfileContentsBox = styled.div`
-  margin-left: 10px;
-  position: relative;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  justify-content: space-between;
-  width: 100%;
+  align-items: flex-start; /* 왼쪽 정렬 */
+  width: 200px;
+  padding-left: 17px; /* 왼쪽 여백 추가 */
+  gap: 12px;
+
+  @media screen and (max-width: 500px) {
+    width: 70%;
+  }
 `;
-export const FollowBox = styled.div`
-  width: 300px;
+
+export const NicknameBox = styled.div`
   display: flex;
-  gap: 10px;
+  align-items: center; /* 세로 중앙 정렬 */
+  justify-content: center; /* 내부 내용 중앙 정렬 */
+  gap: 10px; /* 닉네임과 설정 링크 사이의 간격 */
+`;
+
+export const FollowBox = styled.div`
+  display: flex;
+  gap: 14px;
   align-items: center;
   p {
+    font-size: 16px;
     color: #c2c2c2;
   }
 `;
@@ -78,11 +86,11 @@ export const SettingPageLink = styled(Link)`
   font-family: Inter;
   font-size: 16px;
   font-weight: 700;
-  margin-top: 20px;
   width: 53px;
   height: 24px;
   text-align: center;
   line-height: 1.5;
+  margin-left: auto; /* 설정 링크를 오른쪽으로 정렬 */
 `;
 
 export const LikePostSuggestionBox = styled.div`
@@ -99,6 +107,7 @@ export const ImageBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
   p {
     text-align: center;
     font-family: Inter;
@@ -113,7 +122,7 @@ export const PostBox = styled.div`
 export const PostContentBox = styled.div`
   position: relative;
   display: flex;
-  gap: 15px;
+  gap: 14px;
 `;
 export const PostParagraph = styled.p`
   text-align: center;
@@ -134,7 +143,7 @@ export const PostImageBox = styled.div`
   gap: 12px;
   justify-content: flex-start;
   align-items: center;
-  @media (max-width: 500px) {
+  @media (max-width: 1260px) {
     width: 100%;
     justify-content: center;
   }
