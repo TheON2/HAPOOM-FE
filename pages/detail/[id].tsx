@@ -146,16 +146,23 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
             ))}
           </div>
           <ImageContainer>
-            <DynamicComponentWithNoSSR
+            {/* <DynamicComponentWithNoSSR
               videoId={videoId}
               setVideoId={setVideoId}
               setSelectedTitle={setSelectedTitle}
-            />
+            /> */}
             <MapComponent
               setLocation={setLocation}
               location={location}
               update={update}
             />
+            <h4>댓글</h4>
+            <div>
+              <div>
+                
+              </div>
+
+            </div>
           </ImageContainer>
         </ImageContainer>
       </div>
