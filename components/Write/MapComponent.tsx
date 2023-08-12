@@ -119,6 +119,10 @@ export const MapComponent: React.FC<MapComponentProps> = ({
     [setLocation, setLocationInput, update]
   );
   const handleCloseClick = useCallback(() => {
+    if (markerRef.current) {
+      markerRef.current.setMap(null);
+      markerRef.current = null;
+    }
     setMapOpen(false);
   }, []);
 
@@ -163,9 +167,17 @@ export const MapComponent: React.FC<MapComponentProps> = ({
     }
   }, [update, location]);
 
+  useEffect(() => {
+    if (mapOpen) {
+      initializeMap();
+    }
+  }, [mapOpen, initializeMap]);
+
   return (
     <>
       <Script
+        strategy="afterInteractive"
+        type="text/javascript"
         src={`https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NEXT_PUBLIC_NAVERMAP_API_KEY}`}
         onReady={initializeMap}
       />
