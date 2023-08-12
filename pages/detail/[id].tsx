@@ -130,7 +130,7 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
             {content}
           </div>
           <div style={{ width: '400px', textAlign: 'center', margin: '20px' }}>
-            {tags.split(',').map((tag, index) => (
+            {/* {tags.split(',').map((tag, index) => (
               <span
                 key={index}
                 style={{
@@ -143,7 +143,7 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
               >
                 #{tag.trim()}
               </span>
-            ))}
+            ))} */}
           </div>
           <ImageContainer>
             {/* <DynamicComponentWithNoSSR
@@ -158,10 +158,7 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
             />
             <h4>댓글</h4>
             <div>
-              <div>
-                
-              </div>
-
+              <div></div>
             </div>
           </ImageContainer>
         </ImageContainer>
