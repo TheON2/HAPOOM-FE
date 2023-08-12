@@ -31,7 +31,16 @@ const Carousel: React.FC<CarouselProps> = ({ children, active, setActive }) => {
   );
 };
 
-const PopularContentsCarousel = () => {
+interface populerCarouselProps {
+  data: any;
+}
+type dataProps = {
+  postId: number;
+  image: {
+    url: string;
+  };
+};
+const PopularContentsCarousel: React.FC<populerCarouselProps> = ({ data }) => {
   const [active, setActive] = useState<number>(0);
   const isMouseDown = useRef<boolean>(false);
   const offsetX = useRef<number>(0);
@@ -46,7 +55,7 @@ const PopularContentsCarousel = () => {
       setActive(active <= 0 ? 0 : active - 1);
     } else if (dragDistance < 0) {
       setActive(active >= Images.length - 1 ? Images.length - 1 : active + 1);
-     }
+    }
   }, [startX, endX, dragDistance, active]); // 의존성 배열에 active와 Images 추가
 
   //마우스 이벤트
@@ -58,9 +67,9 @@ const PopularContentsCarousel = () => {
 
   const handleMouseUp = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!isMouseDown.current) return;
-    isMouseDown.current = false;  
+    isMouseDown.current = false;
     setEndX(e.clientX);
-    calculateDragDistance(); 
+    calculateDragDistance();
   };
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -68,80 +77,75 @@ const PopularContentsCarousel = () => {
     setEndX(e.clientX); // 현재 위치를 저장합니다.
   };
 
+  // 터치 이벤트
 
-// 터치 이벤트 
+  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+    isMouseDown.current = true;
+    offsetX.current = e.touches[0].clientX;
+    setStartX(e.touches[0].clientX); // 시작 위치를 저장합니다.
+  };
 
-const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
-  isMouseDown.current = true;
-  offsetX.current = e.touches[0].clientX;
-  setStartX(e.touches[0].clientX); // 시작 위치를 저장합니다.
-};
+  // touchmove 이벤트 처리
+  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (!isMouseDown.current) return;
+    setEndX(e.touches[0].clientX); // 현재 위치를 저장합니다.
+  };
 
-// touchmove 이벤트 처리
-const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
-  if (!isMouseDown.current) return;
-  setEndX(e.touches[0].clientX); // 현재 위치를 저장합니다.
-};
-
-// touchend 이벤트 처리
-const handleTouchEnd = (e: React.TouchEvent<HTMLDivElement>) => {
-  if (!isMouseDown.current) return;
-  isMouseDown.current = false;
-  setEndX(e.changedTouches[0].clientX);
-  calculateDragDistance();
-};
-
-
-
+  // touchend 이벤트 처리
+  const handleTouchEnd = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (!isMouseDown.current) return;
+    isMouseDown.current = false;
+    setEndX(e.changedTouches[0].clientX);
+    calculateDragDistance();
+  };
 
   return (
     <>
-    <SectionTitle>#오늘의 좋아요</SectionTitle>
+      <SectionTitle>#오늘의 좋아요</SectionTitle>
 
-    <PopularContentsSection
-      onMouseDown={handleMouseDown}
-      onMouseMove={handleMouseMove}
-      onMouseUp={handleMouseUp}
-      onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
-      onTouchEnd={handleTouchEnd}
-    >
-      <Carousel active={active} setActive={setActive}>
-        {Images.map((item, idx) => (
-          <ImageContent key={idx} src={item} alt={'image'} postId={idx}/>
-          // <Image
-          //   src={item}
-          //   alt="img"
-          //   key={idx}
-          //   width={100}
-          //   height={100}
-          //   style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-          // />
-        ))}
-      </Carousel>
-    </PopularContentsSection>
+      <PopularContentsSection
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+      >
+        <Carousel active={active} setActive={setActive}>
+          {data.map((item: dataProps, idx: number) => (
+            <ImageContent
+              key={idx}
+              src={item.image?.url}
+              alt={'image'}
+              postId={item.postId}
+            />
+          ))}
+        </Carousel>
+      </PopularContentsSection>
     </>
   );
 };
 
+export default PopularContentsCarousel;
+
+const CARD_SIZE = 180;
 
 const PopularContentsSection = styled.section`
-width: 100%;
-height: 50vh;
-padding:36px 24px;
-display: flex;
-justify-content: center;
-overflow: hidden;
-`
+  width: 100%;
+  /* height: 50vh; */
+  padding: 36px 24px;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+`;
 
 const CarouselStyle = styled.div`
   position: relative;
-  width: 50%;
+  width: ${CARD_SIZE}px;
+  height: ${CARD_SIZE}px;
   /* padding-bottom: 50%; */
-  height: 65%;
   perspective: 500px;
   transform-style: preserve-3d;
-
 `;
 
 type props = {
@@ -172,6 +176,3 @@ const CardContainer = styled.div<props>`
     pointer-events: none;
   }
 `;
-
-
-export default PopularContentsCarousel;
