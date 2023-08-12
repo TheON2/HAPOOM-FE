@@ -9,7 +9,7 @@ export const MobileBottomNavLayout = styled.nav`
   display: flex;
   justify-content: center;
   background: #fff;
-  border-top: 1px solid #000;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
   z-index: 15;
   color: #0084ff;
   font-weight: 700;
