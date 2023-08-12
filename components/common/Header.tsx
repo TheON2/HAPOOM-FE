@@ -21,7 +21,7 @@ import {
   MobileBox,
 } from '@/styles/header';
 import useInput from '@/hooks/useInput';
-import IconButton from '../IconButton';
+import IconButton from './IconButton';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import { useMutation, useQueryClient } from 'react-query';

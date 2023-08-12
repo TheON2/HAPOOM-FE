@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
-import Header from '@/components/common/layout/Header';
-import MobileBottomNav from '@/components/common/layout/MobileBottomNav';
+import Header from '@/components/common/Header';
+import MobileBottomNav from '@/components/common/MobileBottomNav';
 type layoutProps = {
   children: ReactNode;
 };
