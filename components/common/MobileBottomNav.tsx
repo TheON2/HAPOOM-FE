@@ -43,8 +43,7 @@ const MobileBottomNav = () => {
               </IconBox>
             </BottomNavItem>
             <BottomNavItem>
-              <IconBox href={'/'}>
-
+              <IconBox href={'/search/search'}>
                 <Search />
 
                 <p>search</p>
@@ -52,15 +51,12 @@ const MobileBottomNav = () => {
             </BottomNavItem>
             <BottomNavItem>
               <IconBox href={'/post/Write'}>
-
                 <Upload />
                 <p>upload</p>
-
               </IconBox>
             </BottomNavItem>
             <BottomNavItem>
               <IconBox href={'/User/User'}>
-
                 <MyProfile />
 
                 <p>my</p>
