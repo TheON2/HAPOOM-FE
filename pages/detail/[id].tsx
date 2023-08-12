@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from 'react';
+import React, { FormEvent, useEffect, useState } from 'react';
 import {
   GlobalStyle,
   ImageContainer,
@@ -7,7 +7,7 @@ import {
 } from '../../styles/write';
 import { MapComponent } from '@/components/Write/MapComponent';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { addPost, getPost, updatePost } from '@/api/post';
+import { addPost, deletePost, getPost, updatePost } from '@/api/post';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, wrapper } from '@/redux/config/configStore';
 import dynamic from 'next/dynamic';
@@ -16,6 +16,11 @@ import Header from '@/components/common/Header';
 import Footer from '@/components/common/Footer';
 import { getAuthToken } from '@/api/user';
 import { AUTH_USER, UserResponse } from '@/redux/reducers/userSlice';
+import MainBannerSlider from '@/components/Home/MainBannerSlider';
+import DetailProfile from '@/components/Detail/DetailProfile';
+import MobileBottomNav from '@/components/common/MobileBottomNav';
+import { parseCookies, setCookie } from 'nookies';
+import { GetServerSidePropsContext, NextPage } from 'next';
 
 const DynamicComponentWithNoSSR = dynamic(
   () => import('@/components/Write/YoutubePlayer'),
@@ -25,10 +30,14 @@ interface Image {
   url: string;
 }
 
-function Detail() {
+interface Props {
+  update: string;
+  updateId: string;
+}
+
+const Detail: NextPage<Props> = ({ update, updateId }) => {
   const router = useRouter();
   const id = typeof router.query.id === 'string' ? router.query.id : '';
-  const { update } = useSelector((state: RootState) => state.post);
   const [images, setImages] = useState<File[]>([]);
   const [content, setContent] = useState<string>('');
   const [selectedTitle, setSelectedTitle] = useState<string>('');
@@ -37,10 +46,22 @@ function Detail() {
   const [location, setLocation] = useState({ name: '', x: 0, y: 0 });
   const queryClient = useQueryClient();
 
+  const { mutate: delete_mutate } = useMutation(deletePost, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('posts');
+      alert('Post deleted');
+      router.push('/');
+    },
+  });
+
   const handleEditClick = () => {
-    localStorage.setItem('update', JSON.stringify(true));
-    localStorage.setItem('updateId', JSON.stringify(id));
+    setCookie(null, 'updateId', id, { path: '/' });
+    setCookie(null, 'update', '2', { path: '/' });
     router.push('/post/Write');
+  };
+
+  const handleDeleteClick = () => {
+    delete_mutate(id);
   };
 
   const dispatch = useDispatch();
@@ -51,6 +72,7 @@ function Detail() {
       onSuccess: (userData: UserResponse) => {
         dispatch(AUTH_USER(userData));
       },
+      cacheTime: 0,
     }
   );
 
@@ -73,47 +95,89 @@ function Detail() {
     }
   );
 
-  if (update && !isSuccess) return <div>Loading...</div>;
+  if (!isSuccess) return <div>Loading...</div>;
   return (
     <>
       <Header />
+      <GlobalStyle />
       <div
-        style={{ minHeight: '800px', display: 'block', textAlign: 'center' }}
+        style={{
+          display: 'block',
+          textAlign: 'center',
+        }}
       >
-        <button onClick={handleEditClick}>글 수정하기</button>
-        <div>{content}</div>
-        <div>
-          {tags.split(',').map((tag, index) => (
-            <span
-              key={index}
-              style={{
-                display: 'inline-block',
-                padding: '5px',
-                border: '1px solid #000',
-                marginRight: '5px',
-                borderRadius: '5px',
-              }}
-            >
-              #{tag.trim()}
-            </span>
-          ))}
-        </div>
         <ImageContainer>
-          <DynamicComponentWithNoSSR
-            videoId={videoId}
-            setVideoId={setVideoId}
-            setSelectedTitle={setSelectedTitle}
-          />
-          <MapComponent
-            setLocation={setLocation}
-            location={location}
-            update={update}
-          />
+          <button onClick={handleEditClick}>글 수정하기</button>
+          <button type="button" onClick={handleDeleteClick}>
+            글 삭제하기
+          </button>
+          <div style={{ width: '100%' }}>
+            <DetailProfile
+              userImage={userData?.userImage}
+              preset={userData?.preset}
+              nick={userData?.nickname}
+            />
+          </div>
+          <MainBannerSlider data={images} />
+          <div
+            style={{
+              width: '400px',
+              height: '100px',
+              textAlign: 'left',
+              margin: '20px',
+            }}
+          >
+            {content}
+          </div>
+          <div style={{ width: '400px', textAlign: 'center', margin: '20px' }}>
+            {tags.split(',').map((tag, index) => (
+              <span
+                key={index}
+                style={{
+                  display: 'inline-block',
+                  padding: '5px',
+                  border: '1px solid #000',
+                  marginRight: '5px',
+                  borderRadius: '5px',
+                }}
+              >
+                #{tag.trim()}
+              </span>
+            ))}
+          </div>
+          <ImageContainer>
+            <DynamicComponentWithNoSSR
+              videoId={videoId}
+              setVideoId={setVideoId}
+              setSelectedTitle={setSelectedTitle}
+            />
+            <MapComponent
+              setLocation={setLocation}
+              location={location}
+              update={update}
+            />
+          </ImageContainer>
         </ImageContainer>
       </div>
       <Footer />
+      <MobileBottomNav />
     </>
   );
-}
+};
 
 export default Detail;
+
+export const getServerSideProps = async (
+  context: GetServerSidePropsContext
+) => {
+  const cookies = parseCookies(context);
+  const update = cookies.update || '';
+  const updateId = cookies.updateId || '';
+
+  return {
+    props: {
+      update,
+      updateId,
+    },
+  };
+};

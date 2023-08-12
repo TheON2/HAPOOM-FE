@@ -24,6 +24,7 @@ import MobileBottomNav from '@/components/common/MobileBottomNav';
 import { getAuthToken } from '@/api/user';
 import { AUTH_USER, UserResponse } from '@/redux/reducers/userSlice';
 import { useDispatch } from 'react-redux';
+import { setCookie } from 'nookies';
 interface Props {
   data: SliderImage[];
   hashtagData: SliderImage[];
@@ -54,14 +55,22 @@ const Home: NextPage<Props> = ({
       onSuccess: (userData: UserResponse) => {
         dispatch(AUTH_USER(userData));
       },
-      enabled: tokenExists, // 클라이언트 측에서만 토큰 존재 여부 확인
+      enabled: tokenExists,
+      cacheTime: 0,
     }
   );
   const [isClick, setIsClick] = useState<boolean>(false);
   const onClickBottomNavHandler = () => {
     setIsClick(!isClick);
   };
-  // console.log(isClick);
+  console.log(isClick);
+
+  if (typeof window !== 'undefined') {
+    setCookie(null, 'update', '1', { path: '/' });
+    setCookie(null, 'updateId', '0', { path: '/' });
+  }
+
+
   return (
     <HomePageLayout>
       <Header sticky={'sticky'} />

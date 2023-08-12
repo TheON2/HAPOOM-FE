@@ -112,7 +112,7 @@ const YoutubePlayer = ({
                     setSeek(playerInstance.getCurrentTime());
                     setDuration(playerInstance.getDuration());
                   }
-                }, 1000); // 매 초마다 업데이트
+                }, 1000);
                 setIntervalId(interval);
                 setPlayer(playerInstance);
               },
@@ -122,7 +122,6 @@ const YoutubePlayer = ({
                 } else if (event.data === YT.PlayerState.PAUSED) {
                   setPlaying(false);
                 }
-                // 기존 코드 (예: 끝나면 특정 시간으로 이동)
               },
             },
           });

@@ -6,6 +6,8 @@ import { likePost } from '@/api/post';
 import { useMutation } from 'react-query';
 import Link from 'next/link';
 import HeartIcon from '@/components/common/HeartIcon';
+import { useRouter } from 'next/router';
+import { setCookie } from 'nookies';
 const ImageContentLayout = styled.div`
   padding-bottom: 100%;
   width: 100%;
@@ -43,6 +45,7 @@ type Props = {
 };
 
 const ImageContent: NextPage<Props> = ({ src, alt, postId }) => {
+  const router = useRouter();
   const [isLike, setIsLike] = useState<boolean>(false);
 
   const mutation = useMutation((postId: string) => likePost(postId));
@@ -50,11 +53,17 @@ const ImageContent: NextPage<Props> = ({ src, alt, postId }) => {
     event.stopPropagation();
     setIsLike(!isLike);
     mutation.mutate(postId.toString());
+  };
 
+  const handleImageBoxClick = (e: React.MouseEvent) => {
+    e.preventDefault(); // 링크 기본 동작 방지
+    setCookie(null, 'updateId', JSON.stringify(postId), { path: '/' });
+    setCookie(null, 'update', '3', { path: '/' });
+    router.push(`/detail/${postId}`);
   };
   return (
     <ImageContentLayout>
-      <ImageBox href={`/detail/${postId}`}>
+      <ImageBox href={`/detail/${postId}`} onClick={handleImageBoxClick}>
         <Image
           src={src}
           alt={alt}
