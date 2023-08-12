@@ -56,7 +56,6 @@ import { identity } from 'lodash';
 import Link from 'next/link';
 import UpAndDownTab from '@/components/common/UpAndDownTab';
 import CustomPlayer from '@/components/Write/CustomPlayer';
-import Modal from '@/components/common/Modal';
 
 const DynamicComponentWithNoSSR = dynamic(
   () => import('@/components/Write/YoutubePlayer'),
@@ -100,12 +99,15 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
   const [videoId, setVideoId] = useState<string>('');
   const [tags, setTags] = useState<string>('');
   const [location, setLocation] = useState({ name: '', x: 0, y: 0 });
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [modalMessge, setModalMessge] = useState<any>({
-    actionText: '',
-    modalMessge: '',
-    onClickEvent: '',
+  const [isShow, setIsShow] = useState<boolean>(false);
+  const [commentEdit, setCommentEdit] = useState<any>({
+    show: false,
+    action: '',
+    uiTitle: '',
+    buttonText: '',
+    postId: '',
   });
+  const [comment, setComment] = useState<string>('');
   const queryClient = useQueryClient();
 
   const audioSrc = id ? `http://localhost:3001/test/stream/${id}` : '';
@@ -113,20 +115,15 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
   const { mutate: delete_mutate } = useMutation(deletePost, {
     onSuccess: () => {
       queryClient.invalidateQueries('posts');
-
-      alert('게시글이 삭제되었습니다.');
+      alert('Post deleted');
       router.push('/');
     },
   });
 
   const { mutate: report } = useMutation(reportPost, {
-    onSuccess: (messag) => {
-      setModalMessge({
-        actionText: '확인',
-        modalMessge: messag,
-        onClickEvent: null,
-      });
-      setIsModalOpen(true);
+    onSuccess: () => {
+      // queryClient.invalidateQueries('posts');
+      alert('신고 완료했습니다.');
     },
   });
 
@@ -137,23 +134,93 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
   };
 
   const handleDeleteClick = () => {
-    setModalMessge({
-      actionText: '삭제',
-      modalMessge: '정말로 해당 게시글을 삭제하시겠습니까?',
-      onClickEvent: () => delete_mutate(id),
-    });
-    setIsModalOpen(true);
+    delete_mutate(id);
   };
 
   const handleReportClick = () => {
-    setModalMessge({
-      actionText: '신고',
-      modalMessge: '해당 사용자를 신고하시겠습니까?',
-      onClickEvent: () => report(id),
-    });
-    setIsModalOpen(true);
+    report(id);
   };
-  // console.log(isModalOpen);
+
+  const handleCommentCreateHandler = () => {
+    setIsShow(true);
+    setCommentEdit({
+      show: true,
+      action: 'create',
+      uiTitle: '댓글 생성',
+      buttonText: '업로드',
+      commentId: '',
+    });
+  };
+
+  const handleCommentEditHandler = (commentId: number, preComment: string) => {
+    setIsShow(true);
+    setCommentEdit({
+      show: true,
+      action: 'edit',
+      uiTitle: '댓글 수정',
+      buttonText: '수정',
+      commentId: commentId,
+    });
+    setComment(preComment);
+  };
+
+  const handleCommentShowHandler = () => {
+    setCommentEdit((pre: any) => ({
+      ...pre,
+      show: !commentEdit.show,
+    }));
+  };
+
+  const handleCommentExitHandler = () => {
+    setIsShow(!isShow);
+  };
+
+  const onChangeCommentHandler = (e: any) => {
+    setComment(e.target.value);
+  };
+
+  const { mutate: commentCreate } = useMutation<void, Error, CommentData>(
+    (comment) => addComment(comment),
+    {
+      onSuccess: () => {
+        alert('댓글 작성에 성공하였습니다.');
+      },
+    }
+  );
+  const { mutate: commentUpdate } = useMutation<void, Error, CommentUpdateData>(
+    (comment) => updateComment(comment),
+    {
+      onSuccess: () => {
+        alert('댓글 수정에 성공하였습니다.');
+      },
+    }
+  );
+  const { mutate: commentDelete } = useMutation<void, Error, CommentDelete>(
+    (comment) => deleteComment(comment),
+    {
+      onSuccess: () => {
+        alert('댓글을 삭제하였습니다.');
+      },
+    }
+  );
+
+  const onClickDeleteCommentHandler = (commentId: number) => {
+    commentDelete({ id, commentId });
+  };
+
+  const onSubmitHandler = (e: React.FormEvent) => {
+    e.preventDefault();
+    const formData = new FormData();
+    if (commentEdit.action === 'create') {
+      formData.append('comment', comment);
+      commentCreate({ formData, id });
+    } else if (commentEdit.action === 'edit') {
+      formData.append('comment', comment);
+      const commentId = commentEdit.commentId;
+      commentUpdate({ formData, id, commentId });
+    }
+  };
+
   const isClientSide = typeof window !== 'undefined';
   const tokenExists = isClientSide ? !!localStorage.getItem('token') : false;
 
@@ -191,7 +258,6 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
       },
     }
   );
-
   const { data: commentsData } = useQuery('comments', () => getComment(id));
 
   if (!isSuccess) return <div>Loading...</div>;
@@ -199,39 +265,27 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
     <>
       <>{!(update === '3' && location.x === 0) && <></>}</>
       <GlobalStyle />
-      <Modal
-        isOpen={isModalOpen}
-        setIsOpen={setIsModalOpen}
-        actionText={modalMessge.actionText}
-        onClickEvent={modalMessge.onClickEvent}
-      >
-        {modalMessge.modalMessge}
-      </Modal>
+      {/* <ImageContainer> */}
       <ContentsContainer>
         <OtherProfileBox>
           <Link href={`/User/sss@gmail.com`}>
             <DetailProfile
-              userImage={data?.user?.userImage}
-              preset={data?.user?.preset}
-              nick={data?.user?.nickname}
+              userImage={userData?.userImage}
+              preset={userData?.preset}
+              nick={userData?.nickname}
             />
           </Link>
           <KebabMenuUI>
             <KebabMenuStyle>
-              {data.user.email === userData?.email ? (
-                <>
-                  <KebabMenuAptionButton onClick={handleDeleteClick}>
-                    글 삭제하기 <span></span>
-                  </KebabMenuAptionButton>
-                  <KebabMenuAptionButton onClick={handleEditClick}>
-                    글 수정하기 <span></span>
-                  </KebabMenuAptionButton>
-                </>
-              ) : (
-                <KebabMenuAptionButton onClick={handleReportClick}>
-                  신고하기 <span></span>
-                </KebabMenuAptionButton>
-              )}
+              <KebabMenuAptionButton onClick={handleDeleteClick}>
+                글 삭제하기 <span></span>
+              </KebabMenuAptionButton>
+              <KebabMenuAptionButton onClick={handleEditClick}>
+                글 수정하기 <span></span>
+              </KebabMenuAptionButton>
+              <KebabMenuAptionButton onClick={handleReportClick}>
+                신고하기 <span></span>
+              </KebabMenuAptionButton>
             </KebabMenuStyle>
           </KebabMenuUI>
         </OtherProfileBox>
@@ -260,7 +314,6 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
                 videoId={videoId}
                 setVideoId={setVideoId}
                 setSelectedTitle={setSelectedTitle}
-                update={update}
               />
             </>
           )}
@@ -287,15 +340,58 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
           />
         </DetialContentSection>
         <DetialContentSection>
-          <h3>댓글</h3>
-          <Comment
-            data={commentsData}
-            id={id}
-            userData={userData}
-            writeUser={data?.user}
-          />
+          <div className="comments-header">
+            <h3>댓글</h3>
+            <Button onClick={handleCommentCreateHandler}>댓글쓰기</Button>
+          </div>
+          {commentsData?.comments.map((comment: any) => {
+            return (
+              <>
+                <Comment
+                  onClickUpdateEvent={handleCommentEditHandler}
+                  onClcikDeleteEvent={onClickDeleteCommentHandler}
+                  data={comment}
+                />
+              </>
+            );
+          })}
         </DetialContentSection>
       </ContentsContainer>
+      <ImageContainer>
+        {/* <DynamicComponentWithNoSSR
+              videoId={videoId}
+              setVideoId={setVideoId}
+              setSelectedTitle={setSelectedTitle}
+            /> */}
+      </ImageContainer>
+      {/* </ImageContainer> */}
+      {isShow ? (
+        <UpAndDownTab
+          onClickEvent={handleCommentShowHandler}
+          $isUp={commentEdit.show}
+        >
+          <DetialContentSection>
+            <CommentForm onSubmit={onSubmitHandler}>
+              <div className="comments-header">
+                <h3>{commentEdit.uiTitle}</h3>
+                <div className="button-box">
+                  <Button onClick={handleCommentExitHandler}>닫기</Button>
+                  <Button type="submit">{commentEdit.buttonText}</Button>
+                </div>
+              </div>
+              <div>
+                <textarea
+                  name=""
+                  id=""
+                  placeholder="댓글을 입력해주세요"
+                  value={comment}
+                  onChange={onChangeCommentHandler}
+                />
+              </div>
+            </CommentForm>
+          </DetialContentSection>
+        </UpAndDownTab>
+      ) : null}
     </>
   );
 };
