@@ -22,7 +22,8 @@ const addPost = async (postData: UpdateData) => {
       'Content-Type': 'multipart/form-data',
     },
   };
-  const response = await api.post('api/post', postData.formData, config);
+
+  const response = await api.post('/api/post', postData.formData, config);
 };
 
 const updatePost = async (postData: UpdateData) => {
@@ -39,7 +40,7 @@ const updatePost = async (postData: UpdateData) => {
 };
 
 const getPost = async (id: string) => {
-  const response = await api.get(`/test/post/${id}`);
+  const response = await api.get(`/api/post/${id}`);
   return response.data;
 };
 

@@ -81,11 +81,12 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
     () => getPost(id),
     {
       onSuccess: async (data) => {
-        setImages(data.images);
+        console.log(data);
+        setImages(data.post.images);
         setContent(data.post.content);
         setSelectedTitle(data.post.musicTitle);
         setVideoId(data.post.musicUrl);
-        setTags(data.post.tag);
+        setTags(data.tag);
         setLocation({
           name: data.post.placeName,
           x: data.post.latitude,
@@ -94,7 +95,7 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
       },
     }
   );
-
+  console.log(images);
   if (!isSuccess) return <div>Loading...</div>;
   return (
     <>

@@ -63,62 +63,27 @@ export const hashtagImages: SliderImage[] = [
 export const hashtagContentsImages: SliderImage[] = [
   {
     id: 1,
-    src: '/20230804_105922.jpeg',
+    src: '/c1.jpeg',
     alt: 'Image 1',
   },
   {
     id: 2,
-    src: '/20230804_105922.jpeg',
+    src: '/c2.jpeg',
     alt: 'Image 2',
   },
   {
     id: 3,
-    src: '/20230804_105922.jpeg',
+    src: '/c3.jpeg',
     alt: 'Image 3',
   },
   {
     id: 4,
-    src: '/20230804_105922.jpeg',
+    src: '/c4.jpeg',
     alt: 'Image 4',
   },
   {
     id: 5,
-    src: '/20230804_105922.jpeg',
-    alt: 'Image 5',
-  },
-  {
-    id: 6,
-    src: '/20230804_105922.jpeg',
-    alt: 'Image 1',
-  },
-  {
-    id: 7,
-    src: '/20230804_105922.jpeg',
-    alt: 'Image 2',
-  },
-  {
-    id: 8,
-    src: '/20230804_105922.jpeg',
-    alt: 'Image 3',
-  },
-  {
-    id: 9,
-    src: '/20230804_105922.jpeg',
-    alt: 'Image 4',
-  },
-  {
-    id: 10,
-    src: '/20230804_105922.jpeg',
-    alt: 'Image 5',
-  },
-  {
-    id: 11,
-    src: '/20230804_105922.jpeg',
-    alt: 'Image 4',
-  },
-  {
-    id: 12,
-    src: '/20230804_105922.jpeg',
+    src: '/c5.jpeg',
     alt: 'Image 5',
   },
 ];
