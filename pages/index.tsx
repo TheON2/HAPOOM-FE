@@ -5,8 +5,8 @@ import HashtagContents from '@/components/Home/HashtagContents';
 import Main from '@/components/Home/Main';
 import PopularContents from '@/components/Home/PopularContents';
 import MainBanner from '@/components/Home/MainBanner';
-import Header from '@/components/common/Header';
-import Footer from '@/components/common/Footer';
+import Header from '@/components/common/layout/Header';
+import Footer from '@/components/common/layout/Footer';
 import PopularContentsCarousel from '@/components/Home/PopularContentsCarousel';
 import styled from 'styled-components';
 import {
@@ -19,7 +19,7 @@ import {
 import { GetStaticProps, NextPage, GetServerSideProps } from 'next';
 import { useQuery } from 'react-query';
 import axios from 'axios';
-import MobileBottomNav from '@/components/common/MobileBottomNav';
+import MobileBottomNav from '@/components/common/layout/MobileBottomNav';
 import { getAuthToken } from '@/api/user';
 import { AUTH_USER, UserResponse } from '@/redux/reducers/userSlice';
 import { useDispatch } from 'react-redux';
@@ -73,8 +73,6 @@ const Home: NextPage<Props> = ({
     <HomePageLayout>
       <Header sticky={'sticky'} />
       <MainBanner data={data} isClick={isClick} />
-      {/* <MainBannerSlider data={data} /> */}
-      <MobileBottomNav />
       <HashtagNavBar
         data={hashtagData}
         isClick={isClick}
@@ -83,8 +81,6 @@ const Home: NextPage<Props> = ({
       <Main>
         <HashtagContents data={hashContent} />
         <PopularContentsCarousel data={popularContent} />
-        {/* <Slidetest /> */}
-        {/* <PopularContents data={popularContent} /> */}
         <Footer />
       </Main>
     </HomePageLayout>

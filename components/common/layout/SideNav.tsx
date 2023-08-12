@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import styled from 'styled-components';
 import { SideNavLayout, SideNavMenuBox } from '@/styles/navbar';
-import IconButton from './IconButton';
+import IconButton from '../IconButton';
 import Themes from '@/components/Setting/Themes';
 import Profile from '@/components/Setting/Profile';
 import { useSelector } from 'react-redux';
