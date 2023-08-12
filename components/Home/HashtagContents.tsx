@@ -11,7 +11,7 @@ type Props = {
   data: Post[];
 };
 interface Post {
-  id: number;
+  postId: number;
   content: string;
   musicTitle: string;
   musicUrl: string;
@@ -23,9 +23,7 @@ interface Post {
   createdAt: string;
   updatedAt: string;
   userId: number;
-  image: {
-    url: string;
-  };
+  image: string;
 }
 
 const HashtagContents: React.FC<Props> = ({ data }) => {
@@ -38,9 +36,9 @@ const HashtagContents: React.FC<Props> = ({ data }) => {
           return (
             <ImageContent
               key={index}
-              src={content.image?.url}
+              src={content.image}
               alt={'date'}
-              postId={content.id}
+              postId={content.postId}
             />
           );
         })}
