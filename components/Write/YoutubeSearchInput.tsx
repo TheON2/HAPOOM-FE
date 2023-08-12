@@ -21,13 +21,13 @@ interface YouTubeSearchProps {
   setVideoId: React.Dispatch<React.SetStateAction<string>>;
   selectedTitle: string;
   setSelectedTitle: React.Dispatch<React.SetStateAction<string>>;
-  update: boolean;
+  update: string;
   videoId: string;
 }
 
 const InputContainer = styled.div`
   position: relative;
-  width: 600px;
+  width: 400px;
 `;
 
 const ClearButton = styled.button`
@@ -48,7 +48,7 @@ const SuggestionBox = styled.ul`
   list-style-type: none;
   padding: 0;
   margin: 0;
-  width: 600px;
+  width: 400px;
   box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
   border-radius: 4px;
   overflow: hidden;
@@ -90,7 +90,7 @@ export const YouTubeSearch = ({
   const searchYoutube = async (term: string) => {
     if (term.length >= 2) {
       const response = await axios.get(
-        `http://localhost:3001/test/youtube/search`,
+        `http://localhost:3001/api/util/youtube/search`,
         {
           params: {
             term: term,
@@ -145,7 +145,7 @@ export const YouTubeSearch = ({
   }, [setSelectedTitle, setVideoId]);
 
   useEffect(() => {
-    if (update && videoId !== '') {
+    if (update === '2' && videoId !== '') {
       setIsInputActive(false);
     }
   }, [update, videoId]);
@@ -161,6 +161,9 @@ export const YouTubeSearch = ({
 
   return (
     <>
+      <label>
+        <h3 style={{ float: 'left', margin: '10px 0' }}>음악추가</h3>
+      </label>
       {!isSearchComplete && (
         <InputContainer>
           <StyledAuthInput
@@ -169,7 +172,11 @@ export const YouTubeSearch = ({
             value={isInputActive ? searchTerm : selectedTitle}
             onChange={handleChange}
             onKeyUp={isInputActive ? handleKeyUp : undefined}
-            style={{ width: '100%', margin: '5px 0' }}
+            style={{
+              width: '100%',
+              margin: '5px 0',
+              border: '2px solid #0084ff',
+            }}
             disabled={!isInputActive}
           />
           {selectedTitle && !isInputActive && (

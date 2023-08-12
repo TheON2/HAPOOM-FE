@@ -56,16 +56,19 @@ const TagInput: React.FC<TagInputProps> = ({ tags, setTags }) => {
 
   return (
     <>
+      <label>
+        <h3 style={{ float: 'left', margin: '10px 0' }}>태그</h3>
+      </label>
       <StyledAuthInput
         type="text"
         placeholder="#태그"
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
         onKeyDown={handleTagChange}
-        style={{ width: '600px' }}
+        style={{ width: '400px', border: '2px solid #0084ff' }}
         disabled={isMaxTags}
       />
-      <div style={{ position: 'relative', width: 600 }}>
+      <div style={{ position: 'relative', width: 400 }}>
         <div
           style={{
             position: 'absolute',

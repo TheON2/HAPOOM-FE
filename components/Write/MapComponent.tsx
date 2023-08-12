@@ -24,7 +24,7 @@ interface Marker {
 interface MapComponentProps {
   setLocation: React.Dispatch<React.SetStateAction<Location>>;
   location: Location;
-  update: boolean;
+  update: string;
 }
 
 declare global {
@@ -61,10 +61,10 @@ export const MapComponent: React.FC<MapComponentProps> = ({
   location,
   update,
 }) => {
-  const [mapOpen, setMapOpen] = useState(false);
+  const [mapOpen, setMapOpen] = useState(true);
   const [locationInput, setLocationInput] = useState('');
   const mapContainerRef = useRef(null);
-  const mapRef = useRef(null);
+  const mapRef = useRef<any>(null);
   const markerRef = useRef<Marker | null>(null);
 
   const handleSearchIconClick = useCallback(() => {
@@ -74,9 +74,10 @@ export const MapComponent: React.FC<MapComponentProps> = ({
   const handleMapClick = useCallback(
     async (event: MapClickEvent) => {
       const coord = event.coord;
+      if (update === '3') return;
       try {
         const response = await axios.get(
-          'http://localhost:3001/test/map/reversegeocode',
+          'http://localhost:3001/api/util/map/reversegeocode',
           {
             params: {
               x: coord.x,
@@ -115,47 +116,50 @@ export const MapComponent: React.FC<MapComponentProps> = ({
         console.error('Geocoding API 호출 중 오류가 발생했습니다:', error);
       }
     },
-    [setLocation, setLocationInput]
+    [setLocation, setLocationInput, update]
   );
   const handleCloseClick = useCallback(() => {
     setMapOpen(false);
   }, []);
 
-  useEffect(() => {
-    if (mapOpen && window.naver) {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition((position) => {
-          const userLocation = {
-            x: position.coords.longitude,
-            y: position.coords.latitude,
-          };
-          mapRef.current = new window.naver.maps.Map(mapContainerRef.current, {
-            center: new window.naver.maps.LatLng(
-              userLocation.y,
-              userLocation.x
-            ),
-          });
-          window.naver.maps.Event.addListener(
-            mapRef.current,
-            'click',
-            handleMapClick
-          );
+  const initializeMap = useCallback(() => {
+    navigator.geolocation.getCurrentPosition((position) => {
+      const userLocation = {
+        x: position.coords.longitude,
+        y: position.coords.latitude,
+      };
+      if (update === '1') {
+        mapRef.current = new window.naver.maps.Map(mapContainerRef.current, {
+          center: new window.naver.maps.LatLng(userLocation.y, userLocation.x),
+        });
+        markerRef.current = new window.naver.maps.Marker({
+          position: new window.naver.maps.LatLng(
+            userLocation.y,
+            userLocation.x
+          ),
+          map: mapRef.current,
         });
       } else {
-        mapRef.current = new window.naver.maps.Map(mapContainerRef.current);
-        window.naver.maps.Event.addListener(
-          mapRef.current,
-          'click',
-          handleMapClick
-        );
+        mapRef.current = new window.naver.maps.Map(mapContainerRef.current, {
+          center: new window.naver.maps.LatLng(location.y, location.x),
+        });
+        markerRef.current = new window.naver.maps.Marker({
+          position: new window.naver.maps.LatLng(location.y, location.x),
+          map: mapRef.current,
+        });
       }
-    }
-  }, [mapOpen, handleMapClick]);
+
+      window.naver.maps.Event.addListener(
+        mapRef.current,
+        'click',
+        handleMapClick
+      );
+    });
+  }, [handleMapClick, location, update]);
 
   useEffect(() => {
-    if (update) {
+    if (update === '2' || update === '3') {
       setLocationInput(location.name + ' ' + location.x + location.y);
-      setMapOpen(true);
     }
   }, [update, location]);
 
@@ -163,17 +167,21 @@ export const MapComponent: React.FC<MapComponentProps> = ({
     <>
       <Script
         src={`https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NEXT_PUBLIC_NAVERMAP_API_KEY}`}
+        onReady={initializeMap}
       />
+      <label>
+        <h3 style={{ float: 'left', margin: '10px 0' }}>장소</h3>
+      </label>
       <StyledAuthInput
         type="text"
         placeholder="🔍️"
         value={locationInput}
         onClick={handleSearchIconClick}
         readOnly
-        style={{ width: '600px' }}
+        style={{ width: '400px', border: '2px solid #0084ff' }}
       />
       {mapOpen && (
-        <div style={{ position: 'relative', width: '600px', height: '400px' }}>
+        <div style={{ position: 'relative', width: '400px', height: '400px' }}>
           <div
             ref={mapContainerRef}
             id="map"

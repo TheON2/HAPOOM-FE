@@ -23,10 +23,12 @@ const Setting = () => {
       onSuccess: (userData: UserResponse) => {
         dispatch(AUTH_USER(userData));
       },
+      cacheTime: 0,
     }
   );
   const { data: userSetting } = useQuery('userSetting', getUserSetting, {
     onSuccess: (data) => {},
+    cacheTime: 0,
   });
 
   return (
@@ -36,7 +38,7 @@ const Setting = () => {
         <Profile
           userImage={userSetting?.user.userImage}
           preset={userSetting?.user.preset}
-          nickname={userSetting?.user.nickname}
+          nick={userSetting?.user.nickname}
         />
         테마 : {userSetting?.user.theme} <br />
         비밀번호 : {userSetting?.user.password} <br />

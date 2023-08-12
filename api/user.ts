@@ -82,6 +82,10 @@ const deleteUser = async (userEmail: string): Promise<void> => {
   await api.delete(`/api/user/${userEmail}`);
 };
 
+const test = async () => {
+  await api.get(`/test/test`);
+};
+
 export {
   addUser,
   getUser,
@@ -94,4 +98,5 @@ export {
   getUserSetting,
   updateUserSetting,
   getUserProfile,
+  test,
 };

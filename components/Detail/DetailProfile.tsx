@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import styled from 'styled-components';
-import { ProfileBox } from '@/styles/setting';
 import { profilePreset } from '@/public/presetData';
+import { ProfileBox } from '@/styles/detail';
 const ProfileImageBox = styled.div``;
 
 // const profilePreset = ['/b1.png', '/b2.png', '/b3.png', '/c1.jpeg'];
@@ -10,14 +10,14 @@ const ProfileImageBox = styled.div``;
 // const PRESET = 2;
 
 type profileProps = {
-  userImage: string;
-  preset: number;
-  nick: string;
+  userImage: string | null | undefined;
+  preset: number | null | undefined;
+  nick: string | null | undefined;
 };
 
-const Profile = ({ userImage, preset, nick }: profileProps) => {
-  const [profileImage, setProfileImage] = useState<string | undefined>();
-  const [nickname, setNickname] = useState<string>('nick');
+const DetailProfile = ({ userImage, preset, nick }: profileProps) => {
+  const [profileImage, setProfileImage] = useState<string | null | undefined>();
+  const [nickname, setNickname] = useState<string | null | undefined>('nick');
 
   useEffect(() => {
     if (preset === 1) {
@@ -28,7 +28,7 @@ const Profile = ({ userImage, preset, nick }: profileProps) => {
       );
       setProfileImage(foundPreset);
     }
-  }, [preset]);
+  }, [preset, userImage]);
 
   useEffect(() => {
     setNickname(nick);
@@ -49,4 +49,4 @@ const Profile = ({ userImage, preset, nick }: profileProps) => {
   );
 };
 
-export default Profile;
+export default DetailProfile;
