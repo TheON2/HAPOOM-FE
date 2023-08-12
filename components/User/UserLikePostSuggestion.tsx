@@ -1,5 +1,11 @@
 import React from 'react';
-import { LikePostSuggestionBox, ImageBox } from '@/styles/user';
+import {
+  LikePostSuggestionBox,
+  ImageBox,
+  InfoContainer,
+  InfoText,
+  InfoNumber,
+} from '@/styles/user';
 import cloud from '../../public/🦆 icon _cloud_.svg';
 import square from '../../public/🦆 icon _image_.svg';
 import star from '../../public/🦆 icon _star_.svg';
@@ -22,10 +28,10 @@ const UserLikePostSuggestion: React.FC<postsCountProps> = ({ data }) => {
           height={40}
           objectFit="cover"
         />
-        <p style={{ fontSize: '16px', fontWeight: '300' }}>좋아요</p>
-        <p style={{ fontSize: '30px', fontWeight: '900' }}>
-          {data?.likePostsCount}
-        </p>
+        <InfoContainer>
+          <InfoText>좋아요</InfoText>
+          <InfoNumber>{data?.likePostsCount}</InfoNumber>
+        </InfoContainer>
       </ImageBox>
       <ImageBox>
         <Image
@@ -35,10 +41,10 @@ const UserLikePostSuggestion: React.FC<postsCountProps> = ({ data }) => {
           height={40}
           objectFit="cover"
         />
-        <p style={{ fontSize: '16px', fontWeight: '300' }}>게시물</p>
-        <p style={{ fontSize: '30px', fontWeight: '900' }}>
-          {data?.postsCount}
-        </p>
+        <InfoContainer>
+          <InfoText>게시물</InfoText>
+          <InfoNumber>{data?.postsCount}</InfoNumber>
+        </InfoContainer>
       </ImageBox>
       <ImageBox>
         <Image
@@ -48,8 +54,10 @@ const UserLikePostSuggestion: React.FC<postsCountProps> = ({ data }) => {
           height={40}
           objectFit="cover"
         />
-        <p style={{ fontSize: '16px', fontWeight: '300' }}>추천</p>
-        <p style={{ fontSize: '30px', fontWeight: '900' }}>3</p>
+        <InfoContainer>
+          <InfoText>북마크</InfoText>
+          <InfoNumber>99</InfoNumber>
+        </InfoContainer>
       </ImageBox>
     </LikePostSuggestionBox>
   );
