@@ -35,7 +35,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({ data }) => {
       />
       <ProfileContentsBox>
         <NicknameBox>
-          <p>{data?.user.nickname}</p>
+          <p className="nickName">{data?.user.nickname}</p>
           <SettingPageLink href={'/setting/Setting'}>설정</SettingPageLink>
         </NicknameBox>
         <FollowBox>

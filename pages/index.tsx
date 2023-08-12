@@ -8,7 +8,6 @@ import MainBanner from '@/components/Home/MainBanner';
 import Header from '@/components/common/Header';
 import Footer from '@/components/common/Footer';
 import PopularContentsCarousel from '@/components/Home/PopularContentsCarousel';
-import Slidetest from '@/components/Home/Slidetest';
 import styled from 'styled-components';
 import {
   sliderImages,

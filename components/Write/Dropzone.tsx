@@ -29,13 +29,13 @@ const Dropzone: React.FC<DropzoneProps> = ({ images, setImages }) => {
       {...getRootProps()}
       style={{
         height: '200px',
-        width: '600px',
-        border: 'dashed 1px',
+        width: '400px',
+        border: ' #0084ff dashed 2px',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        marginBottom: '20px',
+        margin: '20px',
         position: 'relative',
         overflow: 'hidden',
       }}
