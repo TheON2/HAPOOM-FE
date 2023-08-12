@@ -21,18 +21,24 @@ import Header from '@/components/common/Header';
 import Footer from '@/components/common/Footer';
 import { getAuthToken } from '@/api/user';
 import { AUTH_USER, UserResponse } from '@/redux/reducers/userSlice';
+import MobileBottomNav from '@/components/common/MobileBottomNav';
+import { parseCookies } from 'nookies';
+import { GetServerSidePropsContext, NextPage } from 'next';
 
 const DynamicComponentWithNoSSR = dynamic(
   () => import('@/components/Write/YoutubePlayer'),
   { ssr: false }
 );
+
 interface Image {
   url: string;
 }
+interface Props {
+  update: string;
+  updateId: string;
+}
 
-function Write() {
-  const [update, setUpdate] = useState<boolean>(false);
-  const [updateId, setUpdateId] = useState<string>('');
+const Write: NextPage<Props> = ({ update, updateId }) => {
   const [images, setImages] = useState<File[]>([]);
   const [content, setContent] = useState<string>('');
   const [selectedTitle, setSelectedTitle] = useState<string>('');
@@ -53,6 +59,7 @@ function Write() {
       onSuccess: (userData: UserResponse) => {
         dispatch(AUTH_USER(userData));
       },
+      cacheTime: 0,
     }
   );
 
@@ -84,11 +91,8 @@ function Write() {
 
   const mutationOptions = {
     onSuccess: () => {
-      localStorage.removeItem('update');
-      localStorage.removeItem('updateId');
-
       queryClient.invalidateQueries('posts');
-      if (update) {
+      if (update === '2') {
         alert('게시물이 수정되었습니다!');
       } else {
         alert('게시물이 추가되었습니다!');
@@ -98,7 +102,7 @@ function Write() {
   };
 
   const { mutate: postMutation, isLoading: postLoading } = useMutation(
-    update ? updatePost : addPost,
+    update === '2' ? updatePost : addPost,
     mutationOptions
   );
 
@@ -125,67 +129,79 @@ function Write() {
           y: data.post.longitude,
         });
       },
-      enabled: update,
+      enabled: update === '2',
     }
   );
 
-  useEffect(() => {
-    const initialUpdate = localStorage.getItem('update') === 'true';
-    const initialUpdateId = localStorage.getItem('updateId')
-      ? JSON.parse(localStorage.getItem('updateId') || '')
-      : '';
-
-    setUpdate(initialUpdate);
-    setUpdateId(initialUpdateId);
-  }, []);
-
-  if (update && !isSuccess) return <div>Loading...</div>;
-
   return (
     <>
-      <Header />
-      <div style={{ minHeight: '800px' }}>
-        <GlobalStyle />
-        <form
-          onSubmit={handlePostSubmit}
-          style={{ display: 'block', textAlign: 'center' }}
-        >
-          <ImageContainer>
-            {update ? <h1>게시글 수정</h1> : <h1>새 게시글</h1>}
-            <Dropzone images={images} setImages={setImages} />
-            <PreviewContainer>
-              <ImagePreview images={images} removeImage={removeImage} />
-            </PreviewContainer>
-          </ImageContainer>
-          <ImageContainer>
-            <ContentArea content={content} setContent={setContent} />
-            <YouTubeSearch
-              setVideoId={setVideoId}
-              selectedTitle={selectedTitle}
-              setSelectedTitle={setSelectedTitle}
-              update={update}
-              videoId={videoId}
-            />
-            <DynamicComponentWithNoSSR
-              videoId={videoId}
-              setVideoId={setVideoId}
-              setSelectedTitle={setSelectedTitle}
-            />
-            <TagInput tags={tags} setTags={setTags} />
-            <MapComponent
-              setLocation={setLocation}
-              location={location}
-              update={update}
-            />
-            <StyledButton type="submit">
-              {update ? <h1>사진 수정하기</h1> : <h1>사진 올리기</h1>}
-            </StyledButton>
-          </ImageContainer>
-        </form>
-      </div>
-      <Footer />
+      {!(update === '2' && location.x === 0) && (
+        <>
+          <Header />
+          <div style={{ minHeight: '800px' }}>
+            <GlobalStyle />
+            <form
+              onSubmit={handlePostSubmit}
+              style={{ display: 'block', textAlign: 'center' }}
+            >
+              <ImageContainer>
+                {update === '2' ? <h1>게시글 수정</h1> : <h1>새 게시글</h1>}
+                <Dropzone images={images} setImages={setImages} />
+                <PreviewContainer>
+                  <ImagePreview images={images} removeImage={removeImage} />
+                </PreviewContainer>
+              </ImageContainer>
+              <ImageContainer>
+                <ContentArea content={content} setContent={setContent} />
+                <YouTubeSearch
+                  setVideoId={setVideoId}
+                  selectedTitle={selectedTitle}
+                  setSelectedTitle={setSelectedTitle}
+                  update={update}
+                  videoId={videoId}
+                />
+                <DynamicComponentWithNoSSR
+                  videoId={videoId}
+                  setVideoId={setVideoId}
+                  setSelectedTitle={setSelectedTitle}
+                />
+                <TagInput tags={tags} setTags={setTags} />
+                <MapComponent
+                  setLocation={setLocation}
+                  location={location}
+                  update={update}
+                />
+                <StyledButton type="submit">
+                  {update === '2' ? (
+                    <h3>사진 수정하기</h3>
+                  ) : (
+                    <h3>사진 게시하기</h3>
+                  )}
+                </StyledButton>
+              </ImageContainer>
+            </form>
+          </div>
+          <Footer />
+          <MobileBottomNav />
+        </>
+      )}
     </>
   );
-}
+};
 
-export default wrapper.withRedux(Write);
+export default Write;
+
+export const getServerSideProps = async (
+  context: GetServerSidePropsContext
+) => {
+  const cookies = parseCookies(context);
+  const update = cookies.update || '';
+  const updateId = cookies.updateId || '';
+
+  return {
+    props: {
+      update,
+      updateId,
+    },
+  };
+};

@@ -136,7 +136,7 @@ export const CloseButton = styled.button`
 
 export const PlayerWrapper = styled.div<PlayerWrapperProps>`
   position: relative;
-  width: 600px;
+  width: 400px;
   display: ${({ videoId }) =>
     videoId ? 'flex' : 'none'}; // videoId가 있으면 flex, 없으면 none
   flex-direction: column;

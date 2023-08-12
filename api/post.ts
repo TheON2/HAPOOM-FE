@@ -22,7 +22,8 @@ const addPost = async (postData: UpdateData) => {
       'Content-Type': 'multipart/form-data',
     },
   };
-  const response = await api.post('/test/post', postData.formData, config);
+
+  const response = await api.post('/api/post', postData.formData, config);
 };
 
 const updatePost = async (postData: UpdateData) => {
@@ -39,12 +40,17 @@ const updatePost = async (postData: UpdateData) => {
 };
 
 const getPost = async (id: string) => {
-  const response = await api.get(`/test/post/${id}`);
+  const response = await api.get(`/api/post/${id}`);
   return response.data;
 };
 
 const likePost = async (postId: string) => {
-  const response = await api.post(`/test/post/${postId}/like`);
+  const response = await api.post(`/api/post/${postId}/like`);
+  return response.data;
+};
+
+const deletePost = async (postId: string) => {
+  const response = await api.delete(`/test/post/${postId}`);
   return response.data;
 };
 
@@ -83,4 +89,5 @@ export {
   reportPost,
   getComment,
   addComment,
+  deletePost,
 };

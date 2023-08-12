@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react';
 import styled from 'styled-components';
 
 interface Button {
-  marginTop: string;
+  marginTop?: string;
 }
 
 const ButtonStyle = styled.button<Button>`
@@ -19,7 +19,7 @@ const ButtonStyle = styled.button<Button>`
 
 type buttonProps = {
   children: ReactNode;
-  marginTop: string;
+  marginTop?: string;
   type?: 'button' | 'submit' | 'reset';
   className?: string;
   onClick?: any;

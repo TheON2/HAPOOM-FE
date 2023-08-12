@@ -6,6 +6,9 @@ import { useQuery } from 'react-query';
 import { getUserProfile, getUsers } from '@/api/user';
 import Header from '../common/Header';
 import Footer from '../common/Footer';
+import FollowButton from './FollowButton';
+import { useState } from 'react';
+import Modal from '../common/Modal';
 
 interface Post {}
 
@@ -52,6 +55,11 @@ export interface UserPageData {
 
 const UserUi = () => {
   const { data } = useQuery<UserPageData>('users', getUserProfile);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleFollowButtonClick = () => {
+    setIsModalOpen(true);
+  };
 
   return (
     <>
@@ -59,6 +67,7 @@ const UserUi = () => {
       <UserPageSection>
         <UserPageContainer>
           <UserProfileCard data={data} />
+          <FollowButton />
           <UserLikePostSuggestion data={data} />
           <PostLike data={data} />
         </UserPageContainer>

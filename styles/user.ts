@@ -29,10 +29,9 @@ export const UserPageContainer = styled.div`
 `;
 export const UserProfileCardBox = styled.div`
   margin: auto;
-  width: 90%;
+  width: 100%;
   display: flex;
   align-items: center;
-  border: 1px solid black;
   justify-content: center;
 
   @media screen and (max-width: 1260px) {
@@ -67,6 +66,10 @@ export const NicknameBox = styled.div`
   align-items: center; /* 세로 중앙 정렬 */
   justify-content: center; /* 내부 내용 중앙 정렬 */
   gap: 10px; /* 닉네임과 설정 링크 사이의 간격 */
+
+  .nickName {
+    font-size: 20px;
+  }
 `;
 
 export const FollowBox = styled.div`
@@ -80,8 +83,8 @@ export const FollowBox = styled.div`
 `;
 export const SettingPageLink = styled(Link)`
   display: block;
-  color: #c2c2c2;
-  border: 1px solid black;
+  color: #0084ff;
+  border: 1px solid #0084ff;
   border-radius: 5px;
   font-family: Inter;
   font-size: 16px;
@@ -94,15 +97,38 @@ export const SettingPageLink = styled(Link)`
 `;
 
 export const LikePostSuggestionBox = styled.div`
-  width: 200px;
-  height: 150px;
-  margin: 0 auto;
-  margin-top: 20px;
+  width: 100%;
+  height: 90px;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 15px;
+  gap: 30px;
 `;
+
+export const InfoContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 3px;
+`;
+
+export const InfoText = styled.div`
+  font-size: 12px;
+  font-weight: 700;
+`;
+
+export const InfoNumber = styled.div`
+  font-size: 12px;
+  font-weight: 700;
+  color: white;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #0084ff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const ImageBox = styled.div`
   display: flex;
   flex-direction: column;
@@ -111,18 +137,19 @@ export const ImageBox = styled.div`
   p {
     text-align: center;
     font-family: Inter;
-    font-size: 30px;
     margin: 5px 0;
   }
 `;
 
 export const PostBox = styled.div`
   max-width: 320px;
+  padding: 0 24px;
+  text-align: center;
+  margin: auto;
 `;
 export const PostContentBox = styled.div`
   position: relative;
   display: flex;
-  gap: 14px;
 `;
 export const PostParagraph = styled.p`
   text-align: center;
@@ -154,9 +181,14 @@ export const PostImage = styled(Image)`
   object-fit: cover;
   position: relative;
 `;
+export const TabContainer = styled.div`
+  display: flex;
+  width: 320px;
+`;
 export const TabButton = styled.div`
+  flex: 1;
+  padding: 12px;
   color: #83818c;
-  padding: 20px;
   text-decoration: none;
   cursor: pointer;
   transition: 0.3s;
