@@ -21,29 +21,40 @@ const ContentArea: React.FC<ContentAreaProps> = ({ content, setContent }) => {
   const color = isMaxLength ? 'red' : 'black';
 
   return (
-    <div style={{ position: 'relative', width: 600, height: 100 }}>
-      <label></label>
-      <textarea
-        style={{
-          width: '100%',
-          height: '100%',
-          resize: 'none',
-          padding: '5px',
-        }}
-        value={content}
-        onChange={handleInputChange}
-      />
+    <>
+      <label>
+        <h3 style={{ float: 'left', margin: '10px 0' }}>문구입력</h3>
+      </label>
       <div
         style={{
-          position: 'absolute',
-          bottom: 5,
-          right: 10,
-          color: color,
+          position: 'relative',
+          width: 400,
+          height: 100,
         }}
       >
-        {content.length}/{maxLength}
+        <textarea
+          style={{
+            width: '100%',
+            height: '100%',
+            resize: 'none',
+            padding: '5px',
+            border: '2px solid #0084ff',
+          }}
+          value={content}
+          onChange={handleInputChange}
+        />
+        <div
+          style={{
+            position: 'absolute',
+            bottom: 5,
+            right: 10,
+            color: color,
+          }}
+        >
+          {content.length}/{maxLength}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

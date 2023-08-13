@@ -48,6 +48,11 @@ const likePost = async (postId: string) => {
   return response.data;
 };
 
+const deletePost = async (postId: string) => {
+  const response = await api.delete(`/api/post/${postId}`);
+  return response.data;
+};
+
 const getPostCount = async (postId: string) => {
   const response = await api.get(`/api/post/${postId}/postsCount`);
   return response.data;
@@ -83,4 +88,5 @@ export {
   reportPost,
   getComment,
   addComment,
+  deletePost,
 };

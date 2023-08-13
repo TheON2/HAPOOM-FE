@@ -7,7 +7,7 @@ import { profilePreset } from '@/public/presetData';
 type profileProps = {
   userImage: string;
   preset: number;
-  nickname: string;
+  nick: string;
   email: string;
   direction?: 'column' | 'row';
 };
@@ -15,11 +15,12 @@ type profileProps = {
 const Profile = ({
   userImage,
   preset,
-  nickname,
+  nick,
   email,
   direction,
 }: profileProps) => {
   const [profileImage, setProfileImage] = useState<string | undefined>();
+  const [nickname, setNickname] = useState<string>('nick');
 
   useEffect(() => {
     if (preset === 1) {
@@ -31,6 +32,10 @@ const Profile = ({
       setProfileImage(foundPreset);
     }
   }, [preset]);
+
+  useEffect(() => {
+    setNickname(nick);
+  }, [nick]);
 
   return (
     <ProfileBox direction={direction}>

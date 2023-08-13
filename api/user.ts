@@ -2,6 +2,7 @@ import api from '../axios/api';
 import { UserResponse } from '../redux/reducers/userSlice';
 
 interface User {
+  userId: number;
   email: string | null;
   nickName: string | null;
   userImage: string | null;
@@ -45,8 +46,8 @@ const updateUserSetting = async (userData: FormData) => {
   return response.data;
 };
 
-const getUserProfile = async () => {
-  const response = await api.get(`/api/user/profile`);
+const getUserProfile = async (userId: User) => {
+  const response = await api.get(`/api/user/profile/${userId}`);
   return response.data;
 };
 
@@ -82,6 +83,10 @@ const deleteUser = async (userEmail: string): Promise<void> => {
   await api.delete(`/api/user/${userEmail}`);
 };
 
+const test = async () => {
+  await api.get(`/test/test`);
+};
+
 export {
   addUser,
   getUser,
@@ -94,4 +99,5 @@ export {
   getUserSetting,
   updateUserSetting,
   getUserProfile,
+  test,
 };

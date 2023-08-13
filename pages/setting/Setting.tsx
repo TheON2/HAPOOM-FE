@@ -23,12 +23,12 @@ const Setting = () => {
       onSuccess: (userData: UserResponse) => {
         dispatch(AUTH_USER(userData));
       },
+      cacheTime: 0,
     }
   );
   const { data: userSetting } = useQuery('userSetting', getUserSetting, {
-    onSuccess: (data) => {
-      console.log(data.user?.email);
-    },
+    onSuccess: (data) => {},
+    cacheTime: 0,
   });
 
   return (
@@ -40,7 +40,7 @@ const Setting = () => {
           email={userSetting?.user.email}
           userImage={userSetting?.user.userImage}
           preset={userSetting?.user.preset}
-          nickname={userSetting?.user.nickname}
+          nick={userSetting?.user.nickname}
         />
         {/*  */}
         <AccordianMenu tabText="닉네임 수정">

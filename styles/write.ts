@@ -22,7 +22,7 @@ export const PreviewContainer = styled.div`
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  max-width: 600px;
+  max-width: 400px;
 `;
 
 export const ImageContainer = styled.div`
@@ -66,7 +66,7 @@ export const StyledSection = styled.section`
 `;
 
 export const StyledForm = styled.form`
-  max-width: 600px;
+  max-width: 400px;
   margin: 0 auto;
   padding: 7.5% 5% 4rem;
   position: relative;
@@ -88,13 +88,13 @@ export const StyledButton = styled.button`
   padding: 11px 1.3rem;
   cursor: pointer;
   position: relative;
-  border-radius: 8px;
-  border: 1px solid #051619;
+  border-radius: 3px;
+  border: none;
   box-sizing: border-box;
-  background: gray;
+  background: #0084ff;
   color: white;
-  width: 200px;
-  margin-top: 1rem;
+  width: 400px;
+  margin: 2rem 0;
   text-align: center;
 `;
 
