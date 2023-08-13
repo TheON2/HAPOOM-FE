@@ -128,10 +128,6 @@ export const CloseButton = styled.button`
   color: white;
   font-size: 20px;
   cursor: pointer;
-  display: none;
-  &:hover {
-    color: #ff0000;
-  }
 `;
 
 export const PlayerWrapper = styled.div<PlayerWrapperProps>`
@@ -139,6 +135,22 @@ export const PlayerWrapper = styled.div<PlayerWrapperProps>`
   width: 400px;
   display: ${({ videoId }) =>
     videoId ? 'flex' : 'none'}; // videoId가 있으면 flex, 없으면 none
+  flex-direction: column;
+  align-items: center;
+  background: #222;
+  border-radius: 45px;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  &:hover ${CloseButton} {
+    display: block;
+  }
+  margin: 10px;
+`;
+
+export const CustomPlayerWrapper = styled.div`
+  position: relative;
+  width: 400px;
+  display: flex;
   flex-direction: column;
   align-items: center;
   background: #222;
