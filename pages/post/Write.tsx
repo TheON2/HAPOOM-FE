@@ -24,6 +24,7 @@ import { AUTH_USER, UserResponse } from '@/redux/reducers/userSlice';
 import MobileBottomNav from '@/components/common/MobileBottomNav';
 import { parseCookies } from 'nookies';
 import { GetServerSidePropsContext, NextPage } from 'next';
+import RecordPlayer from '@/components/Write/RecordPlayer';
 
 const DynamicComponentWithNoSSR = dynamic(
   () => import('@/components/Write/YoutubePlayer'),
@@ -41,8 +42,10 @@ interface Props {
 const Write: NextPage<Props> = ({ update, updateId }) => {
   const [images, setImages] = useState<File[]>([]);
   const [content, setContent] = useState<string>('');
+  const [audioFile, setAudioFile] = useState<Blob | null>(null);
   const [selectedTitle, setSelectedTitle] = useState<string>('');
   const [videoId, setVideoId] = useState<string>('');
+  const [recording, setRecording] = useState<boolean>(false);
   const [tags, setTags] = useState<string[]>([]);
   const [location, setLocation] = useState({ name: '', x: 0, y: 0 });
   const queryClient = useQueryClient();
@@ -79,6 +82,9 @@ const Write: NextPage<Props> = ({ update, updateId }) => {
     images.forEach((image) => {
       formData.append('image', image);
     });
+    if (audioFile) {
+      formData.append('audio', audioFile);
+    }
     formData.append('content', content);
     formData.append('musicTitle', selectedTitle);
     formData.append('musicUrl', videoId);
@@ -164,6 +170,10 @@ const Write: NextPage<Props> = ({ update, updateId }) => {
                   videoId={videoId}
                   setVideoId={setVideoId}
                   setSelectedTitle={setSelectedTitle}
+                />
+                <RecordPlayer
+                  setRecording={setRecording}
+                  setAudioFile={setAudioFile}
                 />
                 <TagInput tags={tags} setTags={setTags} />
                 <MapComponent
