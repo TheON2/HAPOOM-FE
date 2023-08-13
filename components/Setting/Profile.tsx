@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { ProfileBox } from '@/styles/setting';
 import { profilePreset } from '@/public/presetData';
-// import movecloud from '../../public/movecloud.gif';
 
 type profileProps = {
   userImage: string;
@@ -59,12 +58,3 @@ const Profile = ({
   );
 };
 export default Profile;
-{
-  /* <Image
-src="/movecloud.gif"
-alt="My GIF"
-width={500}
-height={300}
-unoptimized={true}
-/> */
-}
