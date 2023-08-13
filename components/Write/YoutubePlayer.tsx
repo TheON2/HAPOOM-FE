@@ -121,6 +121,9 @@ const YoutubePlayer = ({
                   setPlaying(true);
                 } else if (event.data === YT.PlayerState.PAUSED) {
                   setPlaying(false);
+                } else if (event.data === YT.PlayerState.ENDED) {
+                  setPlaying(false);
+                  setSeek(duration); // 플레이가 종료되면 Seek을 duration으로 설정
                 }
               },
             },
@@ -165,6 +168,7 @@ const YoutubePlayer = ({
               max={duration}
               value={seek}
               onChange={handleSeekChange}
+              step={0.01}
             />
             <TimeLabel>{formatTime(duration)}</TimeLabel>
           </SeekSliderGroup>

@@ -46,6 +46,8 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
   const [location, setLocation] = useState({ name: '', x: 0, y: 0 });
   const queryClient = useQueryClient();
 
+  const audioSrc = id ? `http://localhost:3001/test/stream/${id}` : '';
+
   const { mutate: delete_mutate } = useMutation(deletePost, {
     onSuccess: () => {
       queryClient.invalidateQueries('posts');
@@ -146,6 +148,17 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
             ))}
           </div>
           <ImageContainer>
+            <div>
+              <h3>Now Playing:</h3>
+              {id ? (
+                <audio controls autoPlay>
+                  <source src={audioSrc} type="audio/mpeg" />
+                  Your browser does not support the audio element.
+                </audio>
+              ) : (
+                <p>Loading...</p>
+              )}
+            </div>
             {/* <DynamicComponentWithNoSSR
               videoId={videoId}
               setVideoId={setVideoId}
@@ -158,10 +171,7 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
             />
             <h4>댓글</h4>
             <div>
-              <div>
-                
-              </div>
-
+              <div></div>
             </div>
           </ImageContainer>
         </ImageContainer>
