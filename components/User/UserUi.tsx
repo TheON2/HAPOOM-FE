@@ -65,12 +65,13 @@ const UserUi = (userId: number) => {
       <UserPageSection>
         <UserPageContainer>
           <UserProfileCard data={data} />
-          <FollowButton />
+          <FollowButton onClick={handleFollowButtonClick} />
           <UserLikePostSuggestion data={data} />
           <PostLike data={data} />
         </UserPageContainer>
       </UserPageSection>
       <Footer />
+      <TextModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </>
   );
 };
