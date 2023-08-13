@@ -1,3 +1,4 @@
+import { SecretEye } from '@/components/common/SVG';
 import Image from 'next/image';
 import styled from 'styled-components';
 
@@ -93,7 +94,7 @@ export const StyledInput = styled.input<Props>`
   height: 36px;
   outline: none;
   padding-left: 28px;
-  border: 1px solid ${({ $borderColor }) => $borderColor};
+  border: 1px solid ${({ borderColor }) => borderColor};
   border-radius: 3px;
   &::placeholder {
     font-size: 12px;
