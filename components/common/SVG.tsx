@@ -6,6 +6,10 @@ type RightArrowProps = {
   fillColor?: string;
   isOpen: boolean;
 };
+type RightArrowProps = {
+  fillColor?: string;
+  isOpen: boolean;
+};
 
 export const Cloud = ({ fillColor = '#fff' }) => (
   <svg
