@@ -25,6 +25,7 @@ import MobileBottomNav from '@/components/common/MobileBottomNav';
 import { parseCookies } from 'nookies';
 import { GetServerSidePropsContext, NextPage } from 'next';
 import RecordPlayer from '@/components/Write/RecordPlayer';
+import CustomPlayer from '@/components/Write/CustomPlayer';
 
 const DynamicComponentWithNoSSR = dynamic(
   () => import('@/components/Write/YoutubePlayer'),
@@ -43,6 +44,9 @@ const Write: NextPage<Props> = ({ update, updateId }) => {
   const [images, setImages] = useState<File[]>([]);
   const [content, setContent] = useState<string>('');
   const [audioFile, setAudioFile] = useState<Blob | null>(null);
+  const [audioUrl, setAudioUrl] = useState<string>(
+    'http://localhost:3001/uploads/2023-08-13T08-54-06.034Zblob'
+  );
   const [selectedTitle, setSelectedTitle] = useState<string>('');
   const [videoId, setVideoId] = useState<string>('');
   const [recording, setRecording] = useState<boolean>(false);

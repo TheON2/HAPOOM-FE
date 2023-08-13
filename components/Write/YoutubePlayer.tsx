@@ -61,7 +61,8 @@ const YoutubePlayer = ({
   const handleSeekChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (player) {
       const time = +e.target.value;
-      player.seekTo(time, true); // 두 번째 매개변수를 true로 설정
+      setSeek(time); // 현재 탐색 시간을 업데이트하여 UI가 반응하게 합니다.
+      player.seekTo(time, true);
     }
   };
 

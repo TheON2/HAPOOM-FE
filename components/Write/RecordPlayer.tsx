@@ -2,16 +2,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import Recorder from 'recorder-js';
 import Slider from 'react-slider';
 import toWav from 'audiobuffer-to-wav';
-import {
-  PlayButton,
-  PlayButtonGroup,
-  PlayerControls,
-  Title,
-  SeekSlider,
-  SeekSliderGroup,
-  TimeLabel,
-} from '@/styles/youtubeplayer';
+import { Title } from '@/styles/youtubeplayer';
 import styled from 'styled-components';
+import CustomPlayer from './CustomPlayer';
 
 const CloseButton = styled.button`
   position: absolute;
@@ -157,8 +150,6 @@ const RecordPlayer: React.FC<RecordPlayerProps> = ({
         slicedData[j] = originalData[i];
       }
     }
-
-    // audiobuffer-to-wav 라이브러리를 사용하여 WAV 형식의 ArrayBuffer 생성
     const wavBuffer = toWav(slicedBuffer);
 
     // Blob 객체 생성
@@ -193,16 +184,14 @@ const RecordPlayer: React.FC<RecordPlayerProps> = ({
 
   return (
     <div style={{ width: '400px', position: 'relative' }}>
-      <CloseButton type="button" onClick={handleClosePlayer}>
-        X
-      </CloseButton>
       <Title>Audio Recorder</Title>
       {audioURL ? (
         <>
-          <audio controls>
-            <source src={audioURL} type="audio/wav" />
-            Your browser does not support the audio element.
-          </audio>
+          <CustomPlayer
+            audioUrl={audioURL}
+            setAudioUrl={setAudioURL}
+            title={'녹음된 파일'}
+          />
           <StyledSlider
             value={[selectionStart, selectionEnd]}
             min={0}
@@ -221,11 +210,11 @@ const RecordPlayer: React.FC<RecordPlayerProps> = ({
           </button>
           {slicedAudioURL && (
             <div>
-              <Title>Sliced Audio</Title>
-              <audio controls>
-                <source src={slicedAudioURL} type="audio/wav" />
-                Your browser does not support the audio element.
-              </audio>
+              <CustomPlayer
+                audioUrl={slicedAudioURL}
+                setAudioUrl={setSlicedAudioURL}
+                title={'잘라낸 녹음 파일'}
+              />
             </div>
           )}
         </>
