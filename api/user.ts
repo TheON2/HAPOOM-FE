@@ -46,8 +46,7 @@ const updateUserSetting = async (userData: FormData) => {
   return response.data;
 };
 
-
-const getUserProfile = async (userId) => {
+const getUserProfile = async (userId: User) => {
   const response = await api.get(`/api/user/profile/${userId}`);
 
   return response.data;

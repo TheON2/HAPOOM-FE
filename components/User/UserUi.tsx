@@ -9,6 +9,7 @@ import Footer from '../common/Footer';
 import FollowButton from './FollowButton';
 import { useState } from 'react';
 import Modal from '../common/Modal';
+import TextModal from '../common/CommentModal';
 
 interface Post {}
 
@@ -53,8 +54,11 @@ export interface UserPageData {
   user: UserProfile;
 }
 
-const UserUi = () => {
-  const { data } = useQuery<UserPageData>('users', getUserProfile);
+const UserUi = (userId: number) => {
+  console.log('Received userId:', userId);
+  const { data } = useQuery<UserPageData>('users', () =>
+    getUserProfile(userId)
+  );
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleFollowButtonClick = () => {
@@ -67,12 +71,13 @@ const UserUi = () => {
       <UserPageSection>
         <UserPageContainer>
           <UserProfileCard data={data} />
-          <FollowButton />
+          <FollowButton onClick={handleFollowButtonClick} />
           <UserLikePostSuggestion data={data} />
           <PostLike data={data} />
         </UserPageContainer>
       </UserPageSection>
       <Footer />
+      <TextModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </>
   );
 };

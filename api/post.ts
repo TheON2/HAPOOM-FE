@@ -50,7 +50,7 @@ const likePost = async (postId: string) => {
 };
 
 const deletePost = async (postId: string) => {
-  const response = await api.delete(`/test/post/${postId}`);
+  const response = await api.delete(`/api/post/${postId}`);
   return response.data;
 };
 
@@ -65,17 +65,17 @@ const getPostLikeCount = async (postId: string) => {
 };
 
 const reportPost = async (postId: string) => {
-  const response = await api.post(`/test/report/${postId}`);
+  const response = await api.post(`/api/report/${postId}`);
   return response.data;
 };
 
 const getComment = async (postId: string) => {
-  const response = await api.get(`/test/post/comments/${postId}`);
+  const response = await api.get(`/api/post/comments/${postId}`);
   return response.data;
 };
 
 const addComment = async (comment: FormData) => {
-  const response = await api.post(`/test/post/comment`, comment);
+  const response = await api.post(`/api/post/comment`, comment);
   return response.data;
 };
 

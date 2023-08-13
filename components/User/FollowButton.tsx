@@ -1,7 +1,7 @@
 import React from 'react';
 
 const FollowButton = () => {
-  return <div>FollowButton</div>;
+  return <button>FollowButton</button>;
 };
 
 export default FollowButton;
