@@ -1,3 +1,4 @@
+import { SecretEye } from '@/components/common/SVG';
 import Image from 'next/image';
 import styled from 'styled-components';
 
@@ -94,6 +95,7 @@ export const StyledInput = styled.input<Props>`
   height: 36px;
   outline: none;
   padding-left: 28px;
+  position: relative;
   border: 1px solid ${({borderColor}) => borderColor};
   border-radius: 3px;
   &::placeholder{
@@ -179,3 +181,6 @@ export const TextErrorParagraph = styled.p`
   line-height: 2.5;
   margin-left: 4px;
   `;
+export const InputWrapper = styled.div`
+  position: relative;
+`;
