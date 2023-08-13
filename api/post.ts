@@ -69,7 +69,7 @@ const reportPost = async (postId: string) => {
 };
 
 const getComment = async (postId: string) => {
-  const response = await api.get(`/api/post/${postId}/comment`);
+  const response = await api.get(`/test/post/comments/${postId}`);
   return response.data;
 };
 type comment = {
@@ -92,25 +92,8 @@ type commentUpdate = {
   commentId: number;
 };
 
-const updateComment = async ({ formData, id, commentId }: commentUpdate) => {
-  const config = {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
-  };
-  const response = await api.post(
-    `/api/post/${id}/comment/${commentId}`,
-    formData,
-    config
-  );
-  return response.data;
-};
-type commentDelete = {
-  id: string;
-  commentId: number;
-};
-const deleteComment = async ({ id, commentId }: commentDelete) => {
-  const response = await api.delete(`/api/post/${id}/comment/${commentId}`);
+const addComment = async (comment: FormData) => {
+  const response = await api.post(`/test/post/comment`, comment);
   return response.data;
 };
 
