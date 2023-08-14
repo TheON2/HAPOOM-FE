@@ -55,11 +55,9 @@ export interface UserPageData {
 }
 
 const UserUi = (userId: number) => {
-  console.log('Received userId:', userId);
   const { data } = useQuery<UserPageData>('users', () =>
     getUserProfile(userId)
   );
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleFollowButtonClick = () => {
     setIsModalOpen(true);
@@ -77,7 +75,6 @@ const UserUi = (userId: number) => {
         </UserPageContainer>
       </UserPageSection>
       <Footer />
-      <TextModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </>
   );
 };
