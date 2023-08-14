@@ -131,8 +131,14 @@ export const InfoNumber = styled.div`
 
 export const ImageBox = styled.div`
   display: flex;
+  justify-content: center;
   flex-direction: column;
   align-items: center;
+
+  svg {
+    width: 40px;
+    height: 40px;
+  }
 
   p {
     text-align: center;
@@ -165,14 +171,20 @@ export const Line = styled.div`
   border-bottom: 1px solid black;
 `;
 export const PostImageBox = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  justify-content: flex-start;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  place-items: center;
+  justify-content: center;
   align-items: center;
-  @media (max-width: 1260px) {
-    width: 100%;
-    justify-content: center;
+  grid-gap: 4px;
+  @media screen and (max-width: 1260px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @media screen and (max-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
   }
 `;
 export const PostImage = styled(Image)`

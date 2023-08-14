@@ -19,41 +19,42 @@ interface PostLike {
 }
 
 interface PostProps {
-  imageUrl: string;
+  image: string;
   postId: number;
   showLikeIcon?: boolean;
   handleLikeClick: MouseEventHandler<HTMLImageElement>;
 }
-
-const Post: React.FC<PostProps> = ({
-  imageUrl,
+const Posts: React.FC<PostProps> = ({
+  image,
   postId,
   showLikeIcon,
   handleLikeClick,
-}) => (
-  <div style={{ position: 'relative', display: 'inline-block' }}>
-    <Image
-      src={imageUrl}
-      alt="게시물 이미지"
-      width={157}
-      height={157}
-      objectFit="cover"
-    />
-    {showLikeIcon && (
+}) => {
+  return (
+    <div style={{ position: 'relative', display: 'inline-block' }}>
       <Image
-        src={cloud}
-        alt="좋아요"
-        onClick={handleLikeClick}
-        style={{
-          position: 'absolute',
-          top: 10,
-          right: 10,
-          cursor: 'pointer',
-        }}
+        src={image}
+        alt="게시물 이미지"
+        width={157}
+        height={157}
+        objectFit="cover"
       />
-    )}
-  </div>
-);
+      {showLikeIcon && (
+        <Image
+          src={cloud}
+          alt="좋아요"
+          onClick={handleLikeClick}
+          style={{
+            position: 'absolute',
+            top: 10,
+            right: 10,
+            cursor: 'pointer',
+          }}
+        />
+      )}
+    </div>
+  );
+};
 
 const PostLike: React.FC<PostLike> = ({ data }) => {
   const [selectedTab, setSelectedTab] = useState(0);
@@ -109,7 +110,6 @@ const PostLike: React.FC<PostLike> = ({ data }) => {
         setDisplayedPosts(data?.likePosts ?? null);
       }
     };
-
   return (
     <PostBox>
       <PostContentBox>
@@ -141,15 +141,18 @@ const PostLike: React.FC<PostLike> = ({ data }) => {
       </PostContentBox>
       <Line />
       <PostImageBox>
-        {displayedPosts?.map((post) => (
-          <Post
-            key={post.id}
-            imageUrl={post.image?.url}
-            postId={post.id}
-            showLikeIcon={selectedTab === 1}
-            handleLikeClick={handleLikeClick}
-          />
-        ))}
+        {displayedPosts?.map((post) => {
+          console.log(displayedPosts);
+          return (
+            <Posts
+              key={post.postId}
+              image={post.image}
+              postId={post.postId}
+              showLikeIcon={selectedTab === 1}
+              handleLikeClick={handleLikeClick}
+            />
+          );
+        })}
       </PostImageBox>
     </PostBox>
   );

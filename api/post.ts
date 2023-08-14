@@ -45,9 +45,14 @@ const getPost = async (id: string) => {
 };
 
 const likePost = async (postId: string) => {
-  const response = await api.post(`/api/post/${postId}/like`);
+  const response = await api.put(`/api/post/${postId}/like`);
   return response.data;
 };
+
+// const unlikePost = async (postId: string) => {
+//   const response = await api.delete(`/api/post/${postId}/like`);
+//   return response.data;
+// };
 
 const deletePost = async (postId: string) => {
   const response = await api.delete(`/api/post/${postId}`);

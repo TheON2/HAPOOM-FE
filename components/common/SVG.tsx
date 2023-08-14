@@ -442,3 +442,61 @@ export const UserPost = () => (
     </g>
   </svg>
 );
+
+export const ModalWarning = () => (
+  <svg
+    width="21"
+    height="31"
+    viewBox="0 0 21 31"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <g
+      id="&#240;&#159;&#166;&#134; icon &#34;exclamation&#34;"
+      filter="url(#filter0_d_1446_3523)"
+    >
+      <path
+        id="Vector"
+        d="M12.8125 20.5103C12.8125 21.7877 11.7331 22.827 10.4062 22.827C9.07944 22.827 8 21.7877 8 20.5103C8 19.2328 9.07944 18.1935 10.4062 18.1935C11.7331 18.1935 12.8125 19.2328 12.8125 20.5103ZM8.27852 8.72974L8.68759 16.6066C8.70681 16.9765 9.02389 17.2669 9.40856 17.2669H11.4039C11.7886 17.2669 12.1057 16.9765 12.1249 16.6066L12.534 8.72974C12.5546 8.33274 12.2259 8 11.813 8H8.9995C8.58664 8 8.25792 8.33274 8.27852 8.72974Z"
+        fill="white"
+      />
+    </g>
+    <defs>
+      <filter
+        id="filter0_d_1446_3523"
+        x="0"
+        y="0"
+        width="20.8125"
+        height="30.827"
+        filterUnits="userSpaceOnUse"
+        color-interpolation-filters="sRGB"
+      >
+        <feFlood flood-opacity="0" result="BackgroundImageFix" />
+        <feColorMatrix
+          in="SourceAlpha"
+          type="matrix"
+          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+          result="hardAlpha"
+        />
+        <feOffset />
+        <feGaussianBlur stdDeviation="4" />
+        <feComposite in2="hardAlpha" operator="out" />
+        <feColorMatrix
+          type="matrix"
+          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.15 0"
+        />
+        <feBlend
+          mode="normal"
+          in2="BackgroundImageFix"
+          result="effect1_dropShadow_1446_3523"
+        />
+        <feBlend
+          mode="normal"
+          in="SourceGraphic"
+          in2="effect1_dropShadow_1446_3523"
+          result="shape"
+        />
+      </filter>
+    </defs>
+  </svg>
+);

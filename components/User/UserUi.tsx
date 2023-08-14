@@ -3,13 +3,10 @@ import UserProfileCard from './UserProfileCard';
 import UserLikePostSuggestion from './UserLikePostSuggestion';
 import PostLike from './PostLike';
 import { useQuery } from 'react-query';
-import { getUserProfile, getUsers } from '@/api/user';
+import { getMyProfile, getUserProfile } from '@/api/user';
 import Header from '../common/Header';
 import Footer from '../common/Footer';
-import FollowButton from './FollowButton';
 import { useState } from 'react';
-import Modal from '../common/Modal';
-import TextModal from '../common/CommentModal';
 
 interface Post {}
 
@@ -55,13 +52,12 @@ export interface UserPageData {
 }
 
 const UserUi = (userId: number) => {
-  const { data } = useQuery<UserPageData>('users', () =>
-    getUserProfile(userId)
-  );
+  const { data, error } = useQuery<UserPageData>('users', () => getMyProfile());
+  console.log(data);
 
-  const handleFollowButtonClick = () => {
-    setIsModalOpen(true);
-  };
+  if (error) {
+    return <div>Error loading user data.</div>; // or any other error handling component or UI
+  }
 
   return (
     <>
@@ -69,7 +65,6 @@ const UserUi = (userId: number) => {
       <UserPageSection>
         <UserPageContainer>
           <UserProfileCard data={data} />
-          <FollowButton onClick={handleFollowButtonClick} />
           <UserLikePostSuggestion data={data} />
           <PostLike data={data} />
         </UserPageContainer>
