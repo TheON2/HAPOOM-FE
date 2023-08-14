@@ -20,13 +20,14 @@ export const GlobalStyle = createGlobalStyle`
 
 export const ProfileBox = styled.div`
   display: flex;
-  padding: 20px 30px;
+  align-items: center;
+  /* padding: 20px 30px; */
   gap: 30px;
   /* height: 10vh; */
   .image {
-    width: 100px;
-    height: 100px;
-    border-radius: 50px;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
     overflow: hidden;
     img {
       width: 100%;

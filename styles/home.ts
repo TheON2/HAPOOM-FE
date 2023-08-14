@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 
 // main banner style
-export const MainBannerLayout = styled.section`
+export const MainBannerLayout = styled.div`
   width: 100%;
+  height: 100%;
   overflow: hidden;
   position: relative;
 `;
@@ -16,6 +17,7 @@ type SliderListProps = {
 export const SliderList = styled.ul<SliderListProps>`
   width: ${(props) =>
     props.width ? `${props.width * props.$sliedsum}px` : `500vw`};
+  height: 100%;
   display: flex;
   transform: ${(props) =>
     props.width
@@ -31,7 +33,7 @@ type SliderItemProps = {
 
 export const SliderItem = styled.li<SliderItemProps>`
   width: ${(props) => (props.width ? `${props.width}px` : `100vw`)};
-  height: 70vh;
+  height: 100%;
   position: relative;
   /* padding: 50px 100px; */
   img {
@@ -47,20 +49,16 @@ export const SliderItem = styled.li<SliderItemProps>`
     line-height: 30px;
     color: #fff;
   }
-  @media screen and (max-width: 786px) {
-    height: 335px;
-    padding: 100px 30px;
-  }
 `;
 
 export const SlideDotBox = styled.div`
   width: 100%;
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   padding: 0 24px;
   gap: 4px;
   position: absolute;
-  bottom: 24px;
+  bottom: 12px;
   span {
     display: block;
     width: 8px;

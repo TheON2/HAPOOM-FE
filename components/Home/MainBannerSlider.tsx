@@ -46,7 +46,7 @@ const MainBannerSlider: React.FC<Props> = ({ data }) => {
   const [currentInterval, setCurrentInterval] =
     useState<number>(DEFAULT_INTERVAL);
   const sliedListRef = useRef<HTMLUListElement>(null);
-  const sliedContainerRef = useRef<HTMLElement>(null);
+  const sliedContainerRef = useRef<HTMLDivElement>(null);
   // console.log(slideIndex);
   const sliedArr = useMemo(
     () => [beforeSlide, ...copiedArr, afterSlide],
@@ -55,13 +55,13 @@ const MainBannerSlider: React.FC<Props> = ({ data }) => {
 
   // let sliedArr = [beforeSlide, ...copiedArr, afterSlide];
   //무한 로드 슬라이드
-  useEffect(() => {
-    const interval = setInterval(
-      () => setSlideIndex((prev) => prev + 1),
-      currentInterval
-    );
-    return () => clearInterval(interval);
-  }, [currentInterval]);
+  // useEffect(() => {
+  //   const interval = setInterval(
+  //     () => setSlideIndex((prev) => prev + 1),
+  //     currentInterval
+  //   );
+  //   return () => clearInterval(interval);
+  // }, [currentInterval]);
 
   useEffect(() => {
     if (slideIndex === sliedArr.length - 1) {
@@ -92,12 +92,11 @@ const MainBannerSlider: React.FC<Props> = ({ data }) => {
       const width = sliedContainerRef.current.clientWidth;
       setSlideItemWidth(width);
     }
-    console.log('debounced');
+    // console.log('debounced');
   }, []);
-
   //리사이징 이벤트
   useEffect(() => {
-    // handleResize();
+    handleResize();
     const debouncedResize = debounce(handleResize, 500);
     window.addEventListener('resize', debouncedResize);
 

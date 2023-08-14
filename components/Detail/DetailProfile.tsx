@@ -43,7 +43,6 @@ const DetailProfile = ({ userImage, preset, nick }: profileProps) => {
       </div>
       <div>
         <h2>{nickname}</h2>
-        <p>aaa@gmail.com</p>
       </div>
     </ProfileBox>
   );
