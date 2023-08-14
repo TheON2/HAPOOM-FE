@@ -111,7 +111,6 @@ const PostLike: React.FC<PostLike> = ({ data }) => {
         // ... 다른 탭에 대한 로직 ...
       }
     };
-
   return (
     <PostBox>
       <PostContentBox>

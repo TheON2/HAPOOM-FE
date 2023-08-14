@@ -54,6 +54,7 @@ export interface UserPageData {
 
 const UserUi = (userId: number) => {
   const { data, error } = useQuery<UserPageData>('users', () => getMyProfile());
+  console.log(data);
 
   if (error) {
     return <div>Error loading user data.</div>; // or any other error handling component or UI
@@ -65,13 +66,11 @@ const UserUi = (userId: number) => {
       <UserPageSection>
         <UserPageContainer>
           <UserProfileCard data={data} />
-          <FollowButton onClick={handleFollowButtonClick} />
           <UserLikePostSuggestion data={data} />
           <PostLike data={data} />
         </UserPageContainer>
       </UserPageSection>
       <Footer />
-      <TextModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </>
   );
 };
