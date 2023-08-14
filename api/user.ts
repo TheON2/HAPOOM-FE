@@ -103,6 +103,7 @@ export {
   userLogOut,
   getUserSetting,
   updateUserSetting,
+  getMyProfile,
   getUserProfile,
   getMyProfile,
   test,
