@@ -27,18 +27,25 @@ type onClickProps = {
   active: number;
 };
 
-const DISTANCE = '100% - 48px/4';
-
 const ActiveBar = styled.span<onClickProps>`
   width: calc((100% - 48px) / 4);
   height: 5px;
   border-radius: 4px 4px 0 0;
   position: absolute;
-  background-color: #0084ff;
+  /* background-color: #0084ff; */
   top: 0;
   left: 24px;
   transform: ${(props) => `translate( ${props.active * 100}%,  -100%)`};
   transition: all 0.3s ease-in-out;
+  &::after {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 5px;
+    margin: auto;
+    border-radius: 4px 4px 0 0;
+    background-color: #0084ff;
+  }
 `;
 
 const MobileBottomNav = () => {
