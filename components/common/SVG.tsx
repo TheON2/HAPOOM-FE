@@ -1,5 +1,6 @@
+import styled from 'styled-components';
 type svgColorProps = {
-  fillColor: string;
+  fillColor?: string;
 };
 
 export const Cloud = ({ fillColor = '#fff' }) => (
