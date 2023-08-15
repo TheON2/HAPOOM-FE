@@ -103,7 +103,7 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
       },
     }
   );
-
+  console.log(images);
   if (!isSuccess) return <div>Loading...</div>;
   return (
     <>

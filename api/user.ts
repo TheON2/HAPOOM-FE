@@ -2,6 +2,7 @@ import api from '../axios/api';
 import { UserResponse } from '../redux/reducers/userSlice';
 
 interface User {
+  userId: number;
   email: string | null;
   nickName: string | null;
   userImage: string | null;

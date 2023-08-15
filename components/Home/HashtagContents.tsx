@@ -6,12 +6,12 @@ import {
   HashtagContentsLayout,
   HashtagContentsContainer,
 } from '@/styles/home';
-
+import { ImageContentsContainer } from '@/styles/imageContainer';
 type Props = {
   data: Post[];
 };
 interface Post {
-  id: number;
+  postId: number;
   content: string;
   musicTitle: string;
   musicUrl: string;
@@ -23,28 +23,25 @@ interface Post {
   createdAt: string;
   updatedAt: string;
   userId: number;
-  image: {
-    url: string;
-  };
+  image: string;
 }
 
 const HashtagContents: React.FC<Props> = ({ data }) => {
-  // console.log(data);
   return (
     <HashtagContentsLayout>
       <SectionTitle>#랜덤글</SectionTitle>
-      <HashtagContentsContainer>
+      <ImageContentsContainer>
         {data.map((content, index) => {
           return (
             <ImageContent
               key={index}
-              src={content.image?.url}
+              src={content.image}
               alt={'date'}
-              postId={content.id}
+              postId={content.postId}
             />
           );
         })}
-      </HashtagContentsContainer>
+      </ImageContentsContainer>
     </HashtagContentsLayout>
   );
 };

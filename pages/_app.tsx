@@ -7,6 +7,7 @@ import { ReactQueryDevtools } from 'react-query/devtools';
 import AuthChecker from '@/components/common/AuthChecker';
 import { useEffect, useState } from 'react';
 import socketIOClient from 'socket.io-client';
+import Layout from '@/components/common/layout/Layout';
 
 const queryClient = new QueryClient();
 const ENDPOINT = 'http://localhost:3001';
@@ -94,7 +95,9 @@ function MyApp({ Component, pageProps }: AppProps) {
             ))}
         </div>
       )}
-      <Component {...pageProps} />
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
       <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
     </QueryClientProvider>
   );

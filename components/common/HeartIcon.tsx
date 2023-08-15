@@ -19,6 +19,7 @@ const HeartIconBox = styled.div<iconType>`
   position: absolute;
   top: 0px;
   right: 0px;
+  cursor: pointer;
   svg {
     transform: scale();
     path:nth-child(2) {
