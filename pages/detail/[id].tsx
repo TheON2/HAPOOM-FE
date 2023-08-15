@@ -11,6 +11,14 @@ import {
   PreviewContainer,
   StyledButton,
 } from '../../styles/write';
+import {
+  DetialContentSection,
+  OtherProfileBox,
+  ContentsContainer,
+  HashtagBox,
+  Hashtag,
+  CommentForm,
+} from '@/styles/detail';
 import { MapComponent } from '@/components/Write/MapComponent';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { addPost, deletePost, getPost, updatePost } from '@/api/post';
@@ -46,7 +54,7 @@ import {
 } from '@/api/post';
 import { identity } from 'lodash';
 import Link from 'next/link';
-
+import UpAndDownTab from '@/components/common/UpAndDownTab';
 const DynamicComponentWithNoSSR = dynamic(
   () => import('@/components/Write/YoutubePlayer'),
   { ssr: false }
@@ -60,202 +68,21 @@ interface Props {
   updateId: string;
 }
 
-const DetialContentSection = styled.section`
-  margin-bottom: 40px;
-  h3 {
-    width: 100%;
-    padding-bottom: 8px;
-    border-bottom: 1px solid #cdcdcd;
-    font-size: 16px;
-    line-height: 16px;
-    &::after {
-      content: '';
-      display: block;
-      position: relative;
-      bottom: -10px;
-      width: 60px;
-      height: 3px;
-      background-color: #0084ff;
-    }
-  }
-  .comments-header {
-    display: flex;
-    gap: 8px;
-    h3 {
-      width: 60%;
-    }
-    button {
-      width: 40%;
-      padding: 4px 22px 2px;
-    }
-  }
-  .button-box {
-    width: 40%;
-    display: flex;
-    gap: 8px;
-    button {
-      width: 50%;
-      padding: 4px 4px 2px;
-    }
-  }
-  & > div:last-child {
-    border: none;
-  }
-`;
-
-const OtherProfileBox = styled.div`
-  width: 100%;
-  padding: 12px 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`;
-
-const ContentsContainer = styled.div`
-  width: 100%;
-  padding: 0 24px;
-  /* position: relative; */
-  .heart {
-    position: static;
-    width: 36px;
-    height: 36px;
-    margin-top: 10px;
-    margin-bottom: 12px;
-  }
-  .detail-content-text {
-    margin-bottom: 12px;
-  }
-  .carousel-box {
-    border-radius: 8px;
-    overflow: hidden;
-    height: 26vh;
-  }
-`;
-const HashtagBox = styled.div`
-  display: flex;
-  gap: 8px;
-`;
-
-const Hashtag = styled.div`
-  padding: 4px 12px 2px;
-  border: 1px solid #000;
-  border-radius: 20px;
-  font-size: 10px;
-`;
-
-type styleProps = {
-  $up?: boolean;
-  className: any;
+type CommentData = {
+  formData: FormData;
+  id: string;
 };
 
-const CreateComment = styled.div<styleProps>`
-  width: 100%;
-  /* height: 80vh; */
-  padding: 20px 24px;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  z-index: 15;
-  border-radius: 25px 25px 0 0;
-  background-color: #fff;
-  box-shadow: 0px -5px 10px rgba(0, 0, 0, 0.2);
+type CommentUpdateData = {
+  formData: FormData;
+  id: string;
+  commentId: number;
+};
 
-  &.up {
-    animation: comment-up 0.8s forwards;
-  }
-  &.down {
-    animation: comment-down 0.8s forwards;
-  }
-  span {
-    display: block;
-    width: 23px;
-    height: 3px;
-    margin: 0 auto 25px;
-    border-radius: 2px;
-    background-color: #ddd;
-  }
-  @keyframes comment-up {
-    0% {
-      transform: translateY(70%);
-    }
-    100% {
-      transform: translateY();
-    }
-  }
-  @keyframes comment-down {
-    0% {
-      transform: translateY(0);
-    }
-    100% {
-      transform: translateY(70%);
-    }
-  }
-`;
-
-const CommentForm = styled.form`
-  width: 100%;
-  padding: 8px 0;
-  textarea {
-    width: 100%;
-    height: 141px;
-    padding: 16px 12px;
-    margin-top: 8px;
-    resize: none;
-    border: 1px solid #0084ff;
-    border-radius: 3px;
-    ::placeholder {
-      color: #b3b3b3;
-    }
-  }
-`;
-
-const COMMENT = [
-  {
-    commentId: 2,
-    userId: 5,
-    nickname: 'test',
-    userImage: '/c1.jpeg',
-    comment: 'test1234',
-    createdAt: '2023-08-10T02:51:56.000Z',
-    updatedAt: '2023-08-10T02:51:56.000Z',
-  },
-  {
-    commentId: 3,
-    userId: 5,
-    nickname: 'test',
-    userImage: '/c1.jpeg',
-    comment: 'test1234',
-    createdAt: '2023-08-10T02:51:56.000Z',
-    updatedAt: '2023-08-10T02:51:56.000Z',
-  },
-  {
-    commentId: 5,
-    userId: 6,
-    nickname: 'test',
-    userImage: '/c1.jpeg',
-    comment: 'test1234',
-    createdAt: '2023-08-10T02:51:56.000Z',
-    updatedAt: '2023-08-10T02:51:56.000Z',
-  },
-  {
-    commentId: 6,
-    userId: 2,
-    nickname: 'test',
-    userImage: '/c1.jpeg',
-    comment: 'test1234',
-    createdAt: '2023-08-10T02:51:56.000Z',
-    updatedAt: '2023-08-10T02:51:56.000Z',
-  },
-  {
-    commentId: 7,
-    userId: 5,
-    nickname: 'test',
-    userImage: '/c1.jpeg',
-    comment: 'test1234',
-    createdAt: '2023-08-10T02:51:56.000Z',
-    updatedAt: '2023-08-10T02:51:56.000Z',
-  },
-];
+type CommentDelete = {
+  id: string;
+  commentId: number;
+};
 
 const Detail: NextPage<Props> = ({ update, updateId }) => {
   const router = useRouter();
@@ -304,7 +131,6 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
 
   const handleReportClick = () => {
     report(id);
-    // alert('신고기능');
   };
 
   const handleCommentCreateHandler = () => {
@@ -344,32 +170,7 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
   const onChangeCommentHandler = (e: any) => {
     setComment(e.target.value);
   };
-  // console.log(update);
-  // console.log(updateId);
-  // console.log(id);
-  type comment = {
-    formData: FormData;
-    id?: string;
-  };
 
-  type CommentData = {
-    formData: FormData;
-    id: string;
-  };
-
-  type CommentUpdateData = {
-    formData: FormData;
-    id: string;
-    commentId: number;
-  };
-  type CommentDelete = {
-    id: string;
-    commentId: number;
-  };
-  // console.log(id);
-  // const commentCreate = useMutation(({ formData, id }: comment) =>
-  //   addComment(formData, id),
-  // );
   const { mutate: commentCreate } = useMutation<void, Error, CommentData>(
     (comment) => addComment(comment),
     {
@@ -403,11 +204,9 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
     e.preventDefault();
     const formData = new FormData();
     if (commentEdit.action === 'create') {
-      // alert('create');
       formData.append('comment', comment);
       commentCreate({ formData, id });
     } else if (commentEdit.action === 'edit') {
-      // alert('edit');
       formData.append('comment', comment);
       const commentId = commentEdit.commentId;
       commentUpdate({ formData, id, commentId });
@@ -447,10 +246,7 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
   );
 
   const { data: commentsData } = useQuery('comments', () => getComment(id));
-  console.log(commentsData);
 
-  console.log(data);
-  console.log(data?.userId);
   if (!isSuccess) return <div>Loading...</div>;
   return (
     <div style={{ backgroundColor: ` #2797FF` }}>
@@ -547,8 +343,10 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
         </ImageContainer>
         {/* </ImageContainer> */}
         {isShow ? (
-          <CreateComment className={commentEdit.show ? `up` : `down`}>
-            <span onClick={handleCommentShowHandler}></span>
+          <UpAndDownTab
+            onClickEvent={handleCommentShowHandler}
+            $isUp={commentEdit.show}
+          >
             <DetialContentSection>
               <CommentForm onSubmit={onSubmitHandler}>
                 <div className="comments-header">
@@ -569,7 +367,7 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
                 </div>
               </CommentForm>
             </DetialContentSection>
-          </CreateComment>
+          </UpAndDownTab>
         ) : null}
         <Footer />
       </PageLayout>
