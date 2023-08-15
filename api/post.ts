@@ -22,7 +22,7 @@ const addPost = async (postData: UpdateData) => {
       'Content-Type': 'multipart/form-data',
     },
   };
-  const response = await api.post('/test/post', postData.formData, config);
+  const response = await api.post('/api/post', postData.formData, config);
 };
 
 const updatePost = async (postData: UpdateData) => {
@@ -32,24 +32,24 @@ const updatePost = async (postData: UpdateData) => {
     },
   };
   const response = await api.put(
-    `/test/post/${postData.updateId}`,
+    `/api/post/${postData.updateId}`,
     postData.formData,
     config
   );
 };
 
 const getPost = async (id: string) => {
-  const response = await api.get(`/test/post/${id}`);
+  const response = await api.get(`/api/post/${id}`);
   return response.data;
 };
 
 const likePost = async (postId: string) => {
-  const response = await api.post(`/test/post/${postId}/like`);
+  const response = await api.put(`/api/post/${postId}/like`);
   return response.data;
 };
 
 const deletePost = async (postId: string) => {
-  const response = await api.delete(`/test/post/${postId}`);
+  const response = await api.delete(`/api/post/${postId}`);
   return response.data;
 };
 
@@ -64,7 +64,7 @@ const getPostLikeCount = async (postId: string) => {
 };
 
 const reportPost = async (postId: string) => {
-  const response = await api.post(`/test/report/${postId}`);
+  const response = await api.post(`/api/report/${postId}`);
   return response.data;
 };
 
