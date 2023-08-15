@@ -125,18 +125,22 @@ const Search = () => {
             <Cloud />
           </IconButton>
         </SearchForm>
-        <ImageContentsContainer>
-          {hashtagContentsImages.map((result, idx) => {
-            return (
-              <ImageContent
-                key={idx}
-                src={result.src}
-                alt={result.alt}
-                postId={idx}
-              />
-            );
-          })}
-        </ImageContentsContainer>
+        {option !== 'user' ? (
+          <ImageContentsContainer>
+            {hashtagContentsImages.map((result, idx) => {
+              return (
+                <ImageContent
+                  key={idx}
+                  src={result.src}
+                  alt={result.alt}
+                  postId={idx}
+                />
+              );
+            })}
+          </ImageContentsContainer>
+        ) : (
+          <div>user</div>
+        )}
       </SearchLayout>
       <Footer />
     </>
