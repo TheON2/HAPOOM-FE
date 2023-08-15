@@ -19,6 +19,8 @@ const IconButtonStyle = styled.button`
 type buttonProps = {
   children: ReactNode;
   onClick?: () => void;
+  className: string;
+  type: 'button' | 'submit';
 };
 
 const IconButton = ({ children, ...restProps }: buttonProps) => {

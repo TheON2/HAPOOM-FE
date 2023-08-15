@@ -18,7 +18,7 @@ type mobileBottomNavProps = {
 
 const BOTTOM_NAV = [
   { icon: Home, text: 'home', route: '/' },
-  { icon: Search, text: 'search', route: '/search/search' },
+  { icon: Search, text: 'search', route: '/search' },
   { icon: Upload, text: 'upload', route: '/post/Write' },
   { icon: MyProfile, text: 'my', route: '/User/User' },
 ];
