@@ -5,6 +5,9 @@ import toWav from 'audiobuffer-to-wav';
 import { Title } from '@/styles/youtubeplayer';
 import styled from 'styled-components';
 import CustomPlayer from './CustomPlayer';
+import RecordingInfo from './RecordingInfo';
+import { GetServerSidePropsContext } from 'next';
+import { parseCookies } from 'nookies';
 
 const CloseButton = styled.button`
   position: absolute;
@@ -32,29 +35,39 @@ const Thumb = styled.div`
   cursor: grab;
 `;
 
+interface RecorderReference {
+  recorder: Recorder;
+  updateDurationInterval: number;
+}
+
 interface RecordPlayerProps {
-  setRecording: React.Dispatch<React.SetStateAction<boolean>>;
   setAudioFile: React.Dispatch<React.SetStateAction<Blob | null>>;
+  setSlicedAudioFile: React.Dispatch<React.SetStateAction<Blob | null>>;
+  audioURL: string | undefined;
+  setAudioURL: React.Dispatch<React.SetStateAction<string | undefined>>;
+  slicedAudioURL: string | undefined;
+  setSlicedAudioURL: React.Dispatch<React.SetStateAction<string | undefined>>;
 }
 
 const RecordPlayer: React.FC<RecordPlayerProps> = ({
-  setRecording,
   setAudioFile,
+  setSlicedAudioFile,
+  slicedAudioURL,
+  setSlicedAudioURL,
+  audioURL,
+  setAudioURL,
 }) => {
   const [recording, setInternalRecording] = useState(false);
-  const [audioURL, setAudioURL] = useState<string | undefined>(undefined);
-  const [slicedAudioURL, setSlicedAudioURL] = useState<string | undefined>(
-    undefined
-  );
   const [playing, setPlaying] = useState(false);
   const [duration, setDuration] = useState(0);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
-  const recorderRef = useRef<Recorder | null>(null);
+  const recorderRef = useRef<RecorderReference | null>(null);
   const [selectionStart, setSelectionStart] = useState(0);
   const [selectionEnd, setSelectionEnd] = useState(duration);
 
   const startRecording = async () => {
+    setDuration(0);
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
     const audioContext = new (window.AudioContext ||
       (window as any).webkitAudioContext)({
@@ -64,14 +77,24 @@ const RecordPlayer: React.FC<RecordPlayerProps> = ({
 
     const recorder = new Recorder(audioContext);
     recorder.init(stream);
-    recorderRef.current = recorder;
+    const updateDurationInterval = window.setInterval(() => {
+      setDuration((prevDuration) => prevDuration + 1);
+    }, 1000);
+
+    recorderRef.current = {
+      recorder, // Recorder 인스턴스
+      updateDurationInterval, // setInterval의 반환값
+    };
     recorder.start();
+
     setInternalRecording(true);
   };
 
   const stopRecording = async () => {
     if (recorderRef.current) {
-      const { blob } = await recorderRef.current.stop();
+      const { recorder, updateDurationInterval } = recorderRef.current;
+      clearInterval(updateDurationInterval);
+      const { blob } = await recorderRef.current.recorder.stop();
       const url = URL.createObjectURL(blob);
       setAudioURL(url);
       setInternalRecording(false);
@@ -90,29 +113,6 @@ const RecordPlayer: React.FC<RecordPlayerProps> = ({
     }
   };
 
-  const handlePlayPause = () => {
-    if (audioRef.current) {
-      if (playing) {
-        audioRef.current.pause();
-      } else {
-        audioRef.current.play();
-      }
-      setPlaying(!playing);
-    }
-  };
-
-  const handleClosePlayer = () => {
-    setAudioURL(undefined);
-    setSlicedAudioURL(undefined);
-    setPlaying(false);
-    setDuration(0);
-    setInternalRecording(false);
-    if (recorderRef.current) {
-      recorderRef.current.stop();
-    }
-    setRecording(false); // 부모 컴포넌트에게 플레이어 닫힘 알리기
-  };
-
   const handleSliderChange = (
     values: number | readonly number[],
     index: number
@@ -124,7 +124,10 @@ const RecordPlayer: React.FC<RecordPlayerProps> = ({
   };
 
   const sliceAudio = async (start: number, end: number) => {
-    const audioContext = audioContextRef.current;
+    const audioContext = new (window.AudioContext ||
+      (window as any).webkitAudioContext)({
+      sampleRate: 44100,
+    });
     if (!audioContext || !audioURL) return;
 
     // 원본 오디오 데이터 로드
@@ -152,18 +155,11 @@ const RecordPlayer: React.FC<RecordPlayerProps> = ({
     }
     const wavBuffer = toWav(slicedBuffer);
 
-    // Blob 객체 생성
     const audioBlob = new Blob([wavBuffer], { type: 'audio/wav' });
 
-    // 새 URL 생성
-    // const url = URL.createObjectURL(audioBlob);
-    // setAudioURL(url);
-    // if (setAudioFile) {
-    //   // 부모 컴포넌트에게 오디오 파일 전달
-    //   setAudioFile(audioBlob);
-    // }
     const url = URL.createObjectURL(audioBlob);
     setSlicedAudioURL(url);
+    setSlicedAudioFile(audioBlob);
   };
 
   useEffect(() => {
@@ -179,12 +175,22 @@ const RecordPlayer: React.FC<RecordPlayerProps> = ({
       audio.onended = () => {
         setPlaying(false);
       };
+    } else {
+      setSlicedAudioURL(undefined);
+      setSlicedAudioFile(null);
     }
-  }, [audioURL, playing, duration]);
+  }, [audioURL, playing, duration, setSlicedAudioURL, setSlicedAudioFile]);
 
   return (
     <div style={{ width: '400px', position: 'relative' }}>
       <Title>Audio Recorder</Title>
+
+      {recording && (
+        <>
+          <RecordingInfo audioUrl={audioURL} recording={recording} />
+        </>
+      )}
+
       {audioURL ? (
         <>
           <CustomPlayer

@@ -19,9 +19,10 @@ import playImage from '@/public/play.png';
 import pauseImage from '@/public/pause.png';
 
 interface UniversalPlayerProps {
-  audioUrl: string|undefined;
-  setAudioUrl: React.Dispatch<React.SetStateAction<string|undefined>>;
+  audioUrl: string | undefined;
+  setAudioUrl: React.Dispatch<React.SetStateAction<string | undefined>>;
   title?: string;
+  propsduration?: number;
 }
 
 const formatTime = (time: number) => {
@@ -34,6 +35,7 @@ const CustomPlayer = ({
   audioUrl,
   setAudioUrl,
   title,
+  propsduration,
 }: UniversalPlayerProps) => {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [playing, setPlaying] = useState(false);
@@ -65,30 +67,55 @@ const CustomPlayer = ({
   };
 
   const handleClosePlayer = () => {
-    setAudioUrl(''); // 플레이어를 닫습니다.
+    if (audioRef.current) {
+      audioRef.current.pause(); // 재생 중지
+    }
+    setAudioUrl(''); // 플레이어 제거
     setSeek(0);
     setDuration(0);
   };
 
   useEffect(() => {
     if (audioRef.current) {
-      audioRef.current.addEventListener('loadedmetadata', () => {
-        setDuration(audioRef.current!.duration);
-      });
+      const handleLoadedMetadata = () => {
+        if (audioRef.current) {
+          setDuration(audioRef.current.duration);
+        }
+      };
+
+      if (propsduration === undefined) {
+        audioRef.current.addEventListener(
+          'loadedmetadata',
+          handleLoadedMetadata
+        );
+      }
 
       audioRef.current.addEventListener('timeupdate', () => {
-        setSeek(audioRef.current!.currentTime);
+        if (audioRef.current) {
+          setSeek(audioRef.current.currentTime);
+        }
       });
 
       audioRef.current.addEventListener('pause', () => setPlaying(false));
       audioRef.current.addEventListener('play', () => setPlaying(true));
+
+      return () => {
+        if (audioRef.current) {
+          audioRef.current.removeEventListener(
+            'loadedmetadata',
+            handleLoadedMetadata
+          );
+        }
+      };
     }
-  }, [audioUrl]);
+  }, [propsduration]);
 
   return (
     <>
       <CustomPlayerWrapper>
-        <CloseButton onClick={handleClosePlayer}>X</CloseButton>
+        <CloseButton type="button" onClick={handleClosePlayer}>
+          X
+        </CloseButton>
         <Title>{title}</Title>
         <audio ref={audioRef} src={audioUrl} style={{ display: 'none' }} />
 
@@ -107,12 +134,12 @@ const CustomPlayer = ({
             <SeekSlider
               type="range"
               min="0"
-              max={duration}
+              max={propsduration ?? duration}
               value={seek}
               onChange={handleSeekChange}
               step={0.01}
             />
-            <TimeLabel>{formatTime(duration)}</TimeLabel>
+            <TimeLabel>{formatTime(propsduration ?? duration)}</TimeLabel>
           </SeekSliderGroup>
           <VolumeSliderGroup>
             <VolumeSlider

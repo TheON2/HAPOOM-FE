@@ -22,7 +22,6 @@ const addPost = async (postData: UpdateData) => {
       'Content-Type': 'multipart/form-data',
     },
   };
-
   const response = await api.post('/api/post', postData.formData, config);
 };
 
@@ -33,7 +32,7 @@ const updatePost = async (postData: UpdateData) => {
     },
   };
   const response = await api.put(
-    `/test/post/${postData.updateId}`,
+    `/api/post/${postData.updateId}`,
     postData.formData,
     config
   );
@@ -48,11 +47,6 @@ const likePost = async (postId: string) => {
   const response = await api.put(`/api/post/${postId}/like`);
   return response.data;
 };
-
-// const unlikePost = async (postId: string) => {
-//   const response = await api.delete(`/api/post/${postId}/like`);
-//   return response.data;
-// };
 
 const deletePost = async (postId: string) => {
   const response = await api.delete(`/api/post/${postId}`);
