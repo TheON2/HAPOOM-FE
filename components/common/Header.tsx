@@ -28,6 +28,7 @@ import { useMutation, useQueryClient } from 'react-query';
 import { userLogOut } from '@/api/user';
 import { LOGOUT_USER } from '@/redux/reducers/userSlice';
 import { Hamburger, Bell } from '@/components/common/SVG';
+import { setCookie } from 'nookies';
 
 const Header = ({ sticky }: any) => {
   const dispatch = useDispatch();
@@ -60,12 +61,13 @@ const Header = ({ sticky }: any) => {
   };
 
   const handleLogoClick = () => {
-    if (localStorage.getItem('update') && localStorage.getItem('updateId')) {
-      localStorage.removeItem('update');
-      localStorage.removeItem('updateId');
-    }
-
     router.push('/');
+  };
+
+  const goToWritePage = () => {
+    setCookie(null, 'update', '1', { path: '/' });
+    setCookie(null, 'updateId', '0', { path: '/' });
+    router.push('/post/Write'); // 글쓰기 페이지로 이동
   };
 
   return (
@@ -91,12 +93,15 @@ const Header = ({ sticky }: any) => {
               />
             </IconBox>
           </SearchInputBox>
-          <GoWriteLink href={'/post/Write'}>글쓰기</GoWriteLink>
+          <GoWriteLink onClick={goToWritePage} href={'/post/Write'}>
+            글쓰기
+          </GoWriteLink>
           {!isAuth ? (
             <>
               <AuthButtonBox>
                 <Link href={'/auth/SignIn'}>로그인</Link>|
                 <Link href={'/auth/SignUp'}>회원가입</Link>
+                <Link href={'/record/2'}>레코드 테스트</Link>
                 <a href="#" onClick={onLogOut}>
                   로그아웃
                 </a>
