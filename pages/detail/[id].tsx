@@ -55,6 +55,8 @@ import {
 import { identity } from 'lodash';
 import Link from 'next/link';
 import UpAndDownTab from '@/components/common/UpAndDownTab';
+import CustomPlayer from '@/components/Write/CustomPlayer';
+
 const DynamicComponentWithNoSSR = dynamic(
   () => import('@/components/Write/YoutubePlayer'),
   { ssr: false }
@@ -89,7 +91,10 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
   const id = typeof router.query.id === 'string' ? router.query.id : '';
   const [images, setImages] = useState<File[]>([]);
   const [content, setContent] = useState<string>('');
+  const [musicChoose, setMusicChoose] = useState<number>();
   const [selectedTitle, setSelectedTitle] = useState<string>('');
+  const [musicTitle, setMusicTitle] = useState<string>('');
+  const [audioURL, setAudioURL] = useState<string | undefined>(undefined);
   const [videoId, setVideoId] = useState<string>('');
   const [tags, setTags] = useState<string>('');
   const [location, setLocation] = useState({ name: '', x: 0, y: 0 });
@@ -103,6 +108,8 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
   });
   const [comment, setComment] = useState<string>('');
   const queryClient = useQueryClient();
+
+  const audioSrc = id ? `http://localhost:3001/test/stream/${id}` : '';
 
   const { mutate: delete_mutate } = useMutation(deletePost, {
     onSuccess: () => {
@@ -230,12 +237,14 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
     () => getPost(id),
     {
       onSuccess: async (data) => {
-        // console.log(data);
-        setImages(data.post.images);
+        setMusicChoose(data.post.musicType);
+        setImages(data.images);
         setContent(data.post.content);
         setSelectedTitle(data.post.musicTitle);
         setVideoId(data.post.musicUrl);
-        setTags(data.tag);
+        setAudioURL(data.post.musicUrl);
+        setTags(data.post.tag);
+        setMusicTitle(data.post.musicTitle);
         setLocation({
           name: data.post.placeName,
           x: data.post.latitude,
@@ -293,20 +302,104 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
               <Hashtag>#하늘을품다</Hashtag>
               <Hashtag>#공룡크아앙</Hashtag>
               <Hashtag>#하늘을품다</Hashtag>
-              {/* {tags.split(',').map((tag, index) => (
-              <Hashtag
-                key={index}
-                style={{
-                  display: 'inline-block',
-                  padding: '5px',
-                  border: '1px solid #000',
-                  marginRight: '5px',
-                  borderRadius: '5px',
-                }}
-              >
-                #{tag.trim()}
-              </Hashtag>
-            ))} */}
+
+              <>
+                {!(update === '3' && location.x === 0) && (
+                  <>
+                    <Header />
+                    <GlobalStyle />
+                    <div
+                      style={{
+                        display: 'block',
+                        textAlign: 'center',
+                      }}
+                    >
+                      <ImageContainer>
+                        <button onClick={handleEditClick}>글 수정하기</button>
+                        <button type="button" onClick={handleDeleteClick}>
+                          글 삭제하기
+                        </button>
+                        <div style={{ width: '100%' }}>
+                          <DetailProfile
+                            userImage={userData?.userImage}
+                            preset={userData?.preset}
+                            nick={userData?.nickname}
+                          />
+                        </div>
+                        <MainBannerSlider data={images} />
+                        <div
+                          style={{
+                            width: '400px',
+                            height: '100px',
+                            textAlign: 'left',
+                            margin: '20px',
+                          }}
+                        >
+                          {content}
+                        </div>
+                        <div
+                          style={{
+                            width: '400px',
+                            textAlign: 'center',
+                            margin: '20px',
+                          }}
+                        >
+                          {tags.split(',').map((tag, index) => (
+                            <span
+                              key={index}
+                              style={{
+                                display: 'inline-block',
+                                padding: '5px',
+                                border: '1px solid #000',
+                                marginRight: '5px',
+                                borderRadius: '5px',
+                              }}
+                            >
+                              #{tag.trim()}
+                            </span>
+                          ))}
+                        </div>
+                        <ImageContainer>
+                          {musicChoose === 1 && (
+                            <>
+                              <DynamicComponentWithNoSSR
+                                videoId={videoId}
+                                setVideoId={setVideoId}
+                                setSelectedTitle={setSelectedTitle}
+                              />
+                            </>
+                          )}
+                          {musicChoose === 2 && (
+                            <CustomPlayer
+                              setAudioUrl={setAudioURL}
+                              audioUrl={audioURL}
+                              title={musicTitle}
+                            />
+                          )}
+                          {musicChoose === 3 && (
+                            <CustomPlayer
+                              setAudioUrl={setAudioURL}
+                              audioUrl={audioURL}
+                              title={musicTitle}
+                            />
+                          )}
+                          <MapComponent
+                            setLocation={setLocation}
+                            location={location}
+                            update={update}
+                          />
+                          <h4>댓글</h4>
+                          <div>
+                            <div></div>
+                          </div>
+                        </ImageContainer>
+                      </ImageContainer>
+                    </div>
+                    <Footer />
+                    <MobileBottomNav />
+                  </>
+                )}
+              </>
             </HashtagBox>
           </DetialContentSection>
           <DetialContentSection>
