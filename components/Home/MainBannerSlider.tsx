@@ -54,14 +54,14 @@ const MainBannerSlider: React.FC<Props> = ({ data }) => {
   );
 
   // let sliedArr = [beforeSlide, ...copiedArr, afterSlide];
-  //무한 로드 슬라이드
-  // useEffect(() => {
-  //   const interval = setInterval(
-  //     () => setSlideIndex((prev) => prev + 1),
-  //     currentInterval
-  //   );
-  //   return () => clearInterval(interval);
-  // }, [currentInterval]);
+  // 무한 로드 슬라이드
+  useEffect(() => {
+    const interval = setInterval(
+      () => setSlideIndex((prev) => prev + 1),
+      currentInterval
+    );
+    return () => clearInterval(interval);
+  }, [currentInterval]);
 
   useEffect(() => {
     if (slideIndex === sliedArr.length - 1) {
