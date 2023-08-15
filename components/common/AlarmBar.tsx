@@ -17,13 +17,37 @@ const AlarmContainer = styled.div`
   align-items: center;
   top: 30px;
   left: 50%;
-  transform: translateX(-50%);
+  /* transform: translateX(-50%); */
+  animation: fadeIn 6s forwards ease-in-out;
   p {
     width: calc(100% - 20px);
     text-align: center;
     font-weight: 700;
     font-size: 14px;
     color: #fff;
+  }
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+      transform: translate(-50%, -100px);
+    }
+    20% {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+    90% {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+    99% {
+      opacity: 0;
+      transform: translate(600%, 0);
+    }
+    100% {
+      opacity: 0;
+      transform: translate(600%, 0);
+      display: none;
+    }
   }
 `;
 
