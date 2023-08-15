@@ -48,11 +48,6 @@ const likePost = async (postId: string) => {
   return response.data;
 };
 
-// const unlikePost = async (postId: string) => {
-//   const response = await api.delete(`/api/post/${postId}/like`);
-//   return response.data;
-// };
-
 const deletePost = async (postId: string) => {
   const response = await api.delete(`/api/post/${postId}`);
   return response.data;
