@@ -166,7 +166,7 @@ const DetialContentSection = styled.section`
   }
 `;
 type Props = {
-  onClickUpdateEvent: () => void;
+  onClickUpdateEvent: (commentId: number, preComment: string) => void;
   onClcikDeleteEvent: (commentId: number) => void;
   data: any;
 };
@@ -186,7 +186,11 @@ const Comment = ({ onClickUpdateEvent, onClcikDeleteEvent, data }: Props) => {
                 <span>3시간전</span>
               </div>
               <div className="comment-button-box">
-                <IconButton onClick={onClickUpdateEvent}>
+                <IconButton
+                  onClick={() =>
+                    onClickUpdateEvent(data.commentId, data.comment)
+                  }
+                >
                   <EditComment />
                 </IconButton>
                 <IconButton onClick={() => onClcikDeleteEvent(data.commentId)}>
