@@ -17,7 +17,6 @@ interface postsCountProps {
 }
 
 const UserLikePostSuggestion: React.FC<postsCountProps> = ({ data }) => {
-  console.log(data);
   return (
     <LikePostSuggestionBox>
       <ImageBox>

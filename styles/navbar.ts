@@ -7,9 +7,9 @@ export const MobileBottomNavLayout = styled.nav`
   bottom: 0;
   width: 100%;
   display: flex;
-  justify-content: center;
+  /* justify-content: center; */
   background: #fff;
-  border-top: 1px solid #000;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
   z-index: 15;
   color: #0084ff;
   font-weight: 700;
@@ -17,10 +17,10 @@ export const MobileBottomNavLayout = styled.nav`
 `;
 
 export const BottomNavList = styled.ul`
-  max-width: 500px;
+  /* max-width: 500px; */
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
 `;
 
@@ -32,7 +32,7 @@ export const BottomNavItem = styled.li`
   align-items: center;
 `;
 
-export const IconBox = styled(Link)`
+export const IconBox = styled.button`
   display: block;
   width: 24px;
   height: 100%;
@@ -41,6 +41,19 @@ export const IconBox = styled(Link)`
   justify-content: space-between;
   align-items: center;
   font-size: 10px;
+  border: none;
+  background: none;
+  color: #777;
+  path {
+    stroke: #777;
+  }
+  &.active {
+    color: #0084ff;
+    path {
+      stroke: #0084ff;
+    }
+  }
+  font-weight: 700;
   /* position: relative; */
   img {
     width: 100%;

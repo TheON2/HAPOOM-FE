@@ -22,6 +22,7 @@ const addPost = async (postData: UpdateData) => {
       'Content-Type': 'multipart/form-data',
     },
   };
+
   const response = await api.post('/api/post', postData.formData, config);
 };
 
@@ -44,7 +45,7 @@ const getPost = async (id: string) => {
 };
 
 const likePost = async (postId: string) => {
-  const response = await api.post(`/test/post/${postId}/like`);
+  const response = await api.post(`/api/post/${postId}/like`);
   return response.data;
 };
 

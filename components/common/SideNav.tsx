@@ -81,7 +81,7 @@ const SideNav = ({ isShowMenu, setIsShowMenu }: sideNavProps) => {
           email={user?.email || ''}
           userImage={user?.userImage || ''}
           preset={user?.preset || 5}
-          nickname={user?.nickName || ''}
+          nick={user?.nickName || ''}
         />
         <SideNavMenuBox>
           {user?.email !== null ? (
