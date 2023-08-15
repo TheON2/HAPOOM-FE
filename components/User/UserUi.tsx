@@ -66,6 +66,7 @@ const UserUi = (userId: number) => {
       <UserPageSection>
         <UserPageContainer>
           <UserProfileCard data={data} />
+          <FollowButton />
           <UserLikePostSuggestion data={data} />
           <PostLike data={data} />
         </UserPageContainer>
