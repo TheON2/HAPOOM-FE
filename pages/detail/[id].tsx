@@ -45,6 +45,7 @@ import {
   reportPost,
 } from '@/api/post';
 import { identity } from 'lodash';
+import Link from 'next/link';
 
 const DynamicComponentWithNoSSR = dynamic(
   () => import('@/components/Write/YoutubePlayer'),
@@ -143,7 +144,8 @@ const Hashtag = styled.div`
 `;
 
 type styleProps = {
-  $up: boolean;
+  $up?: boolean;
+  className: any;
 };
 
 const CreateComment = styled.div<styleProps>`
@@ -157,8 +159,13 @@ const CreateComment = styled.div<styleProps>`
   border-radius: 25px 25px 0 0;
   background-color: #fff;
   box-shadow: 0px -5px 10px rgba(0, 0, 0, 0.2);
-  transform: ${(props) => (props.$up ? `translateY(0)` : `translateY(70%)`)};
-  transition: all 0.8s ease-in-out;
+
+  &.up {
+    animation: comment-up 0.8s forwards;
+  }
+  &.down {
+    animation: comment-down 0.8s forwards;
+  }
   span {
     display: block;
     width: 23px;
@@ -166,6 +173,22 @@ const CreateComment = styled.div<styleProps>`
     margin: 0 auto 25px;
     border-radius: 2px;
     background-color: #ddd;
+  }
+  @keyframes comment-up {
+    0% {
+      transform: translateY(70%);
+    }
+    100% {
+      transform: translateY();
+    }
+  }
+  @keyframes comment-down {
+    0% {
+      transform: translateY(0);
+    }
+    100% {
+      transform: translateY(70%);
+    }
   }
 `;
 
@@ -249,6 +272,7 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
     action: '',
     uiTitle: '',
     buttonText: '',
+    postId: '',
   });
   const [comment, setComment] = useState<string>('');
   const queryClient = useQueryClient();
@@ -284,23 +308,26 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
   };
 
   const handleCommentCreateHandler = () => {
-    setIsShow(!isShow);
+    setIsShow(true);
     setCommentEdit({
-      show: false,
+      show: true,
       action: 'create',
       uiTitle: '댓글 생성',
       buttonText: '업로드',
+      commentId: '',
     });
   };
 
-  const handleCommentEditHandler = () => {
+  const handleCommentEditHandler = (commentId: number, preComment: string) => {
     setIsShow(true);
     setCommentEdit({
-      show: false,
+      show: true,
       action: 'edit',
       uiTitle: '댓글 수정',
       buttonText: '수정',
+      commentId: commentId,
     });
+    setComment(preComment);
   };
 
   const handleCommentShowHandler = () => {
@@ -308,6 +335,10 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
       ...pre,
       show: !commentEdit.show,
     }));
+  };
+
+  const handleCommentExitHandler = () => {
+    setIsShow(!isShow);
   };
 
   const onChangeCommentHandler = (e: any) => {
@@ -329,7 +360,7 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
   type CommentUpdateData = {
     formData: FormData;
     id: string;
-    updateId: string;
+    commentId: number;
   };
   type CommentDelete = {
     id: string;
@@ -378,7 +409,8 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
     } else if (commentEdit.action === 'edit') {
       // alert('edit');
       formData.append('comment', comment);
-      commentUpdate({ formData, id, updateId });
+      const commentId = commentEdit.commentId;
+      commentUpdate({ formData, id, commentId });
     }
   };
 
@@ -417,7 +449,8 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
   const { data: commentsData } = useQuery('comments', () => getComment(id));
   console.log(commentsData);
 
-  // console.log(data);
+  console.log(data);
+  console.log(data?.userId);
   if (!isSuccess) return <div>Loading...</div>;
   return (
     <div style={{ backgroundColor: ` #2797FF` }}>
@@ -427,11 +460,13 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
         {/* <ImageContainer> */}
         <ContentsContainer>
           <OtherProfileBox>
-            <DetailProfile
-              userImage={userData?.userImage}
-              preset={userData?.preset}
-              nick={userData?.nickname}
-            />
+            <Link href={`/User/User/${data?.post?.userId}`}>
+              <DetailProfile
+                userImage={userData?.userImage}
+                preset={userData?.preset}
+                nick={userData?.nickname}
+              />
+            </Link>
             <KebabMenuUI>
               <KebabMenuStyle>
                 <KebabMenuAptionButton onClick={handleDeleteClick}>
@@ -512,14 +547,14 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
         </ImageContainer>
         {/* </ImageContainer> */}
         {isShow ? (
-          <CreateComment $up={commentEdit.show}>
+          <CreateComment className={commentEdit.show ? `up` : `down`}>
             <span onClick={handleCommentShowHandler}></span>
             <DetialContentSection>
               <CommentForm onSubmit={onSubmitHandler}>
                 <div className="comments-header">
                   <h3>{commentEdit.uiTitle}</h3>
                   <div className="button-box">
-                    <Button onClick={handleCommentCreateHandler}>닫기</Button>
+                    <Button onClick={handleCommentExitHandler}>닫기</Button>
                     <Button type="submit">{commentEdit.buttonText}</Button>
                   </div>
                 </div>
