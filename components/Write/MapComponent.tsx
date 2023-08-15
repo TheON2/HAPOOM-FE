@@ -184,19 +184,18 @@ export const MapComponent: React.FC<MapComponentProps> = ({
         src={`https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NEXT_PUBLIC_NAVERMAP_API_KEY}`}
         onLoad={initializeMap}
       />
-      <label>
-        <h3 style={{ float: 'left', margin: '10px 0' }}>장소</h3>
-      </label>
+      <h3 style={{ float: 'left', margin: '10px 0' }}>장소</h3>
+      <label></label>
       <StyledAuthInput
         type="text"
         placeholder="🔍️"
         value={locationInput}
         onClick={handleSearchIconClick}
         readOnly
-        style={{ width: '400px', border: '2px solid #0084ff' }}
+        style={{ width: '100%', border: '2px solid #0084ff', margin: '0' }}
       />
       {mapOpen && (
-        <div style={{ position: 'relative', width: '400px', height: '400px' }}>
+        <div style={{ position: 'relative', width: '100%', height: '50vh' }}>
           <div
             ref={mapContainerRef}
             id="map"

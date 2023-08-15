@@ -74,7 +74,7 @@ const Header = ({ sticky }: any) => {
     <>
       <HeaderLayout sticky={sticky}>
         <LogoBox href={'/'} onClick={handleLogoClick}>
-          <h1 style={{ color: homeLogoColor }}>HAPOOM</h1>
+          <h1>HAPOOM</h1>
         </LogoBox>
         <AccountActionsContainer>
           <SearchInputBox $isSearch={isSearch}>
@@ -130,10 +130,10 @@ const Header = ({ sticky }: any) => {
         </AccountActionsContainer>
         <MobileBox>
           <IconButton>
-            <Bell fillColor={homeIconColor} />
+            <Bell fillColor="#fff" />
           </IconButton>
           <IconButton onClick={onClickShowMenuHandler}>
-            <Hamburger fillColor={homeIconColor} />
+            <Hamburger fillColor="#fff" />
           </IconButton>
           {/* <HamburgerButton className={isShowMenu ? 'active' : ''}>
             <span></span>

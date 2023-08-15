@@ -10,7 +10,7 @@ export const HeaderLayout = styled.header<HeaderProps>`
   height: 58px;
   padding: 0 24px;
   position: ${(props) => (props.sticky ? 'fixed' : 'sticky')};
-  background: ${(props) => (props.sticky ? 'none' : '#fff')};
+  /* background: ${(props) => (props.sticky ? 'none' : '#fff')}; */
   z-index: 15;
   top: 0;
   /* background: linear-gradient(
@@ -41,6 +41,7 @@ export const LogoBox = styled(Link)`
   /* border: 1px solid #000; */
   h1 {
     font-size: 24px;
+    color: #fff;
   }
   img {
     width: 100%;
