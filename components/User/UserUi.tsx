@@ -7,6 +7,7 @@ import { getMyProfile, getUserProfile } from '@/api/user';
 import Header from '../common/Header';
 import Footer from '../common/Footer';
 import { useState } from 'react';
+import FollowButton from './FollowButton';
 
 interface Post {}
 
@@ -53,7 +54,6 @@ export interface UserPageData {
 
 const UserUi = (userId: number) => {
   const { data, error } = useQuery<UserPageData>('users', () => getMyProfile());
-  console.log(data);
 
   if (error) {
     return <div>Error loading user data.</div>; // or any other error handling component or UI
@@ -65,6 +65,7 @@ const UserUi = (userId: number) => {
       <UserPageSection>
         <UserPageContainer>
           <UserProfileCard data={data} />
+          <FollowButton />
           <UserLikePostSuggestion data={data} />
           <PostLike data={data} />
         </UserPageContainer>

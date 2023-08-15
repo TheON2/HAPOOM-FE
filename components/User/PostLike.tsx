@@ -7,12 +7,14 @@ import {
   TabButton,
   TabContainer,
   TabIndicator,
+  UserImageContainer,
 } from '@/styles/user';
-import cloud from '../../public/🦆 icon _cloud_.svg';
 import Image from 'next/image';
 import { UserPost, UserPageData } from './UserUi';
 import { useMutation } from 'react-query';
 import { getPost, likePost } from '@/api/post';
+import HeartIcon from '../common/HeartIcon';
+import ImageContent from '../Home/ImageContent';
 
 interface PostLike {
   data: UserPageData | undefined;
@@ -30,29 +32,20 @@ const Posts: React.FC<PostProps> = ({
   showLikeIcon,
   handleLikeClick,
 }) => {
+  const [isLike, setIsLike] = useState<boolean>(false);
+  const mutation = useMutation((postId: string) => likePost(postId));
+
+  const onLikeClickHandler = (postId: number, event: React.MouseEvent) => {
+    event.stopPropagation();
+    setIsLike(!isLike);
+    mutation.mutate(postId.toString());
+  };
+
   return (
-    <div style={{ position: 'relative', display: 'inline-block' }}>
-      <Image
-        src={image}
-        alt="게시물 이미지"
-        width={157}
-        height={157}
-        objectFit="cover"
-      />
-      {showLikeIcon && (
-        <Image
-          src={cloud}
-          alt="좋아요"
-          onClick={handleLikeClick}
-          style={{
-            position: 'absolute',
-            top: 10,
-            right: 10,
-            cursor: 'pointer',
-          }}
-        />
-      )}
-    </div>
+    <UserImageContainer>
+      <ImageContent src={image} alt="게시물 이미지" postId={postId} />
+      {showLikeIcon && <HeartIcon postId={postId} />}
+    </UserImageContainer>
   );
 };
 
@@ -60,10 +53,17 @@ const PostLike: React.FC<PostLike> = ({ data }) => {
   const [selectedTab, setSelectedTab] = useState(0);
   const [indicatorStyle, setIndicatorStyle] = useState({ width: 0, left: 0 });
   const [displayedPosts, setDisplayedPosts] = useState<UserPost[] | null>(null);
+  const [likedPosts, setLikedPosts] = useState<UserPost[]>([]);
 
   const mutation = useMutation(likePost, {
-    onSuccess: () => {
+    onSuccess: (data, variables) => {
       console.log('Success');
+      const newPost = displayedPosts?.find(
+        (post) => post.postId.toString() === variables
+      );
+      if (newPost) {
+        setLikedPosts((prev) => [...prev, newPost]);
+      }
     },
     onError: (error) => {
       console.error('Failed to like the post', error);
@@ -83,7 +83,7 @@ const PostLike: React.FC<PostLike> = ({ data }) => {
     if (data) {
       setDisplayedPosts(data.posts);
     }
-  }, [data]);
+  }, [data, displayedPosts]);
 
   useEffect(() => {
     const updateIndicator = () => {
@@ -105,11 +105,13 @@ const PostLike: React.FC<PostLike> = ({ data }) => {
       setIndicatorStyle({ width: offsetWidth, left: offsetLeft });
       if (index === 0) {
         setDisplayedPosts(data?.posts ?? null);
-        ``;
+      } else if (index === 1) {
+        setDisplayedPosts(likedPosts);
       } else {
-        setDisplayedPosts(data?.likePosts ?? null);
+        // ... 다른 탭에 대한 로직 ...
       }
     };
+
   return (
     <PostBox>
       <PostContentBox>
@@ -142,7 +144,6 @@ const PostLike: React.FC<PostLike> = ({ data }) => {
       <Line />
       <PostImageBox>
         {displayedPosts?.map((post) => {
-          console.log(displayedPosts);
           return (
             <Posts
               key={post.postId}

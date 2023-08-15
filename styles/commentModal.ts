@@ -19,8 +19,8 @@ export const ModalContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
-  border-bottom-left-radius: 15px;
-  border-bottom-right-radius: 15px;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
 
   textarea {
     width: 100%;
