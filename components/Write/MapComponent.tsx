@@ -127,6 +127,9 @@ export const MapComponent: React.FC<MapComponentProps> = ({
   }, []);
 
   const initializeMap = useCallback(() => {
+    if (typeof window === 'undefined' || !window.naver || !window.naver.maps) {
+      return;
+    }
     navigator.geolocation.getCurrentPosition((position) => {
       const userLocation = {
         x: position.coords.longitude,
@@ -179,7 +182,7 @@ export const MapComponent: React.FC<MapComponentProps> = ({
         strategy="afterInteractive"
         type="text/javascript"
         src={`https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NEXT_PUBLIC_NAVERMAP_API_KEY}`}
-        onReady={initializeMap}
+        onLoad={initializeMap}
       />
       <label>
         <h3 style={{ float: 'left', margin: '10px 0' }}>장소</h3>
