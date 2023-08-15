@@ -24,6 +24,10 @@ import { AUTH_USER, UserResponse } from '@/redux/reducers/userSlice';
 import MobileBottomNav from '@/components/common/MobileBottomNav';
 import { parseCookies } from 'nookies';
 import { GetServerSidePropsContext, NextPage } from 'next';
+import RecordPlayer from '@/components/Write/RecordPlayer';
+import CustomPlayer from '@/components/Write/CustomPlayer';
+import MusicSelector from '@/components/Write/MusicSelector';
+import { Form } from 'react-bootstrap';
 
 const DynamicComponentWithNoSSR = dynamic(
   () => import('@/components/Write/YoutubePlayer'),
@@ -41,6 +45,14 @@ interface Props {
 const Write: NextPage<Props> = ({ update, updateId }) => {
   const [images, setImages] = useState<File[]>([]);
   const [content, setContent] = useState<string>('');
+  const [musicChoose, setMusicChoose] = useState<number>(1);
+  const [audioFile, setAudioFile] = useState<Blob | null>(null);
+  const [slicedAudioFile, setSlicedAudioFile] = useState<Blob | null>(null);
+  const [audioURL, setAudioURL] = useState<string | undefined>(undefined);
+  const [musicURL, setMusicURL] = useState<string>('');
+  const [slicedAudioURL, setSlicedAudioURL] = useState<string | undefined>(
+    undefined
+  );
   const [selectedTitle, setSelectedTitle] = useState<string>('');
   const [videoId, setVideoId] = useState<string>('');
   const [tags, setTags] = useState<string[]>([]);
@@ -76,12 +88,34 @@ const Write: NextPage<Props> = ({ update, updateId }) => {
     }
 
     const formData = new FormData();
+
     images.forEach((image) => {
       formData.append('image', image);
     });
-    formData.append('content', content);
+
+    if (musicChoose === 1) {
+      formData.append('musicUrl', videoId);
+    } else if (musicChoose === 2) {
+      formData.append('musicUrl', musicURL);
+    } else if (musicChoose === 3 && slicedAudioURL !== undefined) {
+      formData.append('musicUrl', slicedAudioURL);
+    } else if (
+      musicChoose === 3 &&
+      slicedAudioURL === undefined &&
+      audioURL !== undefined
+    ) {
+      formData.append('musicUrl', audioURL);
+    }
+
+    if (slicedAudioFile) {
+      formData.append('audio', slicedAudioFile);
+    } else if (audioFile) {
+      formData.append('audio', audioFile);
+    }
+
+    formData.append('musicType', String(musicChoose));
     formData.append('musicTitle', selectedTitle);
-    formData.append('musicUrl', videoId);
+    formData.append('content', content);
     formData.append('tag', tags.join(', '));
     formData.append('latitude', String(location.x));
     formData.append('longitude', String(location.y));
@@ -106,7 +140,7 @@ const Write: NextPage<Props> = ({ update, updateId }) => {
     mutationOptions
   );
 
-  const { isError, data, isSuccess } = useQuery(
+  const { isLoading, isError, data, isSuccess } = useQuery(
     ['post', updateId],
     () => getPost(updateId),
     {
@@ -121,6 +155,22 @@ const Write: NextPage<Props> = ({ update, updateId }) => {
         setImages(imageFiles);
         setContent(data.post.content);
         setSelectedTitle(data.post.musicTitle);
+        setMusicChoose(data.post.musicType);
+        data.post.musicType === 1 && setVideoId(data.post.musicUrl);
+        data.post.musicType === 3 && setAudioURL(data.post.musicUrl);
+        console.log(data.post.musicType === 3);
+        if (data.post.musicType === 3) {
+          console.log('진입함');
+          try {
+            const response = await fetch(data.post.musicUrl);
+            const audioBlob = await response.blob();
+            const url = URL.createObjectURL(audioBlob);
+            setAudioFile(audioBlob);
+            setAudioURL(url);
+          } catch (error) {
+            console.error('오디오 파일을 불러오는 중 오류 발생:', error);
+          }
+        }
         setVideoId(data.post.musicUrl);
         setTags(data.post.tag.split(', '));
         setLocation({
@@ -153,18 +203,53 @@ const Write: NextPage<Props> = ({ update, updateId }) => {
               </ImageContainer>
               <ImageContainer>
                 <ContentArea content={content} setContent={setContent} />
-                <YouTubeSearch
-                  setVideoId={setVideoId}
-                  selectedTitle={selectedTitle}
-                  setSelectedTitle={setSelectedTitle}
-                  update={update}
-                  videoId={videoId}
-                />
-                <DynamicComponentWithNoSSR
-                  videoId={videoId}
-                  setVideoId={setVideoId}
-                  setSelectedTitle={setSelectedTitle}
-                />
+                <Form.Group controlId="musicChooseSelect">
+                  <Form.Label>음악 선택</Form.Label>
+                  <Form.Select
+                    size="lg"
+                    aria-label="음악 선택"
+                    value={musicChoose}
+                    onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+                      setMusicChoose(Number(e.target.value));
+                    }}
+                  >
+                    <option value={1}>YouTube</option>
+                    <option value={2}>Music Selector</option>
+                    <option value={3}>Record Player</option>
+                  </Form.Select>
+                </Form.Group>
+                {musicChoose === 1 && (
+                  <>
+                    <YouTubeSearch
+                      setVideoId={setVideoId}
+                      selectedTitle={selectedTitle}
+                      setSelectedTitle={setSelectedTitle}
+                      update={update}
+                      videoId={videoId}
+                    />
+                    <DynamicComponentWithNoSSR
+                      videoId={videoId}
+                      setVideoId={setVideoId}
+                      setSelectedTitle={setSelectedTitle}
+                    />
+                  </>
+                )}
+                {musicChoose === 2 && (
+                  <MusicSelector
+                    musicURL={musicURL}
+                    setMusicURL={setMusicURL}
+                  />
+                )}
+                {musicChoose === 3 && (
+                  <RecordPlayer
+                    setAudioFile={setAudioFile}
+                    setSlicedAudioFile={setSlicedAudioFile}
+                    setSlicedAudioURL={setSlicedAudioURL}
+                    slicedAudioURL={slicedAudioURL}
+                    audioURL={audioURL}
+                    setAudioURL={setAudioURL}
+                  />
+                )}
                 <TagInput tags={tags} setTags={setTags} />
                 <MapComponent
                   setLocation={setLocation}
