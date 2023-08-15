@@ -259,6 +259,7 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
   if (!isSuccess) return <div>Loading...</div>;
   return (
     <div style={{ backgroundColor: ` #2797FF` }}>
+      <>{!(update === '3' && location.x === 0) && <></>}</>
       <Header />
       <GlobalStyle />
       <PageLayout>
@@ -290,117 +291,38 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
             <MainBannerSlider data={images} />
           </div>
           <DetialContentSection>
-            <HeartIcon postId={1} />
-            <p className="detail-content-text">
-              {content}일정을 정해봅시다. 오늘은 마음이 좋네요~!일정을
-              정해봅시다. 오늘은 마음이 좋네요~!일정을 정해봅시다. 오늘은 마음이
-              좋네요~!일정을 정해봅시다. 오늘은 마음이 좋네요~!일정을
-              정해봅시다. 오늘은 마음이 좋네요~!일정을 정해봅시다. 오늘은 마음이
-              좋네요~!
-            </p>
+            <HeartIcon postId={id} />
+            <p className="detail-content-text">{content}</p>
             <HashtagBox>
-              <Hashtag>#하늘을품다</Hashtag>
-              <Hashtag>#공룡크아앙</Hashtag>
-              <Hashtag>#하늘을품다</Hashtag>
-
-              <>
-                {!(update === '3' && location.x === 0) && (
-                  <>
-                    <Header />
-                    <GlobalStyle />
-                    <div
-                      style={{
-                        display: 'block',
-                        textAlign: 'center',
-                      }}
-                    >
-                      <ImageContainer>
-                        <button onClick={handleEditClick}>글 수정하기</button>
-                        <button type="button" onClick={handleDeleteClick}>
-                          글 삭제하기
-                        </button>
-                        <div style={{ width: '100%' }}>
-                          <DetailProfile
-                            userImage={userData?.userImage}
-                            preset={userData?.preset}
-                            nick={userData?.nickname}
-                          />
-                        </div>
-                        <MainBannerSlider data={images} />
-                        <div
-                          style={{
-                            width: '400px',
-                            height: '100px',
-                            textAlign: 'left',
-                            margin: '20px',
-                          }}
-                        >
-                          {content}
-                        </div>
-                        <div
-                          style={{
-                            width: '400px',
-                            textAlign: 'center',
-                            margin: '20px',
-                          }}
-                        >
-                          {tags.split(',').map((tag, index) => (
-                            <span
-                              key={index}
-                              style={{
-                                display: 'inline-block',
-                                padding: '5px',
-                                border: '1px solid #000',
-                                marginRight: '5px',
-                                borderRadius: '5px',
-                              }}
-                            >
-                              #{tag.trim()}
-                            </span>
-                          ))}
-                        </div>
-                        <ImageContainer>
-                          {musicChoose === 1 && (
-                            <>
-                              <DynamicComponentWithNoSSR
-                                videoId={videoId}
-                                setVideoId={setVideoId}
-                                setSelectedTitle={setSelectedTitle}
-                              />
-                            </>
-                          )}
-                          {musicChoose === 2 && (
-                            <CustomPlayer
-                              setAudioUrl={setAudioURL}
-                              audioUrl={audioURL}
-                              title={musicTitle}
-                            />
-                          )}
-                          {musicChoose === 3 && (
-                            <CustomPlayer
-                              setAudioUrl={setAudioURL}
-                              audioUrl={audioURL}
-                              title={musicTitle}
-                            />
-                          )}
-                          <MapComponent
-                            setLocation={setLocation}
-                            location={location}
-                            update={update}
-                          />
-                          <h4>댓글</h4>
-                          <div>
-                            <div></div>
-                          </div>
-                        </ImageContainer>
-                      </ImageContainer>
-                    </div>
-                    <Footer />
-                    <MobileBottomNav />
-                  </>
-                )}
-              </>
+              {tags.split(',').map((tag, index) => (
+                <Hashtag key={index}>#{tag.trim()}</Hashtag>
+              ))}
             </HashtagBox>
+          </DetialContentSection>
+          <DetialContentSection>
+            {musicChoose === 1 && (
+              <>
+                <DynamicComponentWithNoSSR
+                  videoId={videoId}
+                  setVideoId={setVideoId}
+                  setSelectedTitle={setSelectedTitle}
+                />
+              </>
+            )}
+            {musicChoose === 2 && (
+              <CustomPlayer
+                setAudioUrl={setAudioURL}
+                audioUrl={audioURL}
+                title={musicTitle}
+              />
+            )}
+            {musicChoose === 3 && (
+              <CustomPlayer
+                setAudioUrl={setAudioURL}
+                audioUrl={audioURL}
+                title={musicTitle}
+              />
+            )}
           </DetialContentSection>
           <DetialContentSection>
             <MapComponent
