@@ -28,8 +28,6 @@ const Setting = () => {
   );
   const { data: userSetting } = useQuery('userSetting', getUserSetting, {
     onSuccess: (data) => {},
-    cacheTime: 0,
-
   });
 
   return (
