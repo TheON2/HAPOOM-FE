@@ -1,24 +1,37 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Bell } from '@/components/common/SVG';
 // import Icon from '/🦆 icon _cloud_.svg';
 import { Home, Search, Upload, MyProfile } from '@/components/common/SVG';
-
-const AlarmContainer = styled.div`
+import useSwipe from '@/hooks/useSwipe';
+const AlarmContainerStyle = styled.div`
   max-width: 280px;
   width: 80%;
+  /* display: flex;
+  flex-direction: column; */
+  position: fixed;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 99;
+`;
+
+const AlarmBox = styled.div`
+  width: 100%;
   /* height: 54px; */
   padding: 8px;
   background-color: rgba(0, 0, 0, 0.6);
   border-radius: 18px;
-  position: fixed;
-  z-index: 999;
   display: flex;
   align-items: center;
-  top: 30px;
-  left: 50%;
-  /* transform: translateX(-50%); */
-  animation: fadeIn 6s forwards ease-in-out;
+  margin-bottom: 12px;
+  transition: all 0.3s ease-in-out;
+  &.fade-in {
+    animation: fadeIn 1s forwards ease-in-out;
+  }
+  &.fade-out {
+    animation: fadeOut 1s forwards ease-in-out;
+  }
   p {
     width: calc(100% - 20px);
     text-align: center;
@@ -29,15 +42,17 @@ const AlarmContainer = styled.div`
   @keyframes fadeIn {
     0% {
       opacity: 0;
-      transform: translate(-50%, -100px);
+      transform: translate(0, -100px);
     }
-    20% {
+    100% {
       opacity: 1;
-      transform: translate(-50%, 0);
+      transform: translate(0, 0);
     }
-    90% {
+  }
+  @keyframes fadeOut {
+    0% {
       opacity: 1;
-      transform: translate(-50%, 0);
+      transform: translate(0, 0);
     }
     99% {
       opacity: 0;
@@ -66,15 +81,74 @@ const AlarmIconBox = styled.div`
   }
 `;
 
-const AlarmBar = () => {
+const FADE_OUT_INTERVAL = 5000;
+
+type Props = {
+  className?: string;
+  alarm: string;
+};
+
+const AlarmBar = ({ className, alarm }: Props) => {
+  const [isShow, setIsShow] = useState<boolean>(true);
+  // const onClickAlarmHandler = () => {
+  //   setIsShow(!isShow);
+  // };
+  const leftAction = () => {};
+
+  const rightAction = () => {
+    setIsShow(!isShow);
+  };
+  const {
+    handleMouseDown,
+    handleMouseUp,
+    handleMouseMove,
+    handleTouchStart,
+    handleTouchMove,
+    handleTouchEnd,
+  } = useSwipe(leftAction, rightAction);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIsShow(false);
+    }, FADE_OUT_INTERVAL);
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
   return (
-    <AlarmContainer>
+    <AlarmBox
+      className={`${isShow ? 'fade-in' : 'fade-out'} ${className}`}
+      onMouseDown={handleMouseDown}
+      onMouseMove={handleMouseMove}
+      onMouseUp={handleMouseUp}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+    >
       <AlarmIconBox>
         <Bell fillColor={'#fff'} />
       </AlarmIconBox>
-      <p>알림이 도착했습니다</p>
-    </AlarmContainer>
+      <p>{alarm}</p>
+    </AlarmBox>
   );
 };
 
-export default AlarmBar;
+const AlarmContainer = () => {
+  const [arr, setArr] = useState(['알림이 도착했습니다.']);
+  console.log(arr);
+  const test = () => {
+    setArr((prevArr) => [...prevArr, '알림2']);
+  };
+  return (
+    <>
+      <AlarmContainerStyle>
+        <button onClick={test}>알림 추가</button>
+        {arr.map((alarm, idx) => {
+          return <AlarmBar alarm={alarm} key={idx} />;
+        })}
+      </AlarmContainerStyle>
+    </>
+  );
+};
+
+export default AlarmContainer;
