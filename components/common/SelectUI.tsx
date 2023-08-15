@@ -90,9 +90,10 @@ const SelectItem = styled.li`
   font-weight: 700;
   display: flex;
   align-items: center;
+  background-color: #5aabf6;
   cursor: pointer;
   &:hover {
-    background-color: gray;
+    background-color: #0988ff;
   }
 `;
 
@@ -104,9 +105,12 @@ const SelectBox = styled.div<Props>`
   width: 80px;
   height: ${(props) => (props.$show ? 'calc(36px * 3)' : '36px')};
   background-color: #5aabf6;
+  border-radius: ${(props) => (props.$show ? '15px' : '20px')};
   border-radius: 20px;
+  overflow: hidden;
   position: absolute;
   z-index: 14;
+  transition: all 0.3s ease-in-out;
   /* top: 4px; */
   /* left: 12px; */
   /* transform: translateY(-50%); */
