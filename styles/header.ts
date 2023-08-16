@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import Link from 'next/link';
 
 type HeaderProps = {
-  sticky: string;
+  $sticky: string;
 };
 
 export const HeaderLayout = styled.header<HeaderProps>`
@@ -10,8 +10,7 @@ export const HeaderLayout = styled.header<HeaderProps>`
   height: 70px;
   padding: 0 24px;
   /* position: fixed; */
-  position: ${(props) => (props.sticky ? 'fixed' : 'sticky')};
-  /* background: ${(props) => (props.sticky ? 'none' : '#fff')}; */
+  position: ${(props) => (props.$sticky ? 'fixed' : 'sticky')};
   z-index: 15;
   top: 0;
   /* background: linear-gradient(
@@ -31,6 +30,17 @@ export const HeaderLayout = styled.header<HeaderProps>`
     position: fixed;
     background: none;
   } */
+  .search-icon {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    svg {
+      width: 70%;
+      height: 70%;
+    }
+  }
 `;
 
 export const LogoBox = styled(Link)`
@@ -113,17 +123,29 @@ export const AccountActionsContainer = styled.div`
   }
 `;
 export const GoWriteLink = styled(Link)`
-  width: 100px;
+  width: 80px;
+  height: 80px;
   padding: 12px 18px;
-  border-radius: 25px;
+  border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
   position: fixed;
   bottom: 20vh;
   right: 60px;
-  background-color: #0084ff;
+  background-color: #fff;
   z-index: 14;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+  svg {
+    transform: scale(0.8) translate(2px, -1px);
+  }
+  &:hover {
+    background-color: #d4eaff;
+  }
+  &:active {
+    background-color: #7dc1ff;
+  }
+
 `;
 export const ProfileButton = styled.button`
   width: 50px;

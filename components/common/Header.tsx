@@ -27,11 +27,11 @@ import { useRouter } from 'next/router';
 import { useMutation, useQueryClient } from 'react-query';
 import { userLogOut } from '@/api/user';
 import { LOGOUT_USER, UserState } from '@/redux/reducers/userSlice';
-import { SearchIcon, Bell } from '@/components/common/SVG';
+import { SearchIcon, Bell, EditIcon } from '@/components/common/SVG';
 import { setCookie } from 'nookies';
 import ProfileImage from '@/components/common/ProfileImage';
 import { RootState } from '@/redux/config/configStore';
-const Header = ({ sticky }: any) => {
+const Header = ({ $sticky }: any) => {
   const dispatch = useDispatch();
   const { user }: { user: UserState['user'] } = useSelector(
     (state: RootState) => state.user
@@ -55,7 +55,7 @@ const Header = ({ sticky }: any) => {
   const [isAuth, setIsAuth] = useState<boolean>(false);
 
   const onClickShowMenuHandler = () => {
-    setIsShowMenu(!isShowMenu);
+    router.push('/User/User');
   };
 
   const handleLogoClick = () => {
@@ -68,44 +68,50 @@ const Header = ({ sticky }: any) => {
     router.push('/post/Write'); // 글쓰기 페이지로 이동
   };
 
-  console.log(user);
+
+  useEffect(() => {
+    if (user.email !== '') {
+      setIsAuth(true);
+    } else {
+      setIsAuth(false);
+    }
+  }, []);
+
 
   return (
     <>
-      <HeaderLayout sticky={sticky}>
+      <HeaderLayout $sticky={$sticky}>
         <LogoBox href={'/'} onClick={handleLogoClick}>
           <h1>HAPOOM</h1>
         </LogoBox>
         <AccountActionsContainer>
-          <IconButton>
+
+          <Link href={'/post/Write'} className="search-icon">
             <SearchIcon />
-          </IconButton>
+          </Link>
+
           <GoWriteLink onClick={goToWritePage} href={'/post/Write'}>
-            글쓰기
+            <EditIcon />
           </GoWriteLink>
           {!isAuth ? (
-            <>
-              <AuthButtonBox>
-                <Link href={'/auth/SignIn'}>로그인</Link>|
-                <Link href={'/auth/SignUp'}>회원가입</Link>
-                <Link href={'/record/2'}>레코드 테스트</Link>
-                <a href="#" onClick={onLogOut}>
-                  로그아웃
-                </a>
-              </AuthButtonBox>
-              <ProfileButton onClick={onClickShowMenuHandler}>
-                <ProfileImage
-                  preset={user?.preset || 5}
-                  userImage={user?.userImage || ''}
-                  loading="eager"
-                />
-              </ProfileButton>
-            </>
-          ) : (
-            <ProfileButton onClick={onClickShowMenuHandler}>
-              <ProfileImage preset={2} userImage={''} loading="eager" />
-            </ProfileButton>
-          )}
+
+            <AuthButtonBox>
+              <Link href={'/auth/SignIn'}>로그인</Link>|
+              <Link href={'/auth/SignUp'}>회원가입</Link>
+              <Link href={'/record/2'}>레코드 테스트</Link>
+              <a href="#" onClick={onLogOut}>
+                로그아웃
+              </a>
+            </AuthButtonBox>
+          ) : null}
+          <ProfileButton onClick={onClickShowMenuHandler}>
+            <ProfileImage
+              preset={user?.preset || 5}
+              userImage={user?.userImage || ''}
+              loading="eager"
+            />
+          </ProfileButton>
+
         </AccountActionsContainer>
         <MobileBox>
           <IconButton>
