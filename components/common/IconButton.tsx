@@ -14,6 +14,10 @@ const IconButtonStyle = styled.button`
     width: 20px;
     height: 20px;
   }
+  &:hover {
+    background-color: #00000020;
+    border-radius: 50%;
+  }
 `;
 
 type buttonProps = {
