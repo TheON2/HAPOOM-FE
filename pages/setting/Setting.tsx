@@ -28,10 +28,6 @@ const Setting = () => {
   );
   const { data: userSetting } = useQuery('userSetting', getUserSetting, {
     onSuccess: (data) => {},
-<<<<<<< HEAD
-    cacheTime: 0,
-=======
->>>>>>> 21ca88f19747bc2e5da089c4bb3bcbb911e7c0d9
   });
   console.log('data', userData);
 
