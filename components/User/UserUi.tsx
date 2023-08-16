@@ -61,6 +61,8 @@ const UserUi: React.FC<UserUiProps> = ({ userId, loggedInEmail }) => {
     isOwnProfile ? getMyProfile() : getUserProfile(userId)
   );
   console.log(isOwnProfile);
+  console.log(userId);
+  console.log(loggedInEmail);
 
   if (error) {
     return <div>Error loading user data.</div>; // or any other error handling component or UI
