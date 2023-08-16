@@ -29,7 +29,7 @@ const HeartIconBox = styled.div<iconType>`
 `;
 
 type Props = {
-  postId: number;
+  postId: number | string;
 };
 
 const HeartIcon = ({ postId }: Props) => {

@@ -3,7 +3,7 @@ import { styled } from 'styled-components';
 const theme = {
   textColor: '#000',
   fontFamily: 'Inter',
-  primaryColor: '#0084FF',
+  primaryColor: '#2797FF',
   inputBtnBoxWidth: '100%',
 };
 export const SignInSection = styled.section`

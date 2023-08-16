@@ -12,20 +12,17 @@ const Footer = () => {
     <FooterLayout>
       <FooterBox>
         <LogoBox>
-          <Image
-            src={'/inflearn.jpg'}
-            alt="logo-img"
-            fill
-            sizes="(max-width: 1440px) 200px"
-            placeholder="blur"
-            blurDataURL={'/inflearn.jpg'}
-          />
+          <p>HAPOOM</p>
         </LogoBox>
         <FooterContent>
-          하품 정소채
-          사업자등록번호220-81-62517통신판매업신고번호제2006-경기성남-0692호주소경기도
-          성남시 분당구 정자일로 95, NAVER 1784, 13561
-          대표전화1588-3820이메일ccnaver@naver.com호스팅 서비스 제공 NAVER Cloud
+          (주)하품 정소채ㅣ사업자등록번호220-81-62517ㅣ
+          통신판매업신고번호:제2006-경기성남-0692호 주소:경기도 성남시 분당구
+          정자일로 95, NAVER 1784, 13561
+          대표전화:1588-3820ㅣ이메일:ccnaver@naver.com 호스팅 서비스 제공 NAVER
+          Cloud
+        </FooterContent>
+        <FooterContent>
+          개인정보처리방침ㅣ이용약관ㅣsobest@sparta.co.kr
         </FooterContent>
       </FooterBox>
     </FooterLayout>

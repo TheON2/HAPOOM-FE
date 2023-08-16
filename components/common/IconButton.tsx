@@ -14,13 +14,17 @@ const IconButtonStyle = styled.button`
     width: 20px;
     height: 20px;
   }
+  &:hover {
+    background-color: #00000020;
+    border-radius: 50%;
+  }
 `;
 
 type buttonProps = {
   children: ReactNode;
   onClick?: () => void;
-  className: string;
-  type: 'button' | 'submit';
+  className?: string;
+  type?: 'button' | 'submit';
 };
 
 const IconButton = ({ children, ...restProps }: buttonProps) => {
