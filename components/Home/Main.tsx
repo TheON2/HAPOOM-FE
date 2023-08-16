@@ -14,7 +14,7 @@ const MainLayout = styled.main`
   -ms-overflow-style: none; /* 인터넷 익스플로러 */
   scrollbar-width: none; /* 파이어폭스 */
   @media screen and (min-width: 768px) {
-    height: calc(100vh - 200px);
+    height: calc(100vh - 43vh);
     transform: translateY(-215px);
     /* overflow-y: initial; */
   }
