@@ -31,7 +31,7 @@ import { SearchIcon, Bell, EditIcon } from '@/components/common/SVG';
 import { setCookie } from 'nookies';
 import ProfileImage from '@/components/common/ProfileImage';
 import { RootState } from '@/redux/config/configStore';
-const Header = ({ sticky }: any) => {
+const Header = ({ $sticky }: any) => {
   const dispatch = useDispatch();
   const { user }: { user: UserState['user'] } = useSelector(
     (state: RootState) => state.user
@@ -80,7 +80,7 @@ const Header = ({ sticky }: any) => {
 
   return (
     <>
-      <HeaderLayout sticky={sticky}>
+      <HeaderLayout $sticky={$sticky}>
         <LogoBox href={'/'} onClick={handleLogoClick}>
           <h1>HAPOOM</h1>
         </LogoBox>

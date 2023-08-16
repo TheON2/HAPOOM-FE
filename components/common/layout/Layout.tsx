@@ -18,7 +18,7 @@ const Layout = ({ children }: layoutProps) => {
     <>
       <GlobalStyle />
       <LayoutStyle>
-        <Header sticky={isHome} />
+        <Header $sticky={isHome} />
         <AlarmBar />
         {isHome ? (
           <>{children}</>

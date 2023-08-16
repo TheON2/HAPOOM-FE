@@ -1,20 +1,36 @@
-import Header from '@/components/common/Header';
-import React from 'react';
+import React, { useCallback } from 'react';
 import UpdateNickName from '@/components/Setting/UpdateNickName';
 import UpdateUserProfile from '@/components/Setting/UpdateUserProfile';
 import UpdatePassword from '@/components/Setting/UpdatePassword';
 import AccordianMenu from '@/components/common/AccordianMenu';
 import Themes from '@/components/Setting/Themes';
-import { getAuthToken, getUserSetting } from '@/api/user';
-import { useQuery } from 'react-query';
+import { getAuthToken, getUserSetting, userLogOut } from '@/api/user';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useDispatch } from 'react-redux';
-import { AUTH_USER, UserResponse } from '@/redux/reducers/userSlice';
-import { SettingLayout, AccordianContent } from '@/styles/setting';
+import {
+  AUTH_USER,
+  LOGOUT_USER,
+  UserResponse,
+} from '@/redux/reducers/userSlice';
+import { SettingLayout, AccordianContent, LogOutBtn } from '@/styles/setting';
 import Profile from '@/components/Setting/Profile';
-import MobileBottomNav from '@/components/common/MobileBottomNav';
+import { useRouter } from 'next/router';
 
 const Setting = () => {
   const dispatch = useDispatch();
+  const queryClient = useQueryClient();
+  const router = useRouter();
+  const { mutate: logOut_mutate } = useMutation(userLogOut, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('user');
+      dispatch(LOGOUT_USER());
+      router.push('/');
+    },
+  });
+  const onLogOut = useCallback(() => {
+    logOut_mutate();
+    alert('로그아웃 되었습니다');
+  }, [logOut_mutate]);
 
   const { data: userData, isSuccess: tokenSuccess } = useQuery(
     'user',
@@ -32,7 +48,6 @@ const Setting = () => {
 
   return (
     <>
-      <Header />
       <SettingLayout>
         <Profile
           direction="column"
@@ -69,8 +84,7 @@ const Setting = () => {
             <UpdatePassword />
           </AccordianContent>
         </AccordianMenu>
-
-        <MobileBottomNav />
+        <LogOutBtn onClick={onLogOut}>로그아웃</LogOutBtn>
       </SettingLayout>
     </>
   );

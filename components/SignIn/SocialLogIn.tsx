@@ -1,9 +1,9 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import googleLogo from '../../public/googleLogo.png';
-import kakaoLogo from '../../public/kakaoLogo.png';
-import instaLogo from '../../public/pngegg.png';
+import google from '../../public/google.png';
+import kakao from '../../public/kakao.png';
+import naver from '../../public/naver.png';
 import { SignUpSocialSignUpBox } from '@/styles/signIn';
 
 const SocialLogin = () => {
@@ -13,8 +13,8 @@ const SocialLogin = () => {
         <Image
           width={64}
           height={60}
-          src={googleLogo}
-          alt="구글로고"
+          src={google}
+          alt="구글로그인"
           quality={80}
           style={{ borderRadius: '100%', cursor: 'pointer' }}
         />
@@ -23,8 +23,8 @@ const SocialLogin = () => {
         <Image
           width={64}
           height={60}
-          src={kakaoLogo}
-          alt="카카오로고"
+          src={kakao}
+          alt="카카오로그인"
           quality={80}
           style={{ borderRadius: '100%', cursor: 'pointer' }}
         />
@@ -33,8 +33,8 @@ const SocialLogin = () => {
         <Image
           width={64}
           height={60}
-          src={instaLogo}
-          alt="인스타로고"
+          src={naver}
+          alt="네이버로그인"
           quality={80}
           style={{ borderRadius: '100%', cursor: 'pointer' }}
         />

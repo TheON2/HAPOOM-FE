@@ -12,8 +12,8 @@ const ButtonStyle = styled.button<Button>`
   margin-top: ${({ marginTop }) => marginTop};
   border-radius: 3px;
   color: #fff;
-  border: 1px solid #0084ff;
-  background-color: #0084ff;
+  border: 1px solid #2797ff;
+  background-color: #2797ff;
   cursor: pointer;
 `;
 
