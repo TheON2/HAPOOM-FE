@@ -1,4 +1,3 @@
-import Header from '@/components/common/Header';
 import {
   Email,
   FollowButtonStyled,
@@ -6,6 +5,7 @@ import {
   Nickname,
   TabButton,
   TabContainer,
+  TabUnderline,
   UserInfo,
   UserList,
   UserListItemStyled,
@@ -24,6 +24,10 @@ interface User {
 interface FollowTabProps {
   followers: User[];
   followings: User[];
+}
+
+interface TabUnderlineProps {
+  activeTab: 'followers' | 'followings';
 }
 
 const UserListItem: React.FC<User> = ({ userImage, nickname, email }) => {
@@ -73,7 +77,6 @@ const FollowTab: React.FC = () => {
 
   return (
     <FollowContainer>
-      <Header />
       <TabContainer>
         <TabButton onClick={() => handleTabClick('followers')}>
           팔로워
@@ -81,6 +84,7 @@ const FollowTab: React.FC = () => {
         <TabButton onClick={() => handleTabClick('followings')}>
           팔로잉
         </TabButton>
+        <TabUnderline activeTab={activeTab} /> {/* 이 부분을 추가합니다. */}
       </TabContainer>
 
       <UserList>

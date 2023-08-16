@@ -40,7 +40,8 @@ export const UserProfileCardBox = styled.div`
 
   img {
     border-radius: 50%;
-    height: 51px;
+    width: 60px;
+    height: 60px;
   }
 `;
 export const UserImage = styled(Image)`
@@ -65,7 +66,6 @@ export const NicknameBox = styled.div`
   display: flex;
   align-items: center; /* 세로 중앙 정렬 */
   justify-content: center; /* 내부 내용 중앙 정렬 */
-  gap: 10px; /* 닉네임과 설정 링크 사이의 간격 */
 
   .nickName {
     font-size: 20px;
@@ -74,7 +74,7 @@ export const NicknameBox = styled.div`
 
 export const FollowBox = styled.div`
   display: flex;
-  gap: 14px;
+  gap: 10px;
   align-items: center;
   p {
     font-size: 16px;
@@ -149,7 +149,6 @@ export const ImageBox = styled.div`
 
 export const PostBox = styled.div`
   max-width: 320px;
-  padding: 0 24px;
   text-align: center;
   margin: auto;
 `;
@@ -210,9 +209,11 @@ export const PostImage = styled(Image)`
 export const TabContainer = styled.div`
   display: flex;
   width: 320px;
+  padding: 0 12px;
 `;
 export const TabButton = styled.div`
   flex: 1;
+
   padding: 12px;
   color: #83818c;
   text-decoration: none;
@@ -239,10 +240,10 @@ export const TabButton = styled.div`
 export const TabIndicator = styled.span<{ width: number; left: number }>`
   position: absolute;
   bottom: -13px;
-  height: 4px;
-  transition: 0.4s;
+  height: 3px;
+  transition: 0.2s;
   height: 5px;
-  background-color: #0084ff;
+  background-color: #2797ff;
   width: ${({ width }) => `${width}px`};
   left: ${({ left }) => `${left}px`};
   z-index: 1;

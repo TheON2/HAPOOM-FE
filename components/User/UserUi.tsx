@@ -4,12 +4,15 @@ import UserLikePostSuggestion from './UserLikePostSuggestion';
 import PostLike from './PostLike';
 import { useQuery } from 'react-query';
 import { getMyProfile, getUserProfile } from '@/api/user';
-import Header from '../common/Header';
-import Footer from '../common/Footer';
 import { useState } from 'react';
 import FollowButton from './FollowButton';
 
 interface Post {}
+
+interface UserUiProps {
+  userId: string | number;
+  loggedInEmail: string | null;
+}
 
 interface PostImage {
   url: string;
@@ -52,9 +55,12 @@ export interface UserPageData {
   user: UserProfile;
 }
 
-const UserUi = (userId: number) => {
-  const { data, error } = useQuery<UserPageData>('users', () => getMyProfile());
-  console.log(data);
+const UserUi: React.FC<UserUiProps> = ({ userId, loggedInEmail }) => {
+  const isOwnProfile = userId === loggedInEmail;
+  const { data, error } = useQuery<UserPageData>('users', (userId) =>
+    isOwnProfile ? getMyProfile() : getUserProfile(userId)
+  );
+  console.log(isOwnProfile);
 
   if (error) {
     return <div>Error loading user data.</div>; // or any other error handling component or UI
@@ -62,7 +68,6 @@ const UserUi = (userId: number) => {
 
   return (
     <>
-      <Header />
       <UserPageSection>
         <UserPageContainer>
           <UserProfileCard data={data} />
@@ -71,7 +76,6 @@ const UserUi = (userId: number) => {
           <PostLike data={data} />
         </UserPageContainer>
       </UserPageSection>
-      <Footer />
     </>
   );
 };

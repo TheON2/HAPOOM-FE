@@ -2,8 +2,6 @@ import styled from 'styled-components';
 
 export const FollowContainer = styled.div`
   width: 100%;
-  padding-left: 24px;
-  padding-right: 24px;
 `;
 
 export const TabContainer = styled.div`
@@ -11,14 +9,18 @@ export const TabContainer = styled.div`
   display: flex;
   justify-content: center;
   margin-bottom: 20px;
-  gap: 90px; // 기본 간격을 설정합니다.
+  display: flex;
+  position: relative; // TabUnderline의 위치를 위해 필요합니다.
+  border-bottom: 1px solid #c2c2c2; // 이 줄을 추가합니다.
+  padding-left: 24px;
+  padding-right: 24px;
 
   @media screen and (max-width: 768px) {
     gap: 90px; // 태블릿 및 모바일 화면에서의 간격을 조절합니다.
   }
 
   @media screen and (max-width: 480px) {
-    gap: 90px; // 모바일 화면에서의 간격을 조절합니다.
+    gap: 50px; // 모바일 화면에서의 간격을 조절합니다.
   }
 `;
 
@@ -92,4 +94,20 @@ export const FollowButtonStyled = styled.button`
   &:hover {
     background-color: #0056b3;
   }
+`;
+
+export const TabUnderline = styled.div.attrs<TabUnderlineProps>((props) => ({
+  activeTab: props.activeTab,
+}))`
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 50%;
+  height: 3px;
+  background-color: #2797ff;
+
+  transition: transform 0.3s ease-in-out;
+
+  transform: ${(props) =>
+    props.activeTab === 'followers' ? 'translateX(0%)' : 'translateX(100%)'};
 `;
