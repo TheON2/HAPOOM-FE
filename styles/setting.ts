@@ -8,10 +8,12 @@ type FlexProps = {
 export const SettingLayout = styled.section`
   display: flex;
   flex-direction: column;
-  height: 1000px;
+  height: 1100px;
   align-items: center;
-  max-width: 1360px;
+  max-width: 768px;
+  margin: 0 auto;
   padding: 0 24px;
+  border-radius: 25px 25px 0 0;
 `;
 
 export const AccordianContent = styled.div`
