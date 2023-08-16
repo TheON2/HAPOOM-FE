@@ -44,7 +44,7 @@ const Posts: React.FC<PostProps> = ({
   return (
     <UserImageContainer>
       <ImageContent src={image} alt="게시물 이미지" postId={postId} />
-      {showLikeIcon && <HeartIcon postId={postId} />}
+      {/* <HeartIcon postId={postId} /> */}
     </UserImageContainer>
   );
 };

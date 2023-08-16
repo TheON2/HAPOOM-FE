@@ -1,5 +1,5 @@
-import { FollowBtn } from '@/styles/user';
 import Link from 'next/link';
+import { FollowBtn } from '@/styles/user';
 import React from 'react';
 
 interface FollowButtonProps {
