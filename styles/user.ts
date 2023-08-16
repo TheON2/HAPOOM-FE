@@ -131,8 +131,14 @@ export const InfoNumber = styled.div`
 
 export const ImageBox = styled.div`
   display: flex;
+  justify-content: center;
   flex-direction: column;
   align-items: center;
+
+  svg {
+    width: 40px;
+    height: 40px;
+  }
 
   p {
     text-align: center;
@@ -165,16 +171,36 @@ export const Line = styled.div`
   border-bottom: 1px solid black;
 `;
 export const PostImageBox = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  justify-content: flex-start;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  place-items: center;
+  justify-content: center;
   align-items: center;
-  @media (max-width: 1260px) {
-    width: 100%;
-    justify-content: center;
+  grid-gap: 4px;
+  @media screen and (max-width: 1260px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @media screen and (max-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
   }
 `;
+
+export const UserImageContainer = styled.div`
+  max-width: 1200px;
+  width: 158px;
+  height: 158px;
+
+  img {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    object-fit: cover;
+  }
+`;
+
 export const PostImage = styled(Image)`
   width: 232px;
   height: 228px;
@@ -220,4 +246,50 @@ export const TabIndicator = styled.span<{ width: number; left: number }>`
   width: ${({ width }) => `${width}px`};
   left: ${({ left }) => `${left}px`};
   z-index: 1;
+`;
+
+export const FollowBtn = styled.div`
+  width: 100%;
+  text-align: center;
+  button {
+    width: 251px;
+    height: 36px;
+    border: none;
+    color: white;
+    font-weight: 700px;
+    border-radius: 3px;
+
+    background: rgb(0, 132, 255);
+    background: linear-gradient(
+      180deg,
+      rgba(0, 132, 255, 0.639093137254902) 0%,
+      rgba(0, 132, 255, 0.7595413165266106) 55%,
+      rgba(0, 132, 255, 0.8295693277310925) 58%,
+      rgba(0, 132, 255, 1) 100%
+    );
+  }
+`;
+
+export const SettingBtn = styled.div`
+  width: 100%;
+  text-align: center;
+  button {
+    width: 251px;
+    height: 36px;
+    border: none;
+    color: white;
+    font-weight: 700px;
+    border-radius: 3px;
+
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.85) 0%,
+      rgba(108, 108, 108, 0.6) 0.01%,
+      rgba(143, 142, 142, 0.76) 38.02%,
+      rgba(164, 164, 164, 0.83) 41.67%,
+      rgba(181, 181, 181, 0.86) 89.58%,
+      #c2c2c2 100%
+    );
+    box-shadow: 1px 2px 3px 0px rgba(0, 0, 0, 0.3);
+  }
 `;

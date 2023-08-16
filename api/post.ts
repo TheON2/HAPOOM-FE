@@ -98,7 +98,7 @@ const updateComment = async ({ formData, id, commentId }: commentUpdate) => {
       'Content-Type': 'multipart/form-data',
     },
   };
-  const response = await api.post(
+  const response = await api.put(
     `/api/post/${id}/comment/${commentId}`,
     formData,
     config
