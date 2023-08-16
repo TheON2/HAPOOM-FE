@@ -11,10 +11,11 @@ import Footer from '@/components/common/Footer';
 import { ImageContentsContainer } from '@/styles/imageContainer';
 import { hashtagContentsImages } from '@/public/data';
 import { Cloud } from '@/components/common/SVG';
-
+import Image from 'next/image';
+import GIF from '/movecloud.gif';
 const SearchLayout = styled.main`
   width: 100%;
-  padding: 20px 24px;
+  padding: 80px 24px 20px;
   .search-button {
     width: 32px;
     height: 32px;
@@ -81,6 +82,19 @@ const SelectBox = styled.div`
   position: relative;
 `;
 
+const NoneSearchResult = styled.div`
+  width: 100%;
+  height: 70vh;
+  color: #c4c4c4;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  line-height: 30px;
+  gap: 30px;
+`;
+
 const selectOption = [
   { value: 'user', text: '유저' },
   { value: 'content', text: '게시글' },
@@ -88,10 +102,13 @@ const selectOption = [
 ];
 const Search = () => {
   const [search, searchHandler, setSearch] = useInput('');
-  const [option, setOption] = useState<string>();
-
+  const [option, setOption] = useState<string>('user');
+  const data = hashtagContentsImages;
   const onSubmitSearchHandler = (e: FormEvent) => {
     e.preventDefault();
+    if (search === '') {
+      return alert('검색 내용을 입력해주세요');
+    }
     alert(search + option);
   };
 
@@ -125,26 +142,68 @@ const Search = () => {
             <Cloud />
           </IconButton>
         </SearchForm>
-        {option !== 'user' ? (
-          <ImageContentsContainer>
-            {hashtagContentsImages.map((result, idx) => {
-              return (
-                <ImageContent
-                  key={idx}
-                  src={result.src}
-                  alt={result.alt}
-                  postId={idx}
-                />
-              );
-            })}
-          </ImageContentsContainer>
-        ) : (
-          <div>user</div>
-        )}
       </SearchLayout>
+      {data ? (
+        <SearchResult option={option} data={data} />
+      ) : (
+        <NoneSearchResult>
+          <Image
+            src={'/movecloud.gif'}
+            alt="move cloud gif image"
+            width={100}
+            height={100}
+          />
+          검색 결과가 없습니다. <br />더 넓은 하늘을 구경해봐요
+        </NoneSearchResult>
+      )}
+
       <Footer />
     </>
   );
 };
 
 export default Search;
+
+type searchProps = {
+  option: string;
+  data: any;
+};
+
+const SearchResult = ({ option, data }: searchProps) => {
+  switch (option) {
+    case 'user':
+      return <div>user</div>;
+    case 'content':
+      return (
+        <ImageContentsContainer>
+          {data.map((result, idx) => {
+            return (
+              <ImageContent
+                key={idx}
+                src={result.src}
+                alt={result.alt}
+                postId={idx}
+              />
+            );
+          })}
+        </ImageContentsContainer>
+      );
+    case 'tag':
+      return (
+        <ImageContentsContainer>
+          {data.map((result, idx) => {
+            return (
+              <ImageContent
+                key={idx}
+                src={result.src}
+                alt={result.alt}
+                postId={idx}
+              />
+            );
+          })}
+        </ImageContentsContainer>
+      );
+    default:
+      return <NoneSearchResult>검색 결과가 없습니다</NoneSearchResult>;
+  }
+};
