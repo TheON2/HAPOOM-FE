@@ -375,7 +375,11 @@ const SignUpUi = () => {
           회원가입하기
         </SignUpBtn>
       </form>
-      <SubHeadText color="#0084FF" onClick={moveSignInPageHandeler}>
+      <SubHeadText
+        color="#0084FF"
+        style={{ cursor: 'pointer' }}
+        onClick={moveSignInPageHandeler}
+      >
         이미 아이디가 있으신가요? 로그인
       </SubHeadText>
       <MobileBottomNav />
