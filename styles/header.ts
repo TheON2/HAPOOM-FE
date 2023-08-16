@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import Link from 'next/link';
 
 type HeaderProps = {
-  sticky: string;
+  $sticky: string;
 };
 
 export const HeaderLayout = styled.header<HeaderProps>`
@@ -10,8 +10,7 @@ export const HeaderLayout = styled.header<HeaderProps>`
   height: 70px;
   padding: 0 24px;
   /* position: fixed; */
-  position: ${(props) => (props.sticky ? 'fixed' : 'sticky')};
-  /* background: ${(props) => (props.sticky ? 'none' : '#fff')}; */
+  position: ${(props) => (props.$sticky ? 'fixed' : 'sticky')};
   z-index: 15;
   top: 0;
   /* background: linear-gradient(

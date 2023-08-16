@@ -7,7 +7,7 @@ import { HashtagNavBarLayout, HashtagList, HashtagItem } from '@/styles/home';
 
 type Props = {
   data: SliderImage[];
-  isClick?: any;
+  $isClick?: any;
   onClickEvent?: any;
 };
 
@@ -27,12 +27,12 @@ const ScrollBar = styled.div`
   }
 `;
 
-const HashtagNavBar: React.FC<Props> = ({ data, onClickEvent, isClick }) => {
+const HashtagNavBar: React.FC<Props> = ({ data, onClickEvent, $isClick }) => {
   // const onClickBottomNavHandler = () => {
   //   setIsClick(!isClick);
   // };
   return (
-    <HashtagNavBarLayout onClick={onClickEvent} isClick={isClick}>
+    <HashtagNavBarLayout onClick={onClickEvent} $isClick={$isClick}>
       <div className="background">
         <ScrollBar>
           <span></span>
@@ -45,9 +45,10 @@ const HashtagNavBar: React.FC<Props> = ({ data, onClickEvent, isClick }) => {
                   <Image
                     src={hashtag.src}
                     alt="v13 image"
-                    width={100}
-                    height={100}
+                    width={200}
+                    height={200}
                     loading="eager"
+
                     // placeholder="blur"
                     // blurDataURL={hashtag.src}
                   />

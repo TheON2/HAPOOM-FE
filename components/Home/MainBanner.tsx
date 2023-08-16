@@ -3,12 +3,12 @@ import React from 'react';
 import styled from 'styled-components';
 
 type mainBannerProps = {
-  isClick: boolean;
+  $isClick: boolean;
 };
 
 const MainBannerContainer = styled.div<mainBannerProps>`
   width: 100%;
-  height: ${(props) => (props.isClick ? '250px' : 'calc(100vh - 52px)')};
+  height: ${(props) => (props.$isClick ? '250px' : 'calc(100vh - 52px)')};
   transition: all 0.8s ease-in-out;
   position: relative;
   p {
@@ -28,10 +28,10 @@ const MainBannerContainer = styled.div<mainBannerProps>`
     height: 100%;
     object-fit: cover;
     transition: all 0.8s ease-in-out;
-    opacity: ${(props) => (props.isClick ? '0' : '1')};
+    opacity: ${(props) => (props.$isClick ? '0' : '1')};
   }
   @media screen and (min-width: 768px) {
-    height: ${(props) => (props.isClick ? '400px' : '100vh')};
+    height: ${(props) => (props.$isClick ? '400px' : '100vh')};
     p {
       bottom: 225px;
       max-width: 768px;
@@ -41,10 +41,10 @@ const MainBannerContainer = styled.div<mainBannerProps>`
   }
 `;
 
-const MainBanner = ({ data, isClick }: any) => {
+const MainBanner = ({ data, $isClick }: any) => {
   // console.log(isClick);
   return (
-    <MainBannerContainer isClick={isClick}>
+    <MainBannerContainer $isClick={$isClick}>
       <p>
         집에 가고 싶다.
         <br /> 집 떠나면 개고생이다.

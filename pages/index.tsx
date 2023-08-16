@@ -65,7 +65,6 @@ const Home: NextPage<Props> = ({
   const onClickBottomNavHandler = () => {
     setIsClick(!isClick);
   };
-  console.log(isClick);
 
   if (typeof window !== 'undefined') {
     setCookie(null, 'update', '1', { path: '/' });
@@ -74,11 +73,11 @@ const Home: NextPage<Props> = ({
 
   return (
     <HomePageLayout>
-      <Header sticky={'sticky'} />
-      <MainBanner data={data} isClick={isClick} />
+      <Header $sticky={'sticky'} />
+      <MainBanner data={data} $isClick={isClick} />
       <HashtagNavBar
         data={hashtagData}
-        isClick={isClick}
+        $isClick={isClick}
         onClickEvent={onClickBottomNavHandler}
       />
       <Main>
@@ -92,19 +91,11 @@ const Home: NextPage<Props> = ({
 
 export default Home;
 
-// const MainPost = async () => {
-//   const response = await axios.get(`http://localhost:3001/api/main`);
-//   return response.data;
-// };
-// MainPost();
-
 export const getStaticProps: GetStaticProps = async () => {
   const response = await axios.get(`http://localhost:3001/api/main`);
   const data = sliderImages;
   const hashtagData = hashtagImages;
-  // const hashContent = hashtagContentsImages;
-  // const popularContent = popularContentsImages;
-  // console.log(data);
+
   return {
     props: {
       data,

@@ -193,7 +193,7 @@ export const SlideButtonBox = styled.div`
 `;
 
 type hashtagNavbarProps = {
-  isClick: boolean;
+  $isClick: boolean;
 };
 
 //hashtag navbar style

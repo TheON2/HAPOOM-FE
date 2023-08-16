@@ -21,20 +21,19 @@ const Images = [
 
 interface CarouselProps {
   children: React.ReactNode;
-  active: number;
+  $active: number;
   setActive: any;
 }
 
-const Carousel: React.FC<CarouselProps> = ({ children, active, setActive }) => {
+const Carousel: React.FC<CarouselProps> = ({
+  children,
+  $active,
+  setActive,
+}) => {
   return (
     <CarouselStyle>
       {React.Children.map(children, (child, idx) => (
-        <CardContainer
-          key={idx}
-          active={active}
-          i={idx}
-          className={active === idx ? '' : 'inactive'}
-        >
+        <CardContainer key={idx} $active={$active} $i={idx}>
           {child}
         </CardContainer>
       ))}
@@ -52,7 +51,7 @@ type dataProps = {
   };
 };
 const PopularContentsCarousel: React.FC<populerCarouselProps> = ({ data }) => {
-  const [active, setActive] = useState<number>(0);
+  const [$active, setActive] = useState<number>(0);
   const leftAction = () => {
     setActive((prevActive) =>
       prevActive >= Images.length - 1 ? Images.length - 1 : prevActive + 1
@@ -86,15 +85,13 @@ const PopularContentsCarousel: React.FC<populerCarouselProps> = ({ data }) => {
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
         >
-          <Carousel active={active} setActive={setActive}>
-            {Images.map((item: dataProps, idx: number) => (
+          <Carousel $active={$active} setActive={setActive}>
+            {data.map((item: dataProps, idx: number) => (
               <ImageContent
                 key={idx}
-                // src={item.image?.url}
-                src={item}
-                alt={'image'}
-                // postId={item.postId}
-                postId={idx}
+                src={item.image?.url}
+                alt={'popular content image'}
+                postId={item.postId}
               />
             ))}
           </Carousel>
@@ -140,8 +137,8 @@ const CarouselStyle = styled.div`
 `;
 
 type props = {
-  active: number;
-  i: number;
+  $active: number;
+  $i: number;
 };
 
 const CardContainer = styled.div<props>`
@@ -151,20 +148,20 @@ const CardContainer = styled.div<props>`
   border-radius: 8px;
   overflow: hidden;
   pointer-events: auto;
-  --active: ${({ active, i }) => (i === active ? 1 : 0)};
-  --offset: ${({ active, i }) => (active - i) / 3};
-  --direction: ${({ active, i }) => active - i};
-  --abs-offset: ${({ active, i }) => Math.abs(active - i) / 3};
-  opacity: ${({ active, i }) =>
-    Math.abs(active - i) / MAX_VISIBILITY >= 1 ? 0 : 1};
-  display: ${({ active, i }) =>
-    Math.abs(active - i) / MAX_VISIBILITY > 1 ? 'none' : 'block'};
+  --active: ${({ $active, $i }) => ($i === $active ? 1 : 0)};
+  --offset: ${({ $active, $i }) => ($active - $i) / 3};
+  --direction: ${({ $active, $i }) => $active - $i};
+  --abs-offset: ${({ $active, $i }) => Math.abs($active - $i) / 3};
+  opacity: ${({ $active, $i }) =>
+    Math.abs($active - $i) / MAX_VISIBILITY >= 1 ? 0 : 1};
+  display: ${({ $active, $i }) =>
+    Math.abs($active - $i) / MAX_VISIBILITY > 1 ? 'none' : 'block'};
   transform: rotateY(calc(0 * 50deg)) scaleY(calc(1 + var(--abs-offset) * -0.4))
     translateZ(calc(var(--abs-offset) * -30rem))
     translateX(calc(var(--direction) * -8rem));
   transition: all 0.3s ease-out;
   .heart {
-    display: ${({ active, i }) => (i === active ? 'flex' : 'none')};
+    display: ${({ $active, $i }) => ($i === $active ? 'flex' : 'none')};
   }
   @media screen and (min-width: 768px) {
     transform: rotateY(calc(0 * 50deg))
