@@ -7,8 +7,9 @@ type HeaderProps = {
 
 export const HeaderLayout = styled.header<HeaderProps>`
   width: 100%;
-  height: 58px;
+  height: 70px;
   padding: 0 24px;
+  /* position: fixed; */
   position: ${(props) => (props.sticky ? 'fixed' : 'sticky')};
   /* background: ${(props) => (props.sticky ? 'none' : '#fff')}; */
   z-index: 15;
@@ -22,6 +23,7 @@ export const HeaderLayout = styled.header<HeaderProps>`
   justify-content: space-between;
   align-items: center;
   gap: 12px;
+  color: #fff;
   @media screen and (max-width: 1260px) {
     padding: 0 24px;
   }
@@ -102,7 +104,8 @@ export const IconBox = styled.button`
 export const AccountActionsContainer = styled.div`
   display: flex;
   justify-content: flex-end;
-  gap: 12px;
+  align-items: center;
+  gap: 24px;
   width: 80%;
   @media screen and (max-width: 786px) {
     display: none;
@@ -115,6 +118,11 @@ export const GoWriteLink = styled(Link)`
   display: flex;
   justify-content: center;
   align-items: center;
+  position: fixed;
+  bottom: 20vh;
+  right: 60px;
+  background-color: #0084ff;
+  z-index: 14;
 `;
 export const ProfileButton = styled.button`
   width: 50px;

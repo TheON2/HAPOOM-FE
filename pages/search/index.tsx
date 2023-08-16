@@ -1,5 +1,5 @@
 import React, { FormEvent, useState } from 'react';
-import Header from '@/components/common/Header';
+// import Header from '@/components/common/Header';
 import MobileBottomNav from '@/components/common/MobileBottomNav';
 import styled from 'styled-components';
 import { Selecter } from '@/components/common/SelectUI';
@@ -97,7 +97,7 @@ const Search = () => {
 
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <SearchLayout>
         <p className="keyword">
           {search === '' ? (
