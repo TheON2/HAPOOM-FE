@@ -57,6 +57,9 @@ const SignInUi = () => {
   const moveSignUpBtn = () => {
     router.push('/auth/SignUp');
   };
+  const moveFindPwdBtn = () => {
+    router.push('/findPassword/FindPwd');
+  };
   const validateEmail = (email: string): boolean => {
     const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
     return emailRegex.test(email);
@@ -121,9 +124,14 @@ const SignInUi = () => {
         {error.message && (
           <TextErrorParagraph>{error.message}</TextErrorParagraph>
         )}
-        <SignInBtn onClick={handleLogin}>로그인</SignInBtn>
+        <SignInBtn
+          onClick={handleLogin}
+          disabled={!signInState.email && !signInState.password}
+        >
+          로그인
+        </SignInBtn>
         <PwdSignUpSettingPageLink>
-          <TextPwSetParagraph onClick={() => alert('준비중입니다.')}>
+          <TextPwSetParagraph onClick={moveFindPwdBtn}>
             비밀번호 찾기
           </TextPwSetParagraph>
           <Separator />
