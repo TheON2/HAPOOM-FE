@@ -193,31 +193,46 @@ type hashtagNavbarProps = {
 //hashtag navbar style
 export const HashtagNavBarLayout = styled.nav<hashtagNavbarProps>`
   width: 100%;
-  padding: 0px 24px 20px;
   border-radius: 30px 30px 0 0;
-  /* height: 10vh; */
-  /* opacity: 0.5; */
-  /* background-color: #fff; */
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  /* justify-content: space-between; */
-  align-items: center;
-  /* gap: 54px; */
   transform: translateY(-95%);
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.22) 80%,
-    #fff 90%,
-    #fff 95%,
-    rgba(255, 255, 255, 0.1) 100%
-  );
-
   position: relative;
-  /* top: 54px; */
   z-index: 10;
   font-size: 10px;
   color: #fff;
+  overflow: hidden;
+  .background {
+    width: 100%;
+    padding: 0px 24px 20px;
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.22) 80%,
+      #fff 90%,
+      #fff 95%,
+      rgba(255, 255, 255, 0.1) 100%
+    );
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  @media screen and (min-width: 768px) {
+    transform: translateY(-100%);
+    .background {
+      width: 100%;
+      padding: 0px 24px 35px;
+      background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.22) 80%,
+        #fff 90%,
+        #fff 95%,
+        rgba(255, 255, 255, 0.1) 100%
+      );
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+  }
 `;
 
 export const HashtagList = styled.ul`
@@ -247,15 +262,21 @@ export const HashtagItem = styled.li`
     margin-bottom: 2px;
     overflow: hidden;
     border-radius: 8px;
+    width: 44px;
+    height: 44px;
     /* border: 2px solid #fff; */
-    @media screen and (max-width: 786px) {
-      width: 44px;
-      height: 44px;
-    }
     img {
       width: 100%;
       height: 100%;
       object-fit: cover;
+    }
+  }
+  @media screen and (min-width: 768px) {
+    font-size: 12px;
+    font-weight: 500;
+    figure {
+      width: 120px;
+      height: 100px;
     }
   }
 `;

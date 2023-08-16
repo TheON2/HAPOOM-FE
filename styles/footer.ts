@@ -7,9 +7,10 @@ export const FooterLayout = styled.footer`
 `;
 
 export const FooterBox = styled.div`
-  max-width: 1440px;
+  max-width: 768px;
   width: 100%;
   padding: 30px 20px 100px;
+  margin: 0 auto;
   display: flex;
   gap: 24px;
 `;

@@ -35,6 +35,9 @@ const HomePageLayout = styled.div`
   width: 100%;
   height: 100vh;
   overflow: hidden;
+  /* @media screen and (min-width: 768px) {
+    overflow: initial;
+  } */
 `;
 
 const Home: NextPage<Props> = ({

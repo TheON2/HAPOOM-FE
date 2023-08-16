@@ -75,28 +75,30 @@ const PopularContentsCarousel: React.FC<populerCarouselProps> = ({ data }) => {
   } = useSwipe(leftAction, rightAction);
 
   return (
-    <>
-      <SectionTitle>#오늘의 좋아요</SectionTitle>
-      <PopularContentsSection
-        onMouseDown={handleMouseDown}
-        onMouseMove={handleMouseMove}
-        onMouseUp={handleMouseUp}
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
-      >
-        <Carousel active={active} setActive={setActive}>
-          {data.map((item: dataProps, idx: number) => (
-            <ImageContent
-              key={idx}
-              src={item.image?.url}
-              alt={'image'}
-              postId={item.postId}
-            />
-          ))}
-        </Carousel>
-      </PopularContentsSection>
-    </>
+    <HomeMainSection>
+      <div className="center">
+        <SectionTitle>#오늘의 좋아요</SectionTitle>
+        <PopularContentsContainer
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseUp={handleMouseUp}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+        >
+          <Carousel active={active} setActive={setActive}>
+            {data.map((item: dataProps, idx: number) => (
+              <ImageContent
+                key={idx}
+                src={item.image?.url}
+                alt={'image'}
+                postId={item.postId}
+              />
+            ))}
+          </Carousel>
+        </PopularContentsContainer>
+      </div>
+    </HomeMainSection>
   );
 };
 
@@ -104,7 +106,12 @@ export default PopularContentsCarousel;
 
 const CARD_SIZE = 180;
 
-const PopularContentsSection = styled.section`
+const HomeMainSection = styled.section`
+  background-color: #f0f1f2;
+  margin-top: 24px;
+`;
+
+const PopularContentsContainer = styled.div`
   width: 100%;
   /* height: 50vh; */
   padding: 36px 24px;
