@@ -8,14 +8,17 @@ import AuthChecker from '@/components/common/AuthChecker';
 import { useEffect, useState } from 'react';
 import socketIOClient from 'socket.io-client';
 import Layout from '@/components/common/layout/Layout';
-
+import MobileBottomNav from '@/components/common/MobileBottomNav';
+import { useRouter } from 'next/router';
 const queryClient = new QueryClient();
 const ENDPOINT = 'http://localhost:3001';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [notification, setNotification] = useState<string | null>(null);
   const [randomPosts, setRandomPosts] = useState(null);
-
+  const router = useRouter();
+  const excludedPages = ['/auth/SignIn', '/auth/SignUp'];
+  const isExcludedPage = excludedPages.includes(router.pathname);
   useEffect(() => {
     // 로그인 성공 후 Socket.IO 클라이언트를 생성하고 서버에 연결합니다.
     const socket = socketIOClient(ENDPOINT);
@@ -52,54 +55,63 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, []);
 
   return (
-    <QueryClientProvider client={queryClient}>
-      {notification && (
-        <div
-          style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            right: 0,
-            backgroundColor: 'rgba(0,0,0,0.7)',
-            color: 'white',
-            padding: '10px',
-            textAlign: 'center',
-            zIndex: 1000,
-            animation: 'fadeIn 0.5s, fadeOut 0.5s 1.5s',
-          }}
-        >
-          {notification}
-        </div>
-      )}
-      {randomPosts && (
-        <div
-          style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            right: 0,
-            backgroundColor: 'rgba(0,0,0,0.7)',
-            color: 'white',
-            padding: '10px',
-            textAlign: 'center',
-            zIndex: 1000,
-            animation: 'fadeIn 0.5s, fadeOut 0.5s 1.5s',
-          }}
-        >
-          {randomPosts &&
-            randomPosts.map((post, index) => (
-              <div key={index} className="fade-in-post">
-                <h3>{post.title}</h3>
-                <p>{post.content}</p>
+    <>
+      <QueryClientProvider client={queryClient}>
+        {!isExcludedPage ? (
+          <>
+            {notification && (
+              <div
+                style={{
+                  position: 'fixed',
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  backgroundColor: 'rgba(0,0,0,0.7)',
+                  color: 'white',
+                  padding: '10px',
+                  textAlign: 'center',
+                  zIndex: 1000,
+                  animation: 'fadeIn 0.5s, fadeOut 0.5s 1.5s',
+                }}
+              >
+                {notification}
               </div>
-            ))}
-        </div>
-      )}
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
-      <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
-    </QueryClientProvider>
+            )}
+            {randomPosts && (
+              <div
+                style={{
+                  position: 'fixed',
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  backgroundColor: 'rgba(0,0,0,0.7)',
+                  color: 'white',
+                  padding: '10px',
+                  textAlign: 'center',
+                  zIndex: 1000,
+                  animation: 'fadeIn 0.5s, fadeOut 0.5s 1.5s',
+                }}
+              >
+                {randomPosts &&
+                  randomPosts.map((post, index) => (
+                    <div key={index} className="fade-in-post">
+                      <h3>{post.title}</h3>
+                      <p>{post.content}</p>
+                    </div>
+                  ))}
+              </div>
+            )}
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+            <MobileBottomNav />
+          </>
+        ) : (
+          <Component {...pageProps} />
+        )}
+        <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
+      </QueryClientProvider>
+    </>
   );
 }
 
