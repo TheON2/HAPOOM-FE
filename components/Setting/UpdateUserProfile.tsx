@@ -22,14 +22,14 @@ const UserProfileImageUpdate = ({ profileImage, preset }: profileType) => {
   const queryClient = useQueryClient();
 
   const mutate = useMutation(
-    (formData: FormData) => updateUserSetting(formData),
-    {
-      onSuccess: () => {
-        alert('수정되었습니다.');
-        queryClient.invalidateQueries('userSetting');
-      },
-    }
-  );
+  (formData: FormData) => updateUserSetting(formData),
+  {
+    onSuccess: () => {
+      alert('업로드되었습니다.');
+      queryClient.invalidateQueries('userSetting'); // 쿼리를 무효화
+    },
+  }
+);
 
   const onChangeProfileUpdate = async (
     event: ChangeEvent<HTMLInputElement>

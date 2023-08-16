@@ -14,17 +14,17 @@ const HeartIconBox = styled.div<iconType>`
   justify-content: center;
   align-items: center;
   /* background-color: ${(props) => (props.$isLike ? `black` : `white`)}; */
-  /* border-radius: 50%; */
   /* border: 2px solid black; */
+  background-color: ${(props) => (props.$isLike ? `#0084FF` : `#538cc080`)};
+
+  /* background-color: #538cc0; */
+  border-radius: 50%;
   position: absolute;
-  top: 0px;
-  right: 0px;
+  top: 5px;
+  right: 5px;
   cursor: pointer;
   svg {
-    transform: scale();
-    path:nth-child(2) {
-      fill: ${(props) => (props.$isLike ? `#2B66FF` : `#fff`)};
-    }
+    transform: translate(-1px, -1px);
   }
 `;
 
@@ -44,6 +44,7 @@ const HeartIcon = ({ postId }: Props) => {
     <HeartIconBox
       onClick={(event) => onClickHeartHandler(postId, event)}
       $isLike={isLike}
+      className="heart"
     >
       <LikeCloud />
     </HeartIconBox>
