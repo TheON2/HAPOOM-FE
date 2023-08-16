@@ -22,16 +22,20 @@ import {
 } from '@/styles/header';
 import useInput from '@/hooks/useInput';
 import IconButton from './IconButton';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { useMutation, useQueryClient } from 'react-query';
 import { userLogOut } from '@/api/user';
-import { LOGOUT_USER } from '@/redux/reducers/userSlice';
-import { Hamburger, Bell } from '@/components/common/SVG';
+import { LOGOUT_USER, UserState } from '@/redux/reducers/userSlice';
+import { SearchIcon, Bell } from '@/components/common/SVG';
 import { setCookie } from 'nookies';
-
+import ProfileImage from '@/components/common/ProfileImage';
+import { RootState } from '@/redux/config/configStore';
 const Header = ({ sticky }: any) => {
   const dispatch = useDispatch();
+  const { user }: { user: UserState['user'] } = useSelector(
+    (state: RootState) => state.user
+  );
   const router = useRouter();
   const queryClient = useQueryClient();
   const { mutate: logOut_mutate } = useMutation(userLogOut, {
@@ -46,16 +50,10 @@ const Header = ({ sticky }: any) => {
     logOut_mutate();
   }, [logOut_mutate]);
 
-  const [isSearch, setIsSearch] = useState<boolean>(false);
-  const [isMobile, setIsMobile] = useState<boolean>(true);
   const [isShowMenu, setIsShowMenu] = useState<boolean>(false);
-  const [search, onChangeSearchHandler, setSearch] = useInput('');
+
   const [isAuth, setIsAuth] = useState<boolean>(false);
 
-  const homeIconColor = sticky ? '#fff' : '#CBCBCB';
-  const homeLogoColor = sticky ? '#fff' : '#0084FF';
-  // console.log(homeIconColor);
-  const onClickSearchIconHandler = () => [setIsSearch(!isSearch)];
   const onClickShowMenuHandler = () => {
     setIsShowMenu(!isShowMenu);
   };
@@ -70,6 +68,8 @@ const Header = ({ sticky }: any) => {
     router.push('/post/Write'); // 글쓰기 페이지로 이동
   };
 
+  console.log(user);
+
   return (
     <>
       <HeaderLayout sticky={sticky}>
@@ -77,22 +77,9 @@ const Header = ({ sticky }: any) => {
           <h1>HAPOOM</h1>
         </LogoBox>
         <AccountActionsContainer>
-          <SearchInputBox $isSearch={isSearch}>
-            <input
-              type="text"
-              value={search}
-              onChange={onChangeSearchHandler}
-            />
-            <IconBox onClick={onClickSearchIconHandler}>
-              <Image
-                src={'/🦆 icon _star_.svg'}
-                alt="icon"
-                loading="eager"
-                width={50}
-                height={50}
-              />
-            </IconBox>
-          </SearchInputBox>
+          <IconButton>
+            <SearchIcon />
+          </IconButton>
           <GoWriteLink onClick={goToWritePage} href={'/post/Write'}>
             글쓰기
           </GoWriteLink>
@@ -107,24 +94,16 @@ const Header = ({ sticky }: any) => {
                 </a>
               </AuthButtonBox>
               <ProfileButton onClick={onClickShowMenuHandler}>
-                <Image
-                  src={'/inflearn.jpg'}
-                  alt="prpfile image"
+                <ProfileImage
+                  preset={user?.preset || 5}
+                  userImage={user?.userImage || ''}
                   loading="eager"
-                  width={50}
-                  height={50}
                 />
               </ProfileButton>
             </>
           ) : (
             <ProfileButton onClick={onClickShowMenuHandler}>
-              <Image
-                src={'/inflearn.jpg'}
-                alt="prpfile image"
-                loading="eager"
-                width={50}
-                height={50}
-              />
+              <ProfileImage preset={2} userImage={''} loading="eager" />
             </ProfileButton>
           )}
         </AccountActionsContainer>
@@ -132,14 +111,6 @@ const Header = ({ sticky }: any) => {
           <IconButton>
             <Bell fillColor="#fff" />
           </IconButton>
-          <IconButton onClick={onClickShowMenuHandler}>
-            <Hamburger fillColor="#fff" />
-          </IconButton>
-          {/* <HamburgerButton className={isShowMenu ? 'active' : ''}>
-            <span></span>
-            <span></span>
-            <span></span>
-          </HamburgerButton> */}
         </MobileBox>
       </HeaderLayout>
       {isShowMenu && (
