@@ -146,6 +146,7 @@ export const GoWriteLink = styled(Link)`
   &:active {
     background-color: #7dc1ff;
   }
+
 `;
 export const ProfileButton = styled.button`
   width: 50px;
