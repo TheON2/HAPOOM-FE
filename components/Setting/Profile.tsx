@@ -57,5 +57,4 @@ const Profile = ({
     </ProfileBox>
   );
 };
-
 export default Profile;

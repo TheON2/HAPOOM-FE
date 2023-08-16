@@ -2,6 +2,10 @@ import styled from 'styled-components';
 type svgColorProps = {
   fillColor?: string;
 };
+type RightArrowProps = {
+  fillColor?: string;
+  isOpen: boolean;
+};
 
 export const Cloud = ({ fillColor = '#fff' }) => (
   <svg
@@ -158,19 +162,29 @@ export const ScrollBar = () => (
     />
   </svg>
 );
-export const RightArrow = ({ fillColor = '#8995a7' }) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="8"
-    height="11"
-    viewBox="0 0 8 11"
-    fill="none"
-  >
-    <path
-      d="M7.70034 5.92748L2.48544 10.8229C2.23393 11.059 1.82617 11.059 1.57469 10.8229L0.966457 10.2519C0.715378 10.0162 0.714895 9.63425 0.965384 9.39799L5.09828 5.49999L0.965384 1.60201C0.714895 1.36575 0.715378 0.983752 0.966457 0.748052L1.57469 0.177077C1.8262 -0.0590258 2.23396 -0.0590258 2.48544 0.177077L7.70031 5.07252C7.95182 5.3086 7.95182 5.69138 7.70034 5.92748Z"
-      fill={fillColor}
-    />
-  </svg>
+
+const RotatingWrapper = styled.div<{ isOpen: boolean }>`
+  transition: transform 0.3s ease;
+  transform: ${({ isOpen }) => `rotate(${isOpen ? '90deg' : '0deg'})`};
+`;
+export const RightArrow = ({
+  fillColor = '#8995a7',
+  isOpen,
+}: RightArrowProps) => (
+  <RotatingWrapper isOpen={isOpen}>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="8"
+      height="11"
+      viewBox="0 0 8 11"
+      fill="none"
+    >
+      <path
+        d="M7.70034 5.92748L2.48544 10.8229C2.23393 11.059 1.82617 11.059 1.57469 10.8229L0.966457 10.2519C0.715378 10.0162 0.714895 9.63425 0.965384 9.39799L5.09828 5.49999L0.965384 1.60201C0.714895 1.36575 0.715378 0.983752 0.966457 0.748052L1.57469 0.177077C1.8262 -0.0590258 2.23396 -0.0590258 2.48544 0.177077L7.70031 5.07252C7.95182 5.3086 7.95182 5.69138 7.70034 5.92748Z"
+        fill={isOpen ? '#0084FF' : fillColor}
+      />
+    </svg>
+  </RotatingWrapper>
 );
 export const LikeCloud = ({ fillColor = '#8995a7' }) => (
   <svg
@@ -499,5 +513,29 @@ export const ModalWarning = () => (
         />
       </filter>
     </defs>
+  </svg>
+);
+export const SearchIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="46"
+    height="39"
+    viewBox="0 0 46 39"
+    fill="none"
+  >
+    <path
+      d="M21.0868 32.9544C25.3378 32.4417 29.2009 30.3416 31.8263 27.116C34.4516 23.8904 35.6242 19.8035 35.086 15.7544C34.5478 11.7053 32.343 8.02574 28.9565 5.52509C25.57 3.02443 21.2794 1.90756 17.0284 2.42019C12.7774 2.93281 8.9143 5.03293 6.28895 8.25854C3.6636 11.4841 2.49104 15.571 3.02922 19.6201C3.56741 23.6692 5.77225 27.3488 9.1587 29.8495C12.5452 32.3501 16.8358 33.467 21.0868 32.9544Z"
+      stroke="#DBDBDB"
+      stroke-width="4"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+    <path
+      d="M43.6807 36.4849L32.1895 27.9995"
+      stroke="#DBDBDB"
+      stroke-width="4"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
   </svg>
 );

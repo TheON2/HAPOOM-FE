@@ -108,7 +108,7 @@ export const MapComponent: React.FC<MapComponentProps> = ({
         });
 
         if (roadAddress === '도로명 없음') {
-          setLocationInput(`도로명 없음 x좌표:${coord.x} y좌표:${coord.y}`);
+          setLocationInput(`도로명 없음 x좌표:${coord.x}y좌표:${coord.y}`);
         } else {
           setLocationInput(roadAddress);
         }
@@ -146,6 +146,11 @@ export const MapComponent: React.FC<MapComponentProps> = ({
           ),
           map: mapRef.current,
         });
+        setLocation({
+          name: '현재위치',
+          x: userLocation.x,
+          y: userLocation.y,
+        });
       } else {
         mapRef.current = new window.naver.maps.Map(mapContainerRef.current, {
           center: new window.naver.maps.LatLng(location.y, location.x),
@@ -165,9 +170,9 @@ export const MapComponent: React.FC<MapComponentProps> = ({
   }, [handleMapClick, location, update]);
 
   useEffect(() => {
-    if (update === '2' || update === '3') {
-      setLocationInput(location.name + ' ' + location.x + location.y);
-    }
+    setLocationInput(
+      location.name + ' ' + 'X:' + location.x + '   ' + 'Y:' + location.y
+    );
   }, [update, location]);
 
   useEffect(() => {

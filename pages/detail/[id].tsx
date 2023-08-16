@@ -336,7 +336,7 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
               <h3>댓글</h3>
               <Button onClick={handleCommentCreateHandler}>댓글쓰기</Button>
             </div>
-            {commentsData.comments.map((comment: any) => {
+            {commentsData?.comments.map((comment: any) => {
               return (
                 <>
                   <Comment
