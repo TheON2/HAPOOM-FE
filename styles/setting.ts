@@ -8,9 +8,10 @@ type FlexProps = {
 export const SettingLayout = styled.section`
   display: flex;
   flex-direction: column;
-  height: 1000px;
+  height: 1100px;
   align-items: center;
-  max-width: 1360px;
+  max-width: 768px;
+  margin: 0 auto;
   padding: 0 24px;
 `;
 
