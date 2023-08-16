@@ -105,7 +105,7 @@ export const HashtagContentsContainer = styled.div`
 
 //popular contents section style
 export const SectionTitle = styled.h2`
-  max-width: 1200px;
+  max-width: 768px;
   padding: 26px 36px 24px;
   color: #0084ff;
   position: relative;
@@ -119,6 +119,12 @@ export const SectionTitle = styled.h2`
     left: 24px;
     transform: translateY(-50%);
     background-color: #0084ff;
+  }
+  @media screen and (min-width: 786px) {
+    padding: 26px 16px 24px;
+    &::after {
+      left: 0;
+    }
   }
   /* margin: 0 auto 30px; */
 `;

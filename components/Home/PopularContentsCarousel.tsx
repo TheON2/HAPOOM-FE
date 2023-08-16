@@ -87,12 +87,14 @@ const PopularContentsCarousel: React.FC<populerCarouselProps> = ({ data }) => {
           onTouchEnd={handleTouchEnd}
         >
           <Carousel active={active} setActive={setActive}>
-            {data.map((item: dataProps, idx: number) => (
+            {Images.map((item: dataProps, idx: number) => (
               <ImageContent
                 key={idx}
-                src={item.image?.url}
+                // src={item.image?.url}
+                src={item}
                 alt={'image'}
-                postId={item.postId}
+                // postId={item.postId}
+                postId={idx}
               />
             ))}
           </Carousel>
@@ -104,29 +106,37 @@ const PopularContentsCarousel: React.FC<populerCarouselProps> = ({ data }) => {
 
 export default PopularContentsCarousel;
 
-const CARD_SIZE = 180;
-
 const HomeMainSection = styled.section`
   background-color: #f0f1f2;
   margin-top: 24px;
+  @media screen and (min-width: 786px) {
+    padding-top: 24px;
+  }
 `;
 
 const PopularContentsContainer = styled.div`
   width: 100%;
   /* height: 50vh; */
-  padding: 36px 24px;
+  padding: 24px 24px 56px;
   display: flex;
   justify-content: center;
   overflow: hidden;
+  /* @media screen and (min-width: 768px) {
+    padding: 56px 24px;
+  } */
 `;
 
 const CarouselStyle = styled.div`
+  --size: 210px;
   position: relative;
-  width: ${CARD_SIZE}px;
-  height: ${CARD_SIZE}px;
+  width: var(--size);
+  height: var(--size);
   /* padding-bottom: 50%; */
   perspective: 500px;
   transform-style: preserve-3d;
+  @media screen and (min-width: 768px) {
+    --size: 280px;
+  }
 `;
 
 type props = {
@@ -155,5 +165,11 @@ const CardContainer = styled.div<props>`
   transition: all 0.3s ease-out;
   .heart {
     display: ${({ active, i }) => (i === active ? 'flex' : 'none')};
+  }
+  @media screen and (min-width: 768px) {
+    transform: rotateY(calc(0 * 50deg))
+      scaleY(calc(1 + var(--abs-offset) * -0.4))
+      translateZ(calc(var(--abs-offset) * -30rem))
+      translateX(calc(var(--direction) * -15.3rem));
   }
 `;
