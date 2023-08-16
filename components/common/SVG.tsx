@@ -517,3 +517,27 @@ export const ModalWarning = () => (
     </defs>
   </svg>
 );
+export const SearchIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="46"
+    height="39"
+    viewBox="0 0 46 39"
+    fill="none"
+  >
+    <path
+      d="M21.0868 32.9544C25.3378 32.4417 29.2009 30.3416 31.8263 27.116C34.4516 23.8904 35.6242 19.8035 35.086 15.7544C34.5478 11.7053 32.343 8.02574 28.9565 5.52509C25.57 3.02443 21.2794 1.90756 17.0284 2.42019C12.7774 2.93281 8.9143 5.03293 6.28895 8.25854C3.6636 11.4841 2.49104 15.571 3.02922 19.6201C3.56741 23.6692 5.77225 27.3488 9.1587 29.8495C12.5452 32.3501 16.8358 33.467 21.0868 32.9544Z"
+      stroke="#DBDBDB"
+      stroke-width="4"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+    <path
+      d="M43.6807 36.4849L32.1895 27.9995"
+      stroke="#DBDBDB"
+      stroke-width="4"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  </svg>
+);
