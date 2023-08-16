@@ -68,7 +68,6 @@ const Header = ({ $sticky }: any) => {
     router.push('/post/Write'); // 글쓰기 페이지로 이동
   };
 
-
   useEffect(() => {
     if (user.email !== '') {
       setIsAuth(true);
@@ -77,7 +76,6 @@ const Header = ({ $sticky }: any) => {
     }
   }, []);
 
-
   return (
     <>
       <HeaderLayout $sticky={$sticky}>
@@ -85,7 +83,6 @@ const Header = ({ $sticky }: any) => {
           <h1>HAPOOM</h1>
         </LogoBox>
         <AccountActionsContainer>
-
           <Link href={'/post/Write'} className="search-icon">
             <SearchIcon />
           </Link>
@@ -94,7 +91,6 @@ const Header = ({ $sticky }: any) => {
             <EditIcon />
           </GoWriteLink>
           {!isAuth ? (
-
             <AuthButtonBox>
               <Link href={'/auth/SignIn'}>로그인</Link>|
               <Link href={'/auth/SignUp'}>회원가입</Link>
@@ -111,7 +107,6 @@ const Header = ({ $sticky }: any) => {
               loading="eager"
             />
           </ProfileButton>
-
         </AccountActionsContainer>
         <MobileBox>
           <IconButton>
