@@ -14,6 +14,9 @@ export const MobileBottomNavLayout = styled.nav`
   color: #0084ff;
   font-weight: 700;
   text-transform: uppercase;
+  @media screen and (min-width: 768px) {
+    display: none;
+  }
 `;
 
 export const BottomNavList = styled.ul`
@@ -44,21 +47,31 @@ export const IconBox = styled.button`
   border: none;
   background: none;
   color: #777;
+  font-weight: 700;
   path {
     stroke: #777;
+  }
+  .image-box {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 2px solid #777;
+    overflow: hidden;
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
   &.active {
     color: #0084ff;
     path {
       stroke: #0084ff;
     }
-  }
-  font-weight: 700;
-  /* position: relative; */
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
+    .image-box {
+      border: 2px solid #0084ff;
+    }
   }
 `;
 
