@@ -221,20 +221,3 @@ export const TabIndicator = styled.span<{ width: number; left: number }>`
   left: ${({ left }) => `${left}px`};
   z-index: 1;
 `;
-
-export const FollowContainer = styled.div`
-  width: 100%;
-  height: 50px;
-  text-align: center;
-
-  button {
-    width: 261px;
-    height: 36px;
-    background-color: #0084ff;
-    border: 0px;
-    border-radius: 4px;
-    color: #ffffff;
-    font-size: 16px;
-    font-weight: 600;
-  }
-`;

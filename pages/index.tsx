@@ -73,8 +73,6 @@ const Home: NextPage<Props> = ({
     <HomePageLayout>
       <Header sticky={'sticky'} />
       <MainBanner data={data} isClick={isClick} />
-      {/* <MainBannerSlider data={data} /> */}
-      <MobileBottomNav />
       <HashtagNavBar
         data={hashtagData}
         isClick={isClick}
@@ -82,9 +80,7 @@ const Home: NextPage<Props> = ({
       />
       <Main>
         <HashtagContents data={hashContent} />
-        <PopularContentsCarousel />
-        {/* <Slidetest /> */}
-        {/* <PopularContents data={popularContent} /> */}
+        <PopularContentsCarousel data={popularContent} />
         <Footer />
       </Main>
     </HomePageLayout>
