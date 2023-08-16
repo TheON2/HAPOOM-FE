@@ -2,6 +2,7 @@ import React, { ReactNode, useState } from 'react';
 import Image from 'next/image';
 import styled from 'styled-components';
 import { Line } from '@/styles/signUp';
+import { RightArrow } from './SVG';
 
 type accordianProps = {
   isOpen?: boolean;
@@ -47,19 +48,20 @@ const AccordianMenu = ({ tabText, children }: DroptabProps) => {
     <>
       <AccordianLayout>
         <AccordianTab onClick={onClickDropTabHandler} isOpen={isOpen}>
-          {tabText} <Icon />
+          {tabText}
+          <RightArrow isOpen={isOpen} />
         </AccordianTab>
         {isOpen ? children : null}
       </AccordianLayout>
       {isOpen ? (
         <Line
-          width={'327px'}
+          width={'100%'}
           borderColor={'#A9A9A9'}
           style={{ display: 'none' }}
         ></Line>
       ) : (
         <Line
-          width={'327px'}
+          width={'100%'}
           borderColor={'#A9A9A9'}
           style={{ marginTop: '-20px' }}
         ></Line>
