@@ -7,7 +7,6 @@ import useInput from '@/hooks/useInput';
 import Button from '@/components/common/Button';
 import IconButton from '@/components/common/IconButton';
 import ImageContent from '@/components/Home/ImageContent';
-import Footer from '@/components/common/Footer';
 import { ImageContentsContainer } from '@/styles/imageContainer';
 import { hashtagContentsImages } from '@/public/data';
 import { Cloud } from '@/components/common/SVG';
@@ -142,7 +141,6 @@ const Search = () => {
           <div>user</div>
         )}
       </SearchLayout>
-      <Footer />
     </>
   );
 };

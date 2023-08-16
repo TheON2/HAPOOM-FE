@@ -44,6 +44,7 @@ export const LogoBox = styled(Link)`
   h1 {
     font-size: 24px;
     color: #fff;
+    font-weight: 900;
   }
   img {
     width: 100%;
