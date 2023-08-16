@@ -13,6 +13,7 @@ export const SettingLayout = styled.section`
   max-width: 768px;
   margin: 0 auto;
   padding: 0 24px;
+  border-radius: 25px 25px 0 0;
 `;
 
 export const AccordianContent = styled.div`
