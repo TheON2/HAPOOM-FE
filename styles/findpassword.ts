@@ -2,7 +2,7 @@ import Image from 'next/image';
 import styled from 'styled-components';
 
 const inputBtnBoxWidth = "100%";
-const inputBtnHeight = "36px";
+const inputBtnHeight = "44px";
 const theme = {
   textColor: "#000",
   fontFamily: "Inter",
@@ -11,6 +11,7 @@ const theme = {
 };
 interface Props {
   marginBottom?: string;
+  marginTop?: string;
   color?: string;
   width?: string;
   borderColor?: string;
@@ -42,6 +43,7 @@ export const SubHeadText = styled.h2<Props>`
   font-size: 13px;
   font-weight: 700;
   margin-bottom: ${({ marginBottom }) => marginBottom || '0'};
+  margin-top: ${({ marginTop }) => marginTop || '0'};
 `;
 export const TextParagraph = styled.p`
   color: ${theme.textColor};

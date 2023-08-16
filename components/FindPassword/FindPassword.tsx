@@ -121,12 +121,9 @@ const FindPassword = () => {
   return (
     <FindPwdSection>
       <MainHeadText>HAPOOM</MainHeadText>
-      <SubHeadText color="#000" marginBottom="12px">
-        비밀번호 찾기
+      <SubHeadText color="#000" marginBottom="12px" marginTop="35px">
+        비밀번호 찾기 및 변경
       </SubHeadText>
-      <SocialLogin />
-      <TextParagraphSns>SNS계정으로 간편 로그인/회원가입</TextParagraphSns>
-      <SnsLine></SnsLine>
 
       <form name="register" onSubmit={submitUser}>
         <StyledInputBox>
@@ -146,8 +143,8 @@ const FindPassword = () => {
           <FindPwdBtn
             style={{
               margin: '12px 0 20px 0',
-              backgroundColor: signUpState.email ? '#0078FF' : '#B3B3B3',
-              borderColor: signUpState.email ? '#0078FF' : '#B3B3B3',
+              backgroundColor: signUpState.email ? '#2797FF' : '#B3B3B3',
+              borderColor: signUpState.email ? '#2797FF' : '#B3B3B3',
             }}
             onClick={() => alert('준비 중 입니다.')}
             disabled={!signUpState.email}
@@ -191,13 +188,13 @@ const FindPassword = () => {
               signUpState.email &&
               signUpState.password &&
               signUpState.passwordConfirm
-                ? '#0078FF'
+                ? '#2797FF'
                 : '#B3B3B3',
             borderColor:
               signUpState.email &&
               signUpState.password &&
               signUpState.passwordConfirm
-                ? '#0078FF'
+                ? '#2797FF'
                 : '#B3B3B3',
           }}
           disabled={
@@ -207,7 +204,7 @@ const FindPassword = () => {
           }
           type="submit"
         >
-          로그인 하러가기
+          비밀번호 변경하기
         </FindPwdBtn>
       </form>
     </FindPwdSection>
