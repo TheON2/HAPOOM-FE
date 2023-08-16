@@ -8,7 +8,7 @@ type FlexProps = {
 export const SettingLayout = styled.section`
   display: flex;
   flex-direction: column;
-  height: 1100px;
+  height: auto;
   align-items: center;
   max-width: 768px;
   margin: 0 auto;
@@ -113,8 +113,8 @@ export const ButtonBox = styled.div`
     padding: 12px 16px 8px;
     border-radius: 3px;
     color: #fff;
-    border: 1px solid #0084ff;
-    background-color: #0084ff;
+    border: 1px solid #2797FF;
+    background-color: #2797FF;
     text-align: center;
     cursor: pointer;
   }
@@ -182,4 +182,12 @@ export const TextParagraphPwdCheck = styled.p`
   text-align: left;
   font-size: 10px;
   font-weight: 400;
+`;
+export const LogOutBtn = styled.button`
+  color: #A6A6A6;
+  text-align: center;
+  font-size: 11px;
+  background-color: transparent;
+  border: none;
+  margin: 40px 0;
 `;
