@@ -162,7 +162,7 @@ const SignUpUi = () => {
     });
   };
 
-  const submitUser = (event: any) => {
+  const submitUser = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     let errors: any = {};
