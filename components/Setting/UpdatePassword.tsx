@@ -70,7 +70,10 @@ const UpdatePassword = () => {
   const submitUser = async (event: any) => {
     event.preventDefault();
 
-    let errors: any = {};
+    let errors: Signup = {
+      password: '',
+      passwordConfirm: '',
+    };
 
     if (!signUpState.password) {
       errors.password = '비밀번호를 입력해주세요.';

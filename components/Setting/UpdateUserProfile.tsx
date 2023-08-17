@@ -14,7 +14,9 @@ type profileType = {
 
 const UserProfileImageUpdate = ({ profileImage, preset }: profileType) => {
   const [selectPreset, setSelectPreset] = useState<number>(preset ? preset : 5);
-  const [userProfile, setUserProfile] = useState<any>(profileImage);
+  const [userProfile, setUserProfile] = useState<string | undefined>(
+    profileImage
+  );
 
   const onClickProfileHandler = (idx: number) => {
     setSelectPreset(idx + 1);
@@ -22,14 +24,14 @@ const UserProfileImageUpdate = ({ profileImage, preset }: profileType) => {
   const queryClient = useQueryClient();
 
   const mutate = useMutation(
-  (formData: FormData) => updateUserSetting(formData),
-  {
-    onSuccess: () => {
-      alert('업로드되었습니다.');
-      queryClient.invalidateQueries('userSetting'); // 쿼리를 무효화
-    },
-  }
-);
+    (formData: FormData) => updateUserSetting(formData),
+    {
+      onSuccess: () => {
+        alert('업로드되었습니다.');
+        queryClient.invalidateQueries('userSetting'); // 쿼리를 무효화
+      },
+    }
+  );
 
   const onChangeProfileUpdate = async (
     event: ChangeEvent<HTMLInputElement>
