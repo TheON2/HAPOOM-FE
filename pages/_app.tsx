@@ -92,13 +92,13 @@ function MyApp({ Component, pageProps }: AppProps) {
                   animation: 'fadeIn 0.5s, fadeOut 0.5s 1.5s',
                 }}
               >
-                {randomPosts &&
+                {/* {randomPosts &&
                   randomPosts.map((post, index) => (
                     <div key={index} className="fade-in-post">
                       <h3>{post.title}</h3>
                       <p>{post.content}</p>
                     </div>
-                  ))}
+                  ))} */}
               </div>
             )}
             <Layout>

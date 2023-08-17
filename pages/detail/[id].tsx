@@ -183,7 +183,7 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
     (comment) => addComment(comment),
     {
       onSuccess: () => {
-        alert('성공하냐');
+        alert('댓글 작성에 성공하였습니다.');
       },
     }
   );
@@ -191,7 +191,7 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
     (comment) => updateComment(comment),
     {
       onSuccess: () => {
-        alert('성공하냐');
+        alert('댓글 수정에 성공하였습니다.');
       },
     }
   );
@@ -199,7 +199,7 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
     (comment) => deleteComment(comment),
     {
       onSuccess: () => {
-        alert('성공하냐');
+        alert('댓글을 삭제하였습니다.');
       },
     }
   );
@@ -254,10 +254,10 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
           x: data.post.latitude,
           y: data.post.longitude,
         });
+        setCookie(null, 'userId', data.post.userId, { path: '/' });
       },
     }
   );
-
   const { data: commentsData } = useQuery('comments', () => getComment(id));
 
   if (!isSuccess) return <div>Loading...</div>;
@@ -268,7 +268,7 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
       {/* <ImageContainer> */}
       <ContentsContainer>
         <OtherProfileBox>
-          <Link href={`/User/User/${data?.post?.userId}`}>
+          <Link href={`/User/sss@gmail.com`}>
             <DetailProfile
               userImage={userData?.userImage}
               preset={userData?.preset}
