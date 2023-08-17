@@ -1,4 +1,10 @@
 import styled from 'styled-components';
+import React, { CSSProperties } from 'react';
+
+interface Props {
+  style?: CSSProperties;
+  onClick?: (event: React.MouseEvent<SVGSVGElement>) => void;
+}
 type svgColorProps = {
   fillColor?: string;
 };
