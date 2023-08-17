@@ -325,7 +325,6 @@ const Write: NextPage<Props> = ({ update, updateId }) => {
               </ImageContainer>
             </form>
           </div>
-          <Footer />
           <MobileBottomNav />
         </>
       )}
