@@ -135,14 +135,14 @@ const AlarmBar = ({ className, alarm }: Props) => {
 
 const AlarmContainer = () => {
   const [arr, setArr] = useState(['알림이 도착했습니다.']);
-  console.log(arr);
-  const test = () => {
-    setArr((prevArr) => [...prevArr, '알림2']);
-  };
+  // console.log(arr);
+  // const test = () => {
+  //   setArr((prevArr) => [...prevArr, '알림2']);
+  // };
   return (
     <>
       <AlarmContainerStyle>
-        <button onClick={test}>알림 추가</button>
+        {/* <button onClick={test}>알림 추가</button> */}
         {arr.map((alarm, idx) => {
           return <AlarmBar alarm={alarm} key={idx} />;
         })}
