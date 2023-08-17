@@ -49,7 +49,7 @@ const AccordianMenu = ({ tabText, children }: DroptabProps) => {
       <AccordianLayout>
         <AccordianTab onClick={onClickDropTabHandler} isOpen={isOpen}>
           {tabText}
-          <RightArrow isOpen={isOpen} />
+          <RightArrow />
         </AccordianTab>
         {isOpen ? children : null}
       </AccordianLayout>

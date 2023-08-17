@@ -74,7 +74,7 @@ export const TextParagraph = styled.p`
   font-weight: 700;
 `;
 export const TextSnsParagraph = styled.p`
-  color: #B1B1B1;
+  color: #b1b1b1;
   text-align: center;
   font-size: 10px;
   font-weight: 400;
@@ -134,14 +134,22 @@ export const TextErrorParagraph = styled.p`
   margin-top: 8px;
 `;
 export const SignUpSocialSignUpBox = styled.div`
+  max-width: 200px;
   width: ${theme.inputBtnBoxWidth};
-
-  /* height: 120px; */
-
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 15px;
+  gap: 16px;
+  a {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+  }
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 `;
 export const PwdSignUpSettingPageLink = styled.div`
   display: flex;

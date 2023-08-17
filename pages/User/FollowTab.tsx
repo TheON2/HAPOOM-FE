@@ -71,7 +71,6 @@ const FollowTab: React.FC = () => {
   );
 
   const handleTabClick = (tab: 'followers' | 'followings') => {
-    console.log('Clicked tab:', tab);
     setActiveTab(tab);
   };
 
