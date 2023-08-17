@@ -49,7 +49,7 @@ interface Props {
 const Write: NextPage<Props> = ({ update, updateId }) => {
   const [images, setImages] = useState<File[]>([]);
   const [content, setContent] = useState<string>('');
-  const [musicChoose, setMusicChoose] = useState<number>(1);
+  const [musicChoose, setMusicChoose] = useState<number>(0);
   const [audioFile, setAudioFile] = useState<Blob | null>(null);
   const [slicedAudioFile, setSlicedAudioFile] = useState<Blob | null>(null);
   const [audioURL, setAudioURL] = useState<string | undefined>(undefined);
