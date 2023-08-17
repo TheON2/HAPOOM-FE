@@ -70,6 +70,7 @@ const PostLike: React.FC<PostLike> = ({
       // if (newPost) {
       //   setLikedPosts((prev) => [...prev, newPost]);
       // }
+
     },
     onError: (error) => {
       console.error('Failed to like the post', error);
