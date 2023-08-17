@@ -7,10 +7,6 @@ interface FollowButtonProps {
   profileUserId?: string;
 }
 
-interface ButtonProps {
-  status: '팔로우' | '팔로잉' | '설정';
-}
-
 const ConfirmModal: React.FC<{
   onClose: () => void;
   onConfirm: () => void;
