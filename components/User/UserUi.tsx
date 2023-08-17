@@ -4,12 +4,21 @@ import UserLikePostSuggestion from './UserLikePostSuggestion';
 import PostLike from './PostLike';
 import { useQuery } from 'react-query';
 import { getMyProfile, getUserProfile } from '@/api/user';
-import Header from '../common/Header';
-import Footer from '../common/Footer';
 import { useState } from 'react';
 import FollowButton from './FollowButton';
+import { parseCookies } from 'nookies';
 
 interface Post {}
+
+// setCookie(null, 'update', '2', { path: '/' }); 쿠키를 저장하는법
+
+//const cookies = parseCookies(null); // 클라이언트 측에서 실행되는 경우 null 사용
+// const tabIndexCookie = cookies.tabIndex; // 'myCookie'의 값을 가져옴
+
+interface UserUiProps {
+  userId: string | number;
+  loggedInEmail: string | null;
+}
 
 interface PostImage {
   url: string;
@@ -52,9 +61,15 @@ export interface UserPageData {
   user: UserProfile;
 }
 
-const UserUi = (userId: number) => {
-  const { data, error } = useQuery<UserPageData>('users', () => getMyProfile());
-  console.log(data);
+const UserUi: React.FC<UserUiProps> = ({ userId, loggedInEmail }) => {
+  const isOwnProfile = userId === loggedInEmail;
+  const { data, error } = useQuery<UserPageData>('users', (userId) =>
+    isOwnProfile ? getMyProfile() : getUserProfile(userId)
+  );
+
+  const cookies = parseCookies();
+  const savedUserId = cookies.userId;
+  const savedEmail = cookies.email;
 
   if (error) {
     return <div>Error loading user data.</div>; // or any other error handling component or UI
@@ -62,7 +77,6 @@ const UserUi = (userId: number) => {
 
   return (
     <>
-      <Header />
       <UserPageSection>
         <UserPageContainer>
           <UserProfileCard data={data} />
@@ -71,7 +85,6 @@ const UserUi = (userId: number) => {
           <PostLike data={data} />
         </UserPageContainer>
       </UserPageSection>
-      <Footer />
     </>
   );
 };
