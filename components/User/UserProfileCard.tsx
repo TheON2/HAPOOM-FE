@@ -33,8 +33,8 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({ data }) => {
         alt={'프로필사진'}
         width={51}
         height={51}
-        objectFit={'cover'}
-        quality={70}
+        // objectFit={'cover'}
+        quality={100}
         loading="eager"
       />
       <ProfileContentsBox>

@@ -70,7 +70,6 @@ const PopularContentsCarousel: React.FC<populerCarouselProps> = ({ data }) => {
     handleTouchMove,
     handleTouchEnd,
   } = useSwipe(leftAction, rightAction);
-  console.log(data);
   return (
     <HomeMainSection>
       <div className="center">

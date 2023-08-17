@@ -56,7 +56,6 @@ const UpdateNickName: NextPage<settingProps> = ({ nickname }) => {
       const formData = new FormData();
       formData.append('nickname', nickName ?? '');
       await mutate.mutateAsync(formData);
-      console.log(nickName);
     }
   };
 
@@ -68,7 +67,7 @@ const UpdateNickName: NextPage<settingProps> = ({ nickname }) => {
         onChange={onClickNickName}
       />
       {error && <TextErrorParagraph>{error}</TextErrorParagraph>}
-      <Button type="submit" marginTop={'-12px'}>
+      <Button type="submit" $marginTop={'-12px'}>
         닉네임변경하기
       </Button>
     </form>
