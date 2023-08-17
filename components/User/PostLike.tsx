@@ -15,6 +15,7 @@ import { useMutation } from 'react-query';
 import { getPost, likePost } from '@/api/post';
 import HeartIcon from '../common/HeartIcon';
 import ImageContent from '../Home/ImageContent';
+import { ImageContentsContainer } from '@/styles/imageContainer';
 
 interface PostLike {
   data: UserPageData | undefined;
@@ -44,7 +45,6 @@ const Posts: React.FC<PostProps> = ({
   return (
     <UserImageContainer>
       <ImageContent src={image} alt="게시물 이미지" postId={postId} />
-      {showLikeIcon && <HeartIcon postId={postId} />}
     </UserImageContainer>
   );
 };
@@ -118,21 +118,21 @@ const PostLike: React.FC<PostLike> = ({ data }) => {
           <TabButton
             className="tab-button"
             onClick={handleTabClick(0)}
-            style={selectedTab === 0 ? { color: '#333' } : undefined}
+            style={selectedTab === 0 ? { color: '#000000' } : undefined}
           >
             게시물
           </TabButton>
           <TabButton
             className="tab-button"
             onClick={handleTabClick(1)}
-            style={selectedTab === 1 ? { color: '#333' } : undefined}
+            style={selectedTab === 1 ? { color: '#000000' } : undefined}
           >
             좋아요
           </TabButton>
           <TabButton
             className="tab-button"
             onClick={handleTabClick(2)}
-            style={selectedTab === 2 ? { color: '#333' } : undefined}
+            style={selectedTab === 2 ? { color: '#000000' } : undefined}
           >
             북마크
           </TabButton>
@@ -141,7 +141,7 @@ const PostLike: React.FC<PostLike> = ({ data }) => {
         <TabIndicator width={indicatorStyle.width} left={indicatorStyle.left} />
       </PostContentBox>
       <Line />
-      <PostImageBox>
+      <ImageContentsContainer>
         {displayedPosts?.map((post) => {
           return (
             <Posts
@@ -153,7 +153,7 @@ const PostLike: React.FC<PostLike> = ({ data }) => {
             />
           );
         })}
-      </PostImageBox>
+      </ImageContentsContainer>
     </PostBox>
   );
 };

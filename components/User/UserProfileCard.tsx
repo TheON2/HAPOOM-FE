@@ -9,12 +9,15 @@ import {
 import Image from 'next/image';
 import b1 from '../../public/b1.png';
 import { UserPageData } from './UserUi';
-// import Link from 'next/link';
+import Link from 'next/link';
 
 interface UserProfileCardProps {
   data: UserPageData | undefined;
 }
 
+const handleFollowingClick = (e: React.MouseEvent) => {
+  e.preventDefault();
+};
 const UserProfileCard: React.FC<UserProfileCardProps> = ({ data }) => {
   if (!data) {
     return null;
@@ -37,13 +40,11 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({ data }) => {
       <ProfileContentsBox>
         <NicknameBox>
           <p className="nickName">{data?.user.nickname}</p>
-          <SettingPageLink href={'/setting/Setting'}>설정</SettingPageLink>
         </NicknameBox>
         <FollowBox>
-          {/* <Link href="/User/FollowTab">팔로워 3</Link> */}
-          <p>팔로워 3</p>
+          <Link href="/User/FollowTab?tab=followers">팔로워 3</Link>
           <span>|</span>
-          <p>팔로잉 3</p>
+          <Link href="/User/FollowTab?tab=followings">팔로잉 3</Link>
         </FollowBox>
       </ProfileContentsBox>
     </UserProfileCardBox>
