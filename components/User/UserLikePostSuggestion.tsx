@@ -31,13 +31,6 @@ const UserLikePostSuggestion: React.FC<postsCountProps> = ({ data }) => {
           <InfoNumber>{data?.postsCount}</InfoNumber>
         </InfoContainer>
       </ImageBox>
-      <ImageBox>
-        <Star />
-        <InfoContainer>
-          <InfoText>북마크</InfoText>
-          <InfoNumber>99</InfoNumber>
-        </InfoContainer>
-      </ImageBox>
     </LikePostSuggestionBox>
   );
 };
