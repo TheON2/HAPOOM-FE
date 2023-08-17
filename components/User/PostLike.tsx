@@ -3,7 +3,6 @@ import {
   Line,
   PostBox,
   PostContentBox,
-  PostImageBox,
   TabButton,
   TabContainer,
   TabIndicator,
@@ -57,7 +56,6 @@ const PostLike: React.FC<PostLike> = ({ data }) => {
 
   const mutation = useMutation(likePost, {
     onSuccess: (data, variables) => {
-      console.log('Success');
       const newPost = displayedPosts?.find(
         (post) => post.postId.toString() === variables
       );
@@ -138,7 +136,10 @@ const PostLike: React.FC<PostLike> = ({ data }) => {
           </TabButton>
         </TabContainer>
 
-        <TabIndicator width={indicatorStyle.width} left={indicatorStyle.left} />
+        <TabIndicator
+          width={indicatorStyle.width}
+          $left={indicatorStyle.left}
+        />
       </PostContentBox>
       <Line />
       <ImageContentsContainer>

@@ -48,7 +48,6 @@ const UserProfileImageUpdate = ({ profileImage, preset }: profileType) => {
       imageData.append('image', file[0]);
       imageData.append('preset', '1');
       await mutate.mutateAsync(imageData);
-      console.log('업로드');
     }
   };
 
@@ -115,7 +114,7 @@ const UserProfileImageUpdate = ({ profileImage, preset }: profileType) => {
               프로필 업로드
             </label>
             <input id="profile" type="file" onChange={onChangeProfileUpdate} />
-            <Button marginTop={'0'} type="submit" className="profile-button">
+            <Button $marginTop={'0'} type="submit" className="profile-button">
               프로필 변경
             </Button>
           </ButtonBox>

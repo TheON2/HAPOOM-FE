@@ -46,9 +46,7 @@ interface populerCarouselProps {
 }
 type dataProps = {
   postId: number;
-  image: {
-    url: string;
-  };
+  image: string;
 };
 const PopularContentsCarousel: React.FC<populerCarouselProps> = ({ data }) => {
   const [$active, setActive] = useState<number>(0);
@@ -72,7 +70,6 @@ const PopularContentsCarousel: React.FC<populerCarouselProps> = ({ data }) => {
     handleTouchMove,
     handleTouchEnd,
   } = useSwipe(leftAction, rightAction);
-
   return (
     <HomeMainSection>
       <div className="center">
@@ -89,7 +86,7 @@ const PopularContentsCarousel: React.FC<populerCarouselProps> = ({ data }) => {
             {data.map((item: dataProps, idx: number) => (
               <ImageContent
                 key={idx}
-                src={item.image?.url}
+                src={item.image}
                 alt={'popular content image'}
                 postId={item.postId}
               />

@@ -183,7 +183,7 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
     (comment) => addComment(comment),
     {
       onSuccess: () => {
-        alert('성공하냐');
+        alert('댓글 작성에 성공하였습니다.');
       },
     }
   );
@@ -191,7 +191,7 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
     (comment) => updateComment(comment),
     {
       onSuccess: () => {
-        alert('성공하냐');
+        alert('댓글 수정에 성공하였습니다.');
       },
     }
   );
@@ -199,7 +199,7 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
     (comment) => deleteComment(comment),
     {
       onSuccess: () => {
-        alert('성공하냐');
+        alert('댓글을 삭제하였습니다.');
       },
     }
   );
@@ -254,144 +254,145 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
           x: data.post.latitude,
           y: data.post.longitude,
         });
+        setCookie(null, 'userId', data.post.userId, { path: '/' });
       },
     }
   );
-
   const { data: commentsData } = useQuery('comments', () => getComment(id));
 
   if (!isSuccess) return <div>Loading...</div>;
   return (
-    <div style={{ backgroundColor: ` #2797FF` }}>
+    <>
       <>{!(update === '3' && location.x === 0) && <></>}</>
-      <Header />
       <GlobalStyle />
-      <PageLayout>
-        {/* <ImageContainer> */}
-        <ContentsContainer>
-          <OtherProfileBox>
-            <Link href={`/User/User/${data?.post?.userId}`}>
-              <DetailProfile
-                userImage={userData?.userImage}
-                preset={userData?.preset}
-                nick={userData?.nickname}
+      {/* <ImageContainer> */}
+      <ContentsContainer>
+        <OtherProfileBox>
+          <Link href={`/User/sss@gmail.com`}>
+            <DetailProfile
+              userImage={userData?.userImage}
+              preset={userData?.preset}
+              nick={userData?.nickname}
+            />
+          </Link>
+          <KebabMenuUI>
+            <KebabMenuStyle>
+              <KebabMenuAptionButton onClick={handleDeleteClick}>
+                글 삭제하기 <span></span>
+              </KebabMenuAptionButton>
+              <KebabMenuAptionButton onClick={handleEditClick}>
+                글 수정하기 <span></span>
+              </KebabMenuAptionButton>
+              <KebabMenuAptionButton onClick={handleReportClick}>
+                신고하기 <span></span>
+              </KebabMenuAptionButton>
+            </KebabMenuStyle>
+          </KebabMenuUI>
+        </OtherProfileBox>
+        <div className="carousel-box">
+          <MainBannerSlider data={images} />
+        </div>
+        <DetialContentSection>
+          <HeartIcon postId={parseInt(id)} />
+          <p className="detail-content-text">{content}</p>
+          <HashtagBox>
+            {tags.split(',').map((tag, index) => (
+              <Hashtag key={index}>#{tag.trim()}</Hashtag>
+            ))}
+          </HashtagBox>
+        </DetialContentSection>
+        <DetialContentSection
+          style={{
+            display: `flex`,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          {musicChoose === 1 && (
+            <>
+              <DynamicComponentWithNoSSR
+                videoId={videoId}
+                setVideoId={setVideoId}
+                setSelectedTitle={setSelectedTitle}
               />
-            </Link>
-            <KebabMenuUI>
-              <KebabMenuStyle>
-                <KebabMenuAptionButton onClick={handleDeleteClick}>
-                  글 삭제하기 <span></span>
-                </KebabMenuAptionButton>
-                <KebabMenuAptionButton onClick={handleEditClick}>
-                  글 수정하기 <span></span>
-                </KebabMenuAptionButton>
-                <KebabMenuAptionButton onClick={handleReportClick}>
-                  신고하기 <span></span>
-                </KebabMenuAptionButton>
-              </KebabMenuStyle>
-            </KebabMenuUI>
-          </OtherProfileBox>
-          <div className="carousel-box">
-            <MainBannerSlider data={images} />
+            </>
+          )}
+          {musicChoose === 2 && (
+            <CustomPlayer
+              setAudioUrl={setAudioURL}
+              audioUrl={audioURL}
+              title={musicTitle}
+            />
+          )}
+          {musicChoose === 3 && (
+            <CustomPlayer
+              setAudioUrl={setAudioURL}
+              audioUrl={audioURL}
+              title={musicTitle}
+            />
+          )}
+        </DetialContentSection>
+        <DetialContentSection>
+          <MapComponent
+            setLocation={setLocation}
+            location={location}
+            update={update}
+          />
+        </DetialContentSection>
+        <DetialContentSection>
+          <div className="comments-header">
+            <h3>댓글</h3>
+            <Button onClick={handleCommentCreateHandler}>댓글쓰기</Button>
           </div>
-          <DetialContentSection>
-            <HeartIcon postId={parseInt(id)} />
-            <p className="detail-content-text">{content}</p>
-            <HashtagBox>
-              {tags.split(',').map((tag, index) => (
-                <Hashtag key={index}>#{tag.trim()}</Hashtag>
-              ))}
-            </HashtagBox>
-          </DetialContentSection>
-          <DetialContentSection>
-            {musicChoose === 1 && (
+          {commentsData?.comments.map((comment: any) => {
+            return (
               <>
-                <DynamicComponentWithNoSSR
-                  videoId={videoId}
-                  setVideoId={setVideoId}
-                  setSelectedTitle={setSelectedTitle}
+                <Comment
+                  onClickUpdateEvent={handleCommentEditHandler}
+                  onClcikDeleteEvent={onClickDeleteCommentHandler}
+                  data={comment}
                 />
               </>
-            )}
-            {musicChoose === 2 && (
-              <CustomPlayer
-                setAudioUrl={setAudioURL}
-                audioUrl={audioURL}
-                title={musicTitle}
-              />
-            )}
-            {musicChoose === 3 && (
-              <CustomPlayer
-                setAudioUrl={setAudioURL}
-                audioUrl={audioURL}
-                title={musicTitle}
-              />
-            )}
-          </DetialContentSection>
-          <DetialContentSection>
-            <MapComponent
-              setLocation={setLocation}
-              location={location}
-              update={update}
-            />
-          </DetialContentSection>
-          <DetialContentSection>
-            <div className="comments-header">
-              <h3>댓글</h3>
-              <Button onClick={handleCommentCreateHandler}>댓글쓰기</Button>
-            </div>
-            {commentsData?.comments.map((comment: any) => {
-              return (
-                <>
-                  <Comment
-                    onClickUpdateEvent={handleCommentEditHandler}
-                    onClcikDeleteEvent={onClickDeleteCommentHandler}
-                    data={comment}
-                  />
-                </>
-              );
-            })}
-          </DetialContentSection>
-        </ContentsContainer>
-        <ImageContainer>
-          {/* <DynamicComponentWithNoSSR
+            );
+          })}
+        </DetialContentSection>
+      </ContentsContainer>
+      <ImageContainer>
+        {/* <DynamicComponentWithNoSSR
               videoId={videoId}
               setVideoId={setVideoId}
               setSelectedTitle={setSelectedTitle}
             /> */}
-        </ImageContainer>
-        {/* </ImageContainer> */}
-        {isShow ? (
-          <UpAndDownTab
-            onClickEvent={handleCommentShowHandler}
-            $isUp={commentEdit.show}
-          >
-            <DetialContentSection>
-              <CommentForm onSubmit={onSubmitHandler}>
-                <div className="comments-header">
-                  <h3>{commentEdit.uiTitle}</h3>
-                  <div className="button-box">
-                    <Button onClick={handleCommentExitHandler}>닫기</Button>
-                    <Button type="submit">{commentEdit.buttonText}</Button>
-                  </div>
+      </ImageContainer>
+      {/* </ImageContainer> */}
+      {isShow ? (
+        <UpAndDownTab
+          onClickEvent={handleCommentShowHandler}
+          $isUp={commentEdit.show}
+        >
+          <DetialContentSection>
+            <CommentForm onSubmit={onSubmitHandler}>
+              <div className="comments-header">
+                <h3>{commentEdit.uiTitle}</h3>
+                <div className="button-box">
+                  <Button onClick={handleCommentExitHandler}>닫기</Button>
+                  <Button type="submit">{commentEdit.buttonText}</Button>
                 </div>
-                <div>
-                  <textarea
-                    name=""
-                    id=""
-                    placeholder="댓글을 입력해주세요"
-                    value={comment}
-                    onChange={onChangeCommentHandler}
-                  />
-                </div>
-              </CommentForm>
-            </DetialContentSection>
-          </UpAndDownTab>
-        ) : null}
-        <Footer />
-      </PageLayout>
-      <MobileBottomNav />
-    </div>
+              </div>
+              <div>
+                <textarea
+                  name=""
+                  id=""
+                  placeholder="댓글을 입력해주세요"
+                  value={comment}
+                  onChange={onChangeCommentHandler}
+                />
+              </div>
+            </CommentForm>
+          </DetialContentSection>
+        </UpAndDownTab>
+      ) : null}
+    </>
   );
 };
 

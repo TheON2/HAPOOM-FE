@@ -51,7 +51,7 @@ const Modal: React.FC<ModalProps> = ({
               </ModalButtons>
             </ModalContainer>
           </ModalBackground>,
-          document.getElementById('modal-root')
+          document.getElementById('modal-root') as HTMLDivElement
         )}
     </>
   );

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   SignUpSection,
   MainHeadText,
@@ -24,6 +24,7 @@ import { addUser } from '@/api/user';
 import { useRouter } from 'next/router';
 import MobileBottomNav from '../common/MobileBottomNav';
 import SocialLogin from '../SignIn/SocialLogIn';
+import { SecretEye } from '../common/SVG';
 
 export interface Signup {
   email: string;
@@ -68,6 +69,23 @@ const SignUpUi = () => {
     checkNewsletter: false,
   });
   const [checkboxErrorMessage, setCheckboxErrorMessage] = useState('');
+  const [passwordInputType, setPasswordInputType] = useState<
+    'password' | 'text'
+  >('password');
+  const [passwordConfirmInputType, setPasswordConfirmInputType] = useState<
+    'password' | 'text'
+  >('password');
+
+  const togglePasswordVisibility = () => {
+    setPasswordInputType(
+      passwordInputType === 'password' ? 'text' : 'password'
+    );
+  };
+  const togglePasswordConfirmVisibility = () => {
+    setPasswordConfirmInputType(
+      passwordConfirmInputType === 'password' ? 'text' : 'password'
+    );
+  };
 
   const addUserMutation = useMutation(addUser, {
     onSuccess: () => {
@@ -143,7 +161,7 @@ const SignUpUi = () => {
     });
   };
 
-  const submitUser = (event: any) => {
+  const submitUser = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     let errors: any = {};
@@ -205,7 +223,7 @@ const SignUpUi = () => {
   return (
     <SignUpSection>
       <MainHeadText>HAPOOM</MainHeadText>
-      <SubHeadText color="#000" marginBottom="12px">
+      <SubHeadText color="#000" $marginBottom="12px">
         회원가입
       </SubHeadText>
       <SocialLogin />
@@ -214,7 +232,7 @@ const SignUpUi = () => {
 
       <form name="register" onSubmit={submitUser}>
         <StyledInputBox>
-          <TextParagraphInfo marginBottom="12px">이메일</TextParagraphInfo>
+          <TextParagraphInfo $marginBottom="12px">이메일</TextParagraphInfo>
           <StyledInput
             type="email"
             name="email"
@@ -241,27 +259,47 @@ const SignUpUi = () => {
         </StyledInputBox>
 
         <StyledInputBox>
-          <TextParagraphInfo marginBottom="7px">비밀번호</TextParagraphInfo>
+          <TextParagraphInfo $marginBottom="7px">비밀번호</TextParagraphInfo>
           <TextParagrapValidate>
             영문, 숫자를 포함한 8자 이상의 비밀번호를 입력해주세요.
           </TextParagrapValidate>
           <StyledInput
-            type="password"
+            type={passwordInputType}
             name="password"
             value={signUpState.password}
             placeholder="비밀번호"
             onChange={handleInputChange}
+          />
+          <SecretEye
+            onClick={togglePasswordVisibility}
+            style={{
+              position: 'absolute',
+              right: '10px',
+              top: '50%',
+              transform: 'translateY(-50%)',
+              cursor: 'pointer',
+            }}
           />
           {error.password && (
             <TextErrorParagraph>{error.password}</TextErrorParagraph>
           )}
           <TextParagraphInfo>비밀번호 확인</TextParagraphInfo>
           <StyledInput
-            type="password"
+            type={passwordConfirmInputType}
             name="passwordConfirm"
             value={signUpState.passwordConfirm}
             placeholder="비밀번호 확인"
             onChange={handleInputChange}
+          />
+          <SecretEye
+            onClick={togglePasswordConfirmVisibility}
+            style={{
+              position: 'absolute',
+              right: '10px',
+              top: '50%',
+              transform: 'translateY(-50%)',
+              cursor: 'pointer',
+            }}
           />
           {error.passwordConfirm && (
             <TextErrorParagraph>{error.passwordConfirm}</TextErrorParagraph>

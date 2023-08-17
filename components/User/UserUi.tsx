@@ -16,7 +16,7 @@ interface Post {}
 // const tabIndexCookie = cookies.tabIndex; // 'myCookie'의 값을 가져옴
 
 interface UserUiProps {
-  userId: string | number;
+  userId: string;
   loggedInEmail: string | null;
 }
 
@@ -41,7 +41,7 @@ export interface UserPost {
   id: number;
   content: string;
   createdAt: string;
-  image: PostImage;
+  image: string;
   latitude: number;
   longitude: number;
   musicTitle: string;
@@ -51,25 +51,25 @@ export interface UserPost {
   tag: string;
   updatedAt: string;
   userId: number;
+  postId: number;
 }
 
 export interface UserPageData {
-  likePosts: Post[];
+  likePosts: UserPost[];
   likePostsCount: number;
-  posts: Post[];
+  posts: UserPost[];
   postsCount: number;
   user: UserProfile;
 }
 
 const UserUi: React.FC<UserUiProps> = ({ userId, loggedInEmail }) => {
   const isOwnProfile = userId === loggedInEmail;
-  const { data, error } = useQuery<UserPageData>('users', (userId) =>
-    isOwnProfile ? getMyProfile() : getUserProfile(userId)
-  );
-
   const cookies = parseCookies();
   const savedUserId = cookies.userId;
   const savedEmail = cookies.email;
+  const { data, error } = useQuery<UserPageData>('users', () =>
+    isOwnProfile ? getMyProfile() : getUserProfile({ savedUserId })
+  );
 
   if (error) {
     return <div>Error loading user data.</div>; // or any other error handling component or UI

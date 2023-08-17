@@ -96,6 +96,10 @@ export const FollowButtonStyled = styled.button`
   }
 `;
 
+type TabUnderlineProps = {
+  activeTab: 'followers' | 'followings';
+};
+
 export const TabUnderline = styled.div.attrs<TabUnderlineProps>((props) => ({
   activeTab: props.activeTab,
 }))`

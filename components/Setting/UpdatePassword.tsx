@@ -132,7 +132,7 @@ const UpdatePassword = () => {
             <TextErrorParagraph>{error.passwordConfirm}</TextErrorParagraph>
           )}
         </InputBox>
-        <Button type="submit" marginTop={'10px'}>
+        <Button type="submit" $marginTop={'10px'}>
           비밀번호 수정
         </Button>
       </form>
