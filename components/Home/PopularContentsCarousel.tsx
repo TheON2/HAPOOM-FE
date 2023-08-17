@@ -83,12 +83,20 @@ const PopularContentsCarousel: React.FC<populerCarouselProps> = ({ data }) => {
           onTouchEnd={handleTouchEnd}
         >
           <Carousel $active={$active} setActive={setActive}>
-            {data.map((item: dataProps, idx: number) => (
+            {/* {data.map((item: dataProps, idx: number) => (
               <ImageContent
                 key={idx}
                 src={item.image}
                 alt={'popular content image'}
                 postId={item.postId}
+              />
+            ))} */}
+            {Images.map((item: any, idx: number) => (
+              <ImageContent
+                key={idx}
+                src={item}
+                alt={'popular content image'}
+                postId={idx}
               />
             ))}
           </Carousel>
