@@ -109,7 +109,7 @@ export const PlayerControls = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  background-color: #333;
+  background-color: whitesmoke;
   color: white;
   padding: 10px;
 `;
@@ -153,7 +153,7 @@ export const CustomPlayerWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: #222;
+  background: #0084ff;
   border-radius: 45px;
   overflow: hidden;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
@@ -187,13 +187,13 @@ export const SeekControls = styled.div`
   align-items: center;
   width: 100%;
   background-color: #333;
-  color: white;
+  color: black;
   padding: 5px;
   margin-top: 5px;
 `;
 
 export const TimeLabel = styled.span`
-  color: white;
+  color: black;
   font-size: 12px;
   margin: 0 5px;
 `;

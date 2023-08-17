@@ -195,8 +195,8 @@ export const YouTubeSearch = ({
                 src={suggestion.thumbnail}
                 alt={suggestion.title}
                 style={{ marginRight: '10px' }}
-                width={100}
-                height={100}
+                width={50}
+                height={50}
               />
               {suggestion.title}
             </SuggestionItem>

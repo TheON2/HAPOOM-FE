@@ -1,34 +1,74 @@
-import { FollowBtn } from '@/styles/user';
 import Link from 'next/link';
-import React from 'react';
+import { FollowBtn } from '@/styles/user';
+import React, { useState, useEffect } from 'react';
 
 interface FollowButtonProps {
-  currentUserId: string; // 현재 로그인한 사용자의 아이디
-  profileUserId: string; // 현재 페이지에서 보고 있는 프로필의 아이디
+  currentUserId: string;
+  profileUserId: string;
 }
+
+const ConfirmModal: React.FC<{
+  onClose: () => void;
+  onConfirm: () => void;
+}> = ({ onClose, onConfirm }) => {
+  return (
+    <div>
+      언팔로우 하시겠습니까?
+      <button onClick={onConfirm}>예</button>
+      <button onClick={onClose}>아니오</button>
+    </div>
+  );
+};
 
 const FollowButton: React.FC<FollowButtonProps> = ({
   currentUserId,
   profileUserId,
 }) => {
-  if (currentUserId === profileUserId) {
-    // 현재 사용자가 자신의 프로필을 보고 있을 경우 "설정" 버튼을 표시
-    return (
-      <FollowBtn>
-        {/* Link 태그로 버튼을 감싸고, href 속성을 설정 페이지의 경로로 설정 */}
-        <Link href="/Setting">
-          <button>설정</button>
-        </Link>
-      </FollowBtn>
-    );
-  } else {
-    // 현재 사용자가 다른 사람의 프로필을 보고 있을 경우 "팔로우" 버튼을 표시
-    return (
-      <FollowBtn>
-        <button>팔로우</button>
-      </FollowBtn>
-    );
-  }
+  const [isFollowing, setIsFollowing] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    // TODO: API 호출 로직 추가
+    // 임시 팔로우 상태 설정
+    setIsFollowing(false);
+  }, [currentUserId, profileUserId]);
+
+  const handleFollowClick = () => {
+    if (isFollowing) {
+      setIsModalOpen(true);
+    } else {
+      setIsFollowing(true);
+    }
+  };
+
+  const handleConfirmUnfollow = () => {
+    setIsFollowing(false);
+    setIsModalOpen(false);
+  };
+
+  return (
+    <>
+      {currentUserId === profileUserId ? (
+        <FollowBtn status="설정">
+          <Link href="/setting/Setting">
+            <button>설정</button>
+          </Link>
+        </FollowBtn>
+      ) : (
+        <FollowBtn status={isFollowing ? '팔로잉' : '팔로우'}>
+          <button onClick={handleFollowClick}>
+            {isFollowing ? '팔로잉' : '팔로우'}
+          </button>
+        </FollowBtn>
+      )}
+      {isModalOpen && (
+        <ConfirmModal
+          onClose={() => setIsModalOpen(false)}
+          onConfirm={handleConfirmUnfollow}
+        />
+      )}
+    </>
+  );
 };
 
 export default FollowButton;

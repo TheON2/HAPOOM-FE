@@ -88,6 +88,7 @@ type CommentDelete = {
 
 const Detail: NextPage<Props> = ({ update, updateId }) => {
   const router = useRouter();
+  const dispatch = useDispatch();
   const id = typeof router.query.id === 'string' ? router.query.id : '';
   const [images, setImages] = useState<File[]>([]);
   const [content, setContent] = useState<string>('');
@@ -220,7 +221,9 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
     }
   };
 
-  const dispatch = useDispatch();
+  const isClientSide = typeof window !== 'undefined';
+  const tokenExists = isClientSide ? !!localStorage.getItem('token') : false;
+
   const { data: userData, isSuccess: tokenSuccess } = useQuery(
     'user',
     getAuthToken,
@@ -228,6 +231,7 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
       onSuccess: (userData: UserResponse) => {
         dispatch(AUTH_USER(userData));
       },
+      enabled: tokenExists,
       cacheTime: 0,
     }
   );
@@ -291,7 +295,7 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
             <MainBannerSlider data={images} />
           </div>
           <DetialContentSection>
-            <HeartIcon postId={id} />
+            <HeartIcon postId={parseInt(id)} />
             <p className="detail-content-text">{content}</p>
             <HashtagBox>
               {tags.split(',').map((tag, index) => (
