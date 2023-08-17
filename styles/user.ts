@@ -148,7 +148,6 @@ export const ImageBox = styled.div`
 `;
 
 export const PostBox = styled.div`
-  max-width: 320px;
   text-align: center;
   margin: auto;
 `;
@@ -169,28 +168,11 @@ export const Line = styled.div`
   margin: 10px 0;
   border-bottom: 1px solid black;
 `;
-export const PostImageBox = styled.div`
-  max-width: 1200px;
-  width: 100%;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  place-items: center;
-  justify-content: center;
-  align-items: center;
-  grid-gap: 4px;
-  @media screen and (max-width: 1260px) {
-    grid-template-columns: repeat(3, 1fr);
-  }
-  @media screen and (max-width: 768px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-`;
 
 export const UserImageContainer = styled.div`
   max-width: 1200px;
-  width: 158px;
-  height: 158px;
+  width: 100%;
+  height: 100%;
 
   img {
     height: 100%;
@@ -208,8 +190,7 @@ export const PostImage = styled(Image)`
 `;
 export const TabContainer = styled.div`
   display: flex;
-  width: 320px;
-  padding: 0 12px;
+  width: 100%;
 `;
 export const TabButton = styled.div`
   flex: 1;

@@ -71,10 +71,6 @@ const UserUi: React.FC<UserUiProps> = ({ userId, loggedInEmail }) => {
   const savedUserId = cookies.userId;
   const savedEmail = cookies.email;
 
-  console.log(isOwnProfile);
-  console.log(userId);
-  console.log(loggedInEmail);
-
   if (error) {
     return <div>Error loading user data.</div>; // or any other error handling component or UI
   }

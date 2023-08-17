@@ -15,6 +15,7 @@ import { useMutation } from 'react-query';
 import { getPost, likePost } from '@/api/post';
 import HeartIcon from '../common/HeartIcon';
 import ImageContent from '../Home/ImageContent';
+import { ImageContentsContainer } from '@/styles/imageContainer';
 
 interface PostLike {
   data: UserPageData | undefined;
@@ -44,7 +45,6 @@ const Posts: React.FC<PostProps> = ({
   return (
     <UserImageContainer>
       <ImageContent src={image} alt="게시물 이미지" postId={postId} />
-      <HeartIcon postId={postId} />
     </UserImageContainer>
   );
 };
@@ -141,7 +141,7 @@ const PostLike: React.FC<PostLike> = ({ data }) => {
         <TabIndicator width={indicatorStyle.width} left={indicatorStyle.left} />
       </PostContentBox>
       <Line />
-      <PostImageBox>
+      <ImageContentsContainer>
         {displayedPosts?.map((post) => {
           return (
             <Posts
@@ -153,7 +153,7 @@ const PostLike: React.FC<PostLike> = ({ data }) => {
             />
           );
         })}
-      </PostImageBox>
+      </ImageContentsContainer>
     </PostBox>
   );
 };

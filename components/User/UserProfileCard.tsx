@@ -16,9 +16,7 @@ interface UserProfileCardProps {
 }
 
 const handleFollowingClick = (e: React.MouseEvent) => {
-  e.preventDefault(); // 기본 이벤트를 방지합니다.
-  console.log('Following link clicked. Data:', data);
-  // 여기서 원하는 로직을 추가할 수 있습니다.
+  e.preventDefault();
 };
 const UserProfileCard: React.FC<UserProfileCardProps> = ({ data }) => {
   if (!data) {
