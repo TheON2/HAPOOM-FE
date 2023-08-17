@@ -28,6 +28,10 @@ import RecordPlayer from '@/components/Write/RecordPlayer';
 import CustomPlayer from '@/components/Write/CustomPlayer';
 import MusicSelector from '@/components/Write/MusicSelector';
 import { Form } from 'react-bootstrap';
+import Accordion from '@/components/Write/Accordion';
+import youtube from '@/public/youtube.png';
+import music from '@/public/music.png';
+import record from '@/public/record.png';
 
 const DynamicComponentWithNoSSR = dynamic(
   () => import('@/components/Write/YoutubePlayer'),
@@ -45,7 +49,7 @@ interface Props {
 const Write: NextPage<Props> = ({ update, updateId }) => {
   const [images, setImages] = useState<File[]>([]);
   const [content, setContent] = useState<string>('');
-  const [musicChoose, setMusicChoose] = useState<number>(1);
+  const [musicChoose, setMusicChoose] = useState<number>(0);
   const [audioFile, setAudioFile] = useState<Blob | null>(null);
   const [slicedAudioFile, setSlicedAudioFile] = useState<Blob | null>(null);
   const [audioURL, setAudioURL] = useState<string | undefined>(undefined);
@@ -77,6 +81,15 @@ const Write: NextPage<Props> = ({ update, updateId }) => {
 
   const removeImage = (index: number) => {
     setImages((images) => images.filter((_, i) => i !== index));
+  };
+
+  const handleAccordionClick = (value: number) => {
+    // 현재 선택된 아코디언과 클릭한 아코디언이 같으면 닫히고, 그렇지 않으면 열립니다.
+    if (musicChoose === value) {
+      setMusicChoose(0); // 0은 닫힌 상태를 나타냅니다.
+    } else {
+      setMusicChoose(value);
+    }
   };
 
   const handlePostSubmit = (event: FormEvent) => {
@@ -203,7 +216,53 @@ const Write: NextPage<Props> = ({ update, updateId }) => {
               </ImageContainer>
               <ImageContainer>
                 <ContentArea content={content} setContent={setContent} />
-                <Form.Group controlId="musicChooseSelect">
+                <div>
+                  <Accordion
+                    image={youtube}
+                    selected={musicChoose === 1}
+                    onClick={() => handleAccordionClick(1)}
+                  >
+                    <>
+                      <YouTubeSearch
+                        setVideoId={setVideoId}
+                        selectedTitle={selectedTitle}
+                        setSelectedTitle={setSelectedTitle}
+                        update={update}
+                        videoId={videoId}
+                      />
+                      <DynamicComponentWithNoSSR
+                        videoId={videoId}
+                        setVideoId={setVideoId}
+                        setSelectedTitle={setSelectedTitle}
+                      />
+                    </>
+                  </Accordion>
+                  <Accordion
+                    image={music}
+                    selected={musicChoose === 2}
+                    onClick={() => handleAccordionClick(2)}
+                  >
+                    <MusicSelector
+                      musicURL={musicURL}
+                      setMusicURL={setMusicURL}
+                    />
+                  </Accordion>
+                  <Accordion
+                    image={record}
+                    selected={musicChoose === 3}
+                    onClick={() => handleAccordionClick(3)}
+                  >
+                    <RecordPlayer
+                      setAudioFile={setAudioFile}
+                      setSlicedAudioFile={setSlicedAudioFile}
+                      setSlicedAudioURL={setSlicedAudioURL}
+                      slicedAudioURL={slicedAudioURL}
+                      audioURL={audioURL}
+                      setAudioURL={setAudioURL}
+                    />
+                  </Accordion>
+                </div>
+                {/* <Form.Group controlId="musicChooseSelect">
                   <Form.Label>음악 선택</Form.Label>
                   <Form.Select
                     size="lg"
@@ -217,8 +276,8 @@ const Write: NextPage<Props> = ({ update, updateId }) => {
                     <option value={2}>Music Selector</option>
                     <option value={3}>Record Player</option>
                   </Form.Select>
-                </Form.Group>
-                {musicChoose === 1 && (
+                </Form.Group> */}
+                {/* {musicChoose === 1 && (
                   <>
                     <YouTubeSearch
                       setVideoId={setVideoId}
@@ -249,7 +308,7 @@ const Write: NextPage<Props> = ({ update, updateId }) => {
                     audioURL={audioURL}
                     setAudioURL={setAudioURL}
                   />
-                )}
+                )} */}
                 <TagInput tags={tags} setTags={setTags} />
                 <MapComponent
                   setLocation={setLocation}
