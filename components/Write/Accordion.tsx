@@ -9,12 +9,12 @@ const AccordionWrapper = styled.div`
 const AccordionButton = styled.button`
   background-color: #f1f1f1;
   cursor: pointer;
-  width: 100%;
-  text-align: left;
+  width: 400px;
+  //text-align: left;
   border: none;
   outline: none;
   transition: 0.4s;
-  display: flex;
+  //display: flex;
   align-items: center; // Image를 중앙에 배치
   &:hover,
   &.active {
