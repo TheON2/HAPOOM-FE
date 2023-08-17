@@ -66,8 +66,6 @@ const Write: NextPage<Props> = ({ update, updateId }) => {
 
   const dispatch = useDispatch();
 
-  console.log(update, updateId);
-
   const { data: userData, isSuccess: tokenSuccess } = useQuery(
     'user',
     getAuthToken,
@@ -200,7 +198,6 @@ const Write: NextPage<Props> = ({ update, updateId }) => {
     <>
       {!(update === '2' && location.x === 0) && (
         <>
-          <Header />
           <div style={{ minHeight: '800px' }}>
             <GlobalStyle />
             <form
@@ -325,8 +322,6 @@ const Write: NextPage<Props> = ({ update, updateId }) => {
               </ImageContainer>
             </form>
           </div>
-          <Footer />
-          <MobileBottomNav />
         </>
       )}
     </>

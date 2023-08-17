@@ -218,7 +218,7 @@ export const TabButton = styled.div`
     transition: 0.3s;
   }
 `;
-export const TabIndicator = styled.span<{ width: number; left: number }>`
+export const TabIndicator = styled.span<{ width: number; $left: number }>`
   position: absolute;
   bottom: -13px;
   height: 3px;
@@ -226,43 +226,41 @@ export const TabIndicator = styled.span<{ width: number; left: number }>`
   height: 5px;
   background-color: #2797ff;
   width: ${({ width }) => `${width}px`};
-  left: ${({ left }) => `${left}px`};
+  left: ${({ $left }) => `${$left}px`};
   z-index: 1;
 `;
 
 interface ButtonProps {
-  status: '팔로우' | '팔로잉' | '언팔로우' | '설정';
+  $status: '팔로우' | '팔로잉' | '언팔로우' | '설정';
 }
 
-export const FollowBtn = styled.button<ButtonProps>`
+export const FollowBtn = styled.div<ButtonProps>`
+  max-width: 300px;
   width: 100%;
   border: none;
-  background-color: white;
+  margin: 0 auto;
+  padding: 8px 0;
+  text-align: center;
+  border: none;
+  font-weight: 700px;
+  border-radius: 3px;
+  box-shadow: 1px 2px 3px 0px rgba(0, 0, 0, 0.3);
 
-  button {
-    width: 251px;
-    height: 36px;
-    border: none;
-    font-weight: 700px;
-    border-radius: 3px;
-    box-shadow: 1px 2px 3px 0px rgba(0, 0, 0, 0.3);
-
-    background-color: ${({ status }) => {
-      switch (status) {
-        case '팔로우':
-          return '#2797ff';
-        case '팔로잉':
-          return '#D9D9D9';
-        case '언팔로우':
-          return '#FF6666';
-        case '설정':
-          return '#2797ff';
-        default:
-          return '#2797ff';
-      }
-    }};
-    color: white;
-  }
+  background-color: ${({ $status }) => {
+    switch ($status) {
+      case '팔로우':
+        return '#2797ff';
+      case '팔로잉':
+        return '#D9D9D9';
+      case '언팔로우':
+        return '#FF6666';
+      case '설정':
+        return '#2797ff';
+      default:
+        return '#2797ff';
+    }
+  }};
+  color: white;
 `;
 
 export const SettingBtn = styled.div`

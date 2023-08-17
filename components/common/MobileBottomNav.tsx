@@ -28,7 +28,7 @@ const BOTTOM_NAV = [
 ];
 
 type onClickProps = {
-  active: number;
+  $active: number;
 };
 
 const ActiveBar = styled.span<onClickProps>`
@@ -39,7 +39,7 @@ const ActiveBar = styled.span<onClickProps>`
   /* background-color: #0084ff; */
   top: 0;
   left: 24px;
-  transform: ${(props) => `translate( ${props.active * 100}%,  -100%)`};
+  transform: ${(props) => `translate( ${props.$active * 100}%,  -100%)`};
   transition: all 0.3s ease-in-out;
   &::after {
     content: '';
@@ -92,7 +92,7 @@ const MobileBottomNav = () => {
         })}
         <BottomNavItem>
           <IconBox
-            onClick={() => onClickNavIconHandler(3, '/User/User')}
+            onClick={() => onClickNavIconHandler(3, `/User/${user.email}`)}
             className={active === 3 ? 'active' : ''}
           >
             <div className="image-box">
@@ -106,7 +106,7 @@ const MobileBottomNav = () => {
           </IconBox>
         </BottomNavItem>
       </BottomNavList>
-      <ActiveBar active={active}></ActiveBar>
+      <ActiveBar $active={active}></ActiveBar>
     </MobileBottomNavLayout>
   );
 };
