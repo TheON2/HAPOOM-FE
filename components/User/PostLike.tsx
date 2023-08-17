@@ -1,4 +1,4 @@
-import React, { MouseEventHandler, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Line,
   PostBox,
@@ -8,23 +8,27 @@ import {
   TabIndicator,
   UserImageContainer,
 } from '@/styles/user';
-import Image from 'next/image';
 import { UserPost, UserPageData } from './UserUi';
 import { useMutation } from 'react-query';
-import { getPost, likePost } from '@/api/post';
-import HeartIcon from '../common/HeartIcon';
+import { likePost } from '@/api/post';
 import ImageContent from '../Home/ImageContent';
 import { ImageContentsContainer } from '@/styles/imageContainer';
 
 interface PostLike {
-  data: UserPageData | undefined;
+  data: LocalUserPageData | undefined;
+}
+
+interface LocalUserPageData {
+  likePosts: UserPost[];
+  likedPosts: UserPost[];
+  posts: UserPost[];
 }
 
 interface PostProps {
   image: string;
   postId: number;
   showLikeIcon?: boolean;
-  handleLikeClick: MouseEventHandler<HTMLImageElement>;
+  handleLikeClick: (postId: number, isLiked: boolean) => void;
 }
 const Posts: React.FC<PostProps> = ({
   image,
@@ -35,53 +39,65 @@ const Posts: React.FC<PostProps> = ({
   const [isLike, setIsLike] = useState<boolean>(false);
   const mutation = useMutation((postId: string) => likePost(postId));
 
-  const onLikeClickHandler = (postId: number, event: React.MouseEvent) => {
+  const onLikeClickHandler = (event: React.MouseEvent) => {
     event.stopPropagation();
     setIsLike(!isLike);
-    mutation.mutate(postId.toString());
+    handleLikeClick(postId, !isLike);
   };
 
   return (
-    <UserImageContainer>
+    <UserImageContainer onClick={onLikeClickHandler}>
       <ImageContent src={image} alt="게시물 이미지" postId={postId} />
     </UserImageContainer>
   );
 };
 
-const PostLike: React.FC<PostLike> = ({ data }) => {
+const PostLike: React.FC<PostLike> = ({
+  data = { likePosts: [], likedPosts: [], posts: [] },
+}) => {
   const [selectedTab, setSelectedTab] = useState(0);
   const [indicatorStyle, setIndicatorStyle] = useState({ width: 0, left: 0 });
   const [displayedPosts, setDisplayedPosts] = useState<UserPost[] | null>(null);
-  const [likedPosts, setLikedPosts] = useState<UserPost[]>([]);
+  const [likedPosts, setLikedPosts] = useState<UserPost[]>(
+    data?.likedPosts || []
+  );
 
   const mutation = useMutation(likePost, {
     onSuccess: (data, variables) => {
-      const newPost = displayedPosts?.find(
-        (post) => post.postId.toString() === variables
-      );
-      if (newPost) {
-        setLikedPosts((prev) => [...prev, newPost]);
-      }
+      // const newPost = displayedPosts?.find(
+      //   (post) => post.postId.toString() === variables
+      // );
+      // if (newPost) {
+      //   setLikedPosts((prev) => [...prev, newPost]);
+      // }
     },
     onError: (error) => {
       console.error('Failed to like the post', error);
     },
   });
 
-  const handleLikeClick: React.MouseEventHandler<HTMLImageElement> = (
-    event
-  ) => {
-    const postId = event.currentTarget.getAttribute('data-post-id');
-    if (postId) {
-      mutation.mutate(postId);
+  const handleLikeClick = (postId: number, isLiked: boolean) => {
+    if (isLiked) {
+      // 좋아요 눌린 경우, likedPosts에 추가
+      const post = data?.posts.find((p) => p.postId === postId);
+      if (post) {
+        setLikedPosts((prevPosts) => [...prevPosts, post]);
+      }
+    } else {
+      // 좋아요 취소된 경우, likedPosts에서 제거
+      setLikedPosts((prevPosts) =>
+        prevPosts.filter((p) => p.postId !== postId)
+      );
     }
   };
 
   useEffect(() => {
-    if (data) {
-      setDisplayedPosts(data.posts);
+    if (selectedTab === 0) {
+      setDisplayedPosts(data?.posts ?? null);
+    } else if (selectedTab === 1) {
+      setDisplayedPosts(data?.likedPosts);
     }
-  }, [data, displayedPosts]);
+  }, [data, likedPosts, selectedTab]);
 
   useEffect(() => {
     const updateIndicator = () => {
@@ -105,8 +121,6 @@ const PostLike: React.FC<PostLike> = ({ data }) => {
         setDisplayedPosts(data?.posts ?? null);
       } else if (index === 1) {
         setDisplayedPosts(likedPosts);
-      } else {
-        // ... 다른 탭에 대한 로직 ...
       }
     };
   return (
@@ -142,7 +156,7 @@ const PostLike: React.FC<PostLike> = ({ data }) => {
               key={post.postId}
               image={post.image}
               postId={post.postId}
-              showLikeIcon={selectedTab === 1}
+              showLikeIcon={selectedTab === 1} // 좋아요 탭에서만 아이콘을 표시
               handleLikeClick={handleLikeClick}
             />
           );
