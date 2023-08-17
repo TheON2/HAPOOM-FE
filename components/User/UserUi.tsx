@@ -10,8 +10,13 @@ import { parseCookies } from 'nookies';
 
 interface Post {}
 
+// setCookie(null, 'update', '2', { path: '/' }); 쿠키를 저장하는법
+
+//const cookies = parseCookies(null); // 클라이언트 측에서 실행되는 경우 null 사용
+// const tabIndexCookie = cookies.tabIndex; // 'myCookie'의 값을 가져옴
+
 interface UserUiProps {
-  userId: string | number;
+  userId: string;
   loggedInEmail: string | null;
 }
 
@@ -36,7 +41,7 @@ export interface UserPost {
   id: number;
   content: string;
   createdAt: string;
-  image: PostImage;
+  image: string;
   latitude: number;
   longitude: number;
   musicTitle: string;
@@ -46,25 +51,25 @@ export interface UserPost {
   tag: string;
   updatedAt: string;
   userId: number;
+  postId: number;
 }
 
 export interface UserPageData {
-  likePosts: Post[];
+  likePosts: UserPost[];
   likePostsCount: number;
-  posts: Post[];
+  posts: UserPost[];
   postsCount: number;
   user: UserProfile;
 }
 
 const UserUi: React.FC<UserUiProps> = ({ userId, loggedInEmail }) => {
   const isOwnProfile = userId === loggedInEmail;
-  const { data, error } = useQuery<UserPageData>('users', (userId) =>
-    isOwnProfile ? getMyProfile() : getUserProfile({userId})
-  );
-
   const cookies = parseCookies();
   const savedUserId = cookies.userId;
   const savedEmail = cookies.email;
+  const { data, error } = useQuery<UserPageData>('users', () =>
+    isOwnProfile ? getMyProfile() : getUserProfile({ savedUserId })
+  );
 
   if (error) {
     return <div>Error loading user data.</div>; // or any other error handling component or UI

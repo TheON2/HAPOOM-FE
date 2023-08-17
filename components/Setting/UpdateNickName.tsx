@@ -56,7 +56,6 @@ const UpdateNickName: NextPage<settingProps> = ({ nickname }) => {
       const formData = new FormData();
       formData.append('nickname', nickName ?? '');
       await mutate.mutateAsync(formData);
-      console.log(nickName);
     }
   };
 

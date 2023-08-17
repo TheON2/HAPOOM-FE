@@ -15,7 +15,7 @@ interface CommentModalProps {
   isOpen: boolean;
   initialComment?: string;
   onSubmit?: (comment: string) => void;
-  onClose?: () => void;
+  onClose?: (e: any) => void;
   onCommentChange?: (comment: string) => void;
 }
 
@@ -31,12 +31,12 @@ const CommentModal = ({
   );
 
   const handlePostComment = () => {
-    console.log('Post comment:', comment);
+    // console.log('Post comment:', comment);
     setComment('');
   };
 
   const handleUpdateComment = () => {
-    console.log('Update comment:', comment);
+    // console.log('Update comment:', comment);
     setComment('');
   };
   // const handlePostComment = async () => {

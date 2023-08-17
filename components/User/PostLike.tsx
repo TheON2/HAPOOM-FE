@@ -12,6 +12,7 @@ import Image from 'next/image';
 import { UserPost, UserPageData } from './UserUi';
 import { useMutation } from 'react-query';
 import { getPost, likePost } from '@/api/post';
+import HeartIcon from '../common/HeartIcon';
 import ImageContent from '../Home/ImageContent';
 import { ImageContentsContainer } from '@/styles/imageContainer';
 
@@ -23,7 +24,7 @@ interface PostProps {
   image: string;
   postId: number;
   showLikeIcon?: boolean;
-  handleLikeClick: (postId: number) => void;
+  handleLikeClick: MouseEventHandler<HTMLImageElement>;
 }
 const Posts: React.FC<PostProps> = ({
   image,
@@ -32,16 +33,16 @@ const Posts: React.FC<PostProps> = ({
   handleLikeClick,
 }) => {
   const [isLike, setIsLike] = useState<boolean>(false);
-  
+  const mutation = useMutation((postId: string) => likePost(postId));
 
   const onLikeClickHandler = (postId: number, event: React.MouseEvent) => {
     event.stopPropagation();
     setIsLike(!isLike);
-    handleLikeClick(postId);
+    mutation.mutate(postId.toString());
   };
 
   return (
-    <UserImageContainer onClick={(event) => onLikeClickHandler(postId, event)}>
+    <UserImageContainer>
       <ImageContent src={image} alt="게시물 이미지" postId={postId} />
     </UserImageContainer>
   );
@@ -51,29 +52,15 @@ const PostLike: React.FC<PostLike> = ({ data }) => {
   const [selectedTab, setSelectedTab] = useState(0);
   const [indicatorStyle, setIndicatorStyle] = useState({ width: 0, left: 0 });
   const [displayedPosts, setDisplayedPosts] = useState<UserPost[] | null>(null);
-  const [likedPosts, setLikedPosts] = useState<UserPost[]>(data?.likePosts || []);
-
+  const [likedPosts, setLikedPosts] = useState<UserPost[]>([]);
 
   const mutation = useMutation(likePost, {
     onSuccess: (data, variables) => {
-      console.log('Success');
-      const likedPost = displayedPosts?.find(
+      const newPost = displayedPosts?.find(
         (post) => post.postId.toString() === variables
       );
-
-      if (likedPost) {
-        // Check if post is already liked
-        const isAlreadyLiked = likedPosts.some(
-          (post) => post.postId === likedPost.postId
-        );
-
-        setLikedPosts((prev) => {
-          if (isAlreadyLiked) {
-            return prev.filter((post) => post.postId !== likedPost.postId);
-          } else {
-            return [...prev, likedPost];
-          }
-        });
+      if (newPost) {
+        setLikedPosts((prev) => [...prev, newPost]);
       }
     },
     onError: (error) => {
@@ -81,22 +68,20 @@ const PostLike: React.FC<PostLike> = ({ data }) => {
     },
   });
 
-  const handleLikeClick = (postId: number) => {
+  const handleLikeClick: React.MouseEventHandler<HTMLImageElement> = (
+    event
+  ) => {
+    const postId = event.currentTarget.getAttribute('data-post-id');
     if (postId) {
       mutation.mutate(postId);
     }
   };
 
   useEffect(() => {
-    console.log("Data received:", data);  // <- 여기에 로깅을 추가합니다.
-    console.log('Liked Posts:', likedPosts);
-    if (selectedTab === 0) {
-      setDisplayedPosts(data?.posts ?? null);
-    } else if (selectedTab === 1) {
-      setDisplayedPosts(likedPosts);
+    if (data) {
+      setDisplayedPosts(data.posts);
     }
-  }, [data, selectedTab, likedPosts]);
-
+  }, [data, displayedPosts]);
 
   useEffect(() => {
     const updateIndicator = () => {
@@ -120,6 +105,8 @@ const PostLike: React.FC<PostLike> = ({ data }) => {
         setDisplayedPosts(data?.posts ?? null);
       } else if (index === 1) {
         setDisplayedPosts(likedPosts);
+      } else {
+        // ... 다른 탭에 대한 로직 ...
       }
     };
   return (
@@ -140,13 +127,23 @@ const PostLike: React.FC<PostLike> = ({ data }) => {
           >
             좋아요
           </TabButton>
+          <TabButton
+            className="tab-button"
+            onClick={handleTabClick(2)}
+            style={selectedTab === 2 ? { color: '#000000' } : undefined}
+          >
+            북마크
+          </TabButton>
         </TabContainer>
 
-        <TabIndicator width={indicatorStyle.width} left={indicatorStyle.left} />
+        <TabIndicator
+          width={indicatorStyle.width}
+          $left={indicatorStyle.left}
+        />
       </PostContentBox>
       <Line />
       <ImageContentsContainer>
-      {(selectedTab === 0 ? data?.posts : data?.likedPosts ?? [])?.map((post) => {
+        {displayedPosts?.map((post) => {
           return (
             <Posts
               key={post.postId}

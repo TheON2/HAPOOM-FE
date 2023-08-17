@@ -3,8 +3,8 @@ import { FollowBtn } from '@/styles/user';
 import React, { useState, useEffect } from 'react';
 
 interface FollowButtonProps {
-  currentUserId: string;
-  profileUserId: string;
+  currentUserId?: string;
+  profileUserId?: string;
 }
 
 interface ButtonProps {
@@ -53,13 +53,11 @@ const FollowButton: React.FC<FollowButtonProps> = ({
   return (
     <>
       {currentUserId === profileUserId ? (
-        <FollowBtn status="설정">
-          <Link href="/setting/Setting">
-            <button>설정</button>
-          </Link>
+        <FollowBtn $status="설정">
+          <Link href="/setting/Setting">설정</Link>
         </FollowBtn>
       ) : (
-        <FollowBtn status={isFollowing ? '팔로잉' : '팔로우'}>
+        <FollowBtn $status={isFollowing ? '팔로잉' : '팔로우'}>
           <button onClick={handleFollowClick}>
             {isFollowing ? '팔로잉' : '팔로우'}
           </button>
