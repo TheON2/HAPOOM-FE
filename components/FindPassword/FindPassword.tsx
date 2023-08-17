@@ -121,13 +121,13 @@ const FindPassword = () => {
   return (
     <FindPwdSection>
       <MainHeadText>HAPOOM</MainHeadText>
-      <SubHeadText color="#000" marginBottom="12px" marginTop="35px">
+      <SubHeadText color="#000" $marginBottom="12px" $marginTop="35px">
         비밀번호 찾기 및 변경
       </SubHeadText>
 
       <form name="register" onSubmit={submitUser}>
         <StyledInputBox>
-          <TextParagraphInfo marginBottom="12px">이메일</TextParagraphInfo>
+          <TextParagraphInfo $marginBottom="12px">이메일</TextParagraphInfo>
           <StyledInput
             type="email"
             name="email"
@@ -154,7 +154,7 @@ const FindPassword = () => {
         </StyledInputBox>
 
         <StyledInputBox>
-          <TextParagraphInfo marginBottom="7px">비밀번호</TextParagraphInfo>
+          <TextParagraphInfo $marginBottom="7px">비밀번호</TextParagraphInfo>
           <TextParagrapValidate>
             영문, 숫자를 포함한 8자 이상의 비밀번호를 입력해주세요.
           </TextParagrapValidate>
