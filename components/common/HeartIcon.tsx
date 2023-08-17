@@ -35,7 +35,10 @@ type Props = {
 const HeartIcon = ({ postId }: Props) => {
   const [isLike, setIsLike] = useState<boolean>(false);
   const mutation = useMutation((postId: string) => likePost(postId));
-  const onClickHeartHandler = (postId: number, event: React.MouseEvent) => {
+  const onClickHeartHandler = (
+    postId: number | string,
+    event: React.MouseEvent
+  ) => {
     event.stopPropagation();
     setIsLike(!isLike);
     mutation.mutate(postId.toString());
