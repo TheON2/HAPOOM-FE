@@ -17,20 +17,24 @@ const MusicSelector: React.FC<MusicSelectorProps> = ({
   };
 
   return (
-    <ImageContainer>
+    <>
       <Form.Select
-        aria-label="Default select example"
+        aria-label="Select NCS MUSIC"
         onChange={handleChange}
         value={musicURL}
       >
-        <option>Open this select menu</option>
-        <option value="1">One</option>
-        <option value="2">Two</option>
-        <option value="3">Three</option>
-        <option value="4">Four</option>
-        <option value="5">Five</option>
+        <option>Select NCS MUSIC</option>
+        <option value="1">
+          1.Alan Walker - Dreamer (BEAUZ & Heleen Remix)
+        </option>
+        <option value="2">
+          2.Arcando & Maazel - To Be Loved (feat. Salvo)
+        </option>
+        <option value="3">3.AX.EL - In Love With a Ghost</option>
+        <option value="4">4.Idle Days - Over It</option>
+        <option value="5">5.ROY KNOX - Closer</option>
       </Form.Select>
-    </ImageContainer>
+    </>
   );
 };
 
