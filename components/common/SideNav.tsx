@@ -51,7 +51,7 @@ const SideNav = ({ isShowMenu, setIsShowMenu }: sideNavProps) => {
     onSuccess: () => {
       queryClient.invalidateQueries('user');
       dispatch(LOGOUT_USER());
-      router.push('/');
+      router.push('/auth/SignIn');
     },
   });
 
