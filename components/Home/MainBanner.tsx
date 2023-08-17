@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 type mainBannerProps = {
@@ -42,7 +42,6 @@ const MainBannerContainer = styled.div<mainBannerProps>`
 `;
 
 const MainBanner = ({ data, $isClick }: any) => {
-  // console.log(isClick);
   return (
     <MainBannerContainer $isClick={$isClick}>
       <p>
@@ -50,12 +49,12 @@ const MainBanner = ({ data, $isClick }: any) => {
         <br /> 집 떠나면 개고생이다.
       </p>
       <Image
-        src={data[0].src}
+        src={data[0]?.src}
         alt="v13 image"
-        width={786}
+        width={768}
         height={800}
         loading="eager"
-        quality={100}
+        priority={true}
       />
     </MainBannerContainer>
   );

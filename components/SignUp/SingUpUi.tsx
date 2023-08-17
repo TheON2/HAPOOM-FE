@@ -205,7 +205,7 @@ const SignUpUi = () => {
   return (
     <SignUpSection>
       <MainHeadText>HAPOOM</MainHeadText>
-      <SubHeadText color="#000" marginBottom="12px">
+      <SubHeadText color="#000" $marginBottom="12px">
         회원가입
       </SubHeadText>
       <SocialLogin />
@@ -214,7 +214,7 @@ const SignUpUi = () => {
 
       <form name="register" onSubmit={submitUser}>
         <StyledInputBox>
-          <TextParagraphInfo marginBottom="12px">이메일</TextParagraphInfo>
+          <TextParagraphInfo $marginBottom="12px">이메일</TextParagraphInfo>
           <StyledInput
             type="email"
             name="email"
@@ -241,7 +241,7 @@ const SignUpUi = () => {
         </StyledInputBox>
 
         <StyledInputBox>
-          <TextParagraphInfo marginBottom="7px">비밀번호</TextParagraphInfo>
+          <TextParagraphInfo $marginBottom="7px">비밀번호</TextParagraphInfo>
           <TextParagrapValidate>
             영문, 숫자를 포함한 8자 이상의 비밀번호를 입력해주세요.
           </TextParagrapValidate>

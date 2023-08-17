@@ -9,13 +9,10 @@ import HeartIcon from '@/components/common/HeartIcon';
 import { useRouter } from 'next/router';
 import { setCookie } from 'nookies';
 const ImageContentLayout = styled.div`
-  padding-bottom: 100%;
+  /* padding-bottom: 100%; */
   width: 100%;
   /* border: 1px solid black; */
   position: relative;
-  img {
-    object-fit: cover;
-  }
 `;
 
 type iconType = {
@@ -24,6 +21,13 @@ type iconType = {
 
 const ImageBox = styled(Link)`
   display: block;
+  position: relative;
+
+  width: 100%;
+  padding-bottom: 100%;
+  img {
+    object-fit: cover;
+  }
 `;
 
 // const HeartIcon = styled.div<iconType>`
