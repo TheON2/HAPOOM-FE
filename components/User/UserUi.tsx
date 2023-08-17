@@ -6,8 +6,14 @@ import { useQuery } from 'react-query';
 import { getMyProfile, getUserProfile } from '@/api/user';
 import { useState } from 'react';
 import FollowButton from './FollowButton';
+import { parseCookies } from 'nookies';
 
 interface Post {}
+
+// setCookie(null, 'update', '2', { path: '/' }); 쿠키를 저장하는법
+
+//const cookies = parseCookies(null); // 클라이언트 측에서 실행되는 경우 null 사용
+// const tabIndexCookie = cookies.tabIndex; // 'myCookie'의 값을 가져옴
 
 interface UserUiProps {
   userId: string | number;
@@ -60,6 +66,11 @@ const UserUi: React.FC<UserUiProps> = ({ userId, loggedInEmail }) => {
   const { data, error } = useQuery<UserPageData>('users', (userId) =>
     isOwnProfile ? getMyProfile() : getUserProfile(userId)
   );
+
+  const cookies = parseCookies();
+  const savedUserId = cookies.userId;
+  const savedEmail = cookies.email;
+
   console.log(isOwnProfile);
   console.log(userId);
   console.log(loggedInEmail);
