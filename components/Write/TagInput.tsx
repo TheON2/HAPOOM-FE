@@ -56,9 +56,6 @@ const TagInput: React.FC<TagInputProps> = ({ tags, setTags }) => {
 
   return (
     <>
-      <label>
-        <h3 style={{ float: 'left', margin: '10px 0' }}>태그</h3>
-      </label>
       <StyledAuthInput
         type="text"
         placeholder="#태그"
