@@ -27,20 +27,18 @@ const ImageBox = styled(Link)`
   padding-bottom: 100%;
   img {
     object-fit: cover;
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    user-drag: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none;
   }
 `;
-
-// const HeartIcon = styled.div<iconType>`
-//   width: 36px;
-//   height: 36px;
-//   background-color: ${(props) => (props.$isLike ? `black` : `white`)};
-//   border-radius: 50%;
-//   border: 2px solid black;
-//   position: absolute;
-//   top: 10px;
-//   right: 10px;
-//   cursor: pointer;
-// `;
 
 type Props = {
   src: string;
@@ -50,14 +48,6 @@ type Props = {
 
 const ImageContent: NextPage<Props> = ({ src, alt, postId }) => {
   const router = useRouter();
-  const [isLike, setIsLike] = useState<boolean>(false);
-
-  const mutation = useMutation((postId: string) => likePost(postId));
-  const onClickHeartHandler = (postId: number, event: React.MouseEvent) => {
-    event.stopPropagation();
-    setIsLike(!isLike);
-    mutation.mutate(postId.toString());
-  };
 
   const handleImageBoxClick = (e: React.MouseEvent) => {
     e.preventDefault(); // 링크 기본 동작 방지
@@ -68,19 +58,8 @@ const ImageContent: NextPage<Props> = ({ src, alt, postId }) => {
   return (
     <ImageContentLayout>
       <ImageBox href={`/detail/${postId}`} onClick={handleImageBoxClick}>
-        <Image
-          src={src}
-          alt={alt}
-          fill
-          sizes="(max-width: 1440px) 288px"
-          // placeholder="blur"
-          // blurDataURL={src}
-        />
+        <Image src={src} alt={alt} fill sizes="(max-width: 1440px) 288px" />
       </ImageBox>
-      {/* <HeartIcon
-        onClick={(event) => onClickHeartHandler(postId, event)}
-        $isLike={isLike}
-      ></HeartIcon> */}
       <HeartIcon postId={postId} />
     </ImageContentLayout>
   );
