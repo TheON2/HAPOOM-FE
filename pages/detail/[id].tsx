@@ -217,15 +217,20 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
           </Link>
           <KebabMenuUI>
             <KebabMenuStyle>
-              <KebabMenuAptionButton onClick={handleDeleteClick}>
-                글 삭제하기 <span></span>
-              </KebabMenuAptionButton>
-              <KebabMenuAptionButton onClick={handleEditClick}>
-                글 수정하기 <span></span>
-              </KebabMenuAptionButton>
-              <KebabMenuAptionButton onClick={handleReportClick}>
-                신고하기 <span></span>
-              </KebabMenuAptionButton>
+              {data.user.email === userData?.email ? (
+                <>
+                  <KebabMenuAptionButton onClick={handleDeleteClick}>
+                    글 삭제하기 <span></span>
+                  </KebabMenuAptionButton>
+                  <KebabMenuAptionButton onClick={handleEditClick}>
+                    글 수정하기 <span></span>
+                  </KebabMenuAptionButton>
+                </>
+              ) : (
+                <KebabMenuAptionButton onClick={handleReportClick}>
+                  신고하기 <span></span>
+                </KebabMenuAptionButton>
+              )}
             </KebabMenuStyle>
           </KebabMenuUI>
         </OtherProfileBox>
@@ -282,7 +287,12 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
         </DetialContentSection>
         <DetialContentSection>
           <h3>댓글</h3>
-          <Comment data={commentsData} id={id} userData={userData} />
+          <Comment
+            data={commentsData}
+            id={id}
+            userData={userData}
+            writeUser={data?.user}
+          />
         </DetialContentSection>
       </ContentsContainer>
     </>
