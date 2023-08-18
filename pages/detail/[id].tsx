@@ -314,6 +314,7 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
                 videoId={videoId}
                 setVideoId={setVideoId}
                 setSelectedTitle={setSelectedTitle}
+                update={update}
               />
             </>
           )}

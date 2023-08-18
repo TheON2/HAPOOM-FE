@@ -5,15 +5,18 @@ import Form from 'react-bootstrap/Form';
 interface MusicSelectorProps {
   musicURL: string;
   setMusicURL: (url: string) => void;
+  setIsShow: (state: boolean) => void;
 }
 
 const MusicSelector: React.FC<MusicSelectorProps> = ({
   musicURL,
   setMusicURL,
+  setIsShow,
 }) => {
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
     setMusicURL(value);
+    setIsShow(false);
   };
 
   return (
