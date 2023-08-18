@@ -65,8 +65,8 @@ export interface ParsedCookies {
 
 const UserUi: React.FC<UserUiProps> = ({ userId, loggedInEmail }) => {
   const isOwnProfile = loggedInEmail && userId === loggedInEmail;
-  const savedUserId: string | undefined = cookies.userId;
   const cookies = parseCookies();
+  const savedUserId: string | undefined = cookies.userId;
   // const savedEmail = cookies.email;
   const { data, error }: { data: UserPageData | undefined; error: any } =
     useQuery<UserPageData>('users', () =>
