@@ -79,12 +79,12 @@ const Header = ({ $sticky }: any) => {
   return (
     <>
       <HeaderLayout $sticky={$sticky}>
-        <LogoBox href={'/'} onClick={handleLogoClick}>
+        <LogoBox href={'/'} onClick={handleLogoClick} $sticky={$sticky}>
           <h1>HAPOOM</h1>
         </LogoBox>
         <AccountActionsContainer>
           <Link href={'/search'} className="search-icon">
-            <SearchIcon />
+            <SearchIcon fillColor={$sticky ? '#fff' : '#2797FF'} />
           </Link>
           <GoWriteLink onClick={goToWritePage} href={'/post/Write'}>
             <EditIcon />
@@ -109,7 +109,7 @@ const Header = ({ $sticky }: any) => {
         </AccountActionsContainer>
         <MobileBox>
           <IconButton>
-            <Bell fillColor="#fff" />
+            <Bell fillColor={$sticky ? '#fff' : '#2797FF'} />
           </IconButton>
         </MobileBox>
       </HeaderLayout>

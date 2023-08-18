@@ -13,16 +13,14 @@ export const HeaderLayout = styled.header<HeaderProps>`
   position: ${(props) => (props.$sticky ? 'fixed' : 'sticky')};
   z-index: 15;
   top: 0;
-  /* background: linear-gradient(
-    180deg,
-    rgba(0, 0, 0, 0.1) 0%,
-    rgba(255, 255, 255, 0) 100%
-  ); */
+  background: ${(props) => (props.$sticky ? 'none' : 'rgba(255,255,255,0.8)')};
+  backdrop-filter: ${(props) => (props.$sticky ? 'none' : 'blur(1px)')};
+  border-bottom: ${(props) => (props.$sticky ? 'none' : '1px solid #fff')};
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 12px;
-  color: #fff;
+  color: #2797ff;
   @media screen and (max-width: 1260px) {
     padding: 0 24px;
   }
@@ -43,7 +41,7 @@ export const HeaderLayout = styled.header<HeaderProps>`
   }
 `;
 
-export const LogoBox = styled(Link)`
+export const LogoBox = styled(Link)<HeaderProps>`
   /* width: 20%; */
   height: 46px;
   display: flex;
@@ -53,7 +51,7 @@ export const LogoBox = styled(Link)`
   /* border: 1px solid #000; */
   h1 {
     font-size: 24px;
-    color: #fff;
+    color: ${(props) => (props.$sticky ? '#fff' : '#2797ff')};
     font-weight: 900;
   }
   img {
