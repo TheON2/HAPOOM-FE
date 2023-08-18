@@ -66,15 +66,6 @@ export const DetialContentSection = styled.section`
       padding: 4px 22px 2px;
     }
   }
-  .button-box {
-    width: 40%;
-    display: flex;
-    gap: 8px;
-    button {
-      width: 50%;
-      padding: 4px 4px 2px;
-    }
-  }
   & > div:last-child {
     border: none;
   }
