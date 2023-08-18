@@ -1,6 +1,4 @@
 import {
-  CancelButton,
-  DeleteButton,
   ModalBackground,
   ModalButtons,
   ModalContainer,
@@ -14,7 +12,7 @@ interface ModalProps {
   isOpen: boolean;
   setIsOpen: any;
   actionText: string;
-  onClickEvent: () => void;
+  onClickEvent: () => void | null;
   children: ReactNode;
 }
 
@@ -41,8 +39,16 @@ const Modal: React.FC<ModalProps> = ({
               </WarningContainer>
               <p className="modalTitle">{children}</p>
               <ModalButtons>
-                <Button onClick={onClickCloseHandler}>취소</Button>
-                <Button onClick={onClickEvent}>{actionText}</Button>
+                {onClickEvent !== null ? (
+                  <>
+                    <Button className="secondary" onClick={onClickCloseHandler}>
+                      취소
+                    </Button>
+                    <Button onClick={onClickEvent}>{actionText}</Button>
+                  </>
+                ) : (
+                  <Button onClick={onClickCloseHandler}>확인</Button>
+                )}
               </ModalButtons>
             </ModalContainer>
           </ModalBackground>,
