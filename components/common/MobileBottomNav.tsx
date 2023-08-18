@@ -52,49 +52,6 @@ const ActiveBar = styled.span<onClickProps>`
     background-color: #0084ff;
   }
 `;
-const IconLink = styled(Link)`
-  display: block;
-  /* width: 24px; */
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 10px;
-  border: none;
-  background: none;
-  color: #777;
-  font-weight: 700;
-  line-height: 1.2;
-  path {
-    stroke: #777;
-  }
-  svg {
-    width: 24px;
-    height: 24px;
-  }
-  .image-box {
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    border: 2px solid #777;
-    overflow: hidden;
-  }
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  &.active {
-    color: #0084ff;
-    path {
-      stroke: #0084ff;
-    }
-    .image-box {
-      border: 2px solid #0084ff;
-    }
-  }
-`;
 
 const MobileBottomNav = () => {
   const [active, setActive] = useState<number>(0);
