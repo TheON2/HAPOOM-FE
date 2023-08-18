@@ -38,17 +38,17 @@ const Header = ({ $sticky }: any) => {
   );
   const router = useRouter();
   const queryClient = useQueryClient();
-  const { mutate: logOut_mutate } = useMutation(userLogOut, {
-    onSuccess: () => {
-      queryClient.invalidateQueries('user');
-      dispatch(LOGOUT_USER());
-      router.push('/');
-    },
-  });
+  // const { mutate: logOut_mutate } = useMutation(userLogOut, {
+  //   onSuccess: () => {
+  //     queryent.invalidateQueries('user');
+  //     dispatch(LOGOUT_USER());
+  //     router.push('/');
+  //   },
+  // });
 
-  const onLogOut = useCallback(() => {
-    logOut_mutate();
-  }, [logOut_mutate]);
+  // const onLogOut = useCallback(() => {
+  //   logOut_mutate();
+  // }, [logOut_mutate]);
 
   const [isShowMenu, setIsShowMenu] = useState<boolean>(false);
 
@@ -93,10 +93,10 @@ const Header = ({ $sticky }: any) => {
             <AuthButtonBox>
               <Link href={'/auth/SignIn'}>로그인</Link>|
               <Link href={'/auth/SignUp'}>회원가입</Link>
-              <Link href={'/record/2'}>레코드 테스트</Link>
+              {/* <Link href={'/record/2'}>레코드 테스트</Link>
               <a href="#" onClick={onLogOut}>
                 로그아웃
-              </a>
+              </a> */}
             </AuthButtonBox>
           ) : null}
           <ProfileButton onClick={onClickShowMenuHandler}>

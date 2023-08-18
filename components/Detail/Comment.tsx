@@ -9,7 +9,7 @@ import {
 } from '@/components/common/SVG';
 import styled from 'styled-components';
 import { addComment, deleteComment, updateComment } from '@/api/post';
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import UpAndDownTab from '../common/UpAndDownTab';
 import Modal from '../common/Modal';
 import { useRouter } from 'next/router';
@@ -286,6 +286,8 @@ const CommentLayout = ({ data, id, userData }: commentProps) => {
   const [isShow, setIsShow] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [comment, setComment] = useState<string>('');
+  const queryClient = useQueryClient();
+  const router = useRouter();
   const [commentEdit, setCommentEdit] = useState<any>({
     show: false,
     action: '',
@@ -299,26 +301,44 @@ const CommentLayout = ({ data, id, userData }: commentProps) => {
     onClickEvent: '',
   });
   const handleCommentEditHandler = (commentId: number, preComment: string) => {
-    setIsShow(true);
-    setCommentEdit({
-      show: true,
-      action: 'edit',
-      uiTitle: '댓글 수정',
-      buttonText: '수정',
-      commentId: commentId,
-    });
-    setComment(preComment);
+    if (userData === null || userData === undefined) {
+      setModalMessge({
+        actionText: '로그인',
+        modalMessge: '로그인이 필요한 서비스입니다. 로그인 하시겠습니까?',
+        onClickEvent: () => router.push('/auth/SignIn'),
+      });
+      return setIsModalOpen(true);
+    } else {
+      setIsShow(true);
+      setCommentEdit({
+        show: true,
+        action: 'edit',
+        uiTitle: '댓글 수정',
+        buttonText: '수정',
+        commentId: commentId,
+      });
+      setComment(preComment);
+    }
   };
 
   const handleCommentCreateHandler = () => {
-    setIsShow(true);
-    setCommentEdit({
-      show: true,
-      action: 'create',
-      uiTitle: '댓글 생성',
-      buttonText: '업로드',
-      commentId: '',
-    });
+    if (userData === null || userData === undefined) {
+      setModalMessge({
+        actionText: '로그인',
+        modalMessge: '로그인이 필요한 서비스입니다. 로그인 하시겠습니까?',
+        onClickEvent: () => router.push('/auth/SignIn'),
+      });
+      return setIsModalOpen(true);
+    } else {
+      setIsShow(true);
+      setCommentEdit({
+        show: true,
+        action: 'create',
+        uiTitle: '댓글 생성',
+        buttonText: '업로드',
+        commentId: '',
+      });
+    }
   };
   const handleCommentShowHandler = () => {
     setCommentEdit((pre: any) => ({
@@ -340,7 +360,7 @@ const CommentLayout = ({ data, id, userData }: commentProps) => {
       onSuccess: () => {
         setIsShow(false);
         setComment('');
-        alert('댓글 작성에 성공하였습니다.');
+        queryClient.invalidateQueries('comments');
       },
     }
   );
@@ -351,7 +371,7 @@ const CommentLayout = ({ data, id, userData }: commentProps) => {
         setIsShow(false);
         setComment('');
         setActive(null);
-        alert('댓글 수정에 성공하였습니다.');
+        queryClient.invalidateQueries('comments');
       },
     }
   );
@@ -360,18 +380,33 @@ const CommentLayout = ({ data, id, userData }: commentProps) => {
     (comment) => deleteComment(comment),
     {
       onSuccess: () => {
-        alert('댓글을 삭제하였습니다.');
+        setModalMessge({
+          actionText: '확인',
+          modalMessge: '댓글이 삭제되었습니다.',
+          onClickEvent: null,
+        });
+        setIsModalOpen(true);
+        queryClient.invalidateQueries('comments');
       },
     }
   );
 
   const onClickDeleteCommentHandler = (commentId: number) => {
-    setModalMessge({
-      actionText: '삭제',
-      modalMessge: '댓글을 삭제하시겠습니까?',
-      onClickEvent: () => commentDelete({ id, commentId }),
-    });
-    setIsModalOpen(true);
+    if (userData === null || userData === undefined) {
+      setModalMessge({
+        actionText: '로그인',
+        modalMessge: '로그인이 필요한 서비스입니다. 로그인 하시겠습니까?',
+        onClickEvent: () => router.push('/auth/SignIn'),
+      });
+      return setIsModalOpen(true);
+    } else {
+      setModalMessge({
+        actionText: '삭제',
+        modalMessge: '댓글을 삭제하시겠습니까?',
+        onClickEvent: () => commentDelete({ id, commentId }),
+      });
+      setIsModalOpen(true);
+    }
   };
 
   const onClickCreateCommentHandler = () => {
@@ -386,18 +421,9 @@ const CommentLayout = ({ data, id, userData }: commentProps) => {
     const commentId = commentEdit.commentId;
     commentUpdate({ formData, id, commentId });
   };
-  const router = useRouter();
 
   const onSubmitHandler = (e: React.FormEvent) => {
     e.preventDefault();
-    if (userData === null || userData === undefined) {
-      setModalMessge({
-        actionText: '로그인',
-        modalMessge: '로그인이 필요한 서비스입니다. 로그인 하시겠습니까?',
-        onClickEvent: () => router.push('/auth/SignIn'),
-      });
-      return setIsModalOpen(true);
-    }
     if (comment === '') {
       return alert('입력된 내용이 없습니다.');
     }

@@ -58,6 +58,8 @@ const HeartIcon = ({ postId }: Props) => {
     event: React.MouseEvent
   ) => {
     event.stopPropagation();
+    event.preventDefault();
+    console.log('heart');
     if (user.email === null) {
       setModalMessge({
         actionText: '확인',
