@@ -12,9 +12,15 @@ const ButtonStyle = styled.button<Button>`
   margin-top: ${({ $marginTop }) => $marginTop};
   border-radius: 3px;
   color: #fff;
-  border: 1px solid #2797ff;
-  background-color: #2797ff;
+  border: none;
+  background-color: #52acff;
   cursor: pointer;
+  &:hover {
+    background-color: #7dc1ff;
+  }
+  &:active {
+    background-color: #2797ff;
+  }
 `;
 
 type buttonProps = {
