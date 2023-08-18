@@ -18,7 +18,6 @@ import {
   SnsLine,
   TextParagraphInfo,
   TextParagrapValidate,
-  InputWrapper,
 } from '@/styles/signUp';
 import { useMutation } from 'react-query';
 import { addUser } from '@/api/user';
@@ -264,48 +263,44 @@ const SignUpUi = () => {
           <TextParagrapValidate>
             영문, 숫자를 포함한 8자 이상의 비밀번호를 입력해주세요.
           </TextParagrapValidate>
-          <InputWrapper>
-            <StyledInput
-              type={passwordInputType}
-              name="password"
-              value={signUpState.password}
-              placeholder="비밀번호"
-              onChange={handleInputChange}
-            />
-            <SecretEye
-              onClick={togglePasswordVisibility}
-              style={{
-                position: 'absolute',
-                right: '10px',
-                top: '50%',
-                transform: 'translateY(-50%)',
-                cursor: 'pointer',
-              }}
-            />
-          </InputWrapper>
+          <StyledInput
+            type={passwordInputType}
+            name="password"
+            value={signUpState.password}
+            placeholder="비밀번호"
+            onChange={handleInputChange}
+          />
+          <SecretEye
+            onClick={togglePasswordVisibility}
+            style={{
+              position: 'absolute',
+              right: '10px',
+              top: '50%',
+              transform: 'translateY(-50%)',
+              cursor: 'pointer',
+            }}
+          />
           {error.password && (
             <TextErrorParagraph>{error.password}</TextErrorParagraph>
           )}
           <TextParagraphInfo>비밀번호 확인</TextParagraphInfo>
-          <InputWrapper>
-            <StyledInput
-              type={passwordConfirmInputType}
-              name="passwordConfirm"
-              value={signUpState.passwordConfirm}
-              placeholder="비밀번호 확인"
-              onChange={handleInputChange}
-            />
-            <SecretEye
-              onClick={togglePasswordConfirmVisibility}
-              style={{
-                position: 'absolute',
-                right: '10px',
-                top: '50%',
-                transform: 'translateY(-50%)',
-                cursor: 'pointer',
-              }}
-            />
-          </InputWrapper>
+          <StyledInput
+            type={passwordConfirmInputType}
+            name="passwordConfirm"
+            value={signUpState.passwordConfirm}
+            placeholder="비밀번호 확인"
+            onChange={handleInputChange}
+          />
+          <SecretEye
+            onClick={togglePasswordConfirmVisibility}
+            style={{
+              position: 'absolute',
+              right: '10px',
+              top: '50%',
+              transform: 'translateY(-50%)',
+              cursor: 'pointer',
+            }}
+          />
           {error.passwordConfirm && (
             <TextErrorParagraph>{error.passwordConfirm}</TextErrorParagraph>
           )}
