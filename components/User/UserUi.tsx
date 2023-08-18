@@ -4,25 +4,19 @@ import UserLikePostSuggestion from './UserLikePostSuggestion';
 import PostLike from './PostLike';
 import { useQuery } from 'react-query';
 import { getMyProfile, getUserProfile } from '@/api/user';
-import { useState } from 'react';
 import FollowButton from './FollowButton';
 import { parseCookies } from 'nookies';
 
-interface Post {}
-
-// setCookie(null, 'update', '2', { path: '/' }); 쿠키를 저장하는법
-
-//const cookies = parseCookies(null); // 클라이언트 측에서 실행되는 경우 null 사용
-// const tabIndexCookie = cookies.tabIndex; // 'myCookie'의 값을 가져옴
+// interface Post {}
 
 interface UserUiProps {
   userId: string;
   loggedInEmail: string | null;
 }
 
-interface PostImage {
-  url: string;
-}
+// interface PostImage {
+//   url: string;
+// }
 
 interface UserProfile {
   createdAt: string;
@@ -56,23 +50,31 @@ export interface UserPost {
 
 export interface UserPageData {
   likePosts: UserPost[];
+  likedPosts: UserPost[];
   likePostsCount: number;
   posts: UserPost[];
   postsCount: number;
   user: UserProfile;
 }
 
+export interface ParsedCookies {
+  userId?: string;
+  email?: string;
+  [key: string]: string | undefined;
+}
+
 const UserUi: React.FC<UserUiProps> = ({ userId, loggedInEmail }) => {
-  const isOwnProfile = userId === loggedInEmail;
+  const isOwnProfile = loggedInEmail && userId === loggedInEmail;
+  const savedUserId: string | undefined = cookies.userId;
   const cookies = parseCookies();
-  const savedUserId = cookies.userId;
-  const savedEmail = cookies.email;
-  const { data, error } = useQuery<UserPageData>('users', () =>
-    isOwnProfile ? getMyProfile() : getUserProfile({ savedUserId })
-  );
+  // const savedEmail = cookies.email;
+  const { data, error }: { data: UserPageData | undefined; error: any } =
+    useQuery<UserPageData>('users', () =>
+      isOwnProfile ? getMyProfile() : getUserProfile({ savedUserId })
+    );
 
   if (error) {
-    return <div>Error loading user data.</div>; // or any other error handling component or UI
+    return <div>Error loading user data.</div>;
   }
 
   return (
