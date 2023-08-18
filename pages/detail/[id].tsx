@@ -281,7 +281,7 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
         </DetialContentSection>
         <DetialContentSection>
           <h3>댓글</h3>
-          <Comment data={commentsData} id={id} />
+          <Comment data={commentsData} id={id} userData={userData} />
         </DetialContentSection>
       </ContentsContainer>
     </>

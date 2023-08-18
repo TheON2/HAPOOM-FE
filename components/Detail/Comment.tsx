@@ -12,6 +12,7 @@ import { addComment, deleteComment, updateComment } from '@/api/post';
 import { useMutation } from 'react-query';
 import UpAndDownTab from '../common/UpAndDownTab';
 import Modal from '../common/Modal';
+import { useRouter } from 'next/router';
 const CommentsContainer = styled.div`
   width: 100%;
   border-bottom: 1px solid #ddd;
@@ -274,9 +275,10 @@ const Comment = ({
 type commentProps = {
   data: any;
   id: string;
+  userData: any;
 };
 
-const CommentLayout = ({ data, id }: commentProps) => {
+const CommentLayout = ({ data, id, userData }: commentProps) => {
   const [active, setActive] = useState<number | null>(null);
   const updateButtonActive = (idx: number) => {
     setActive(idx);
@@ -384,9 +386,18 @@ const CommentLayout = ({ data, id }: commentProps) => {
     const commentId = commentEdit.commentId;
     commentUpdate({ formData, id, commentId });
   };
-
+  const router = useRouter();
+  console.log(userData);
   const onSubmitHandler = (e: React.FormEvent) => {
     e.preventDefault();
+    if (userData === null || userData === undefined) {
+      setModalMessge({
+        actionText: '로그인',
+        modalMessge: '로그인이 필요한 서비스입니다. 로그인 하시겠습니까?',
+        onClickEvent: () => router.push('/auth/SignIn'),
+      });
+      return setIsModalOpen(true);
+    }
     if (comment === '') {
       return alert('입력된 내용이 없습니다.');
     }
