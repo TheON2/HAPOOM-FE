@@ -17,7 +17,7 @@ const Layout = ({ children }: layoutProps) => {
   return (
     <>
       <GlobalStyle />
-      <LayoutStyle>
+      <LayoutStyle $isHome={isHome}>
         <Header $sticky={isHome} />
         <AlarmBar />
         {isHome ? (
@@ -37,16 +37,19 @@ export default Layout;
 
 const LayoutWapper = styled.div`
   width: 100%;
-  height: calc(100vh - 70px);
-  border-radius: 25px 25px 0 0;
+  /* height: calc(100vh - 70px); */
+  /* border-radius: 25px 25px 0 0; */
   background-color: #fff;
-  overflow: auto;
+  /* overflow: auto; */
   &::-webkit-scrollbar {
     display: none;
   }
 `;
-const LayoutStyle = styled.div`
-  background-color: #2797ff;
+type layoutStyleProps = {
+  $isHome: boolean;
+};
+const LayoutStyle = styled.div<layoutStyleProps>`
+  background-color: ${(props) => (props.$isHome ? '#2797ff' : '#fff')};
   .center {
     max-width: 768px;
     width: 100%;
