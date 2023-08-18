@@ -135,7 +135,7 @@ export const GoWriteLink = styled(Link)`
   right: 60px;
   background-color: #fff;
   z-index: 14;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
   svg {
     transform: scale(0.8) translate(2px, -1px);
   }
@@ -145,7 +145,6 @@ export const GoWriteLink = styled(Link)`
   &:active {
     background-color: #7dc1ff;
   }
-
 `;
 export const ProfileButton = styled.button`
   width: 50px;

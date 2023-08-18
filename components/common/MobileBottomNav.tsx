@@ -102,9 +102,6 @@ const MobileBottomNav = () => {
     (state: RootState) => state.user
   );
   const router = useRouter();
-  const cookies = parseCookies(null); // 클라이언트 측에서 실행되는 경우 null 사용
-  const tabIndexCookie = cookies.tabIndex; // 'myCookie'의 값을 가져옴
-  const { id } = router.query;
 
   useEffect(() => {
     const currentPathname = window.location.pathname;
@@ -130,18 +127,7 @@ const MobileBottomNav = () => {
         setActive(0);
         break;
     }
-  }, [pathIndex, active]);
-
-  const onClickNavIconHandler = (idx: number, route: string) => {
-    // const tabIndex = idx.toString();
-    // setCookie(null, 'tabIndex', tabIndex, { path: '/' });
-    router.push(route);
-    // setActive(idx);
-  };
-
-  // console.log(router.pathname);
-  // console.log(id);
-  // console.log(`/User/${user.email}`);
+  }, [pathIndex, user.email]);
 
   return (
     <MobileBottomNavLayout>
