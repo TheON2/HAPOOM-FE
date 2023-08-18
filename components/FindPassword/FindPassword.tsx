@@ -5,8 +5,6 @@ import {
   StyledInputBox,
   StyledInput,
   TextErrorParagraph,
-  TextParagraphSns,
-  SnsLine,
   TextParagraphInfo,
   TextParagrapValidate,
   FindPwdSection,
@@ -15,7 +13,6 @@ import {
 import { useMutation } from 'react-query';
 import { addUser } from '@/api/user';
 import { useRouter } from 'next/router';
-import SocialLogin from '../SignIn/SocialLogIn';
 
 export interface Signup {
   email: string;
@@ -36,6 +33,7 @@ type TextInputType = 'email' | 'password' | 'passwordConfirm' | 'nickname';
 
 const FindPassword = () => {
   const router = useRouter();
+  const [isEmailVerified, setIsEmailVerified] = useState(false);
   const [signUpState, setSignUpState] = useState<Signup>({
     email: '',
     password: '',
@@ -65,6 +63,9 @@ const FindPassword = () => {
       ...prevSignUpState,
       [name]: value,
     }));
+  };
+  const verifyEmail = () => {
+    setIsEmailVerified(true);
   };
 
   const validateEmail = (email: string) => {
@@ -121,7 +122,7 @@ const FindPassword = () => {
   return (
     <FindPwdSection>
       <MainHeadText>HAPOOM</MainHeadText>
-      <SubHeadText color="#000" $marginBottom="12px" $marginTop="35px">
+      <SubHeadText color="#000" $marginBottom="12px" $marginTop="15px">
         비밀번호 찾기 및 변경
       </SubHeadText>
 
@@ -140,72 +141,85 @@ const FindPassword = () => {
               {error.email}
             </TextErrorParagraph>
           )}
+          {isEmailVerified && (
+            <TextErrorParagraph
+              style={{ marginBottom: '-12px', color: 'blue' }}
+            >
+              인증되었습니다.
+            </TextErrorParagraph>
+          )}
           <FindPwdBtn
             style={{
-              margin: '12px 0 20px 0',
+              margin: '8px 0 20px 0',
               backgroundColor: signUpState.email ? '#2797FF' : '#B3B3B3',
               borderColor: signUpState.email ? '#2797FF' : '#B3B3B3',
             }}
-            onClick={() => alert('준비 중 입니다.')}
+            onClick={verifyEmail}
             disabled={!signUpState.email}
           >
             이메일 인증하기
           </FindPwdBtn>
         </StyledInputBox>
 
-        <StyledInputBox>
-          <TextParagraphInfo $marginBottom="7px">비밀번호</TextParagraphInfo>
-          <TextParagrapValidate>
-            영문, 숫자를 포함한 8자 이상의 비밀번호를 입력해주세요.
-          </TextParagrapValidate>
-          <StyledInput
-            type="password"
-            name="password"
-            value={signUpState.password}
-            placeholder="비밀번호"
-            onChange={handleInputChange}
-          />
-          {error.password && (
-            <TextErrorParagraph>{error.password}</TextErrorParagraph>
-          )}
-          <TextParagraphInfo>비밀번호 확인</TextParagraphInfo>
-          <StyledInput
-            type="password"
-            name="passwordConfirm"
-            value={signUpState.passwordConfirm}
-            placeholder="비밀번호 확인"
-            onChange={handleInputChange}
-          />
-          {error.passwordConfirm && (
-            <TextErrorParagraph>{error.passwordConfirm}</TextErrorParagraph>
-          )}
-        </StyledInputBox>
+        {isEmailVerified && (
+          <>
+            <StyledInputBox>
+              <TextParagraphInfo $marginBottom="7px">
+                비밀번호
+              </TextParagraphInfo>
+              <TextParagrapValidate>
+                영문, 숫자를 포함한 8자 이상의 비밀번호를 입력해주세요.
+              </TextParagrapValidate>
+              <StyledInput
+                type="password"
+                name="password"
+                value={signUpState.password}
+                placeholder="비밀번호"
+                onChange={handleInputChange}
+              />
+              {error.password && (
+                <TextErrorParagraph>{error.password}</TextErrorParagraph>
+              )}
+              <TextParagraphInfo>비밀번호 확인</TextParagraphInfo>
+              <StyledInput
+                type="password"
+                name="passwordConfirm"
+                value={signUpState.passwordConfirm}
+                placeholder="비밀번호 확인"
+                onChange={handleInputChange}
+              />
+              {error.passwordConfirm && (
+                <TextErrorParagraph>{error.passwordConfirm}</TextErrorParagraph>
+              )}
+            </StyledInputBox>
 
-        <FindPwdBtn
-          style={{
-            margin: '12px 0 20px 0',
-            backgroundColor:
-              signUpState.email &&
-              signUpState.password &&
-              signUpState.passwordConfirm
-                ? '#2797FF'
-                : '#B3B3B3',
-            borderColor:
-              signUpState.email &&
-              signUpState.password &&
-              signUpState.passwordConfirm
-                ? '#2797FF'
-                : '#B3B3B3',
-          }}
-          disabled={
-            !signUpState.email &&
-            !signUpState.password &&
-            !signUpState.passwordConfirm
-          }
-          type="submit"
-        >
-          비밀번호 변경하기
-        </FindPwdBtn>
+            <FindPwdBtn
+              style={{
+                margin: '12px 0 20px 0',
+                backgroundColor:
+                  signUpState.email &&
+                  signUpState.password &&
+                  signUpState.passwordConfirm
+                    ? '#2797FF'
+                    : '#B3B3B3',
+                borderColor:
+                  signUpState.email &&
+                  signUpState.password &&
+                  signUpState.passwordConfirm
+                    ? '#2797FF'
+                    : '#B3B3B3',
+              }}
+              disabled={
+                !signUpState.email &&
+                !signUpState.password &&
+                !signUpState.passwordConfirm
+              }
+              type="submit"
+            >
+              비밀번호 변경하기
+            </FindPwdBtn>
+          </>
+        )}
       </form>
     </FindPwdSection>
   );
