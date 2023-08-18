@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useMutation } from 'react-query';
 import { likePost } from '@/api/post';
@@ -49,6 +49,16 @@ const HeartIcon = ({ postId }: Props) => {
   const { user }: { user: UserState['user'] } = useSelector(
     (state: RootState) => state.user
   );
+
+  useEffect(() => {
+    const likePostIndex = user?.likePosts;
+    const test = likePostIndex?.find((post) => post === postId);
+    if (test !== undefined) {
+      setIsLike(true);
+    } else {
+      setIsLike(false);
+    }
+  }, [user]);
   const mutation = useMutation((postId: string) => likePost(postId));
   const modalHandler = () => {
     router.push('/auth/SignIn');
@@ -59,7 +69,7 @@ const HeartIcon = ({ postId }: Props) => {
   ) => {
     event.stopPropagation();
     event.preventDefault();
-    console.log('heart');
+
     if (user.email === null) {
       setModalMessge({
         actionText: '확인',
