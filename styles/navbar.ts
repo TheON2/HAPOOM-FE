@@ -64,6 +64,16 @@ export const IconBox = styled.button`
     height: 100%;
     object-fit: cover;
   }
+  &:hover {
+    filter: brightness(0.7);
+    color: #0084ff;
+    path {
+      stroke: #0084ff;
+    }
+    .image-box {
+      border: 2px solid #0084ff;
+    }
+  }
   &.active {
     color: #0084ff;
     path {

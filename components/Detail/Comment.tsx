@@ -387,7 +387,7 @@ const CommentLayout = ({ data, id, userData }: commentProps) => {
     commentUpdate({ formData, id, commentId });
   };
   const router = useRouter();
-  console.log(userData);
+
   const onSubmitHandler = (e: React.FormEvent) => {
     e.preventDefault();
     if (userData === null || userData === undefined) {
