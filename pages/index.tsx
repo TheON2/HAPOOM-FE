@@ -92,7 +92,7 @@ const Home: NextPage<Props> = ({
 export default Home;
 
 export const getStaticProps: GetStaticProps = async () => {
-  const response = await axios.get(`http://localhost:3001/api/main`);
+  const response = await axios.get(`https://hapoom.life/api/main`);
   const data = sliderImages;
   const hashtagData = hashtagImages;
 
