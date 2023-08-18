@@ -9,7 +9,6 @@ module.exports = {
       'k.kakaocdn.net',
       'lh3.googleusercontent.com',
       'ssl.pstatic.net',
-      'hapoomimagebucket.s3.ap-northeast-2.amazonaws.com',
     ],
   },
 };
