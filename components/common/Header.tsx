@@ -83,10 +83,9 @@ const Header = ({ $sticky }: any) => {
           <h1>HAPOOM</h1>
         </LogoBox>
         <AccountActionsContainer>
-          <Link href={'/post/Write'} className="search-icon">
+          <Link href={'/search'} className="search-icon">
             <SearchIcon />
           </Link>
-
           <GoWriteLink onClick={goToWritePage} href={'/post/Write'}>
             <EditIcon />
           </GoWriteLink>
