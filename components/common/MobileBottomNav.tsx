@@ -16,6 +16,7 @@ import { useSelector } from 'react-redux';
 import { UserState } from '@/redux/reducers/userSlice';
 import { RootState } from '@/redux/config/configStore';
 import ProfileImage from './ProfileImage';
+import Modal from './Modal';
 
 type mobileBottomNavProps = {
   onClickEvent: () => void;
@@ -98,11 +99,28 @@ const IconLink = styled(Link)`
 const MobileBottomNav = () => {
   const [active, setActive] = useState<number>(0);
   const [pathIndex, setPathIndex] = useState<string>('');
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [modalMessge, setModalMessge] = useState<any>({
+    actionText: '',
+    modalMessge: '',
+    onClickEvent: '',
+  });
   const { user }: { user: UserState['user'] } = useSelector(
     (state: RootState) => state.user
   );
   const router = useRouter();
-
+  const routerHandler = (route: string, text: string) => {
+    if (user.email === null && (text === 'upload' || text === 'my')) {
+      setModalMessge({
+        actionText: '확인',
+        modalMessge: '로그인이 필요한 서비스입니다. 로그인 하시겠습니까?',
+        onClickEvent: () => router.push('/auth/SignIn'),
+      });
+      setIsOpen(!isOpen);
+    } else {
+      router.push(route);
+    }
+  };
   useEffect(() => {
     const currentPathname = window.location.pathname;
     setPathIndex(currentPathname);
@@ -136,19 +154,19 @@ const MobileBottomNav = () => {
           const { icon: Icon, text } = nav;
           return (
             <BottomNavItem key={idx}>
-              <IconLink
-                href={nav.route}
+              <IconBox
+                onClick={() => routerHandler(nav.route, text)}
                 className={active === idx ? 'active' : ''}
               >
                 <Icon />
                 <p>{text}</p>
-              </IconLink>
+              </IconBox>
             </BottomNavItem>
           );
         })}
         <BottomNavItem>
-          <IconLink
-            href={`/User/${user.email}`}
+          <IconBox
+            onClick={() => routerHandler(`/User/${user.email}`, 'my')}
             className={active === 3 ? 'active' : ''}
           >
             <div className="image-box">
@@ -159,10 +177,19 @@ const MobileBottomNav = () => {
               />
             </div>
             <p>my</p>
-          </IconLink>
+          </IconBox>
         </BottomNavItem>
       </BottomNavList>
       <ActiveBar $active={active}></ActiveBar>
+      <Modal
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        actionText={modalMessge.actionText}
+        onClickEvent={modalMessge.onClickEvent}
+      >
+        로그인 후 이용할 수 있는 서비스 입니다.
+        <br /> 로그인 하시겠습니까?
+      </Modal>
     </MobileBottomNavLayout>
   );
 };
