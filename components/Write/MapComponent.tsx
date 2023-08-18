@@ -200,13 +200,13 @@ export const MapComponent: React.FC<MapComponentProps> = ({
         style={{ width: '100%', border: '2px solid #0084ff', margin: '0' }}
       />
       {mapOpen && (
-        <div style={{ position: 'relative', width: '100%', height: '50vh' }}>
+        <div style={{ position: 'relative', width: '100%', height: '80vh' }}>
           <div
             ref={mapContainerRef}
             id="map"
             style={{ width: '100%', height: '100%' }}
           />
-          <CloseButton onClick={handleCloseClick}>X</CloseButton>
+          {/* <CloseButton onClick={handleCloseClick}>X</CloseButton> */}
         </div>
       )}
     </>
