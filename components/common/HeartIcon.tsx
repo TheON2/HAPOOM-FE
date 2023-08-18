@@ -18,18 +18,18 @@ const HeartIconBox = styled.div<iconType>`
   display: flex;
   justify-content: center;
   align-items: center;
-  /* background-color: ${(props) => (props.$isLike ? `black` : `white`)}; */
-  /* border: 2px solid black; */
   background-color: ${(props) => (props.$isLike ? `#0084FF` : `#538cc080`)};
-
-  /* background-color: #538cc0; */
   border-radius: 50%;
   position: absolute;
   top: 5px;
   right: 5px;
+  transition: all 0.2s ease-in-out;
   cursor: pointer;
   svg {
     transform: translate(-1px, -1px);
+  }
+  &:hover {
+    background-color: #0084ff90;
   }
 `;
 
@@ -40,6 +40,11 @@ type Props = {
 const HeartIcon = ({ postId }: Props) => {
   const [isLike, setIsLike] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [modalMessge, setModalMessge] = useState<any>({
+    actionText: '',
+    modalMessge: '',
+    onClickEvent: '',
+  });
   const router = useRouter();
   const { user }: { user: UserState['user'] } = useSelector(
     (state: RootState) => state.user
@@ -54,10 +59,12 @@ const HeartIcon = ({ postId }: Props) => {
   ) => {
     event.stopPropagation();
     if (user.email === null) {
+      setModalMessge({
+        actionText: '확인',
+        modalMessge: '로그인이 필요한 서비스입니다. 로그인 하시겠습니까?',
+        onClickEvent: modalHandler,
+      });
       setIsOpen(!isOpen);
-      // return alert(
-      //   '로그인 후 이용할 수 있는 서비스 입니다. 로그인 하시겠습니까?'
-      // );
     } else {
       setIsLike(!isLike);
       mutation.mutate(postId.toString());
@@ -75,8 +82,8 @@ const HeartIcon = ({ postId }: Props) => {
       <Modal
         isOpen={isOpen}
         setIsOpen={setIsOpen}
-        actionText={'로그인'}
-        onClickEvent={modalHandler}
+        actionText={modalMessge.actionText}
+        onClickEvent={modalMessge.onClickEvent}
       >
         로그인 후 이용할 수 있는 서비스 입니다.
         <br /> 로그인 하시겠습니까?
