@@ -13,6 +13,7 @@ import { useMutation, useQueryClient } from 'react-query';
 import UpAndDownTab from '../common/UpAndDownTab';
 import Modal from '../common/Modal';
 import { useRouter } from 'next/router';
+import { useDispatch, useSelector } from 'react-redux';
 const CommentsContainer = styled.div`
   width: 100%;
   border-bottom: 1px solid #ddd;
@@ -203,6 +204,7 @@ type Props = {
   updateButtonActive: (commentId: number) => void;
   active: number | null;
   data: any;
+  loggedUser: any;
 };
 type CommentData = {
   formData: FormData;
@@ -225,11 +227,33 @@ const Comment = ({
   updateButtonActive,
   active,
   data,
+  loggedUser,
 }: Props) => {
   const updateButtonHandler = (commentId: number, comment: string) => {
     onClickUpdateEvent(commentId, comment);
     updateButtonActive(commentId);
   };
+  console.log(loggedUser);
+  const timeSince = (date: string) => {
+    const now: any = new Date();
+    const inputDate: any = new Date(date);
+    const seconds = Math.floor((now - inputDate) / 1000);
+
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+
+    if (days > 0) {
+      return days + '일 전';
+    } else if (hours > 0) {
+      return hours + '시간 전';
+    } else if (minutes > 0) {
+      return minutes + '분 전';
+    } else {
+      return '방금 전';
+    }
+  };
+  const timeAgo = timeSince(data.createdAt);
   return (
     <>
       <CommentsContainer>
@@ -241,26 +265,30 @@ const Comment = ({
             <CommentInfomation>
               <div className="comment-info">
                 <p>{data.nickname}</p>
-                <span>3시간전</span>
+                <span>{timeAgo}</span>
               </div>
-              <div
-                className={
-                  active === data.commentId
-                    ? 'active comment-button-box'
-                    : 'comment-button-box'
-                }
-              >
-                <IconButton
-                  onClick={() =>
-                    updateButtonHandler(data.commentId, data.comment)
+              {data.nickname === loggedUser?.nickname ? (
+                <div
+                  className={
+                    active === data.commentId
+                      ? 'active comment-button-box'
+                      : 'comment-button-box'
                   }
                 >
-                  <EditComment />
-                </IconButton>
-                <IconButton onClick={() => onClickDeleteEvent(data.commentId)}>
-                  <DeleteComment />
-                </IconButton>
-              </div>
+                  <IconButton
+                    onClick={() =>
+                      updateButtonHandler(data.commentId, data.comment)
+                    }
+                  >
+                    <EditComment />
+                  </IconButton>
+                  <IconButton
+                    onClick={() => onClickDeleteEvent(data.commentId)}
+                  >
+                    <DeleteComment />
+                  </IconButton>
+                </div>
+              ) : null}
             </CommentInfomation>
           </div>
           <div className="comment">
@@ -276,9 +304,12 @@ type commentProps = {
   data: any;
   id: string;
   userData: any;
+  writeUser: any;
 };
 
-const CommentLayout = ({ data, id, userData }: commentProps) => {
+const CommentLayout = ({ data, id, userData, writeUser }: commentProps) => {
+  // console.log(data);
+  // console.log(writeUser);
   const [active, setActive] = useState<number | null>(null);
   const updateButtonActive = (idx: number) => {
     setActive(idx);
@@ -456,6 +487,7 @@ const CommentLayout = ({ data, id, userData }: commentProps) => {
           updateButtonActive={updateButtonActive}
           active={active}
           data={comment}
+          loggedUser={userData}
         />
       ))}
       {isShow ? (
