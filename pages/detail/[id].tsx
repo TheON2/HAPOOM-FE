@@ -190,6 +190,7 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
       },
     }
   );
+  console.log(data);
   const { data: commentsData } = useQuery('comments', () => getComment(id));
 
   if (!isSuccess) return <div>Loading...</div>;
@@ -209,9 +210,9 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
         <OtherProfileBox>
           <Link href={`/User/sss@gmail.com`}>
             <DetailProfile
-              userImage={userData?.userImage}
-              preset={userData?.preset}
-              nick={userData?.nickname}
+              userImage={data?.user?.userImage}
+              preset={data?.user?.preset}
+              nick={data?.user?.nickname}
             />
           </Link>
           <KebabMenuUI>
