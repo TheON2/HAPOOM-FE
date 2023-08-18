@@ -55,7 +55,7 @@ const Header = ({ $sticky }: any) => {
   const [isAuth, setIsAuth] = useState<boolean>(false);
 
   const onClickShowMenuHandler = () => {
-    router.push('/User/User');
+    router.push(`/User/${user.email}`);
   };
 
   const handleLogoClick = () => {
