@@ -10,6 +10,7 @@ export interface UserState {
     nickName: string | null;
     userImage: string | null;
     preset: number | null;
+    likePosts: number[] | null;
   };
 }
 
@@ -18,6 +19,7 @@ export interface UserResponse {
   nickname: string | null;
   userImage: string | null;
   preset: number | null;
+  likePosts: number[] | null;
 }
 
 const initialState: UserState = {
@@ -26,6 +28,7 @@ const initialState: UserState = {
     nickName: null,
     userImage: null,
     preset: null,
+    likePosts: null,
   },
 };
 
@@ -50,6 +53,7 @@ const userSlice = createSlice({
       state.user.nickName = action.payload.nickname;
       state.user.userImage = action.payload.userImage;
       state.user.preset = action.payload.preset;
+      state.user.likePosts = action.payload.likePosts;
     },
   },
 });

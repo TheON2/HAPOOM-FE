@@ -22,6 +22,7 @@ interface YoutubePlayerProps {
   videoId: string;
   setVideoId: React.Dispatch<React.SetStateAction<string>>;
   setSelectedTitle: React.Dispatch<React.SetStateAction<string>>;
+  update: string;
 }
 
 interface Windows extends Window {
@@ -38,6 +39,7 @@ const YoutubePlayer = ({
   videoId,
   setVideoId,
   setSelectedTitle,
+  update,
 }: YoutubePlayerProps) => {
   const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null);
   const [player, setPlayer] = useState<YT.Player | null>(null);
@@ -147,7 +149,9 @@ const YoutubePlayer = ({
   return (
     <>
       <PlayerWrapper videoId={videoId}>
-        <CloseButton onClick={handleClosePlayer}>X</CloseButton>
+        {update !== '3' && (
+          <CloseButton onClick={handleClosePlayer}>X</CloseButton>
+        )}
         <Title>{title}</Title>
         <div id="player" ref={playerRef} style={{ display: 'none' }} />
 
