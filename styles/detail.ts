@@ -96,7 +96,7 @@ export const ContentsContainer = styled.div`
   .carousel-box {
     border-radius: 8px;
     overflow: hidden;
-    height: 26vh;
+    height: 45vh;
   }
 `;
 export const HashtagBox = styled.div`
