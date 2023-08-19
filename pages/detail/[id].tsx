@@ -129,9 +129,7 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
   });
 
   const handleEditClick = () => {
-    setCookie(null, 'updateId', id, { path: '/' });
-    setCookie(null, 'update', '2', { path: '/' });
-    router.push('/post/Write');
+    router.push(`/update/${id}`);
   };
 
   const handleDeleteClick = () => {
