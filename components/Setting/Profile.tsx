@@ -45,7 +45,7 @@ const Profile = ({
             alt={'image'}
             width={74}
             height={74}
-            // objectFit="cover"
+            priority
           />
         )}
       </div>

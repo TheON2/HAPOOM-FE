@@ -5,7 +5,7 @@ import { Line } from '@/styles/signUp';
 import { RightArrow } from './SVG';
 
 type accordianProps = {
-  isOpen?: boolean;
+  $isOpen?: boolean;
 };
 
 const AccordianLayout = styled.div`
@@ -16,7 +16,7 @@ const AccordianLayout = styled.div`
 export const AccordianTab = styled.button<accordianProps>`
   width: 100%;
   padding: 20px 0 16px;
-  color: ${(props) => (props.isOpen ? '#000' : '#8995A7')};
+  color: ${(props) => (props.$isOpen ? '#000' : '#8995A7')};
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -47,7 +47,7 @@ const AccordianMenu = ({ tabText, children }: DroptabProps) => {
   return (
     <>
       <AccordianLayout>
-        <AccordianTab onClick={onClickDropTabHandler} isOpen={isOpen}>
+        <AccordianTab onClick={onClickDropTabHandler} $isOpen={isOpen}>
           {tabText}
           <RightArrow />
         </AccordianTab>
@@ -56,13 +56,13 @@ const AccordianMenu = ({ tabText, children }: DroptabProps) => {
       {isOpen ? (
         <Line
           width={'100%'}
-          borderColor={'#A9A9A9'}
+          $borderColor={'#A9A9A9'}
           style={{ display: 'none' }}
         ></Line>
       ) : (
         <Line
           width={'100%'}
-          borderColor={'#A9A9A9'}
+          $borderColor={'#A9A9A9'}
           style={{ marginTop: '-20px' }}
         ></Line>
       )}
