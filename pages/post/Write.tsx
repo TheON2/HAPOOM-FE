@@ -22,7 +22,7 @@ import Footer from '@/components/common/Footer';
 import { getAuthToken } from '@/api/user';
 import { AUTH_USER, UserResponse } from '@/redux/reducers/userSlice';
 import MobileBottomNav from '@/components/common/MobileBottomNav';
-import { parseCookies } from 'nookies';
+import { parseCookies, setCookie } from 'nookies';
 import { GetServerSidePropsContext, NextPage } from 'next';
 import RecordPlayer from '@/components/Write/RecordPlayer';
 import CustomPlayer from '@/components/Write/CustomPlayer';
@@ -46,9 +46,12 @@ interface Image {
 interface Props {
   update: string;
   updateId: string;
+  data: any;
 }
 
-const Write: NextPage<Props> = ({ update, updateId }) => {
+
+const Write: NextPage<Props> = ({ update, updateId, data }) => {
+
   const [isShow, setIsShow] = useState<boolean>(false);
   const [commentEdit, setCommentEdit] = useState<any>({
     show: false,
@@ -218,11 +221,70 @@ const Write: NextPage<Props> = ({ update, updateId }) => {
     mutationOptions
   );
 
-  const { isLoading, isError, data, isSuccess } = useQuery(
-    ['post', updateId],
-    () => getPost(updateId),
-    {
-      onSuccess: async (data) => {
+  // const { isLoading, isError, data, isSuccess } = useQuery(
+  //   ['post', updateId],
+  //   () => getPost(updateId),
+  //   {
+  //     onSuccess: async (data) => {
+  //       console.log('진입함');
+  //       setCookie(null, 'update', '1', { path: '/' });
+  //       const imageFiles = await Promise.all(
+  //         data.images.map(async (image: Image, idx: string) => {
+  //           const response = await fetch(image.url);
+  //           const blob = await response.blob();
+  //           return new File([blob], idx);
+  //         })
+  //       );
+  //       console.log(data.post.musicType === 3);
+  //       if (data.post.musicType === 3) {
+  //         console.log('진입함');
+  //         try {
+  //           const response = await fetch(data.post.musicUrl);
+  //           const audioBlob = await response.blob();
+  //           const url = URL.createObjectURL(audioBlob);
+  //           setAudioFile(audioBlob);
+  //           setAudioURL(url);
+  //         } catch (error) {
+  //           console.error('오디오 파일을 불러오는 중 오류 발생:', error);
+  //         }
+  //       }
+  //       setImages(imageFiles);
+  //       setContent(data.post.content);
+  //       setSelectedTitle(data.post.musicTitle);
+  //       setMusicChoose(data.post.musicType);
+  //       data.post.musicType === 1 && setVideoId(data.post.musicUrl);
+  //       data.post.musicType === 3 && setAudioURL(data.post.musicUrl);
+  //       console.log(data.post.musicType === 3);
+  //       if (data.post.musicType === 3) {
+  //         console.log('진입함');
+  //         try {
+  //           const response = await fetch(data.post.musicUrl);
+  //           const audioBlob = await response.blob();
+  //           const url = URL.createObjectURL(audioBlob);
+  //           setAudioFile(audioBlob);
+  //           setAudioURL(url);
+  //         } catch (error) {
+  //           console.error('오디오 파일을 불러오는 중 오류 발생:', error);
+  //         }
+  //       }
+  //       setVideoId(data.post.musicUrl);
+  //       setTags(data.post.tag.split(', '));
+  //       setLocation({
+  //         name: data.post.placeName,
+  //         x: data.post.latitude,
+  //         y: data.post.longitude,
+  //       });
+  //     },
+  //     enabled: update === '2',
+  //   }
+  // );
+
+  useEffect(() => {
+    if (update === '2') {
+      const fetchData = async () => {
+        console.log('진입함');
+        setCookie(null, 'update', '1', { path: '/' });
+
         const imageFiles = await Promise.all(
           data.images.map(async (image: Image, idx: string) => {
             const response = await fetch(image.url);
@@ -230,15 +292,14 @@ const Write: NextPage<Props> = ({ update, updateId }) => {
             return new File([blob], idx);
           })
         );
+
         setImages(imageFiles);
         setContent(data.post.content);
         setSelectedTitle(data.post.musicTitle);
         setMusicChoose(data.post.musicType);
         data.post.musicType === 1 && setVideoId(data.post.musicUrl);
-        data.post.musicType === 3 && setAudioURL(data.post.musicUrl);
-        console.log(data.post.musicType === 3);
+
         if (data.post.musicType === 3) {
-          console.log('진입함');
           try {
             const response = await fetch(data.post.musicUrl);
             const audioBlob = await response.blob();
@@ -249,17 +310,18 @@ const Write: NextPage<Props> = ({ update, updateId }) => {
             console.error('오디오 파일을 불러오는 중 오류 발생:', error);
           }
         }
-        setVideoId(data.post.musicUrl);
+
         setTags(data.post.tag.split(', '));
         setLocation({
           name: data.post.placeName,
           x: data.post.latitude,
           y: data.post.longitude,
         });
-      },
-      enabled: update === '2',
+      };
+
+      fetchData(); // 비동기 함수 호출
     }
-  );
+  }, []);
 
   useEffect(() => {
     console.log(images); // images 배열이 변경될 때마다 여기에 로깅됩니다.
@@ -458,17 +520,17 @@ const Write: NextPage<Props> = ({ update, updateId }) => {
 
 export default Write;
 
-export const getServerSideProps = async (
-  context: GetServerSidePropsContext
-) => {
-  const cookies = parseCookies(context);
-  const update = cookies.update || '';
-  const updateId = cookies.updateId || '';
+// export const getServerSideProps = async (
+//   context: GetServerSidePropsContext
+// ) => {
+//   const cookies = parseCookies(context);
+//   const update = cookies.update || '';
+//   const updateId = cookies.updateId || '';
 
-  return {
-    props: {
-      update,
-      updateId,
-    },
-  };
-};
+//   return {
+//     props: {
+//       update,
+//       updateId,
+//     },
+//   };
+// };

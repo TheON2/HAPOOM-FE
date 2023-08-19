@@ -42,8 +42,8 @@ const Dropzone: React.FC<DropzoneProps> = ({ images, setImages }) => {
         <Image
           src={URL.createObjectURL(images[0])}
           alt={`Upload preview 1`}
-          layout="fill"
-          objectFit="contained"
+          width={100}
+          height={100}
           style={{
             position: 'absolute',
           }}
