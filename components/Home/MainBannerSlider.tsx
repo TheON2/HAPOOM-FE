@@ -121,9 +121,10 @@ const MainBannerSlider: React.FC<Props> = ({ data }) => {
               <Image
                 src={slide?.url}
                 alt="v13 image"
-                fill
+                width={768}
+                height={800}
                 loading="eager"
-                sizes="(max-width: 1440px) 1440px"
+                priority={true}
               />
               <BackgroundGradient></BackgroundGradient>
             </SliderItem>

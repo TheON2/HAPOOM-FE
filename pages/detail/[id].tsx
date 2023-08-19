@@ -113,7 +113,8 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
   const { mutate: delete_mutate } = useMutation(deletePost, {
     onSuccess: () => {
       queryClient.invalidateQueries('posts');
-      alert('Post deleted');
+
+      alert('게시글이 삭제되었습니다.');
       router.push('/');
     },
   });
@@ -190,7 +191,7 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
       },
     }
   );
-  console.log(data);
+
   const { data: commentsData } = useQuery('comments', () => getComment(id));
 
   if (!isSuccess) return <div>Loading...</div>;

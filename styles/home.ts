@@ -37,6 +37,8 @@ export const SliderItem = styled.li<SliderItemProps>`
   position: relative;
   /* padding: 50px 100px; */
   img {
+    width: 100%;
+    height: 100%;
     object-fit: cover;
   }
   p {
