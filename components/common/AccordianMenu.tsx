@@ -1,5 +1,4 @@
 import React, { ReactNode, useState } from 'react';
-import Image from 'next/image';
 import styled from 'styled-components';
 import { Line } from '@/styles/signUp';
 import { RightArrow } from './SVG';
@@ -25,12 +24,6 @@ export const AccordianTab = styled.button<accordianProps>`
   font-weight: 700;
 `;
 
-const Icon = () => {
-  return (
-    <Image src={'/🦆 icon _cloud_.svg'} alt={'icon'} width={20} height={20} />
-  );
-};
-
 type DroptabProps = {
   tabText: string;
   children: ReactNode;
@@ -49,7 +42,10 @@ const AccordianMenu = ({ tabText, children }: DroptabProps) => {
       <AccordianLayout>
         <AccordianTab onClick={onClickDropTabHandler} $isOpen={isOpen}>
           {tabText}
-          <RightArrow />
+          <RightArrow
+            rotation={isOpen}
+            fillColor={isOpen ? '#0084FF' : '#8995a7'}
+          />
         </AccordianTab>
         {isOpen ? children : null}
       </AccordianLayout>
