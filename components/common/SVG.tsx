@@ -11,6 +11,10 @@ type svgColorProps = {
 type RightArrowProps = {
   fillColor?: string;
 };
+type Props = {
+  style?: React.CSSProperties;
+  onClick?: () => void;
+};
 
 export const Cloud = ({ fillColor = '#fff' }) => (
   <svg

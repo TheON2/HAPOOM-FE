@@ -49,7 +49,9 @@ interface Props {
   data: any;
 }
 
+
 const Write: NextPage<Props> = ({ update, updateId, data }) => {
+
   const [isShow, setIsShow] = useState<boolean>(false);
   const [commentEdit, setCommentEdit] = useState<any>({
     show: false,
@@ -320,6 +322,10 @@ const Write: NextPage<Props> = ({ update, updateId, data }) => {
       fetchData(); // 비동기 함수 호출
     }
   }, []);
+
+  useEffect(() => {
+    console.log(images); // images 배열이 변경될 때마다 여기에 로깅됩니다.
+  }, [images]);
 
   return (
     <>
