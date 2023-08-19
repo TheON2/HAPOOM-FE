@@ -32,6 +32,8 @@ import Accordion from '@/components/Write/Accordion';
 import youtube from '@/public/youtube.png';
 import music from '@/public/music.png';
 import record from '@/public/record.png';
+import UpAndDownTab from '@/components/common/UpAndDownTab';
+import CustomButton from '@/components/Write/CustomButton';
 
 const DynamicComponentWithNoSSR = dynamic(
   () => import('@/components/Write/YoutubePlayer'),
@@ -47,6 +49,64 @@ interface Props {
 }
 
 const Write: NextPage<Props> = ({ update, updateId }) => {
+  const [isShow, setIsShow] = useState<boolean>(false);
+  const [commentEdit, setCommentEdit] = useState<any>({
+    show: false,
+    action: '',
+    uiTitle: '',
+    buttonText: '',
+    postId: '',
+  });
+  const handleCommentCreateHandler = () => {
+    setIsShow(true);
+    setCommentEdit({
+      show: true,
+      action: 'create',
+      uiTitle: '음악 선택',
+      buttonText: '업로드',
+      commentId: '',
+    });
+  };
+
+  const handleCommentShowHandler = () => {
+    // if (commentEdit.show) {
+    //   setMusicChoose(0);
+    // }
+    setCommentEdit((pre: any) => ({
+      ...pre,
+      show: !commentEdit.show,
+    }));
+  };
+
+  const [isShowMap, setIsShowMap] = useState<boolean>(false);
+  const [mapEdit, setMapEdit] = useState<any>({
+    show: false,
+    action: '',
+    uiTitle: '',
+    buttonText: '',
+    postId: '',
+  });
+  const handleMapCreateHandler = () => {
+    setIsShowMap(true);
+    setMapEdit({
+      show: true,
+      action: 'create',
+      uiTitle: '위치 선택',
+      buttonText: '업로드',
+      commentId: '',
+    });
+  };
+
+  const handleMapShowHandler = () => {
+    // if (commentEdit.show) {
+    //   setMusicChoose(0);
+    // }
+    setMapEdit((pre: any) => ({
+      ...pre,
+      show: !mapEdit.show,
+    }));
+  };
+
   const [images, setImages] = useState<File[]>([]);
   const [content, setContent] = useState<string>('');
   const [musicChoose, setMusicChoose] = useState<number>(0);
@@ -98,6 +158,11 @@ const Write: NextPage<Props> = ({ update, updateId }) => {
       return;
     }
 
+    if (location.x === 0 || location.y === 0) {
+      alert('위치를 선택해주세요.');
+      return;
+    }
+
     const formData = new FormData();
 
     images.forEach((image) => {
@@ -131,6 +196,8 @@ const Write: NextPage<Props> = ({ update, updateId }) => {
     formData.append('latitude', String(location.x));
     formData.append('longitude', String(location.y));
     formData.append('placeName', location.name);
+
+    console.log(images);
     postMutation({ formData, updateId });
   };
 
@@ -194,6 +261,10 @@ const Write: NextPage<Props> = ({ update, updateId }) => {
     }
   );
 
+  useEffect(() => {
+    console.log(images); // images 배열이 변경될 때마다 여기에 로깅됩니다.
+  }, [images]);
+
   return (
     <>
       {!(update === '2' && location.x === 0) && (
@@ -205,7 +276,15 @@ const Write: NextPage<Props> = ({ update, updateId }) => {
               style={{ display: 'block', textAlign: 'center' }}
             >
               <ImageContainer>
-                {update === '2' ? <h1>게시글 수정</h1> : <h1>새 게시글</h1>}
+                {update === '2' ? (
+                  <h1 style={{ alignSelf: 'flex-start', margin: '25px' }}>
+                    게시글 수정
+                  </h1>
+                ) : (
+                  <h1 style={{ alignSelf: 'flex-start', margin: '25px' }}>
+                    새 게시글
+                  </h1>
+                )}
                 <Dropzone images={images} setImages={setImages} />
                 <PreviewContainer>
                   <ImagePreview images={images} removeImage={removeImage} />
@@ -213,80 +292,29 @@ const Write: NextPage<Props> = ({ update, updateId }) => {
               </ImageContainer>
               <ImageContainer>
                 <ContentArea content={content} setContent={setContent} />
-                <div>
-                  <Accordion
-                    image={youtube}
-                    selected={musicChoose === 1}
-                    onClick={() => handleAccordionClick(1)}
+                <div
+                  style={{
+                    position: 'relative',
+                    width: 400,
+                  }}
+                >
+                  <label style={{ textAlign: 'left' }}>
+                    <h3 style={{ margin: '10px 0' }}>음악추가</h3>
+                  </label>
+                  <CustomButton
+                    type="button"
+                    onClick={handleCommentCreateHandler}
                   >
-                    <>
-                      <YouTubeSearch
-                        setVideoId={setVideoId}
-                        selectedTitle={selectedTitle}
-                        setSelectedTitle={setSelectedTitle}
-                        update={update}
-                        videoId={videoId}
-                      />
-                      <DynamicComponentWithNoSSR
-                        videoId={videoId}
-                        setVideoId={setVideoId}
-                        setSelectedTitle={setSelectedTitle}
-                      />
-                    </>
-                  </Accordion>
-                  <Accordion
-                    image={music}
-                    selected={musicChoose === 2}
-                    onClick={() => handleAccordionClick(2)}
-                  >
-                    <MusicSelector
-                      musicURL={musicURL}
-                      setMusicURL={setMusicURL}
-                    />
-                  </Accordion>
-                  <Accordion
-                    image={record}
-                    selected={musicChoose === 3}
-                    onClick={() => handleAccordionClick(3)}
-                  >
-                    <RecordPlayer
-                      setAudioFile={setAudioFile}
-                      setSlicedAudioFile={setSlicedAudioFile}
-                      setSlicedAudioURL={setSlicedAudioURL}
-                      slicedAudioURL={slicedAudioURL}
-                      audioURL={audioURL}
-                      setAudioURL={setAudioURL}
-                    />
-                  </Accordion>
+                    음악 설정하기
+                  </CustomButton>
                 </div>
-                {/* <Form.Group controlId="musicChooseSelect">
-                  <Form.Label>음악 선택</Form.Label>
-                  <Form.Select
-                    size="lg"
-                    aria-label="음악 선택"
-                    value={musicChoose}
-                    onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
-                      setMusicChoose(Number(e.target.value));
-                    }}
-                  >
-                    <option value={1}>YouTube</option>
-                    <option value={2}>Music Selector</option>
-                    <option value={3}>Record Player</option>
-                  </Form.Select>
-                </Form.Group> */}
-                {/* {musicChoose === 1 && (
+                {musicChoose === 1 && (
                   <>
-                    <YouTubeSearch
-                      setVideoId={setVideoId}
-                      selectedTitle={selectedTitle}
-                      setSelectedTitle={setSelectedTitle}
-                      update={update}
-                      videoId={videoId}
-                    />
                     <DynamicComponentWithNoSSR
                       videoId={videoId}
                       setVideoId={setVideoId}
                       setSelectedTitle={setSelectedTitle}
+                      update={update}
                     />
                   </>
                 )}
@@ -294,6 +322,7 @@ const Write: NextPage<Props> = ({ update, updateId }) => {
                   <MusicSelector
                     musicURL={musicURL}
                     setMusicURL={setMusicURL}
+                    setIsShow={setIsShow}
                   />
                 )}
                 {musicChoose === 3 && (
@@ -304,14 +333,38 @@ const Write: NextPage<Props> = ({ update, updateId }) => {
                     slicedAudioURL={slicedAudioURL}
                     audioURL={audioURL}
                     setAudioURL={setAudioURL}
+                    setIsShow={setIsShow}
                   />
-                )} */}
-                <TagInput tags={tags} setTags={setTags} />
-                <MapComponent
+                )}
+                <div
+                  style={{
+                    position: 'relative',
+                    width: 400,
+                  }}
+                >
+                  <label style={{ textAlign: 'left' }}>
+                    <h3 style={{ margin: '10px 0' }}>태그</h3>
+                  </label>
+                  <TagInput tags={tags} setTags={setTags} />
+                </div>
+                <div
+                  style={{
+                    position: 'relative',
+                    width: 400,
+                  }}
+                >
+                  <label style={{ textAlign: 'left' }}>
+                    <h3 style={{ margin: '10px 0' }}>장소</h3>
+                  </label>
+                  <CustomButton type="button" onClick={handleMapCreateHandler}>
+                    위치 설정하기
+                  </CustomButton>
+                </div>
+                {/* <MapComponent
                   setLocation={setLocation}
                   location={location}
                   update={update}
-                />
+                /> */}
                 <StyledButton type="submit">
                   {update === '2' ? (
                     <h3>사진 수정하기</h3>
@@ -320,6 +373,81 @@ const Write: NextPage<Props> = ({ update, updateId }) => {
                   )}
                 </StyledButton>
               </ImageContainer>
+              {isShow ? (
+                <UpAndDownTab
+                  onClickEvent={handleCommentShowHandler}
+                  $isUp={commentEdit.show}
+                >
+                  {commentEdit.show && (
+                    <div>
+                      <Accordion
+                        image={youtube}
+                        selected={musicChoose === 1}
+                        onClick={() => handleAccordionClick(1)}
+                      >
+                        <>
+                          <YouTubeSearch
+                            setVideoId={setVideoId}
+                            selectedTitle={selectedTitle}
+                            setSelectedTitle={setSelectedTitle}
+                            update={update}
+                            videoId={videoId}
+                            setIsShow={setIsShow}
+                          />
+                          {/* <DynamicComponentWithNoSSR
+                          videoId={videoId}
+                          setVideoId={setVideoId}
+                          setSelectedTitle={setSelectedTitle}
+                        /> */}
+                        </>
+                      </Accordion>
+                      <Accordion
+                        image={music}
+                        selected={musicChoose === 2}
+                        onClick={() => handleAccordionClick(2)}
+                      >
+                        <MusicSelector
+                          musicURL={musicURL}
+                          setMusicURL={setMusicURL}
+                          setIsShow={setIsShow}
+                        />
+                      </Accordion>
+                      <Accordion
+                        image={record}
+                        selected={musicChoose === 3}
+                        onClick={() => handleAccordionClick(3)}
+                      >
+                        <RecordPlayer
+                          setAudioFile={setAudioFile}
+                          setSlicedAudioFile={setSlicedAudioFile}
+                          setSlicedAudioURL={setSlicedAudioURL}
+                          slicedAudioURL={slicedAudioURL}
+                          audioURL={audioURL}
+                          setAudioURL={setAudioURL}
+                          setIsShow={setIsShow}
+                        />
+                      </Accordion>
+                      {commentEdit.show && (
+                        <div style={{ height: '200px' }}></div>
+                      )}
+                    </div>
+                  )}
+                </UpAndDownTab>
+              ) : null}
+              {isShowMap ? (
+                <UpAndDownTab
+                  onClickEvent={handleMapShowHandler}
+                  $isUp={mapEdit.show}
+                >
+                  {mapEdit.show && (
+                    <MapComponent
+                      setLocation={setLocation}
+                      location={location}
+                      update={update}
+                    />
+                  )}
+                </UpAndDownTab>
+              ) : null}
             </form>
           </div>
         </>

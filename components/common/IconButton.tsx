@@ -10,6 +10,7 @@ const IconButtonStyle = styled.button`
   background: none;
   border: none;
   transform: translateX(10px);
+  cursor: pointer;
   svg {
     width: 20px;
     height: 20px;

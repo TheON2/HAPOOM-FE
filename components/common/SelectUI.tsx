@@ -68,29 +68,33 @@ const SelectBarButton = styled.button`
   color: #fff;
   font-size: 12px;
   font-weight: 700;
+  transition: all 0.3s ease-in-out;
+
   svg {
     transform: scale(0.8) rotate(90deg);
     path {
       fill: #fff;
     }
   }
+  &:hover {
+    background-color: #0988ff;
+  }
 `;
 const SelectList = styled.ul`
   width: 80px;
-  /* background-color: #5aabf6; */
-  /* position: absolute;
-  top: 98px; */
 `;
 const SelectItem = styled.li`
   width: 100%;
   height: 36px;
   padding: 0px 16px;
+  border-radius: 20px;
   color: #fff;
   font-size: 12px;
   font-weight: 700;
   display: flex;
   align-items: center;
   background-color: #5aabf6;
+  transition: all 0.3s ease-in-out;
   cursor: pointer;
   &:hover {
     background-color: #0988ff;

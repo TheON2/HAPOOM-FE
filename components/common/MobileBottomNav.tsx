@@ -16,6 +16,7 @@ import { useSelector } from 'react-redux';
 import { UserState } from '@/redux/reducers/userSlice';
 import { RootState } from '@/redux/config/configStore';
 import ProfileImage from './ProfileImage';
+import Modal from './Modal';
 
 type mobileBottomNavProps = {
   onClickEvent: () => void;
@@ -34,12 +35,12 @@ type onClickProps = {
 const ActiveBar = styled.span<onClickProps>`
   width: calc((100% - 48px) / 4);
   height: 5px;
-  border-radius: 4px 4px 0 0;
+  border-radius: 0 0 4px 4px;
   position: absolute;
   /* background-color: #0084ff; */
   top: 0;
   left: 24px;
-  transform: ${(props) => `translate( ${props.$active * 100}%,  -100%)`};
+  transform: ${(props) => `translate( ${props.$active * 100}%,  0)`};
   transition: all 0.3s ease-in-out;
   &::after {
     content: '';
@@ -47,31 +48,61 @@ const ActiveBar = styled.span<onClickProps>`
     width: 40px;
     height: 5px;
     margin: auto;
-    border-radius: 4px 4px 0 0;
+    border-radius: 0 0 4px 4px;
     background-color: #0084ff;
   }
 `;
 
 const MobileBottomNav = () => {
   const [active, setActive] = useState<number>(0);
+  const [pathIndex, setPathIndex] = useState<string>('');
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [modalMessge, setModalMessge] = useState<any>({
+    actionText: '',
+    modalMessge: '',
+    onClickEvent: '',
+  });
   const { user }: { user: UserState['user'] } = useSelector(
     (state: RootState) => state.user
   );
   const router = useRouter();
-  const cookies = parseCookies(null); // 클라이언트 측에서 실행되는 경우 null 사용
-  const tabIndexCookie = cookies.tabIndex; // 'myCookie'의 값을 가져옴
+  const routerHandler = (route: string, text: string) => {
+    if (user.email === null && (text === 'upload' || text === 'my')) {
+      setModalMessge({
+        actionText: '확인',
+        modalMessge: '로그인이 필요한 서비스입니다. 로그인 하시겠습니까?',
+        onClickEvent: () => router.push('/auth/SignIn'),
+      });
+      setIsOpen(!isOpen);
+    } else {
+      router.push(route);
+    }
+  };
+  useEffect(() => {
+    const currentPathname = window.location.pathname;
+    setPathIndex(currentPathname);
+    // console.log(currentPathname);
+  }, [router.pathname]);
 
   useEffect(() => {
-    const tabIndex = Number(tabIndexCookie);
-    setActive(tabIndex);
-  }, []);
-
-  const onClickNavIconHandler = (idx: number, route: string) => {
-    const tabIndex = idx.toString();
-    setCookie(null, 'tabIndex', tabIndex, { path: '/' });
-    router.push(route);
-    setActive(idx);
-  };
+    switch (pathIndex) {
+      case '/':
+        setActive(0);
+        break;
+      case '/search':
+        setActive(1);
+        break;
+      case '/post/Write':
+        setActive(2);
+        break;
+      case `/User/${user.email}`:
+        setActive(3);
+        break;
+      default:
+        setActive(0);
+        break;
+    }
+  }, [pathIndex, user.email]);
 
   return (
     <MobileBottomNavLayout>
@@ -81,7 +112,7 @@ const MobileBottomNav = () => {
           return (
             <BottomNavItem key={idx}>
               <IconBox
-                onClick={() => onClickNavIconHandler(idx, nav.route)}
+                onClick={() => routerHandler(nav.route, text)}
                 className={active === idx ? 'active' : ''}
               >
                 <Icon />
@@ -92,7 +123,7 @@ const MobileBottomNav = () => {
         })}
         <BottomNavItem>
           <IconBox
-            onClick={() => onClickNavIconHandler(3, `/User/${user.email}`)}
+            onClick={() => routerHandler(`/User/${user.email}`, 'my')}
             className={active === 3 ? 'active' : ''}
           >
             <div className="image-box">
@@ -107,6 +138,15 @@ const MobileBottomNav = () => {
         </BottomNavItem>
       </BottomNavList>
       <ActiveBar $active={active}></ActiveBar>
+      <Modal
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        actionText={modalMessge.actionText}
+        onClickEvent={modalMessge.onClickEvent}
+      >
+        로그인 후 이용할 수 있는 서비스 입니다.
+        <br /> 로그인 하시겠습니까?
+      </Modal>
     </MobileBottomNavLayout>
   );
 };

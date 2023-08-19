@@ -38,24 +38,24 @@ const Header = ({ $sticky }: any) => {
   );
   const router = useRouter();
   const queryClient = useQueryClient();
-  const { mutate: logOut_mutate } = useMutation(userLogOut, {
-    onSuccess: () => {
-      queryClient.invalidateQueries('user');
-      dispatch(LOGOUT_USER());
-      router.push('/');
-    },
-  });
+  // const { mutate: logOut_mutate } = useMutation(userLogOut, {
+  //   onSuccess: () => {
+  //     queryent.invalidateQueries('user');
+  //     dispatch(LOGOUT_USER());
+  //     router.push('/');
+  //   },
+  // });
 
-  const onLogOut = useCallback(() => {
-    logOut_mutate();
-  }, [logOut_mutate]);
+  // const onLogOut = useCallback(() => {
+  //   logOut_mutate();
+  // }, [logOut_mutate]);
 
   const [isShowMenu, setIsShowMenu] = useState<boolean>(false);
 
   const [isAuth, setIsAuth] = useState<boolean>(false);
 
   const onClickShowMenuHandler = () => {
-    router.push('/User/User');
+    router.push(`/User/${user.email}`);
   };
 
   const handleLogoClick = () => {
@@ -79,14 +79,13 @@ const Header = ({ $sticky }: any) => {
   return (
     <>
       <HeaderLayout $sticky={$sticky}>
-        <LogoBox href={'/'} onClick={handleLogoClick}>
+        <LogoBox href={'/'} onClick={handleLogoClick} $sticky={$sticky}>
           <h1>HAPOOM</h1>
         </LogoBox>
         <AccountActionsContainer>
-          <Link href={'/post/Write'} className="search-icon">
-            <SearchIcon />
+          <Link href={'/search'} className="search-icon">
+            <SearchIcon fillColor={$sticky ? '#fff' : '#2797FF'} />
           </Link>
-
           <GoWriteLink onClick={goToWritePage} href={'/post/Write'}>
             <EditIcon />
           </GoWriteLink>
@@ -94,10 +93,10 @@ const Header = ({ $sticky }: any) => {
             <AuthButtonBox>
               <Link href={'/auth/SignIn'}>로그인</Link>|
               <Link href={'/auth/SignUp'}>회원가입</Link>
-              <Link href={'/record/2'}>레코드 테스트</Link>
+              {/* <Link href={'/record/2'}>레코드 테스트</Link>
               <a href="#" onClick={onLogOut}>
                 로그아웃
-              </a>
+              </a> */}
             </AuthButtonBox>
           ) : null}
           <ProfileButton onClick={onClickShowMenuHandler}>
@@ -110,7 +109,7 @@ const Header = ({ $sticky }: any) => {
         </AccountActionsContainer>
         <MobileBox>
           <IconButton>
-            <Bell fillColor="#fff" />
+            <Bell fillColor={$sticky ? '#fff' : '#2797FF'} />
           </IconButton>
         </MobileBox>
       </HeaderLayout>

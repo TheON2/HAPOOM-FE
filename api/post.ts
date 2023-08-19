@@ -64,8 +64,14 @@ const getPostLikeCount = async (postId: string) => {
 };
 
 const reportPost = async (postId: string) => {
-  const response = await api.post(`/api/report/${postId}`);
-  return response.data;
+  try {
+    const response = await api.post(`/api/report/${postId}`);
+    return '신고가 완료되었습니다.';
+  } catch (error: any) {
+    if (error.response.status === 409) {
+      return '이미 신고가 완료되었습니다.';
+    }
+  }
 };
 
 const getComment = async (postId: string) => {

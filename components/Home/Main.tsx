@@ -6,7 +6,7 @@ const MainLayout = styled.main`
   /* padding-bottom: 100px; */
   height: calc(100vh - 252px);
   overflow-y: auto;
-  transform: translateY(-105px);
+  transform: translateY(-107px);
   background-color: #fff;
   &::-webkit-scrollbar {
     display: none;

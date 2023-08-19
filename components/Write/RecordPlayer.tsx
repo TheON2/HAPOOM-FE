@@ -24,6 +24,13 @@ const StyledSlider = styled(Slider)`
   height: 25px;
 `;
 
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+`;
+
 const Thumb = styled.div`
   height: 25px;
   line-height: 25px;
@@ -47,6 +54,7 @@ interface RecordPlayerProps {
   setAudioURL: React.Dispatch<React.SetStateAction<string | undefined>>;
   slicedAudioURL: string | undefined;
   setSlicedAudioURL: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setIsShow: (state: boolean) => void;
 }
 
 const RecordPlayer: React.FC<RecordPlayerProps> = ({
@@ -56,6 +64,7 @@ const RecordPlayer: React.FC<RecordPlayerProps> = ({
   setSlicedAudioURL,
   audioURL,
   setAudioURL,
+  setIsShow,
 }) => {
   const [recording, setInternalRecording] = useState(false);
   const [playing, setPlaying] = useState(false);
@@ -110,6 +119,7 @@ const RecordPlayer: React.FC<RecordPlayerProps> = ({
         // 부모 컴포넌트에게 오디오 파일 전달
         setAudioFile(blob);
       }
+      setIsShow(false);
     }
   };
 
@@ -182,58 +192,60 @@ const RecordPlayer: React.FC<RecordPlayerProps> = ({
   }, [audioURL, playing, duration, setSlicedAudioURL, setSlicedAudioFile]);
 
   return (
-    <div style={{ width: '400px', position: 'relative' }}>
-      <Title>Audio Recorder</Title>
+    <Container>
+      <div style={{ width: '400px', position: 'relative' }}>
+        <Title>Audio Recorder</Title>
 
-      {recording && (
-        <>
-          <RecordingInfo audioUrl={audioURL} recording={recording} />
-        </>
-      )}
+        {recording && (
+          <>
+            <RecordingInfo audioUrl={audioURL} recording={recording} />
+          </>
+        )}
 
-      {audioURL ? (
-        <>
-          <CustomPlayer
-            audioUrl={audioURL}
-            setAudioUrl={setAudioURL}
-            title={'녹음된 파일'}
-          />
-          <StyledSlider
-            value={[selectionStart, selectionEnd]}
-            min={0}
-            max={duration}
-            step={0.01}
-            onChange={handleSliderChange}
-            renderThumb={(props, state) => (
-              <Thumb {...props}>{state.valueNow}</Thumb>
+        {audioURL ? (
+          <>
+            <CustomPlayer
+              audioUrl={audioURL}
+              setAudioUrl={setAudioURL}
+              title={'녹음된 파일'}
+            />
+            <StyledSlider
+              value={[selectionStart, selectionEnd]}
+              min={0}
+              max={duration}
+              step={0.01}
+              onChange={handleSliderChange}
+              renderThumb={(props, state) => (
+                <Thumb {...props}>{state.valueNow}</Thumb>
+              )}
+            />
+            <button
+              type="button"
+              onClick={() => sliceAudio(selectionStart, selectionEnd)}
+            >
+              Slice Audio
+            </button>
+            {slicedAudioURL && (
+              <div>
+                <CustomPlayer
+                  audioUrl={slicedAudioURL}
+                  setAudioUrl={setSlicedAudioURL}
+                  title={'잘라낸 녹음 파일'}
+                />
+              </div>
             )}
-          />
-          <button
-            type="button"
-            onClick={() => sliceAudio(selectionStart, selectionEnd)}
-          >
-            Slice Audio
+          </>
+        ) : recording ? (
+          <button type="button" onClick={stopRecording}>
+            Stop Recording
           </button>
-          {slicedAudioURL && (
-            <div>
-              <CustomPlayer
-                audioUrl={slicedAudioURL}
-                setAudioUrl={setSlicedAudioURL}
-                title={'잘라낸 녹음 파일'}
-              />
-            </div>
-          )}
-        </>
-      ) : recording ? (
-        <button type="button" onClick={stopRecording}>
-          Stop Recording
-        </button>
-      ) : (
-        <button type="button" onClick={startRecording}>
-          Start Recording
-        </button>
-      )}
-    </div>
+        ) : (
+          <button type="button" onClick={startRecording}>
+            Start Recording
+          </button>
+        )}
+      </div>
+    </Container>
   );
 };
 
