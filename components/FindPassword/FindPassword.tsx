@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import {
   MainHeadText,
   SubHeadText,
@@ -12,7 +12,17 @@ import {
 } from '@/styles/findpassword';
 import { useMutation } from 'react-query';
 import { addUser } from '@/api/user';
-import { useRouter } from 'next/router';
+import { NextRouter, useRouter } from 'next/router';
+
+const validateEmail = (email: string) => {
+  const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
+  return emailRegex.test(email);
+};
+
+const validatePassword = (password: string) => {
+  const passwordPattern = /^(?=.*\d)(?=.*[a-zA-Z]).{8,}$/;
+  return passwordPattern.test(password);
+};
 
 export interface Signup {
   email: string;
@@ -29,10 +39,10 @@ export interface Error {
   passwordConfirm: string;
 }
 
-type TextInputType = 'email' | 'password' | 'passwordConfirm' | 'nickname';
+type TextInputType = 'email' | 'password' | 'passwordConfirm';
 
 const FindPassword = () => {
-  const router = useRouter();
+  const router: NextRouter = useRouter();
   const [isEmailVerified, setIsEmailVerified] = useState(false);
   const [signUpState, setSignUpState] = useState<Signup>({
     email: '',
@@ -54,28 +64,19 @@ const FindPassword = () => {
   //     },
   //   });
 
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement & { name: TextInputType }>
-  ) => {
-    const { name, value } = e.target;
+  const handleInputChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement & { name: TextInputType }>) => {
+      const { name, value } = e.target;
 
-    setSignUpState((prevSignUpState) => ({
-      ...prevSignUpState,
-      [name]: value,
-    }));
-  };
+      setSignUpState((prevSignUpState) => ({
+        ...prevSignUpState,
+        [name]: value,
+      }));
+    },
+    []
+  );
   const verifyEmail = () => {
     setIsEmailVerified(true);
-  };
-
-  const validateEmail = (email: string) => {
-    const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
-    return emailRegex.test(email);
-  };
-
-  const validatePassword = (password: string) => {
-    const passwordPattern = /^(?=.*\d)(?=.*[a-zA-Z]).{8,}$/;
-    return passwordPattern.test(password);
   };
 
   const submitUser = (event: any) => {
