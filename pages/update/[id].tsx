@@ -58,7 +58,6 @@ interface Props {
 const Update: React.FC<Props> = ({ updateId, data }) => {
   return (
     <>
-      <h1>{updateId}</h1>
       <Write update={'2'} updateId={updateId} data={data} />
     </>
   );

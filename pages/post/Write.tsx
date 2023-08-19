@@ -49,9 +49,7 @@ interface Props {
   data: any;
 }
 
-
-const Write: NextPage<Props> = ({ update, updateId, data }) => {
-
+const Write: NextPage<Props> = ({ update = '1', updateId, data }) => {
   const [isShow, setIsShow] = useState<boolean>(false);
   const [commentEdit, setCommentEdit] = useState<any>({
     show: false,
