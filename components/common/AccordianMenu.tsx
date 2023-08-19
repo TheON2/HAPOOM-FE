@@ -42,7 +42,10 @@ const AccordianMenu = ({ tabText, children }: DroptabProps) => {
       <AccordianLayout>
         <AccordianTab onClick={onClickDropTabHandler} $isOpen={isOpen}>
           {tabText}
-          <RightArrow />
+          <RightArrow
+            rotation={isOpen}
+            fillColor={isOpen ? '#0084FF' : '#8995a7'}
+          />
         </AccordianTab>
         {isOpen ? children : null}
       </AccordianLayout>
