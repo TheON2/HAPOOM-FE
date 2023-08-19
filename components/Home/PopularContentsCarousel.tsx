@@ -52,7 +52,7 @@ const PopularContentsCarousel: React.FC<populerCarouselProps> = ({ data }) => {
   const [$active, setActive] = useState<number>(0);
   const leftAction = () => {
     setActive((prevActive) =>
-      prevActive >= Images.length - 1 ? Images.length - 1 : prevActive + 1
+      prevActive >= data.length - 1 ? data.length - 1 : prevActive + 1
     );
     // 좌측 동작에 대한 내용을 원하는 대로 변경
   };
@@ -121,13 +121,19 @@ const PopularContentsContainer = styled.div`
 `;
 
 const CarouselStyle = styled.div`
-  --size: 210px;
+  --size: 180px;
   position: relative;
   width: var(--size);
   height: var(--size);
   /* padding-bottom: 50%; */
   perspective: 500px;
   transform-style: preserve-3d;
+  & > div {
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  }
+  @media screen and (min-width: 460px) {
+    --size: 210px;
+  }
   @media screen and (min-width: 768px) {
     --size: 280px;
   }
@@ -149,16 +155,23 @@ const CardContainer = styled.div<props>`
   --offset: ${({ $active, $i }) => ($active - $i) / 3};
   --direction: ${({ $active, $i }) => $active - $i};
   --abs-offset: ${({ $active, $i }) => Math.abs($active - $i) / 3};
+
   opacity: ${({ $active, $i }) =>
     Math.abs($active - $i) / MAX_VISIBILITY >= 1 ? 0 : 1};
   display: ${({ $active, $i }) =>
     Math.abs($active - $i) / MAX_VISIBILITY > 1 ? 'none' : 'block'};
   transform: rotateY(calc(0 * 50deg)) scaleY(calc(1 + var(--abs-offset) * -0.4))
     translateZ(calc(var(--abs-offset) * -30rem))
-    translateX(calc(var(--direction) * -8rem));
+    translateX(calc(var(--direction) * -5.5rem));
   transition: all 0.3s ease-out;
   .heart {
     display: ${({ $active, $i }) => ($i === $active ? 'flex' : 'none')};
+  }
+  @media screen and (min-width: 460px) {
+    transform: rotateY(calc(0 * 50deg))
+      scaleY(calc(1 + var(--abs-offset) * -0.4))
+      translateZ(calc(var(--abs-offset) * -30rem))
+      translateX(calc(var(--direction) * -8rem));
   }
   @media screen and (min-width: 768px) {
     transform: rotateY(calc(0 * 50deg))

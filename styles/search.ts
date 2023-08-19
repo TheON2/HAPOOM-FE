@@ -9,8 +9,15 @@ export const SearchLayout = styled.main`
     background-color: #5bb0ff;
     border-radius: 18px;
     transform: translateX(0);
+    transition: all 0.2s ease-out;
     svg {
       fill: #fff;
+    }
+    &:hover {
+      background-color: #0988ff;
+    }
+    &:active {
+      filter: brightness(0.7);
     }
   }
   .keyword {
