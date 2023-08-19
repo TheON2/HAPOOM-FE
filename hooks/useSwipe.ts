@@ -16,7 +16,7 @@ const useSwipe = (leftAction: () => void, rightAction: () => void) => {
     } else if (dragDistance < -50) {
       leftAction();
     }
-  }, [startX, endX, dragDistance, leftAction, rightAction]);
+  }, [dragDistance]);
 
   // 마우스 이벤트
   const handleMouseDown = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
