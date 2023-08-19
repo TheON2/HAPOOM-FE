@@ -233,7 +233,6 @@ const Comment = ({
     onClickUpdateEvent(commentId, comment);
     updateButtonActive(commentId);
   };
-  console.log(loggedUser);
   const timeSince = (date: string) => {
     const now: any = new Date();
     const inputDate: any = new Date(date);

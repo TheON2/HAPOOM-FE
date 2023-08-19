@@ -14,7 +14,9 @@ type profileType = {
 
 const UserProfileImageUpdate = ({ profileImage, preset }: profileType) => {
   const [selectPreset, setSelectPreset] = useState<number>(preset ? preset : 5);
-  const [userProfile, setUserProfile] = useState<any>(profileImage);
+  const [userProfile, setUserProfile] = useState<string | undefined>(
+    profileImage
+  );
 
   const onClickProfileHandler = (idx: number) => {
     setSelectPreset(idx + 1);
