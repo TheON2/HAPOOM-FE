@@ -14,7 +14,7 @@ export const FooterBox = styled.div`
 `;
 
 export const LogoBox = styled.div`
-  width: 30%;
+  width: 100%;
   margin-bottom: 12px;
   p {
     font-weight: 900;
@@ -23,7 +23,7 @@ export const LogoBox = styled.div`
   }
 `;
 export const FooterContent = styled.p`
-  width: 70%;
+  width: 100%;
   color: #fff;
   font-size: 0.8rem;
   line-height: 1.4rem;

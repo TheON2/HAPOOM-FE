@@ -2,9 +2,18 @@ import React, { ChangeEvent, useState } from 'react';
 import Image from 'next/image';
 import Button from '@/components/common/Button';
 import IconButton from '@/components/common/IconButton';
-import { DeleteComment, EditComment } from '@/components/common/SVG';
+import {
+  CommentIcon,
+  DeleteComment,
+  EditComment,
+} from '@/components/common/SVG';
 import styled from 'styled-components';
-
+import { addComment, deleteComment, updateComment } from '@/api/post';
+import { useMutation, useQueryClient } from 'react-query';
+import UpAndDownTab from '../common/UpAndDownTab';
+import Modal from '../common/Modal';
+import { useRouter } from 'next/router';
+import { useDispatch, useSelector } from 'react-redux';
 const CommentsContainer = styled.div`
   width: 100%;
   border-bottom: 1px solid #ddd;
@@ -76,6 +85,9 @@ const CommentInfomation = styled.div`
   }
   .comment-button-box {
     display: flex;
+    &.active button:nth-child(1) svg path {
+      fill: #369dfe;
+    }
   }
 `;
 
@@ -153,25 +165,95 @@ const DetialContentSection = styled.section`
     }
   }
   .button-box {
-    width: 40%;
+    width: 100%;
     display: flex;
     gap: 8px;
     button {
       width: 50%;
-      padding: 4px 4px 2px;
+      /* padding: 4px 4px 2px; */
     }
   }
   & > div:last-child {
     border: none;
   }
 `;
+
+const CommentButton = styled.button`
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2px 0 0;
+  gap: 2px;
+  color: #fff;
+  font-size: 10px;
+  position: fixed;
+  right: 24px;
+  bottom: 20vh;
+  background-color: #52acff;
+  border: none;
+  z-index: 15;
+`;
+
 type Props = {
   onClickUpdateEvent: (commentId: number, preComment: string) => void;
-  onClcikDeleteEvent: (commentId: number) => void;
+  onClickDeleteEvent: (commentId: number) => void;
+  updateButtonActive: (commentId: number) => void;
+  active: number | null;
   data: any;
+  loggedUser: any;
 };
-const Comment = ({ onClickUpdateEvent, onClcikDeleteEvent, data }: Props) => {
-  // console.log(data);
+type CommentData = {
+  formData: FormData;
+  id: string;
+};
+
+type CommentUpdateData = {
+  formData: FormData;
+  id: string;
+  commentId: number;
+};
+
+type CommentDelete = {
+  id: string;
+  commentId: number;
+};
+const Comment = ({
+  onClickUpdateEvent,
+  onClickDeleteEvent,
+  updateButtonActive,
+  active,
+  data,
+  loggedUser,
+}: Props) => {
+  const updateButtonHandler = (commentId: number, comment: string) => {
+    onClickUpdateEvent(commentId, comment);
+    updateButtonActive(commentId);
+  };
+  console.log(loggedUser);
+  const timeSince = (date: string) => {
+    const now: any = new Date();
+    const inputDate: any = new Date(date);
+    const seconds = Math.floor((now - inputDate) / 1000);
+
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+
+    if (days > 0) {
+      return days + '일 전';
+    } else if (hours > 0) {
+      return hours + '시간 전';
+    } else if (minutes > 0) {
+      return minutes + '분 전';
+    } else {
+      return '방금 전';
+    }
+  };
+  const timeAgo = timeSince(data.createdAt);
   return (
     <>
       <CommentsContainer>
@@ -183,20 +265,30 @@ const Comment = ({ onClickUpdateEvent, onClcikDeleteEvent, data }: Props) => {
             <CommentInfomation>
               <div className="comment-info">
                 <p>{data.nickname}</p>
-                <span>3시간전</span>
+                <span>{timeAgo}</span>
               </div>
-              <div className="comment-button-box">
-                <IconButton
-                  onClick={() =>
-                    onClickUpdateEvent(data.commentId, data.comment)
+              {data.nickname === loggedUser?.nickname ? (
+                <div
+                  className={
+                    active === data.commentId
+                      ? 'active comment-button-box'
+                      : 'comment-button-box'
                   }
                 >
-                  <EditComment />
-                </IconButton>
-                <IconButton onClick={() => onClcikDeleteEvent(data.commentId)}>
-                  <DeleteComment />
-                </IconButton>
-              </div>
+                  <IconButton
+                    onClick={() =>
+                      updateButtonHandler(data.commentId, data.comment)
+                    }
+                  >
+                    <EditComment />
+                  </IconButton>
+                  <IconButton
+                    onClick={() => onClickDeleteEvent(data.commentId)}
+                  >
+                    <DeleteComment />
+                  </IconButton>
+                </div>
+              ) : null}
             </CommentInfomation>
           </div>
           <div className="comment">
@@ -208,4 +300,237 @@ const Comment = ({ onClickUpdateEvent, onClcikDeleteEvent, data }: Props) => {
   );
 };
 
-export default Comment;
+type commentProps = {
+  data: any;
+  id: string;
+  userData: any;
+  writeUser: any;
+};
+
+const CommentLayout = ({ data, id, userData, writeUser }: commentProps) => {
+  // console.log(data);
+  // console.log(writeUser);
+  const [active, setActive] = useState<number | null>(null);
+  const updateButtonActive = (idx: number) => {
+    setActive(idx);
+  };
+  const [isShow, setIsShow] = useState<boolean>(false);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [comment, setComment] = useState<string>('');
+  const queryClient = useQueryClient();
+  const router = useRouter();
+  const [commentEdit, setCommentEdit] = useState<any>({
+    show: false,
+    action: '',
+    uiTitle: '',
+    buttonText: '',
+    postId: '',
+  });
+  const [modalMessge, setModalMessge] = useState<any>({
+    actionText: '',
+    modalMessge: '',
+    onClickEvent: '',
+  });
+  const handleCommentEditHandler = (commentId: number, preComment: string) => {
+    if (userData === null || userData === undefined) {
+      setModalMessge({
+        actionText: '로그인',
+        modalMessge: '로그인이 필요한 서비스입니다. 로그인 하시겠습니까?',
+        onClickEvent: () => router.push('/auth/SignIn'),
+      });
+      return setIsModalOpen(true);
+    } else {
+      setIsShow(true);
+      setCommentEdit({
+        show: true,
+        action: 'edit',
+        uiTitle: '댓글 수정',
+        buttonText: '수정',
+        commentId: commentId,
+      });
+      setComment(preComment);
+    }
+  };
+
+  const handleCommentCreateHandler = () => {
+    if (userData === null || userData === undefined) {
+      setModalMessge({
+        actionText: '로그인',
+        modalMessge: '로그인이 필요한 서비스입니다. 로그인 하시겠습니까?',
+        onClickEvent: () => router.push('/auth/SignIn'),
+      });
+      return setIsModalOpen(true);
+    } else {
+      setIsShow(true);
+      setCommentEdit({
+        show: true,
+        action: 'create',
+        uiTitle: '댓글 생성',
+        buttonText: '업로드',
+        commentId: '',
+      });
+    }
+  };
+  const handleCommentShowHandler = () => {
+    setCommentEdit((pre: any) => ({
+      ...pre,
+      show: !commentEdit.show,
+    }));
+  };
+  const handleCommentExitHandler = () => {
+    setIsShow(!isShow);
+    setActive(null);
+  };
+
+  const onChangeCommentHandler = (e: any) => {
+    setComment(e.target.value);
+  };
+  const { mutate: commentCreate } = useMutation<void, Error, CommentData>(
+    (comment) => addComment(comment),
+    {
+      onSuccess: () => {
+        setIsShow(false);
+        setComment('');
+        queryClient.invalidateQueries('comments');
+      },
+    }
+  );
+  const { mutate: commentUpdate } = useMutation<void, Error, CommentUpdateData>(
+    (comment) => updateComment(comment),
+    {
+      onSuccess: () => {
+        setIsShow(false);
+        setComment('');
+        setActive(null);
+        queryClient.invalidateQueries('comments');
+      },
+    }
+  );
+
+  const { mutate: commentDelete } = useMutation<void, Error, CommentDelete>(
+    (comment) => deleteComment(comment),
+    {
+      onSuccess: () => {
+        setModalMessge({
+          actionText: '확인',
+          modalMessge: '댓글이 삭제되었습니다.',
+          onClickEvent: null,
+        });
+        setIsModalOpen(true);
+        queryClient.invalidateQueries('comments');
+      },
+    }
+  );
+
+  const onClickDeleteCommentHandler = (commentId: number) => {
+    if (userData === null || userData === undefined) {
+      setModalMessge({
+        actionText: '로그인',
+        modalMessge: '로그인이 필요한 서비스입니다. 로그인 하시겠습니까?',
+        onClickEvent: () => router.push('/auth/SignIn'),
+      });
+      return setIsModalOpen(true);
+    } else {
+      setModalMessge({
+        actionText: '삭제',
+        modalMessge: '댓글을 삭제하시겠습니까?',
+        onClickEvent: () => commentDelete({ id, commentId }),
+      });
+      setIsModalOpen(true);
+    }
+  };
+
+  const onClickCreateCommentHandler = () => {
+    const formData = new FormData();
+    formData.append('comment', comment);
+    commentCreate({ formData, id });
+  };
+
+  const onClickUpdateCommentHandler = () => {
+    const formData = new FormData();
+    formData.append('comment', comment);
+    const commentId = commentEdit.commentId;
+    commentUpdate({ formData, id, commentId });
+  };
+
+  const onSubmitHandler = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (comment === '') {
+      return alert('입력된 내용이 없습니다.');
+    }
+    if (commentEdit.action === 'create') {
+      setModalMessge({
+        actionText: '저장',
+        modalMessge: '댓글을 저장하시겠습니까?',
+        onClickEvent: onClickCreateCommentHandler,
+      });
+    } else if (commentEdit.action === 'edit') {
+      setModalMessge({
+        actionText: '수정',
+        modalMessge: '댓글을 수정하시겠습니까?',
+        onClickEvent: onClickUpdateCommentHandler,
+      });
+    }
+    setIsModalOpen(true);
+  };
+  return (
+    <>
+      <CommentButton onClick={handleCommentCreateHandler}>
+        <CommentIcon />
+        댓글
+      </CommentButton>
+      {data?.comments.map((comment: any, idx: number) => (
+        <Comment
+          key={idx}
+          onClickUpdateEvent={handleCommentEditHandler}
+          onClickDeleteEvent={onClickDeleteCommentHandler}
+          updateButtonActive={updateButtonActive}
+          active={active}
+          data={comment}
+          loggedUser={userData}
+        />
+      ))}
+      {isShow ? (
+        <UpAndDownTab
+          onClickEvent={handleCommentShowHandler}
+          $isUp={commentEdit.show}
+        >
+          <DetialContentSection>
+            <CommentForm onSubmit={onSubmitHandler}>
+              <h3>{commentEdit.uiTitle}</h3>
+
+              <div>
+                <textarea
+                  name=""
+                  id=""
+                  placeholder="댓글을 입력해주세요"
+                  value={comment}
+                  onChange={onChangeCommentHandler}
+                />
+              </div>
+              <div className="button-box">
+                <Button
+                  onClick={handleCommentExitHandler}
+                  className="secondary"
+                >
+                  닫기
+                </Button>
+                <Button type="submit">{commentEdit.buttonText}</Button>
+              </div>
+            </CommentForm>
+          </DetialContentSection>
+        </UpAndDownTab>
+      ) : null}
+      <Modal
+        isOpen={isModalOpen}
+        setIsOpen={setIsModalOpen}
+        actionText={modalMessge.actionText}
+        onClickEvent={modalMessge.onClickEvent}
+      >
+        {modalMessge.modalMessge}
+      </Modal>
+    </>
+  );
+};
+
+export default CommentLayout;

@@ -23,11 +23,20 @@ interface YouTubeSearchProps {
   setSelectedTitle: React.Dispatch<React.SetStateAction<string>>;
   update: string;
   videoId: string;
+  setIsShow: (state: boolean) => void;
 }
 
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+`;
+
 const InputContainer = styled.div`
-  position: relative;
+  position: flex;
   width: 400px;
+  align-items: center;
 `;
 
 const ClearButton = styled.button`
@@ -74,6 +83,7 @@ export const YouTubeSearch = ({
   setSelectedTitle,
   update,
   videoId,
+  setIsShow,
 }: YouTubeSearchProps) => {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [searchSuggestions, setSearchSuggestions] = useState<Suggestion[]>([]);
@@ -90,7 +100,7 @@ export const YouTubeSearch = ({
   const searchYoutube = async (term: string) => {
     if (term.length >= 2) {
       const response = await axios.get(
-        `http://localhost:3001/api/util/youtube/search`,
+        `${process.env.NEXT_PUBLIC_LOCAL_SERVER}/api/util/youtube/search`,
         {
           params: {
             term: term,
@@ -133,8 +143,9 @@ export const YouTubeSearch = ({
       setVideoId(suggestion.url);
       setSearchSuggestions([]);
       setIsSearchComplete(true);
+      setIsShow(false);
     },
-    [setVideoId, setSelectedTitle]
+    [setVideoId, setSelectedTitle, setIsShow]
   );
 
   const handleClear = useCallback(() => {
@@ -160,10 +171,7 @@ export const YouTubeSearch = ({
   }, [update, videoId, setSelectedTitle]);
 
   return (
-    <>
-      <label>
-        <h3 style={{ float: 'left', margin: '10px 0' }}>음악추가</h3>
-      </label>
+    <Container>
       {!isSearchComplete && (
         <InputContainer>
           <StyledAuthInput
@@ -203,6 +211,6 @@ export const YouTubeSearch = ({
           ))}
         </SuggestionBox>
       )}
-    </>
+    </Container>
   );
 };
