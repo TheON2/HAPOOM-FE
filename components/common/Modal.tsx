@@ -1,53 +1,54 @@
 import {
-  CancelButton,
-  DeleteButton,
   ModalBackground,
   ModalButtons,
   ModalContainer,
   WarningContainer,
 } from '@/styles/modal';
-import React from 'react';
+import React, { ReactNode, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { ModalWarning } from './SVG';
-
+import Button from '@/components/common/Button';
 interface ModalProps {
   isOpen: boolean;
-  action: 'delete' | 'edit';
-  onClose: () => void;
-  onConfirm: () => void;
+  setIsOpen: any;
+  actionText: string;
+  onClickEvent: () => void | null;
+  children: ReactNode;
 }
 
 const Modal: React.FC<ModalProps> = ({
   isOpen,
-  onClose,
-  action,
-  onConfirm,
+  setIsOpen,
+  actionText,
+  onClickEvent,
+  children,
 }) => {
-  const handleCloseModal = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (e.target === e.currentTarget) {
-      onClose();
-    }
+  // const [isShow, setIsShow] = useState<boolean>(isOpen);
+  const onClickCloseHandler = () => {
+    setIsOpen(!isOpen);
   };
 
   return (
     <>
       {isOpen &&
         ReactDOM.createPortal(
-          <ModalBackground onClick={handleCloseModal}>
+          <ModalBackground onClick={onClickCloseHandler}>
             <ModalContainer>
               <WarningContainer>
                 <ModalWarning />
               </WarningContainer>
-              <p className="modalTitle">
-                해당 게시물을{' '}
-                <span>{action === 'delete' ? '삭제' : '수정'}</span>
-                하시겠습니까?
-              </p>
+              <p className="modalTitle">{children}</p>
               <ModalButtons>
-                <CancelButton onClick={onClose}>취소</CancelButton>
-                <DeleteButton onClick={onConfirm}>
-                  {action === 'delete' ? '삭제' : '수정'}
-                </DeleteButton>
+                {onClickEvent !== null ? (
+                  <>
+                    <Button className="secondary" onClick={onClickCloseHandler}>
+                      취소
+                    </Button>
+                    <Button onClick={onClickEvent}>{actionText}</Button>
+                  </>
+                ) : (
+                  <Button onClick={onClickCloseHandler}>확인</Button>
+                )}
               </ModalButtons>
             </ModalContainer>
           </ModalBackground>,

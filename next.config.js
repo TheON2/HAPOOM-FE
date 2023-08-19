@@ -11,6 +11,7 @@ module.exports = {
       'ssl.pstatic.net',
       '13.209.98.145',
       'hapoomimagebucket.s3.ap-northeast-2.amazonaws.com',
+      '13.209.98.145',
     ],
   },
 };

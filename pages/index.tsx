@@ -24,6 +24,7 @@ import { getAuthToken } from '@/api/user';
 import { AUTH_USER, UserResponse } from '@/redux/reducers/userSlice';
 import { useDispatch } from 'react-redux';
 import { setCookie } from 'nookies';
+import api from '../axios/api';
 interface Props {
   data: SliderImage[];
   hashtagData: SliderImage[];
@@ -92,7 +93,14 @@ const Home: NextPage<Props> = ({
 export default Home;
 
 export const getStaticProps: GetStaticProps = async () => {
+<<<<<<< HEAD
   const response = await axios.get(`https://hapoom.life/api/main`);
+=======
+  const response = await axios.get(
+    `${process.env.NEXT_PUBLIC_LOCAL_SERVER}/api/main`
+  );
+
+>>>>>>> 73de55035347e164d73a307bcb94a7105a639ad6
   const data = sliderImages;
   const hashtagData = hashtagImages;
 
