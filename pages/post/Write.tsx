@@ -196,6 +196,8 @@ const Write: NextPage<Props> = ({ update, updateId }) => {
     formData.append('latitude', String(location.x));
     formData.append('longitude', String(location.y));
     formData.append('placeName', location.name);
+
+    console.log(images);
     postMutation({ formData, updateId });
   };
 
@@ -258,6 +260,10 @@ const Write: NextPage<Props> = ({ update, updateId }) => {
       enabled: update === '2',
     }
   );
+
+  useEffect(() => {
+    console.log(images); // images 배열이 변경될 때마다 여기에 로깅됩니다.
+  }, [images]);
 
   return (
     <>
