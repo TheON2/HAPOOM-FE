@@ -45,6 +45,7 @@ const Setting = () => {
   const { data: userSetting } = useQuery('userSetting', getUserSetting, {
     onSuccess: (data) => {},
   });
+  console.log('data', userData);
 
   return (
     <>

@@ -1,3 +1,4 @@
+import { SecretEye } from '@/components/common/SVG';
 import Image from 'next/image';
 import styled from 'styled-components';
 
