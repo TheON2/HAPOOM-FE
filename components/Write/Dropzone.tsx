@@ -11,16 +11,13 @@ interface DropzoneProps {
 const MAX_IMAGES = 5;
 
 const Dropzone: React.FC<DropzoneProps> = ({ images, setImages }) => {
-  const onDrop = useCallback(
-    (acceptedFiles: File[]) => {
-      if (acceptedFiles.length + images.length > MAX_IMAGES) {
-        alert(`You can only upload ${MAX_IMAGES} images.`);
-        return;
-      }
-      setImages((prev: any) => [...prev, ...acceptedFiles]);
-    },
-    [images, setImages]
-  );
+  const onDrop = (acceptedFiles: File[]) => {
+    if (acceptedFiles.length + images.length > MAX_IMAGES) {
+      alert(`You can only upload ${MAX_IMAGES} images.`);
+      return;
+    }
+    setImages([...images, ...acceptedFiles]); // 기존 이미지와 새로 받은 이미지를 합칩니다.
+  };
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
