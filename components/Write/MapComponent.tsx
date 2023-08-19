@@ -169,6 +169,13 @@ export const MapComponent: React.FC<MapComponentProps> = ({
     });
   }, [handleMapClick, location, update]);
 
+  const [scriptLoaded, setScriptLoaded] = useState(false);
+
+  // 스크립트 로드 완료 핸들러
+  const handleScriptLoad = () => {
+    setScriptLoaded(true);
+  };
+
   useEffect(() => {
     setLocationInput(
       location.name + ' ' + 'X:' + location.x + '   ' + 'Y:' + location.y
@@ -181,13 +188,19 @@ export const MapComponent: React.FC<MapComponentProps> = ({
     }
   }, [mapOpen]);
 
+  useEffect(() => {
+    if (scriptLoaded) {
+      initializeMap();
+    }
+  }, [scriptLoaded, initializeMap]);
+
   return (
     <>
       <Script
         strategy="afterInteractive"
         type="text/javascript"
         src={`https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NEXT_PUBLIC_NAVERMAP_API_KEY}`}
-        onLoad={initializeMap}
+        onReady={handleScriptLoad}
       />
       <h3 style={{ float: 'left', margin: '10px 0' }}>장소</h3>
       <label></label>
