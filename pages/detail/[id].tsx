@@ -108,8 +108,6 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
   });
   const queryClient = useQueryClient();
 
-  const audioSrc = id ? `http://localhost:3001/test/stream/${id}` : '';
-
   const { mutate: delete_mutate } = useMutation(deletePost, {
     onSuccess: () => {
       queryClient.invalidateQueries('posts');
