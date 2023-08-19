@@ -21,15 +21,23 @@ import { useMutation } from 'react-query';
 import { NextRouter } from 'next/router';
 import { LOGIN_USER } from '@/redux/reducers/userSlice';
 import { userLogin } from '@/api/user';
+import { AxiosError } from 'axios';
 
 interface SignIn {
   email: string;
   password: string;
 }
 interface ErrorMessage {
-  message: string;
+  message?: string;
 }
-
+const validateEmail = (email: string): boolean => {
+  const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
+  return emailRegex.test(email);
+};
+const validatePassword = (password: string): boolean => {
+  const passwordPattern = /^(?=.*\d)(?=.*[a-zA-Z]).{8,}$/;
+  return passwordPattern.test(password);
+};
 const SignInUi = () => {
   const dispatch = useDispatch();
   const router: NextRouter = useRouter();
@@ -46,39 +54,34 @@ const SignInUi = () => {
       dispatch(LOGIN_USER(data));
       router.push('/');
     },
-    onError: (error: any) => {
+    onError: (error: AxiosError) => {
       if (error.response && error.response.data) {
-        setError((prev) => ({ ...prev, password: error.response.data }));
+        setError((prev) => ({ ...prev, password: error.response?.data }));
       }
     },
   });
 
-  const moveSignUpBtn = () => {
+  const moveSignUpBtn = React.useCallback(() => {
     router.push('/auth/SignUp');
-  };
-  const moveFindPwdBtn = () => {
+  }, [router]);
+
+  const moveFindPwdBtn = React.useCallback(() => {
     router.push('/findPassword/FindPwd');
-  };
+  }, [router]);
 
-  const validateEmail = (email: string): boolean => {
-    const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
-    return emailRegex.test(email);
-  };
-  const validatePassword = (password: string): boolean => {
-    const passwordPattern = /^(?=.*\d)(?=.*[a-zA-Z]).{8,}$/;
-    return passwordPattern.test(password);
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setSignInState((prevSignInState) => ({
-      ...prevSignInState,
-      [name]: value,
-    }));
-  };
+  const handleInputChange = React.useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const { name, value } = e.target;
+      setSignInState((prevSignInState) => ({
+        ...prevSignInState,
+        [name]: value,
+      }));
+    },
+    []
+  );
   const handleLogin = (e: FormEvent) => {
     e.preventDefault();
-    let errors: any = {};
+    let errors: ErrorMessage = {};
 
     if (!validateEmail(signInState.email)) {
       if (!validatePassword(signInState.password)) {
