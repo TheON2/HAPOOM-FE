@@ -87,7 +87,7 @@ type CommentDelete = {
   commentId: number;
 };
 
-const Detail: NextPage<Props> = ({ update, updateId }) => {
+const Detail: NextPage = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const id = typeof router.query.id === 'string' ? router.query.id : '';
@@ -193,7 +193,7 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
   if (!isSuccess) return <div>Loading...</div>;
   return (
     <>
-      <>{!(update === '3' && location.x === 0) && <></>}</>
+      <>{!(location.x === 0) && <></>}</>
       <GlobalStyle />
       <Modal
         isOpen={isModalOpen}
@@ -256,7 +256,7 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
                 videoId={videoId}
                 setVideoId={setVideoId}
                 setSelectedTitle={setSelectedTitle}
-                update={update}
+                update={'3'}
               />
             </>
           )}
@@ -279,7 +279,7 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
           <MapComponent
             setLocation={setLocation}
             location={location}
-            update={update}
+            update={'3'}
           />
         </DetialContentSection>
         <DetialContentSection>
@@ -297,18 +297,3 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
 };
 
 export default Detail;
-
-export const getServerSideProps = async (
-  context: GetServerSidePropsContext
-) => {
-  const cookies = parseCookies(context);
-  const update = cookies.update || '';
-  const updateId = cookies.updateId || '';
-
-  return {
-    props: {
-      update,
-      updateId,
-    },
-  };
-};
