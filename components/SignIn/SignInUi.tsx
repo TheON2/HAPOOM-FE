@@ -31,7 +31,7 @@ interface ErrorMessage {
 }
 
 const SignInUi = () => {
-  const dispatch: any = useDispatch();
+  const dispatch = useDispatch();
   const router: NextRouter = useRouter();
   const [signInState, setSignInState] = useState<SignIn>({
     email: '',
@@ -59,6 +59,7 @@ const SignInUi = () => {
   const moveFindPwdBtn = () => {
     router.push('/findPassword/FindPwd');
   };
+
   const validateEmail = (email: string): boolean => {
     const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
     return emailRegex.test(email);
@@ -67,6 +68,7 @@ const SignInUi = () => {
     const passwordPattern = /^(?=.*\d)(?=.*[a-zA-Z]).{8,}$/;
     return passwordPattern.test(password);
   };
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setSignInState((prevSignInState) => ({
@@ -74,7 +76,6 @@ const SignInUi = () => {
       [name]: value,
     }));
   };
-
   const handleLogin = (e: FormEvent) => {
     e.preventDefault();
     let errors: any = {};
