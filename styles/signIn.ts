@@ -90,15 +90,6 @@ export const TextPwSetParagraph = styled(TextParagraph)`
   font-family: ${theme.fontFamily};
   font-size: 12px;
   font-weight: 700;
-  &::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 0.5px;
-    height: 8px;
-    background-color: #000;
-  }
 `;
 export const TextSignUpLinkParagraph = styled(TextParagraph)`
   display: flex;
