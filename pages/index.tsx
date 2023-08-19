@@ -24,6 +24,7 @@ import { getAuthToken } from '@/api/user';
 import { AUTH_USER, UserResponse } from '@/redux/reducers/userSlice';
 import { useDispatch } from 'react-redux';
 import { setCookie } from 'nookies';
+import api from '../axios/api';
 interface Props {
   data: SliderImage[];
   hashtagData: SliderImage[];
@@ -92,7 +93,7 @@ const Home: NextPage<Props> = ({
 export default Home;
 
 export const getStaticProps: GetStaticProps = async () => {
-  const response = await axios.get(`http://localhost:3001/api/main`);
+  const response = await api.get(`/api/main`);
   const data = sliderImages;
   const hashtagData = hashtagImages;
 

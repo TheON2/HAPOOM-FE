@@ -8,7 +8,7 @@ type styleProps = {
 const UpAndDownTabLayout = styled.div<styleProps>`
   width: 100%;
   /* height: 80vh; */
-  padding: 20px 24px;
+  padding: 0px 24px 12px;
   position: fixed;
   bottom: 0;
   left: 0;
@@ -23,11 +23,16 @@ const UpAndDownTabLayout = styled.div<styleProps>`
   &.down {
     animation: comment-down 0.8s forwards;
   }
+  .click-hit-area {
+    width: 100%;
+    padding: 20px 0 16px;
+    cursor: pointer;
+  }
   span {
     display: block;
     width: 23px;
     height: 3px;
-    margin: 0 auto 25px;
+    margin: 0 auto;
     border-radius: 2px;
     background-color: #ddd;
   }
@@ -58,7 +63,9 @@ type Props = {
 const UpAndDownTab = ({ children, $isUp, onClickEvent }: Props) => {
   return (
     <UpAndDownTabLayout className={$isUp ? `up` : `down`}>
-      <span onClick={onClickEvent}></span>
+      <div className="click-hit-area" onClick={onClickEvent}>
+        <span></span>
+      </div>
       {children}
     </UpAndDownTabLayout>
   );
