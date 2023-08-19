@@ -100,7 +100,7 @@ export const YouTubeSearch = ({
   const searchYoutube = async (term: string) => {
     if (term.length >= 2) {
       const response = await axios.get(
-        `http://localhost:3001/api/util/youtube/search`,
+        `${process.env.NEXT_PUBLIC_LOCAL_SERVER}/api/util/youtube/search`,
         {
           params: {
             term: term,

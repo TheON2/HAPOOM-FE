@@ -92,7 +92,9 @@ const Home: NextPage<Props> = ({
 export default Home;
 
 export const getStaticProps: GetStaticProps = async () => {
-  const response = await axios.get(`http://localhost:3001/api/main`);
+  const response = await axios.get(
+    `${process.env.NEXT_PUBLIC_LOCAL_SERVER}/api/main`
+  );
   const data = sliderImages;
   const hashtagData = hashtagImages;
 

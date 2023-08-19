@@ -77,7 +77,7 @@ export const MapComponent: React.FC<MapComponentProps> = ({
       if (update === '3') return;
       try {
         const response = await axios.get(
-          'http://localhost:3001/api/util/map/reversegeocode',
+          `${process.env.NEXT_PUBLIC_LOCAL_SERVER}/api/util/map/reversegeocode`,
           {
             params: {
               x: coord.x,
