@@ -102,7 +102,7 @@ const MobileBottomNav = () => {
         setActive(0);
         break;
     }
-  }, [pathIndex, user.email]);
+  }, [pathIndex]);
 
   return (
     <MobileBottomNavLayout>

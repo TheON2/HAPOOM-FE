@@ -327,8 +327,10 @@ export const Marker = () => (
     </g>
   </svg>
 );
-export const SecretEye = () => (
+export const SecretEye: React.FC<Props> = ({ style, onClick }) => (
   <svg
+    style={style}
+    onClick={onClick}
     width="18"
     height="14"
     viewBox="0 0 18 14"
