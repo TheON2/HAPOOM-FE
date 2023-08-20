@@ -7,11 +7,11 @@ import { useMutation, useQueryClient } from 'react-query';
 import { updateUserSetting } from '@/api/user';
 import { TextErrorParagraph } from '@/styles/signUp';
 
-type settingProps = {
+type SettingProps = {
   nickname?: string;
 };
 
-const UpdateNickName: NextPage<settingProps> = ({ nickname }) => {
+const UpdateNickName: NextPage<SettingProps> = ({ nickname = '' }) => {
   // console.log('리렌더링');
   const [nickName, onClickNickName, setNickName] = useInput<string | undefined>(
     nickname
@@ -29,7 +29,7 @@ const UpdateNickName: NextPage<settingProps> = ({ nickname }) => {
     }
   );
 
-  const validateNickname = (nickname: string) => {
+  const validateNickname = (nickname: string): boolean => {
     const nicknamePattern = /^.{2,15}$/;
     return nicknamePattern.test(nickname);
   };
