@@ -7,12 +7,12 @@ import { ProfilePresetList, ProfileItem, ButtonBox } from '@/styles/setting';
 import { profilePreset } from '@/public/presetData';
 const profileData = ['/inflearn.jpg', '/inflearn.jpg', '/inflearn.jpg'];
 
-type profileType = {
+type ProfileType = {
   profileImage?: string;
   preset?: number;
 };
 
-const UserProfileImageUpdate = ({ profileImage, preset }: profileType) => {
+const UserProfileImageUpdate = ({ profileImage, preset }: ProfileType) => {
   const [selectPreset, setSelectPreset] = useState<number>(preset ? preset : 5);
   const [userProfile, setUserProfile] = useState<string | undefined>(
     profileImage
