@@ -6,17 +6,12 @@ import { useQuery } from 'react-query';
 import { getMyProfile, getUserProfile } from '@/api/user';
 import FollowButton from './FollowButton';
 import { parseCookies } from 'nookies';
-
-// interface Post {}
+import { useInfiniteQuery } from 'react-query';
 
 interface UserUiProps {
   userId: string;
   loggedInEmail: string | null;
 }
-
-// interface PostImage {
-//   url: string;
-// }
 
 interface UserProfile {
   createdAt: string;
@@ -67,7 +62,6 @@ const UserUi: React.FC<UserUiProps> = ({ userId, loggedInEmail }) => {
   const isOwnProfile = loggedInEmail && userId === loggedInEmail;
   const cookies = parseCookies();
   const savedUserId: string | undefined = cookies.userId;
-  // const savedEmail = cookies.email;
   const { data, error }: { data: UserPageData | undefined; error: any } =
     useQuery<UserPageData>('users', () =>
       isOwnProfile ? getMyProfile() : getUserProfile({ savedUserId })
