@@ -9,19 +9,37 @@ import {
   FeedUserNickName,
   MusicBox,
 } from '../../styles/feed';
+import { feedData } from './data';
 
 const FeedUi = () => {
+  const data = feedData;
   return (
     <FeedSection>
       <FeedContainer>
         <FeedHeader>
-          <Image />
-          <FeedUserNickName>닉네임</FeedUserNickName>
-          <FeedTime>19시</FeedTime>
-          <div>아이콘</div>
+          <div>
+            <Image
+              src={data[0].userImage}
+              alt={data[0].alt}
+              width={33}
+              height={33}
+              quality={100}
+            />
+          </div>
+          <FeedUserNickName>{data[0].userNickname}</FeedUserNickName>
+          <FeedTime>{data[0].time}</FeedTime>
+          <div>...아이콘</div>
         </FeedHeader>
 
-        <Image />
+        <div>
+          <Image
+            src={data[0].src}
+            alt={data[0].alt}
+            width={272}
+            height={189}
+            quality={100}
+          />
+        </div>
 
         <FeedMusicLikeBox>
           <MusicBox>
