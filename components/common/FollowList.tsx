@@ -5,7 +5,7 @@ import {
   Nickname,
   UserInfo,
   UserListItemStyled,
-  UserProfileImage,
+  UserProfileImageBox,
 } from '@/styles/followTab';
 import ProfileImage from './ProfileImage';
 import Button from '@/components/common/Button';
@@ -26,9 +26,9 @@ const FollowList: React.FC<User> = ({
 }) => {
   return (
     <UserListItemStyled>
-      <UserProfileImage>
+      <UserProfileImageBox>
         <ProfileImage userImage={userImage} preset={preset} />
-      </UserProfileImage>
+      </UserProfileImageBox>
       <UserInfo>
         <Nickname>{nickname}</Nickname>
         <Email>{email}</Email>

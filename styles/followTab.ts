@@ -49,7 +49,7 @@ export const UserListItemStyled = styled.div`
   }
 `;
 
-export const UserProfileImage = styled.div`
+export const UserProfileImageBox = styled.div`
   width: 50px;
   height: 50px;
   border-radius: 50%;
@@ -57,6 +57,14 @@ export const UserProfileImage = styled.div`
   /* border: 1px solid black; */
   background-color: black;
   overflow: hidden;
+`;
+export const UserProfileImage = styled.img`
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+  border: 1px solid black;
+  background-color: black;
 `;
 
 export const UserInfo = styled.div`
