@@ -57,6 +57,7 @@ import Link from 'next/link';
 import UpAndDownTab from '@/components/common/UpAndDownTab';
 import CustomPlayer from '@/components/Write/CustomPlayer';
 import Modal from '@/components/common/Modal';
+import { ReadOnlyMap } from '@/components/Write/ReadOnlyMap';
 
 const DynamicComponentWithNoSSR = dynamic(
   () => import('@/components/Write/YoutubePlayer'),
@@ -276,11 +277,7 @@ const Detail: NextPage = () => {
           )}
         </DetialContentSection>
         <DetialContentSection>
-          <MapComponent
-            setLocation={setLocation}
-            location={location}
-            update={'3'}
-          />
+          <ReadOnlyMap location={location} />
         </DetialContentSection>
         <DetialContentSection>
           <h3>댓글</h3>

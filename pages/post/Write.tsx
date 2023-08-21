@@ -34,6 +34,7 @@ import music from '@/public/music.png';
 import record from '@/public/record.png';
 import UpAndDownTab from '@/components/common/UpAndDownTab';
 import CustomButton from '@/components/Write/CustomButton';
+import { ReadOnlyMap } from '@/components/Write/ReadOnlyMap';
 
 const DynamicComponentWithNoSSR = dynamic(
   () => import('@/components/Write/YoutubePlayer'),
@@ -109,6 +110,7 @@ const Write: NextPage<Props> = ({ update = '1', updateId, data }) => {
   };
 
   const [images, setImages] = useState<File[]>([]);
+  const [imageURLs, setImageURLs] = useState<string[]>([]);
   const [content, setContent] = useState<string>('');
   const [musicChoose, setMusicChoose] = useState<number>(0);
   const [audioFile, setAudioFile] = useState<Blob | null>(null);
@@ -140,6 +142,7 @@ const Write: NextPage<Props> = ({ update = '1', updateId, data }) => {
 
   const removeImage = (index: number) => {
     setImages((images) => images.filter((_, i) => i !== index));
+    setImageURLs((imageURLs) => imageURLs.filter((_, i) => i !== index));
   };
 
   const handleAccordionClick = (value: number) => {
@@ -154,7 +157,7 @@ const Write: NextPage<Props> = ({ update = '1', updateId, data }) => {
   const handlePostSubmit = (event: FormEvent) => {
     event.preventDefault();
 
-    if (images.length === 0) {
+    if (images.length === 0 && imageURLs.length === 0) {
       alert('최소한 한 장의 사진을 업로드해야 합니다.');
       return;
     }
@@ -168,6 +171,10 @@ const Write: NextPage<Props> = ({ update = '1', updateId, data }) => {
 
     images.forEach((image) => {
       formData.append('image', image);
+    });
+
+    imageURLs.forEach((imageURL) => {
+      formData.append('imageURL', imageURL);
     });
 
     if (musicChoose === 1) {
@@ -219,79 +226,27 @@ const Write: NextPage<Props> = ({ update = '1', updateId, data }) => {
     mutationOptions
   );
 
-  // const { isLoading, isError, data, isSuccess } = useQuery(
-  //   ['post', updateId],
-  //   () => getPost(updateId),
-  //   {
-  //     onSuccess: async (data) => {
-  //       console.log('진입함');
-  //       setCookie(null, 'update', '1', { path: '/' });
-  //       const imageFiles = await Promise.all(
-  //         data.images.map(async (image: Image, idx: string) => {
-  //           const response = await fetch(image.url);
-  //           const blob = await response.blob();
-  //           return new File([blob], idx);
-  //         })
-  //       );
-  //       console.log(data.post.musicType === 3);
-  //       if (data.post.musicType === 3) {
-  //         console.log('진입함');
-  //         try {
-  //           const response = await fetch(data.post.musicUrl);
-  //           const audioBlob = await response.blob();
-  //           const url = URL.createObjectURL(audioBlob);
-  //           setAudioFile(audioBlob);
-  //           setAudioURL(url);
-  //         } catch (error) {
-  //           console.error('오디오 파일을 불러오는 중 오류 발생:', error);
-  //         }
-  //       }
-  //       setImages(imageFiles);
-  //       setContent(data.post.content);
-  //       setSelectedTitle(data.post.musicTitle);
-  //       setMusicChoose(data.post.musicType);
-  //       data.post.musicType === 1 && setVideoId(data.post.musicUrl);
-  //       data.post.musicType === 3 && setAudioURL(data.post.musicUrl);
-  //       console.log(data.post.musicType === 3);
-  //       if (data.post.musicType === 3) {
-  //         console.log('진입함');
-  //         try {
-  //           const response = await fetch(data.post.musicUrl);
-  //           const audioBlob = await response.blob();
-  //           const url = URL.createObjectURL(audioBlob);
-  //           setAudioFile(audioBlob);
-  //           setAudioURL(url);
-  //         } catch (error) {
-  //           console.error('오디오 파일을 불러오는 중 오류 발생:', error);
-  //         }
-  //       }
-  //       setVideoId(data.post.musicUrl);
-  //       setTags(data.post.tag.split(', '));
-  //       setLocation({
-  //         name: data.post.placeName,
-  //         x: data.post.latitude,
-  //         y: data.post.longitude,
-  //       });
-  //     },
-  //     enabled: update === '2',
-  //   }
-  // );
-
   useEffect(() => {
     if (update === '2') {
       const fetchData = async () => {
         console.log('진입함');
         setCookie(null, 'update', '1', { path: '/' });
 
-        const imageFiles = await Promise.all(
-          data.images.map(async (image: Image, idx: string) => {
-            const response = await fetch(image.url);
-            const blob = await response.blob();
-            return new File([blob], idx);
-          })
-        );
+        // const imageFiles = await Promise.all(
+        //   data.images.map(async (image: Image, idx: string) => {
+        //     const response = await fetch(image.url);
+        //     const blob = await response.blob();
+        //     return new File([blob], idx);
+        //   })
+        // );
 
-        setImages(imageFiles);
+        //setImages(imageFiles);
+        //setImageURLs(data.images);
+
+        data.images.map((image: any) => {
+          setImageURLs((images) => [...images, image.url]);
+        });
+
         setContent(data.post.content);
         setSelectedTitle(data.post.musicTitle);
         setMusicChoose(data.post.musicType);
@@ -299,11 +254,11 @@ const Write: NextPage<Props> = ({ update = '1', updateId, data }) => {
 
         if (data.post.musicType === 3) {
           try {
-            const response = await fetch(data.post.musicUrl);
-            const audioBlob = await response.blob();
-            const url = URL.createObjectURL(audioBlob);
-            setAudioFile(audioBlob);
-            setAudioURL(url);
+            // const response = await fetch(data.post.musicUrl);
+            // const audioBlob = await response.blob();
+            // const url = URL.createObjectURL(audioBlob);
+            // setAudioFile(audioBlob);
+            setAudioURL(data.post.musicUrl);
           } catch (error) {
             console.error('오디오 파일을 불러오는 중 오류 발생:', error);
           }
@@ -318,12 +273,10 @@ const Write: NextPage<Props> = ({ update = '1', updateId, data }) => {
       };
 
       fetchData(); // 비동기 함수 호출
+
+      console.log(data.images);
     }
   }, []);
-
-  useEffect(() => {
-    console.log(images); // images 배열이 변경될 때마다 여기에 로깅됩니다.
-  }, [images]);
 
   return (
     <>
@@ -345,9 +298,18 @@ const Write: NextPage<Props> = ({ update = '1', updateId, data }) => {
                     새 게시글
                   </h1>
                 )}
-                <Dropzone images={images} setImages={setImages} />
+                <Dropzone
+                  images={images}
+                  setImages={setImages}
+                  imageURLs={imageURLs}
+                  setImageURLs={setImageURLs}
+                />
                 <PreviewContainer>
-                  <ImagePreview images={images} removeImage={removeImage} />
+                  <ImagePreview
+                    images={images}
+                    removeImage={removeImage}
+                    imageURLs={imageURLs}
+                  />
                 </PreviewContainer>
               </ImageContainer>
               <ImageContainer>
@@ -386,15 +348,16 @@ const Write: NextPage<Props> = ({ update = '1', updateId, data }) => {
                   />
                 )}
                 {musicChoose === 3 && (
-                  <RecordPlayer
-                    setAudioFile={setAudioFile}
-                    setSlicedAudioFile={setSlicedAudioFile}
-                    setSlicedAudioURL={setSlicedAudioURL}
-                    slicedAudioURL={slicedAudioURL}
-                    audioURL={audioURL}
-                    setAudioURL={setAudioURL}
-                    setIsShow={setIsShow}
-                  />
+                  // <RecordPlayer
+                  //   setAudioFile={setAudioFile}
+                  //   setSlicedAudioFile={setSlicedAudioFile}
+                  //   setSlicedAudioURL={setSlicedAudioURL}
+                  //   slicedAudioURL={slicedAudioURL}
+                  //   audioURL={audioURL}
+                  //   setAudioURL={setAudioURL}
+                  //   setIsShow={setIsShow}
+                  // />
+                  <CustomPlayer audioUrl={audioURL} setAudioUrl={setAudioURL} />
                 )}
                 <div
                   style={{
@@ -419,12 +382,12 @@ const Write: NextPage<Props> = ({ update = '1', updateId, data }) => {
                   <CustomButton type="button" onClick={handleMapCreateHandler}>
                     위치 설정하기
                   </CustomButton>
+
+                  {location.x!== 0 && location.y!== 0 && (
+                    <ReadOnlyMap location={location} />
+                  )
+                  }
                 </div>
-                {/* <MapComponent
-                  setLocation={setLocation}
-                  location={location}
-                  update={update}
-                /> */}
                 <StyledButton type="submit">
                   {update === '2' ? (
                     <h3>사진 수정하기</h3>
@@ -454,11 +417,6 @@ const Write: NextPage<Props> = ({ update = '1', updateId, data }) => {
                             videoId={videoId}
                             setIsShow={setIsShow}
                           />
-                          {/* <DynamicComponentWithNoSSR
-                          videoId={videoId}
-                          setVideoId={setVideoId}
-                          setSelectedTitle={setSelectedTitle}
-                        /> */}
                         </>
                       </Accordion>
                       <Accordion
@@ -488,7 +446,7 @@ const Write: NextPage<Props> = ({ update = '1', updateId, data }) => {
                         />
                       </Accordion>
                       {commentEdit.show && (
-                        <div style={{ height: '200px' }}></div>
+                        <div style={{ height: '100px' }}></div>
                       )}
                     </div>
                   )}
@@ -504,6 +462,7 @@ const Write: NextPage<Props> = ({ update = '1', updateId, data }) => {
                       setLocation={setLocation}
                       location={location}
                       update={update}
+                      setIsShowMap={setIsShowMap}
                     />
                   )}
                 </UpAndDownTab>
@@ -517,18 +476,3 @@ const Write: NextPage<Props> = ({ update = '1', updateId, data }) => {
 };
 
 export default Write;
-
-// export const getServerSideProps = async (
-//   context: GetServerSidePropsContext
-// ) => {
-//   const cookies = parseCookies(context);
-//   const update = cookies.update || '';
-//   const updateId = cookies.updateId || '';
-
-//   return {
-//     props: {
-//       update,
-//       updateId,
-//     },
-//   };
-// };
