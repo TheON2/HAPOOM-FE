@@ -19,6 +19,7 @@ import {
   CommentButton,
   DetialContentSection,
   CommentForm,
+  NoneComment,
 } from '@/styles/detail';
 import {
   CommentUpdateData,
@@ -232,7 +233,7 @@ const CommentLayout = ({ data, id, userData }: commentProps) => {
       onSuccess: () => {
         setIsShow(false);
         setComment('');
-        queryClient.invalidateQueries('comments');
+        queryClient.invalidateQueries(['comment', id]);
       },
     }
   );
@@ -243,7 +244,7 @@ const CommentLayout = ({ data, id, userData }: commentProps) => {
         setIsShow(false);
         setComment('');
         setActive(null);
-        queryClient.invalidateQueries('comments');
+        queryClient.invalidateQueries(['comment', id]);
       },
     }
   );
@@ -258,7 +259,7 @@ const CommentLayout = ({ data, id, userData }: commentProps) => {
           onClickEvent: null,
         });
         setIsModalOpen(true);
-        queryClient.invalidateQueries('comments');
+        queryClient.invalidateQueries(['comment', id]);
       },
     }
   );
@@ -314,23 +315,31 @@ const CommentLayout = ({ data, id, userData }: commentProps) => {
     }
     setIsModalOpen(true);
   };
+  console.log(data);
   return (
     <>
       <CommentButton onClick={handleCommentCreateHandler}>
         <CommentIcon />
         댓글
       </CommentButton>
-      {data?.map((comment: CommentData, idx: number) => (
-        <Comment
-          key={idx}
-          onClickUpdateEvent={handleCommentEditHandler}
-          onClickDeleteEvent={onClickDeleteCommentHandler}
-          updateButtonActive={updateButtonActive}
-          active={active}
-          data={comment}
-          loggedUser={userData}
-        />
-      ))}
+      {data?.length !== 0 ? (
+        data?.map((comment: CommentData, idx: number) => (
+          <Comment
+            key={idx}
+            onClickUpdateEvent={handleCommentEditHandler}
+            onClickDeleteEvent={onClickDeleteCommentHandler}
+            updateButtonActive={updateButtonActive}
+            active={active}
+            data={comment}
+            loggedUser={userData}
+          />
+        ))
+      ) : (
+        <NoneComment>
+          댓글이 없습니다.
+          <br /> 첫번째 댓글을 남겨보세요.
+        </NoneComment>
+      )}
 
       {isShow && (
         <CommentFormWrapper
