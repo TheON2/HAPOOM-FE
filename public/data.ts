@@ -54,6 +54,56 @@ export const hashtagImages: SliderImage[] = [
     src: '/b1.png',
     alt: 'Image 5',
   },
+  {
+    id: 1,
+    src: '/b1.png',
+    alt: 'Image 1',
+  },
+  {
+    id: 2,
+    src: '/b1.png',
+    alt: 'Image 2',
+  },
+  {
+    id: 3,
+    src: '/b1.png',
+    alt: 'Image 3',
+  },
+  {
+    id: 4,
+    src: '/b1.png',
+    alt: 'Image 4',
+  },
+  {
+    id: 5,
+    src: '/b1.png',
+    alt: 'Image 5',
+  },
+  {
+    id: 1,
+    src: '/b1.png',
+    alt: 'Image 1',
+  },
+  {
+    id: 2,
+    src: '/b1.png',
+    alt: 'Image 2',
+  },
+  {
+    id: 3,
+    src: '/b1.png',
+    alt: 'Image 3',
+  },
+  {
+    id: 4,
+    src: '/b1.png',
+    alt: 'Image 4',
+  },
+  {
+    id: 5,
+    src: '/b1.png',
+    alt: 'Image 5',
+  },
 ];
 
 export const hashtagContentsImages: SliderImage[] = [

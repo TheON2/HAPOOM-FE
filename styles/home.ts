@@ -4,6 +4,9 @@ export const HomePageLayout = styled.div`
   width: 100%;
   height: 100vh;
   overflow: hidden;
+  @media screen and (min-width: 1260px) {
+    overflow: auto;
+  }
 `;
 // main comment section styled
 export const SectionTitle = styled.h2`
@@ -37,7 +40,7 @@ type mainBannerProps = {
 
 export const MainBannerContainer = styled.div<mainBannerProps>`
   width: 100%;
-  height: ${(props) => (props.$isClick ? '29vh' : 'calc(100vh - 52px)')};
+  height: ${(props) => (props.$isClick ? '250px' : 'calc(100vh - 52px)')};
   transition: all 0.8s ease-in-out;
   position: relative;
   p {
@@ -60,9 +63,18 @@ export const MainBannerContainer = styled.div<mainBannerProps>`
     opacity: ${(props) => (props.$isClick ? '0' : '1')};
   }
   @media screen and (min-width: 768px) {
-    height: ${(props) => (props.$isClick ? '400px' : '100vh')};
+    height: ${(props) => (props.$isClick ? '120px' : '100vh')};
     p {
-      bottom: 225px;
+      bottom: ${(props) => (props.$isClick ? '6px' : '12vh')};
+      max-width: 768px;
+      font-size: ${(props) => (props.$isClick ? '14px' : '28px')};
+      line-height: ${(props) => (props.$isClick ? '18px' : '36px')};
+    }
+  }
+  @media screen and (min-width: 1260px) {
+    height: ${(props) => (props.$isClick ? '250px' : '100vh')};
+    p {
+      bottom: 50px;
       max-width: 768px;
       font-size: 28px;
       line-height: 36px;
@@ -250,17 +262,13 @@ export const HashtagNavBarLayout = styled.nav<hashtagNavbarProps>`
     align-items: center;
   }
   @media screen and (min-width: 768px) {
-    transform: translateY(-100%);
+    transform: translateY(0);
+    border-radius: 0;
+    color: #aaa;
     .background {
       width: 100%;
-      padding: 0px 24px 35px;
-      background: linear-gradient(
-        180deg,
-        rgba(255, 255, 255, 0.22) 80%,
-        #fff 90%,
-        #fff 95%,
-        rgba(255, 255, 255, 0.1) 100%
-      );
+      padding: 0px 24px 12px;
+      background: #fff;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -311,8 +319,8 @@ export const HashtagItem = styled.li`
     font-size: 12px;
     font-weight: 500;
     figure {
-      width: 120px;
-      height: 100px;
+      width: 90px;
+      height: 64px;
     }
   }
 `;

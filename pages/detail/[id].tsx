@@ -138,6 +138,7 @@ const Detail: NextPage = () => {
     ['post', id],
     () => getPost(id),
     {
+      enabled: id !== '',
       onSuccess: async (data) => {
         setMusicChoose(data.post.musicType);
         setImages(data.images);
