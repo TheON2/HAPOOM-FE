@@ -115,6 +115,9 @@ const SignUpUi = () => {
   const moveSignInPageHandeler = useCallback(() => {
     router.push('/auth/SignIn');
   }, [router]);
+  const moveHomePageHandeler = useCallback(() => {
+    router.push('/');
+  }, [router]);
 
   const handleInputChange = useCallback(
     (e: ChangeEvent<HTMLInputElement & { name: TextInputType }>) => {
@@ -227,7 +230,7 @@ const SignUpUi = () => {
 
   return (
     <SignUpSection>
-      <MainHeadText>HAPOOM</MainHeadText>
+      <MainHeadText onClick={moveHomePageHandeler}>HAPOOM</MainHeadText>
       <SubHeadText color="#000" $marginBottom="12px">
         회원가입
       </SubHeadText>
@@ -301,7 +304,7 @@ const SignUpUi = () => {
             style={{
               position: 'absolute',
               right: '10px',
-              top: '50%',
+              top: '88%',
               transform: 'translateY(-50%)',
               cursor: 'pointer',
             }}

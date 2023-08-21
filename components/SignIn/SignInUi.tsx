@@ -64,7 +64,9 @@ const SignInUi = () => {
   const moveSignUpBtn = React.useCallback(() => {
     router.push('/auth/SignUp');
   }, [router]);
-
+  const moveHomeBtn = React.useCallback(() => {
+    router.push('/');
+  }, [router]);
   const moveFindPwdBtn = React.useCallback(() => {
     router.push('/findPassword/FindPwd');
   }, [router]);
@@ -105,7 +107,7 @@ const SignInUi = () => {
   return (
     <SignInSection>
       <SignInContainer>
-        <MainHeadText>HAPOOM</MainHeadText>
+        <MainHeadText onClick={moveHomeBtn}>HAPOOM</MainHeadText>
         <StyledInputBox>
           <StyledEmailInput
             type="email"
