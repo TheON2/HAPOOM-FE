@@ -66,6 +66,14 @@ export const DetialContentSection = styled.section`
       padding: 4px 22px 2px;
     }
   }
+  .button-box {
+    width: 100%;
+    display: flex;
+    gap: 8px;
+    button {
+      width: 50%;
+    }
+  }
   & > div:last-child {
     border: none;
   }
@@ -126,4 +134,103 @@ export const CommentForm = styled.form`
       color: #b3b3b3;
     }
   }
+`;
+
+// comment components style
+export const CommentsContainer = styled.div`
+  width: 100%;
+  border-bottom: 1px solid #ddd;
+`;
+export const CommentBox = styled.div`
+  width: 100%;
+  padding: 16px 0;
+  .comment-profile {
+    display: flex;
+    gap: 12px;
+  }
+  .comment-image {
+    width: 36px;
+    height: 36px;
+    border-radius: 18px;
+    overflow: hidden;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+  .comment {
+    width: calc(100% - 48px);
+    margin: 4px 0 0 auto;
+    color: #737373;
+    font-size: 12px;
+    height: 70px;
+
+    p {
+      padding: 14px 12px 12px;
+      line-height: 20px;
+    }
+
+    textarea {
+      resize: none;
+      width: 100%;
+      height: 70px;
+      padding: 14px 12px 12px;
+      font-size: 12px;
+      line-height: 20px;
+      color: #737373;
+      border: none;
+      background-color: #f0efef;
+      border-radius: 3px;
+    }
+  }
+`;
+export const CommentInfomation = styled.div`
+  width: calc(100% - 48px);
+  display: flex;
+  justify-content: space-between;
+  .comment-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    p {
+      font-weight: 700;
+      font-size: 12px;
+      line-height: 12px;
+      margin-bottom: 6px;
+    }
+    span {
+      color: #b7b4b4;
+      font-size: 8px;
+      line-height: 8px;
+    }
+  }
+  .comment-button-box {
+    display: flex;
+    &.active button:nth-child(1) svg path {
+      fill: #369dfe;
+    }
+  }
+`;
+
+export const CommentButton = styled.button`
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2px 0 0;
+  gap: 2px;
+  color: #fff;
+  font-size: 10px;
+  position: fixed;
+  right: 24px;
+  bottom: 20vh;
+  background-color: #52acff;
+  border: none;
+  cursor: pointer;
+  z-index: 15;
 `;
