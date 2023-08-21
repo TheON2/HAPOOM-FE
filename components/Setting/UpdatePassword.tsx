@@ -35,7 +35,7 @@ const UpdatePassword = () => {
   });
 
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement & { name: TextInputType }>
+    e: React.ChangeEvent<HTMLInputElement> & { name: TextInputType }
   ) => {
     const { name, value } = e.target;
 
@@ -61,7 +61,7 @@ const UpdatePassword = () => {
     }
   );
 
-  const submitUser = async (event: any) => {
+  const submitUser = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     let errors: Signup = {
@@ -134,4 +134,4 @@ const UpdatePassword = () => {
   );
 };
 
-export default UpdatePassword;
+export default React.memo(UpdatePassword);
