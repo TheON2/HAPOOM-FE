@@ -15,7 +15,7 @@ export interface User {
   userImage: string;
 }
 
-const FollowListItem: React.FC<User> = ({ userImage, nickname, email }) => {
+const FollowList: React.FC<User> = ({ userImage, nickname, email }) => {
   return (
     <UserListItemStyled>
       <UserProfileImage src={userImage} alt={nickname} />
@@ -28,4 +28,4 @@ const FollowListItem: React.FC<User> = ({ userImage, nickname, email }) => {
   );
 };
 
-export default FollowListItem;
+export default FollowList;
