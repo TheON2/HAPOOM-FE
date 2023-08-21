@@ -13,7 +13,7 @@ const HashtagContents: React.FC<Props> = ({ data }) => {
   return (
     <HashtagContentsLayout>
       <SectionTitle>#랜덤글</SectionTitle>
-      <HashtagContentsContainer>
+      <ImageContentsContainer>
         {data.map((content, index) => {
           return (
             <ImageContent
@@ -24,7 +24,7 @@ const HashtagContents: React.FC<Props> = ({ data }) => {
             />
           );
         })}
-      </HashtagContentsContainer>
+      </ImageContentsContainer>
     </HashtagContentsLayout>
   );
 };
