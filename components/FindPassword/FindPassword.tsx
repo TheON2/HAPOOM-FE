@@ -63,6 +63,9 @@ const FindPassword = () => {
   //       console.error('비밀번호 찾기 실패:', error);
   //     },
   //   });
+  const moveHomeBtn = React.useCallback(() => {
+    router.push('/');
+  }, [router]);
 
   const handleInputChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement & { name: TextInputType }>) => {
@@ -122,7 +125,7 @@ const FindPassword = () => {
 
   return (
     <FindPwdSection>
-      <MainHeadText>HAPOOM</MainHeadText>
+      <MainHeadText onClick={moveHomeBtn}>HAPOOM</MainHeadText>
       <SubHeadText color="#000" $marginBottom="12px" $marginTop="15px">
         비밀번호 찾기 및 변경
       </SubHeadText>
