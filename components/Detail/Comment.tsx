@@ -21,14 +21,6 @@ import {
   CommentForm,
 } from '@/styles/detail';
 import { UserResponse } from '@/redux/reducers/userSlice';
-type CommentBoxProps = {
-  onClickUpdateEvent: (commentId: number, preComment: string) => void;
-  onClickDeleteEvent: (commentId: number) => void;
-  updateButtonActive: (commentId: number) => void;
-  active: number | null;
-  data: any;
-  loggedUser: any;
-};
 
 type CommentUpdateData = {
   formData: FormData;
@@ -47,6 +39,16 @@ interface CommentData {
   createdAt: string;
   updateAt: string;
 }
+
+type CommentBoxProps = {
+  onClickUpdateEvent: (commentId: number, preComment: string) => void;
+  onClickDeleteEvent: (commentId: number) => void;
+  updateButtonActive: (commentId: number) => void;
+  active: number | null;
+  data: CommentData;
+  loggedUser: UserResponse | undefined;
+};
+
 interface CommentFormProps {
   isOpen: boolean;
   onSubmitHandler: (e: React.FormEvent) => void;
@@ -65,10 +67,11 @@ type commentProps = {
 };
 
 const timeSince = (date: string) => {
-  const now: any = new Date();
-  const inputDate: any = new Date(date);
-  const seconds = Math.floor((now - inputDate) / 1000);
-
+  const now: Date = new Date();
+  const inputDate: Date = new Date(date);
+  const seconds: number = Math.floor(
+    (now.getTime() - inputDate.getTime()) / 1000
+  );
   const minutes = Math.floor(seconds / 60);
   const hours = Math.floor(minutes / 60);
   const days = Math.floor(hours / 24);
@@ -178,6 +181,20 @@ const CommentFormWrapper = ({
   </UpAndDownTab>
 );
 
+type commentEditState = {
+  show: boolean;
+  action: 'create' | 'edit' | '';
+  uiTitle: string;
+  buttonText: string;
+  commentId: number;
+};
+
+type modalState = {
+  actionText: string;
+  modalMessge: string;
+  onClickEvent: (() => void) | null;
+};
+
 const CommentLayout = ({ data, id, userData }: commentProps) => {
   const [active, setActive] = useState<number | null>(null);
   const updateButtonActive = (idx: number) => {
@@ -188,17 +205,17 @@ const CommentLayout = ({ data, id, userData }: commentProps) => {
   const [comment, setComment] = useState<string>('');
   const queryClient = useQueryClient();
   const router = useRouter();
-  const [commentEdit, setCommentEdit] = useState<any>({
+  const [commentEdit, setCommentEdit] = useState<commentEditState>({
     show: false,
     action: '',
     uiTitle: '',
     buttonText: '',
-    postId: '',
+    commentId: 0,
   });
-  const [modalMessge, setModalMessge] = useState<any>({
+  const [modalMessge, setModalMessge] = useState<modalState>({
     actionText: '',
     modalMessge: '',
-    onClickEvent: '',
+    onClickEvent: null,
   });
   const handleCommentEditHandler = (commentId: number, preComment: string) => {
     if (userData === null || userData === undefined) {
@@ -236,12 +253,12 @@ const CommentLayout = ({ data, id, userData }: commentProps) => {
         action: 'create',
         uiTitle: '댓글 생성',
         buttonText: '업로드',
-        commentId: '',
+        commentId: 0,
       });
     }
   };
   const handleCommentShowHandler = () => {
-    setCommentEdit((pre: any) => ({
+    setCommentEdit((pre: commentEditState) => ({
       ...pre,
       show: !commentEdit.show,
     }));
@@ -351,7 +368,7 @@ const CommentLayout = ({ data, id, userData }: commentProps) => {
         <CommentIcon />
         댓글
       </CommentButton>
-      {data?.comments.map((comment: any, idx: number) => (
+      {data?.comments.map((comment: CommentData, idx: number) => (
         <Comment
           key={idx}
           onClickUpdateEvent={handleCommentEditHandler}
