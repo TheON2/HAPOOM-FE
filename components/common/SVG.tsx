@@ -5,6 +5,7 @@ interface Props {
   style?: CSSProperties;
   onClick?: (event: React.MouseEvent<SVGSVGElement>) => void;
 }
+
 type svgColorProps = {
   fillColor?: string;
 };
@@ -490,9 +491,9 @@ export const ModalWarning = () => (
         width="20.8125"
         height="30.827"
         filterUnits="userSpaceOnUse"
-        color-interpolation-filters="sRGB"
+        colorInterpolationFilters="sRGB"
       >
-        <feFlood flood-opacity="0" result="BackgroundImageFix" />
+        <feFlood floodOpacity="0" result="BackgroundImageFix" />
         <feColorMatrix
           in="SourceAlpha"
           type="matrix"

@@ -1,8 +1,4 @@
-export type SliderImage = {
-  id: number;
-  src: string;
-  alt: string;
-};
+import { SliderImage } from '@/types/home';
 
 export const sliderImages: SliderImage[] = [
   {
