@@ -228,9 +228,16 @@ export const CommentButton = styled.button`
   font-size: 10px;
   position: fixed;
   right: 24px;
-  bottom: 20vh;
+  bottom: 10vh;
   background-color: #52acff;
   border: none;
   cursor: pointer;
   z-index: 15;
+`;
+
+export const NoneComment = styled.div`
+  width: 100%;
+  padding: 36px 0;
+  text-align: center;
+  color: #777;
 `;

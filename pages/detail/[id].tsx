@@ -157,9 +157,13 @@ const Detail: NextPage = () => {
     }
   );
 
-  const { data: commentsData } = useQuery('comments', () => getComment(id), {
-    enabled: id !== '',
-  });
+  const { data: commentsData } = useQuery(
+    ['comment', id],
+    () => getComment(id),
+    {
+      enabled: id !== '',
+    }
+  );
   if (!isSuccess) return <div>Loading...</div>;
   return (
     <>
