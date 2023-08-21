@@ -87,7 +87,7 @@ type CommentDelete = {
   commentId: number;
 };
 
-const Detail: NextPage<Props> = ({ update, updateId }) => {
+const Detail: NextPage = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const id = typeof router.query.id === 'string' ? router.query.id : '';
@@ -107,8 +107,6 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
     onClickEvent: '',
   });
   const queryClient = useQueryClient();
-
-  const audioSrc = id ? `http://localhost:3001/test/stream/${id}` : '';
 
   const { mutate: delete_mutate } = useMutation(deletePost, {
     onSuccess: () => {
@@ -131,9 +129,7 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
   });
 
   const handleEditClick = () => {
-    setCookie(null, 'updateId', id, { path: '/' });
-    setCookie(null, 'update', '2', { path: '/' });
-    router.push('/post/Write');
+    router.push(`/update/${id}`);
   };
 
   const handleDeleteClick = () => {
@@ -197,7 +193,7 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
   if (!isSuccess) return <div>Loading...</div>;
   return (
     <>
-      <>{!(update === '3' && location.x === 0) && <></>}</>
+      <>{!(location.x === 0) && <></>}</>
       <GlobalStyle />
       <Modal
         isOpen={isModalOpen}
@@ -260,7 +256,7 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
                 videoId={videoId}
                 setVideoId={setVideoId}
                 setSelectedTitle={setSelectedTitle}
-                update={update}
+                update={'3'}
               />
             </>
           )}
@@ -283,7 +279,7 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
           <MapComponent
             setLocation={setLocation}
             location={location}
-            update={update}
+            update={'3'}
           />
         </DetialContentSection>
         <DetialContentSection>
@@ -301,18 +297,3 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
 };
 
 export default Detail;
-
-export const getServerSideProps = async (
-  context: GetServerSidePropsContext
-) => {
-  const cookies = parseCookies(context);
-  const update = cookies.update || '';
-  const updateId = cookies.updateId || '';
-
-  return {
-    props: {
-      update,
-      updateId,
-    },
-  };
-};

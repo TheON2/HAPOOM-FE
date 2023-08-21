@@ -41,8 +41,9 @@ const Posts: React.FC<PostProps> = ({
 
   const onLikeClickHandler = (event: React.MouseEvent) => {
     event.stopPropagation();
-    setIsLike(!isLike);
-    handleLikeClick(postId, !isLike);
+    const newIsLike = !isLike;
+    setIsLike(newIsLike);
+    handleLikeClick(postId, newIsLike);
   };
 
   return (
@@ -78,13 +79,11 @@ const PostLike: React.FC<PostLike> = ({
 
   const handleLikeClick = (postId: number, isLiked: boolean) => {
     if (isLiked) {
-      // 좋아요 눌린 경우, likedPosts에 추가
       const post = data?.posts.find((p) => p.postId === postId);
       if (post) {
         setLikedPosts((prevPosts) => [...prevPosts, post]);
       }
     } else {
-      // 좋아요 취소된 경우, likedPosts에서 제거
       setLikedPosts((prevPosts) =>
         prevPosts.filter((p) => p.postId !== postId)
       );
@@ -97,7 +96,7 @@ const PostLike: React.FC<PostLike> = ({
     } else if (selectedTab === 1) {
       setDisplayedPosts(data?.likedPosts);
     }
-  }, [data, likedPosts, selectedTab]);
+  }, [data, selectedTab]);
 
   useEffect(() => {
     const updateIndicator = () => {
