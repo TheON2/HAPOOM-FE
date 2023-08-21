@@ -270,11 +270,20 @@ export const HashtagNavBarLayout = styled.nav<hashtagNavbarProps>`
 `;
 
 export const HashtagList = styled.ul`
+  max-width: 768px;
   width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 12px;
   list-style: none;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 `;
 
 export const HashtagItem = styled.li`

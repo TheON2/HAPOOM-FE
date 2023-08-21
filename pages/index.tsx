@@ -51,7 +51,6 @@ const Home: NextPage<MainPageProps> = ({
 
   return (
     <HomePageLayout>
-      <Header $sticky={'sticky'} />
       <MainBanner data={data} $isClick={isClick} />
       <HashtagNavBar
         data={hashtagData}
