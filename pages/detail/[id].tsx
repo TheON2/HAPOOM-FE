@@ -26,38 +26,24 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState, wrapper } from '@/redux/config/configStore';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
-import Header from '@/components/common/Header';
-import Footer from '@/components/common/Footer';
 import { getAuthToken } from '@/api/user';
 import { AUTH_USER, UserResponse } from '@/redux/reducers/userSlice';
-import MainBannerSlider from '@/components/Home/MainBannerSlider';
+import MainBannerSlider from '@/components/Home/InfiniteCarousel';
 import DetailProfile from '@/components/Detail/DetailProfile';
-import MobileBottomNav from '@/components/common/MobileBottomNav';
 import { parseCookies, setCookie } from 'nookies';
 import { GetServerSidePropsContext, NextPage } from 'next';
-import styled from 'styled-components';
 import HeartIcon from '@/components/common/HeartIcon';
-import Image from 'next/image';
-import Button from '@/components/common/Button';
 import Comment from '@/components/Detail/Comment';
 import KebabMenuUI, {
   KebabMenuStyle,
   KebabMenuAptionButton,
 } from '@/components/common/KebabMenuUI';
-import PageLayout from '@/components/common/layout/PageLayout';
-import {
-  getComment,
-  updateComment,
-  deleteComment,
-  addComment,
-  reportPost,
-} from '@/api/post';
+import { getComment, reportPost } from '@/api/post';
 import { identity } from 'lodash';
 import Link from 'next/link';
-import UpAndDownTab from '@/components/common/UpAndDownTab';
 import CustomPlayer from '@/components/Write/CustomPlayer';
 import Modal from '@/components/common/Modal';
-
+import { BannerSliderProps } from '@/types/home';
 const DynamicComponentWithNoSSR = dynamic(
   () => import('@/components/Write/YoutubePlayer'),
   { ssr: false }
@@ -91,7 +77,7 @@ const Detail: NextPage = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const id = typeof router.query.id === 'string' ? router.query.id : '';
-  const [images, setImages] = useState<File[]>([]);
+  const [images, setImages] = useState<BannerSliderProps[]>([]);
   const [content, setContent] = useState<string>('');
   const [musicChoose, setMusicChoose] = useState<number>();
   const [selectedTitle, setSelectedTitle] = useState<string>('');
@@ -189,7 +175,6 @@ const Detail: NextPage = () => {
   );
 
   const { data: commentsData } = useQuery('comments', () => getComment(id));
-
   if (!isSuccess) return <div>Loading...</div>;
   return (
     <>
@@ -238,9 +223,12 @@ const Detail: NextPage = () => {
           <HeartIcon postId={parseInt(id)} />
           <p className="detail-content-text">{content}</p>
           <HashtagBox>
-            {tags.split(',').map((tag, index) => (
-              <Hashtag key={index}>#{tag.trim()}</Hashtag>
-            ))}
+            {tags.length !== 0 &&
+              tags
+                .split(',')
+                .map((tag, index) => (
+                  <Hashtag key={index}>#{tag.trim()}</Hashtag>
+                ))}
           </HashtagBox>
         </DetialContentSection>
         <DetialContentSection

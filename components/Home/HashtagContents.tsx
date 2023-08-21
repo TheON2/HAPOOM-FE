@@ -1,30 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import ImageContent from '@/components/Home/ImageContent';
-import {
-  SectionTitle,
-  HashtagContentsLayout,
-  HashtagContentsContainer,
-} from '@/styles/home';
+import { SectionTitle, HashtagContentsLayout } from '@/styles/home';
 import { ImageContentsContainer } from '@/styles/imageContainer';
+import { MainPageDataProps } from '@/types/home';
+
 type Props = {
-  data: Post[];
+  data: MainPageDataProps[];
 };
-interface Post {
-  postId: number;
-  content: string;
-  musicTitle: string;
-  musicUrl: string;
-  tag: string;
-  placeName: string;
-  latitude: number;
-  longitude: number;
-  private: boolean;
-  createdAt: string;
-  updatedAt: string;
-  userId: number;
-  image: string;
-}
 
 const HashtagContents: React.FC<Props> = ({ data }) => {
   return (
