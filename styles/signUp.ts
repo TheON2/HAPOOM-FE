@@ -86,6 +86,7 @@ export const StyledInputBox = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 12px;
+  position: relative;
 `;
 export const StyledInput = styled.input<Props>`
   width: 100%;

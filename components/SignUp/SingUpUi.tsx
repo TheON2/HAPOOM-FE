@@ -301,7 +301,7 @@ const SignUpUi = () => {
             style={{
               position: 'absolute',
               right: '10px',
-              top: '50%',
+              top: '88%',
               transform: 'translateY(-50%)',
               cursor: 'pointer',
             }}
