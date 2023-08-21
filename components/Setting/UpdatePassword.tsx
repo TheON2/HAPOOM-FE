@@ -15,12 +15,6 @@ export interface Signup {
   password: string;
   passwordConfirm: string;
 }
-export interface CheckBoxInterface {
-  checkAll: boolean;
-  checkTerms: boolean;
-  checkPersonalInfo: boolean;
-  checkNewsletter: boolean;
-}
 
 type TextInputType = 'email' | 'password' | 'passwordConfirm' | 'nickname';
 

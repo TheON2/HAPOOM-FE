@@ -9,10 +9,10 @@ interface Props {
 type svgColorProps = {
   fillColor?: string;
 };
-
-type RightArrowProps = {
+interface RightArrowProps {
   fillColor?: string;
-};
+  rotation?: boolean;
+}
 
 export const Cloud = ({ fillColor = '#fff' }) => (
   <svg
@@ -170,13 +170,20 @@ export const ScrollBar = () => (
   </svg>
 );
 
-export const RightArrow = ({ fillColor = '#8995a7' }: RightArrowProps) => (
+export const RightArrow = ({
+  fillColor = '#8995a7',
+  rotation = false,
+}: RightArrowProps) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="8"
     height="11"
     viewBox="0 0 8 11"
     fill="none"
+    style={{
+      transform: rotation ? 'rotate(90deg)' : '',
+      transition: 'transform 0.2s, fill 0.2s',
+    }}
   >
     <path
       d="M7.70034 5.92748L2.48544 10.8229C2.23393 11.059 1.82617 11.059 1.57469 10.8229L0.966457 10.2519C0.715378 10.0162 0.714895 9.63425 0.965384 9.39799L5.09828 5.49999L0.965384 1.60201C0.714895 1.36575 0.715378 0.983752 0.966457 0.748052L1.57469 0.177077C1.8262 -0.0590258 2.23396 -0.0590258 2.48544 0.177077L7.70031 5.07252C7.95182 5.3086 7.95182 5.69138 7.70034 5.92748Z"

@@ -40,7 +40,6 @@ const ImagePreview: React.FC<ImagePreviewProps> = ({ images, removeImage }) => {
             alt={`Upload preview ${index + 2}`}
             width={50}
             height={50}
-            objectFit="fixed"
           />
           {isMouseOver[index] && (
             <div

@@ -3,20 +3,20 @@ import React from 'react';
 import styled from 'styled-components';
 
 type ProfileInputProps = {
-  updateText: string;
-  value: string;
-  name: string;
-  placeholder: string;
+  updateText?: string;
+  value?: string;
+  name?: string;
+  placeholder?: string;
   label?: string;
   type?: 'password' | 'text';
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-const Input = ({
+const Input: React.FC<ProfileInputProps> = ({
   updateText,
   label,
   ...restProps
-}: Partial<ProfileInputProps>) => {
+}) => {
   return (
     <InputBox>
       {label ? <label htmlFor=""></label> : null}
@@ -26,4 +26,4 @@ const Input = ({
   );
 };
 
-export default Input;
+export default React.memo(Input);
