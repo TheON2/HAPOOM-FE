@@ -46,7 +46,6 @@ const Setting = () => {
     onSuccess: (data) => {},
     cacheTime: 0,
   });
-  console.log('data', userData);
 
   return (
     <>
