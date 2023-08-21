@@ -25,6 +25,7 @@ export const MainHeadText = styled.h1`
   text-align: center;
   font-size: 40px;
   font-weight: 900;
+  cursor: pointer;
 `;
 export const StyledInputBox = styled.div`
   max-width: 312px;
@@ -139,7 +140,6 @@ export const PwdSignUpSettingPageLink = styled.div`
   display: flex;
   margin-top: 20px;
   color: #868686;
-  font-family: Inter;
   font-size: 20px;
   cursor: pointer;
 `;
