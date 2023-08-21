@@ -15,6 +15,7 @@ export interface CommentData {
   userImage: string;
   createdAt: string;
   updateAt: string;
+  preset?: number;
 }
 
 export type CommentBoxProps = {
