@@ -1,4 +1,3 @@
-import { SecretEye } from '@/components/common/SVG';
 import Image from 'next/image';
 import styled from 'styled-components';
 
@@ -35,6 +34,7 @@ export const MainHeadText = styled.h1<Props>`
   font-size: 48px;
   font-weight: 900;
   margin-top: 56px;
+  cursor: pointer;
 `;
 export const SubHeadText = styled.h2<Props>`
   color: ${({ color }) => color};
