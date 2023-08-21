@@ -6,7 +6,6 @@ const inputBtnBoxWidth = '100%';
 const inputBtnHeight = '36px';
 const theme = {
   textColor: '#000',
-  fontFamily: 'Inter',
   primaryColor: '#0084FF',
   inputBtnBoxWidth: '100%',
 };
@@ -24,7 +23,6 @@ export const SignUpSection = styled.section`
   display: flex;
   align-items: center;
   flex-direction: column;
-  font-family: ${theme.fontFamily};
   padding: 0 24px;
   form {
     max-width: 312px;
@@ -174,7 +172,6 @@ export const TextErrorParagraph = styled.p`
   max-width: 227px;
   height: 28px;
   color: red;
-  font-family: ${theme.fontFamily};
   font-size: 10px;
   font-weight: 400;
   line-height: 2.5;
