@@ -19,6 +19,7 @@ const HashtagNavBar: React.FC<HashtagNavBarProps> = ({
         <ScrollBar>
           <span></span>
         </ScrollBar>
+
         <HashtagList>
           {data.map((hashtag, index) => {
             return (
