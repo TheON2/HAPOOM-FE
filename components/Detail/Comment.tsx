@@ -20,51 +20,17 @@ import {
   DetialContentSection,
   CommentForm,
 } from '@/styles/detail';
-import { UserResponse } from '@/redux/reducers/userSlice';
-
-type CommentUpdateData = {
-  formData: FormData;
-  id: string;
-  commentId: number;
-};
-
-type CommentUploadData = Pick<CommentUpdateData, 'formData' | 'id'>;
-type CommentDelete = Pick<CommentUpdateData, 'commentId' | 'id'>;
-
-interface CommentData {
-  comment: string;
-  commentId: number;
-  nickname: string;
-  userImage: string;
-  createdAt: string;
-  updateAt: string;
-}
-
-type CommentBoxProps = {
-  onClickUpdateEvent: (commentId: number, preComment: string) => void;
-  onClickDeleteEvent: (commentId: number) => void;
-  updateButtonActive: (commentId: number) => void;
-  active: number | null;
-  data: CommentData;
-  loggedUser: UserResponse | undefined;
-};
-
-interface CommentFormProps {
-  isOpen: boolean;
-  onSubmitHandler: (e: React.FormEvent) => void;
-  closeForm: () => void;
-  closeComment: () => void;
-  comment: string;
-  onChangeCommentHandler: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
-  editTitle: string;
-  editButton: string;
-}
-
-type commentProps = {
-  data: { comments: CommentData[] };
-  id: string;
-  userData: UserResponse | undefined;
-};
+import {
+  CommentUpdateData,
+  CommentUploadData,
+  CommentDelete,
+  CommentData,
+  CommentBoxProps,
+  CommentFormProps,
+  commentProps,
+  commentEditState,
+  modalState,
+} from '@/types/comment';
 
 const timeSince = (date: string) => {
   const now: Date = new Date();
@@ -180,20 +146,6 @@ const CommentFormWrapper = ({
     </DetialContentSection>
   </UpAndDownTab>
 );
-
-type commentEditState = {
-  show: boolean;
-  action: 'create' | 'edit' | '';
-  uiTitle: string;
-  buttonText: string;
-  commentId: number;
-};
-
-type modalState = {
-  actionText: string;
-  modalMessge: string;
-  onClickEvent: (() => void) | null;
-};
 
 const CommentLayout = ({ data, id, userData }: commentProps) => {
   const [active, setActive] = useState<number | null>(null);
@@ -368,7 +320,7 @@ const CommentLayout = ({ data, id, userData }: commentProps) => {
         <CommentIcon />
         댓글
       </CommentButton>
-      {data?.comments.map((comment: CommentData, idx: number) => (
+      {data?.map((comment: CommentData, idx: number) => (
         <Comment
           key={idx}
           onClickUpdateEvent={handleCommentEditHandler}

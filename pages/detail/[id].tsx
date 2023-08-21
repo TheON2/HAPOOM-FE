@@ -157,7 +157,9 @@ const Detail: NextPage = () => {
     }
   );
 
-  const { data: commentsData } = useQuery('comments', () => getComment(id));
+  const { data: commentsData } = useQuery('comments', () => getComment(id), {
+    enabled: id !== '',
+  });
   if (!isSuccess) return <div>Loading...</div>;
   return (
     <>
@@ -255,7 +257,7 @@ const Detail: NextPage = () => {
         </DetialContentSection>
         <DetialContentSection>
           <h3>댓글</h3>
-          <Comment data={commentsData} id={id} userData={userData} />
+          <Comment data={commentsData?.comments} id={id} userData={userData} />
         </DetialContentSection>
       </ContentsContainer>
     </>
