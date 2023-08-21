@@ -1,11 +1,10 @@
-import React, { ChangeEvent, FormEvent, useState } from 'react';
+import React, { ChangeEvent, FormEvent, useCallback, useState } from 'react';
 import Image from 'next/image';
 import { useMutation, useQueryClient } from 'react-query';
 import Button from '@/components/common/Button';
 import { updateUserSetting } from '@/api/user';
 import { ProfilePresetList, ProfileItem, ButtonBox } from '@/styles/setting';
 import { profilePreset } from '@/public/presetData';
-const profileData = ['/inflearn.jpg', '/inflearn.jpg', '/inflearn.jpg'];
 
 type ProfileType = {
   profileImage?: string;
@@ -18,9 +17,9 @@ const UserProfileImageUpdate = ({ profileImage, preset }: ProfileType) => {
     profileImage
   );
 
-  const onClickProfileHandler = (idx: number) => {
+  const onClickProfileHandler = useCallback((idx: number) => {
     setSelectPreset(idx + 1);
-  };
+  }, []);
   const queryClient = useQueryClient();
 
   const mutate = useMutation(
@@ -61,13 +60,16 @@ const UserProfileImageUpdate = ({ profileImage, preset }: ProfileType) => {
     }
   );
 
-  const onSubmitUserProfile = async (e: FormEvent) => {
-    e.preventDefault();
-    const presetData = new FormData();
+  const onSubmitUserProfile = useCallback(
+    async (e: FormEvent) => {
+      e.preventDefault();
+      const presetData = new FormData();
 
-    presetData.append('preset', selectPreset.toString());
-    await presetMutate.mutateAsync(presetData);
-  };
+      presetData.append('preset', selectPreset.toString());
+      await presetMutate.mutateAsync(presetData);
+    },
+    [selectPreset, presetMutate]
+  );
 
   return (
     <>
@@ -124,4 +126,4 @@ const UserProfileImageUpdate = ({ profileImage, preset }: ProfileType) => {
   );
 };
 
-export default UserProfileImageUpdate;
+export default React.memo(UserProfileImageUpdate);
