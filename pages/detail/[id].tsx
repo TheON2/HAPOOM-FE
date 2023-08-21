@@ -56,23 +56,6 @@ interface Props {
   update: string;
   updateId: string;
 }
-
-type CommentData = {
-  formData: FormData;
-  id: string;
-};
-
-type CommentUpdateData = {
-  formData: FormData;
-  id: string;
-  commentId: number;
-};
-
-type CommentDelete = {
-  id: string;
-  commentId: number;
-};
-
 const Detail: NextPage = () => {
   const router = useRouter();
   const dispatch = useDispatch();
@@ -272,12 +255,7 @@ const Detail: NextPage = () => {
         </DetialContentSection>
         <DetialContentSection>
           <h3>댓글</h3>
-          <Comment
-            data={commentsData}
-            id={id}
-            userData={userData}
-            writeUser={data?.user}
-          />
+          <Comment data={commentsData} id={id} userData={userData} />
         </DetialContentSection>
       </ContentsContainer>
     </>
