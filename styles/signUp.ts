@@ -1,4 +1,3 @@
-import { SecretEye } from '@/components/common/SVG';
 import Image from 'next/image';
 import styled from 'styled-components';
 
@@ -6,7 +5,6 @@ const inputBtnBoxWidth = '100%';
 const inputBtnHeight = '36px';
 const theme = {
   textColor: '#000',
-  fontFamily: 'Inter',
   primaryColor: '#0084FF',
   inputBtnBoxWidth: '100%',
 };
@@ -24,7 +22,6 @@ export const SignUpSection = styled.section`
   display: flex;
   align-items: center;
   flex-direction: column;
-  font-family: ${theme.fontFamily};
   padding: 0 24px;
   form {
     max-width: 312px;
@@ -37,6 +34,7 @@ export const MainHeadText = styled.h1<Props>`
   font-size: 48px;
   font-weight: 900;
   margin-top: 56px;
+  cursor: pointer;
 `;
 export const SubHeadText = styled.h2<Props>`
   color: ${({ color }) => color};
@@ -88,6 +86,7 @@ export const StyledInputBox = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 12px;
+  position: relative;
 `;
 export const StyledInput = styled.input<Props>`
   width: 100%;
@@ -174,7 +173,6 @@ export const TextErrorParagraph = styled.p`
   max-width: 227px;
   height: 28px;
   color: red;
-  font-family: ${theme.fontFamily};
   font-size: 10px;
   font-weight: 400;
   line-height: 2.5;
