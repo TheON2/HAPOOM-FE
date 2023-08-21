@@ -33,7 +33,7 @@ import DetailProfile from '@/components/Detail/DetailProfile';
 import { parseCookies, setCookie } from 'nookies';
 import { GetServerSidePropsContext, NextPage } from 'next';
 import HeartIcon from '@/components/common/HeartIcon';
-import Comment from '@/components/Detail/Comment';
+import Comment from '@/components/Detail/DetailComments';
 import KebabMenuUI, {
   KebabMenuStyle,
   KebabMenuAptionButton,

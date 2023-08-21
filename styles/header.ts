@@ -129,8 +129,8 @@ export const GoWriteLink = styled(Link)`
   justify-content: center;
   align-items: center;
   position: fixed;
-  bottom: 20vh;
-  right: 60px;
+  bottom: 10vh;
+  right: 24px;
   background-color: #fff;
   z-index: 14;
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);

@@ -78,31 +78,13 @@ const MobileBottomNav = () => {
       router.push(route);
     }
   };
-  useEffect(() => {
-    const currentPathname = window.location.pathname;
-    setPathIndex(currentPathname);
-    // console.log(currentPathname);
-  }, [router.pathname]);
 
   useEffect(() => {
-    switch (pathIndex) {
-      case '/':
-        setActive(0);
-        break;
-      case '/search':
-        setActive(1);
-        break;
-      case '/post/Write':
-        setActive(2);
-        break;
-      case `/User/${user.email}`:
-        setActive(3);
-        break;
-      default:
-        setActive(0);
-        break;
-    }
-  }, [pathIndex]);
+    const currentPathname = window.location.pathname;
+    const routes = ['/', '/search', '/post/Write', `/User/${user.email}`];
+    const index = routes.indexOf(currentPathname);
+    setActive(index === -1 ? 0 : index);
+  }, [router.pathname]);
 
   return (
     <MobileBottomNavLayout>
