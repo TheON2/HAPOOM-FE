@@ -1,6 +1,5 @@
 import { InputBox, InputStyle } from '@/styles/setting';
 import React from 'react';
-import styled from 'styled-components';
 
 type ProfileInputProps = {
   updateText?: string;

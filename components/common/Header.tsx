@@ -66,36 +66,39 @@ const Header = ({ $sticky }: any) => {
   return (
     <>
       <HeaderLayout $sticky={$sticky}>
-        <LogoBox href={'/'} onClick={handleLogoClick} $sticky={$sticky}>
-          <h1>HAPOOM</h1>
-        </LogoBox>
-        <AccountActionsContainer>
-          <Link href={'/search'} className="search-icon">
-            <SearchIcon fillColor={$sticky ? '#fff' : '#2797FF'} />
-          </Link>
-          <GoWriteLink onClick={goToWritePage} href={'/post/Write'}>
-            <EditIcon />
-          </GoWriteLink>
-          {!isAuth ? (
-            <AuthButtonBox>
-              <Link href={'/auth/SignIn'}>로그인</Link>|
-              <Link href={'/auth/SignUp'}>회원가입</Link>
-            </AuthButtonBox>
-          ) : null}
-          <ProfileButton onClick={onClickShowMenuHandler}>
-            <ProfileImage
-              preset={user?.preset || 5}
-              userImage={user?.userImage || ''}
-              loading="eager"
-            />
-          </ProfileButton>
-        </AccountActionsContainer>
-        <MobileBox>
-          <IconButton>
-            <Bell fillColor={$sticky ? '#fff' : '#2797FF'} />
-          </IconButton>
-        </MobileBox>
+        <div className="center">
+          <LogoBox href={'/'} onClick={handleLogoClick} $sticky={$sticky}>
+            <h1>HAPOOM</h1>
+          </LogoBox>
+          <AccountActionsContainer>
+            <Link href={'/search'} className="search-icon">
+              <SearchIcon fillColor={$sticky ? '#fff' : '#2797FF'} />
+            </Link>
+
+            {!isAuth ? (
+              <AuthButtonBox>
+                <Link href={'/auth/SignIn'}>로그인</Link>|
+                <Link href={'/auth/SignUp'}>회원가입</Link>
+              </AuthButtonBox>
+            ) : null}
+            <ProfileButton onClick={onClickShowMenuHandler}>
+              <ProfileImage
+                preset={user?.preset || 5}
+                userImage={user?.userImage || ''}
+                loading="eager"
+              />
+            </ProfileButton>
+          </AccountActionsContainer>
+          <MobileBox>
+            <IconButton>
+              <Bell fillColor={$sticky ? '#fff' : '#2797FF'} />
+            </IconButton>
+          </MobileBox>
+        </div>
       </HeaderLayout>
+      <GoWriteLink onClick={goToWritePage} href={'/post/Write'}>
+        <EditIcon />
+      </GoWriteLink>
       {isShowMenu && (
         <SideNav setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu} />
       )}

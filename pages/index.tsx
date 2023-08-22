@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import MainBannerSlider from '@/components/Home/InfiniteCarousel';
 import HashtagNavBar from '@/components/Home/HashtagNavBar';
 import HashtagContents from '@/components/Home/HashtagContents';
@@ -43,7 +43,18 @@ const Home: NextPage<MainPageProps> = ({
   const onClickBottomNavHandler = () => {
     setIsClick(!isClick);
   };
-
+  useEffect(() => {
+    const handleWheel = (event: WheelEvent) => {
+      if (event.deltaY > 0) {
+        setIsClick(true);
+      }
+      window.removeEventListener('wheel', handleWheel);
+    };
+    window.addEventListener('wheel', handleWheel);
+    return () => {
+      window.removeEventListener('wheel', handleWheel);
+    };
+  }, [isClick]);
   if (typeof window !== 'undefined') {
     setCookie(null, 'update', '1', { path: '/' });
     setCookie(null, 'updateId', '0', { path: '/' });

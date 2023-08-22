@@ -13,8 +13,11 @@ const MainLayout = styled.main`
   -ms-overflow-style: none;
   scrollbar-width: none;
   @media screen and (min-width: 768px) {
-    height: calc(100vh - 43vh);
-    transform: translateY(-215px);
+    transform: translateY(0);
+  }
+  @media screen and (min-width: 1260px) {
+    height: auto;
+    transform: translateY(0);
   }
   .center {
     margin: 0 auto;

@@ -27,6 +27,7 @@ const Setting = () => {
       router.push('/');
     },
   });
+
   const onLogOut = useCallback(() => {
     logOut_mutate();
     alert('로그아웃 되었습니다');
@@ -42,12 +43,12 @@ const Setting = () => {
       cacheTime: 0,
     }
   );
+
   const { data: userSetting } = useQuery('userSetting', getUserSetting, {
     onSuccess: (data) => {},
     cacheTime: 0,
   });
-  console.log('data', userData);
-
+  console.log(userData);
   return (
     <>
       <SettingLayout>
