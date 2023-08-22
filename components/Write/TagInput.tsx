@@ -13,7 +13,7 @@ const MAX_TAGS = 5;
 export const InputBox = styled.input`
   display: block;
   width: 100%;
-  padding: 10px 1.3rem;
+  padding: 16px 1.3rem;
   /* margin: 5px; */
   border: 1px solid #051619;
   /* border-radius: 0; */
