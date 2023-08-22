@@ -2,7 +2,7 @@ import React from 'react';
 import ImageContent from '@/components/Home/ImageContent';
 import { ImageContentsContainer } from '@/styles/imageContainer';
 import { NoneSearchResult } from '@/styles/search';
-import FollowList from '../common/FollowList';
+import UserSearchResult from '@/components/Search/UserSearchResult';
 type searchProps = {
   option: string;
   data: any[];
@@ -54,7 +54,7 @@ const SearchResult = ({ option, data }: searchProps) => {
         <>
           {userData.map((user, idx) => {
             return (
-              <FollowList
+              <UserSearchResult
                 key={idx}
                 userImage={user.userImage}
                 nickname={user.nickname}
