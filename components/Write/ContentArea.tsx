@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-
+import { Box } from '@/styles/write';
 interface ContentAreaProps {
   content: string;
   setContent: React.Dispatch<React.SetStateAction<string>>;
@@ -22,10 +22,9 @@ const ContentArea: React.FC<ContentAreaProps> = ({ content, setContent }) => {
 
   return (
     <>
-      <div
+      <Box
         style={{
-          position: 'relative',
-          width: '100%',
+          display: 'flex',
           // marginBottom: 50,
         }}
       >
@@ -51,7 +50,7 @@ const ContentArea: React.FC<ContentAreaProps> = ({ content, setContent }) => {
         >
           {content.length}/{maxLength}
         </div>
-      </div>
+      </Box>
     </>
   );
 };
