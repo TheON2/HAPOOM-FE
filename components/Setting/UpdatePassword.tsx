@@ -1,11 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import Button from '@/components/common/Button';
-import {
-  StyledInput,
-  TextErrorParagraph,
-  TextParagraphSns,
-} from '@/styles/signUp';
+import { StyledInput, TextErrorParagraph } from '@/styles/signUp';
 import { useMutation, useQueryClient } from 'react-query';
 import { updateUserSetting } from '@/api/user';
 import { TextParagraph } from '@/styles/signIn';
@@ -35,7 +31,7 @@ const UpdatePassword = () => {
   });
 
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement> & { name: TextInputType }
+    e: React.ChangeEvent<HTMLInputElement & { name: TextInputType }>
   ) => {
     const { name, value } = e.target;
 
@@ -56,6 +52,7 @@ const UpdatePassword = () => {
     (formData: FormData) => updateUserSetting(formData),
     {
       onSuccess: () => {
+        alert('비밀번호 수정이 완료되었습니다.');
         queryClient.invalidateQueries('userSetting');
       },
     }
@@ -63,7 +60,6 @@ const UpdatePassword = () => {
 
   const submitUser = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
     let errors: Signup = {
       password: '',
       passwordConfirm: '',
@@ -82,16 +78,13 @@ const UpdatePassword = () => {
 
     if (Object.keys(errors).length > 0) {
       setError(errors);
-      return;
     } else {
       setError({ password: '', passwordConfirm: '' });
     }
 
-    if (Object.keys(errors).length === 0) {
-      const formData = new FormData();
-      formData.append('password', signUpState.password);
-      await mutate.mutateAsync(formData);
-    }
+    const formData = new FormData();
+    formData.append('password', signUpState.password);
+    await mutate.mutateAsync(formData);
   };
 
   return (

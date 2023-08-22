@@ -40,7 +40,7 @@ const getUserSetting = async () => {
 };
 
 const updateUserSetting = async (userData: FormData) => {
-  const response = await api.patch(`/api/user`, userData, {
+  const response = await api.put(`/api/user`, userData, {
     headers: { 'Content-Type': 'multipart/form-data' },
   });
   return response.data;

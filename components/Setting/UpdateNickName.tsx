@@ -74,4 +74,4 @@ const UpdateNickName: NextPage<SettingProps> = ({ nickname = '' }) => {
   );
 };
 
-export default React.memo(UpdateNickName);
+export default UpdateNickName;
