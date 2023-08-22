@@ -70,14 +70,14 @@ const Home: NextPage<MainPageProps> = ({
     <HomePageLayout>
       <MainBanner data={data} $isClick={isClick} />
       <HashtagNavBar
-        data={hashtagData}
+        data={mainData.mainTags}
         $isClick={isClick}
         onClickEvent={onClickBottomNavHandler}
         setHashTag={setHashTag}
       />
       <Main>
-        {/* <HashtagContents data={mainData.posts} hashTag={hashTag} />
-        <PopularContentsCarousel data={mainData.likePosts} /> */}
+        <HashtagContents data={mainData.posts} hashTag={hashTag} />
+        <PopularContentsCarousel data={mainData.likePosts} />
         <Footer />
       </Main>
     </HomePageLayout>
@@ -87,9 +87,9 @@ const Home: NextPage<MainPageProps> = ({
 export default Home;
 
 export const getStaticProps: GetStaticProps = async () => {
-  // const response = await axios.get(
-  //   `${process.env.NEXT_PUBLIC_LOCAL_SERVER}/api/main`
-  // );
+  const response = await axios.get(
+    `${process.env.NEXT_PUBLIC_LOCAL_SERVER}/api/main`
+  );
 
   const data = sliderImages;
   const hashtagData = hashtagImages;
@@ -98,9 +98,9 @@ export const getStaticProps: GetStaticProps = async () => {
     props: {
       data,
       hashtagData,
-      // serverProps: response.data,
-      // hashContent: response.data.posts,
-      // popularContent: response.data.likePosts,
+      serverProps: response.data,
+      hashContent: response.data.posts,
+      popularContent: response.data.likePosts,
     },
     revalidate: 60,
     //MEMO : revalidate
