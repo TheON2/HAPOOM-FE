@@ -10,9 +10,10 @@ import {
 } from '@/styles/user';
 import { UserPost, UserPageData } from './UserUi';
 import { useMutation } from 'react-query';
-import { likePost } from '@/api/post';
+import { getPost, likePost } from '@/api/post';
 import ImageContent from '../Home/ImageContent';
 import { ImageContentsContainer } from '@/styles/imageContainer';
+import useInfiniteData from '../../hooks/useInfiniteData';
 
 interface PostLike {
   data: LocalUserPageData | undefined;
@@ -62,6 +63,8 @@ const PostLike: React.FC<PostLike> = ({
   const [likedPosts, setLikedPosts] = useState<UserPost[]>(
     data?.likedPosts || []
   );
+
+  console.log(data);
 
   const mutation = useMutation(likePost, {
     onSuccess: (data, variables) => {
@@ -122,6 +125,7 @@ const PostLike: React.FC<PostLike> = ({
         setDisplayedPosts(likedPosts);
       }
     };
+
   return (
     <PostBox>
       <PostContentBox>
