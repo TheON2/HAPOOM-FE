@@ -47,7 +47,12 @@ export const ReadOnlyMap: React.FC<MapComponentProps> = ({ location }) => {
   const markerRef = useRef<Marker | null>(null);
 
   const initializeMap = () => {
-    if (mapContainerRef.current && location.x && location.y) {
+    if (
+      mapContainerRef.current &&
+      location.x &&
+      location.y &&
+      window.naver?.maps
+    ) {
       const centerPosition = new window.naver.maps.LatLng(
         location.y,
         location.x
@@ -58,7 +63,6 @@ export const ReadOnlyMap: React.FC<MapComponentProps> = ({ location }) => {
         zoom: 15,
       });
 
-      // 해당 위치에 마커를 찍습니다.
       markerRef.current = new window.naver.maps.Marker({
         position: centerPosition,
         map: mapRef.current,

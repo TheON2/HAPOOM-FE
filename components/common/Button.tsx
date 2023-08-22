@@ -18,6 +18,7 @@ const ButtonStyle = styled.button<Button>`
   &.secondary {
     color: #818181;
     background-color: #e1e1e1;
+    border: none;
     &:hover {
       background-color: #f1f1f1;
     }

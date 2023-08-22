@@ -35,6 +35,9 @@ import record from '@/public/record.png';
 import UpAndDownTab from '@/components/common/UpAndDownTab';
 import CustomButton from '@/components/Write/CustomButton';
 import { ReadOnlyMap } from '@/components/Write/ReadOnlyMap';
+import YoutubePlayer from '@/components/Write/YoutubePlayer';
+import Button from '@/components/common/Button';
+import ReadOnlyYoutube from '@/components/Write/ReadOnlyYoutube';
 
 const DynamicComponentWithNoSSR = dynamic(
   () => import('@/components/Write/YoutubePlayer'),
@@ -60,6 +63,9 @@ const Write: NextPage<Props> = ({ update = '1', updateId, data }) => {
     postId: '',
   });
   const handleCommentCreateHandler = () => {
+    if (musicType !== 0) {
+      return;
+    }
     setIsShow(true);
     setCommentEdit({
       show: true,
@@ -109,21 +115,23 @@ const Write: NextPage<Props> = ({ update = '1', updateId, data }) => {
     }));
   };
 
+  const [content, setContent] = useState<string>('');
   const [images, setImages] = useState<File[]>([]);
   const [imageURLs, setImageURLs] = useState<string[]>([]);
-  const [content, setContent] = useState<string>('');
-  const [musicChoose, setMusicChoose] = useState<number>(0);
   const [audioFile, setAudioFile] = useState<Blob | null>(null);
   const [slicedAudioFile, setSlicedAudioFile] = useState<Blob | null>(null);
+  const [musicType, setMusicType] = useState<number>(0);
+  const [musicChoose, setMusicChoose] = useState<number>(0);
   const [audioURL, setAudioURL] = useState<string | undefined>(undefined);
-  const [musicURL, setMusicURL] = useState<string>('');
   const [slicedAudioURL, setSlicedAudioURL] = useState<string | undefined>(
     undefined
   );
-  const [selectedTitle, setSelectedTitle] = useState<string>('');
+  const [musicURL, setMusicURL] = useState<string | undefined>(undefined);
   const [videoId, setVideoId] = useState<string>('');
+  const [selectedTitle, setSelectedTitle] = useState<string>('');
   const [tags, setTags] = useState<string[]>([]);
   const [location, setLocation] = useState({ name: '', x: 0, y: 0 });
+  const [audioSubmit, setAudioSubmit] = useState(false);
   const queryClient = useQueryClient();
   const router = useRouter();
 
@@ -154,6 +162,14 @@ const Write: NextPage<Props> = ({ update = '1', updateId, data }) => {
     }
   };
 
+  const submitMusic = () => {
+    if (musicChoose === 0) {
+      return;
+    }
+    setMusicType(musicChoose);
+    setIsShow(false);
+  };
+
   const handlePostSubmit = (event: FormEvent) => {
     event.preventDefault();
 
@@ -177,27 +193,32 @@ const Write: NextPage<Props> = ({ update = '1', updateId, data }) => {
       formData.append('imageURL', imageURL);
     });
 
-    if (musicChoose === 1) {
+    if (musicType === 1) {
+      setSelectedTitle('유튜브 링크');
       formData.append('musicUrl', videoId);
-    } else if (musicChoose === 2) {
+    } else if (musicType === 2 && musicURL !== undefined) {
       formData.append('musicUrl', musicURL);
-    } else if (musicChoose === 3 && slicedAudioURL !== undefined) {
+    } else if (musicType === 3 && slicedAudioURL !== undefined) {
+      setSelectedTitle('녹음된 음성');
       formData.append('musicUrl', slicedAudioURL);
     } else if (
-      musicChoose === 3 &&
+      musicType === 3 &&
       slicedAudioURL === undefined &&
       audioURL !== undefined
     ) {
+      setSelectedTitle('녹음된 음성');
       formData.append('musicUrl', audioURL);
     }
 
     if (slicedAudioFile) {
+      setSelectedTitle('녹음된 음성');
       formData.append('audio', slicedAudioFile);
     } else if (audioFile) {
+      setSelectedTitle('녹음된 음성');
       formData.append('audio', audioFile);
     }
 
-    formData.append('musicType', String(musicChoose));
+    formData.append('musicType', String(musicType));
     formData.append('musicTitle', selectedTitle);
     formData.append('content', content);
     formData.append('tag', tags.join(', '));
@@ -228,53 +249,24 @@ const Write: NextPage<Props> = ({ update = '1', updateId, data }) => {
 
   useEffect(() => {
     if (update === '2') {
-      const fetchData = async () => {
-        console.log('진입함');
-        setCookie(null, 'update', '1', { path: '/' });
+      data.images.map((image: any) => {
+        setImageURLs((images) => [...images, image.url]);
+      });
 
-        // const imageFiles = await Promise.all(
-        //   data.images.map(async (image: Image, idx: string) => {
-        //     const response = await fetch(image.url);
-        //     const blob = await response.blob();
-        //     return new File([blob], idx);
-        //   })
-        // );
+      setContent(data.post.content);
+      setSelectedTitle(data.post.musicTitle);
 
-        //setImages(imageFiles);
-        //setImageURLs(data.images);
+      setMusicType(data.post.musicType);
+      data.post.musicType === 1 && setVideoId(data.post.musicUrl);
+      data.post.musicType === 2 && setMusicURL(data.post.musicUrl);
+      data.post.musicType === 3 && setAudioURL(data.post.musicUrl);
 
-        data.images.map((image: any) => {
-          setImageURLs((images) => [...images, image.url]);
-        });
-
-        setContent(data.post.content);
-        setSelectedTitle(data.post.musicTitle);
-        setMusicChoose(data.post.musicType);
-        data.post.musicType === 1 && setVideoId(data.post.musicUrl);
-
-        if (data.post.musicType === 3) {
-          try {
-            // const response = await fetch(data.post.musicUrl);
-            // const audioBlob = await response.blob();
-            // const url = URL.createObjectURL(audioBlob);
-            // setAudioFile(audioBlob);
-            setAudioURL(data.post.musicUrl);
-          } catch (error) {
-            console.error('오디오 파일을 불러오는 중 오류 발생:', error);
-          }
-        }
-
-        setTags(data.post.tag.split(', '));
-        setLocation({
-          name: data.post.placeName,
-          x: data.post.latitude,
-          y: data.post.longitude,
-        });
-      };
-
-      fetchData(); // 비동기 함수 호출
-
-      console.log(data.images);
+      setTags(data.post.tag.split(', '));
+      setLocation({
+        name: data.post.placeName,
+        x: data.post.latitude,
+        y: data.post.longitude,
+      });
     }
   }, []);
 
@@ -326,38 +318,56 @@ const Write: NextPage<Props> = ({ update = '1', updateId, data }) => {
                   <CustomButton
                     type="button"
                     onClick={handleCommentCreateHandler}
+                    className={musicType !== 0 ? 'secondary' : undefined}
                   >
                     음악 설정하기
                   </CustomButton>
                 </div>
-                {musicChoose === 1 && (
+                {musicType === 1 && (
                   <>
-                    <DynamicComponentWithNoSSR
+                    <ReadOnlyYoutube
                       videoId={videoId}
-                      setVideoId={setVideoId}
-                      setSelectedTitle={setSelectedTitle}
                       update={update}
+                      setVideoId={setVideoId}
+                      setMusicType={setMusicType}
+                      setSelectedTitle={setSelectedTitle}
+                      setMusicChoose={setMusicChoose}
+                      setAudioSubmit={setAudioSubmit}
                     />
                   </>
                 )}
-                {musicChoose === 2 && (
-                  <MusicSelector
-                    musicURL={musicURL}
-                    setMusicURL={setMusicURL}
-                    setIsShow={setIsShow}
+                {musicType === 2 && (
+                  <CustomPlayer
+                    audioUrl={musicURL}
+                    setAudioUrl={setMusicURL}
+                    title={selectedTitle}
+                    setMusicChoose={setMusicChoose}
+                    setMusicType={setMusicType}
+                    setAudioSubmit={setAudioSubmit}
+                    update={'2'}
                   />
                 )}
-                {musicChoose === 3 && (
-                  // <RecordPlayer
-                  //   setAudioFile={setAudioFile}
-                  //   setSlicedAudioFile={setSlicedAudioFile}
-                  //   setSlicedAudioURL={setSlicedAudioURL}
-                  //   slicedAudioURL={slicedAudioURL}
-                  //   audioURL={audioURL}
-                  //   setAudioURL={setAudioURL}
-                  //   setIsShow={setIsShow}
-                  // />
-                  <CustomPlayer audioUrl={audioURL} setAudioUrl={setAudioURL} />
+                {musicType === 3 && slicedAudioURL && (
+                  <CustomPlayer
+                    title={'잘라낸 녹음 파일'}
+                    audioUrl={slicedAudioURL}
+                    setAudioUrl={setAudioURL}
+                    setMusicChoose={setMusicChoose}
+                    setMusicType={setMusicType}
+                    setAudioSubmit={setAudioSubmit}
+                    update={'2'}
+                  />
+                )}
+                {musicType === 3 && audioURL && !slicedAudioURL && (
+                  <CustomPlayer
+                    title={'녹음된 파일'}
+                    audioUrl={audioURL}
+                    setAudioUrl={setAudioURL}
+                    setMusicChoose={setMusicChoose}
+                    setMusicType={setMusicType}
+                    setAudioSubmit={setAudioSubmit}
+                    update={'2'}
+                  />
                 )}
                 <div
                   style={{
@@ -383,10 +393,9 @@ const Write: NextPage<Props> = ({ update = '1', updateId, data }) => {
                     위치 설정하기
                   </CustomButton>
 
-                  {location.x!== 0 && location.y!== 0 && (
+                  {location.x !== 0 && location.y !== 0 && (
                     <ReadOnlyMap location={location} />
-                  )
-                  }
+                  )}
                 </div>
                 <StyledButton type="submit">
                   {update === '2' ? (
@@ -409,13 +418,12 @@ const Write: NextPage<Props> = ({ update = '1', updateId, data }) => {
                         onClick={() => handleAccordionClick(1)}
                       >
                         <>
-                          <YouTubeSearch
+                          <YoutubePlayer
                             setVideoId={setVideoId}
-                            selectedTitle={selectedTitle}
                             setSelectedTitle={setSelectedTitle}
                             update={update}
                             videoId={videoId}
-                            setIsShow={setIsShow}
+                            setAudioSubmit={setAudioSubmit}
                           />
                         </>
                       </Accordion>
@@ -428,6 +436,8 @@ const Write: NextPage<Props> = ({ update = '1', updateId, data }) => {
                           musicURL={musicURL}
                           setMusicURL={setMusicURL}
                           setIsShow={setIsShow}
+                          setAudioSubmit={setAudioSubmit}
+                          setSelectedTitle={setSelectedTitle}
                         />
                       </Accordion>
                       <Accordion
@@ -443,10 +453,25 @@ const Write: NextPage<Props> = ({ update = '1', updateId, data }) => {
                           audioURL={audioURL}
                           setAudioURL={setAudioURL}
                           setIsShow={setIsShow}
+                          setAudioSubmit={setAudioSubmit}
+                          setMusicChoose={setMusicChoose}
+                          setMusicType={setMusicType}
                         />
                       </Accordion>
+                      <div style={{ display: 'flex', gap: '20px' }}>
+                        <Button type="button" className="secondary">
+                          닫기
+                        </Button>
+                        <Button
+                          onClick={submitMusic}
+                          type="button"
+                          className={!audioSubmit ? 'secondary' : undefined}
+                        >
+                          확인
+                        </Button>
+                      </div>
                       {commentEdit.show && (
-                        <div style={{ height: '100px' }}></div>
+                        <div style={{ height: '50px' }}></div>
                       )}
                     </div>
                   )}

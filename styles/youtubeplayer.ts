@@ -144,7 +144,7 @@ export const PlayerWrapper = styled.div<PlayerWrapperProps>`
   &:hover ${CloseButton} {
     display: block;
   }
-  margin: 10px;
+  margin: 15px 0;
 `;
 
 export const CustomPlayerWrapper = styled.div`
