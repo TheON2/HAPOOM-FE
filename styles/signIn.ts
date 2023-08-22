@@ -2,7 +2,6 @@ import { styled } from 'styled-components';
 
 const theme = {
   textColor: '#000',
-  fontFamily: 'Inter',
   primaryColor: '#2797FF',
   inputBtnBoxWidth: '100%',
 };
@@ -24,9 +23,9 @@ export const SignInContainer = styled.form`
 export const MainHeadText = styled.h1`
   color: ${theme.primaryColor};
   text-align: center;
-  font-family: ${theme.fontFamily};
   font-size: 40px;
   font-weight: 900;
+  cursor: pointer;
 `;
 export const StyledInputBox = styled.div`
   max-width: 312px;
@@ -61,7 +60,6 @@ export const SignInBtn = styled.button`
   color: #fff;
   outline: none;
   text-align: center;
-  font-family: ${theme.fontFamily};
   font-size: 16px;
   font-weight: 400;
   margin-top: 15px;
@@ -69,7 +67,6 @@ export const SignInBtn = styled.button`
 `;
 export const TextParagraph = styled.p`
   color: ${theme.textColor};
-  font-family: ${theme.fontFamily};
   font-size: 12px;
   font-weight: 700;
 `;
@@ -87,18 +84,8 @@ export const TextPwSetParagraph = styled(TextParagraph)`
   width: 91px;
   height: 29px;
   color: ${theme.textColor};
-  font-family: ${theme.fontFamily};
   font-size: 12px;
   font-weight: 700;
-  &::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 0.5px;
-    height: 8px;
-    background-color: #000;
-  }
 `;
 export const TextSignUpLinkParagraph = styled(TextParagraph)`
   display: flex;
@@ -106,7 +93,6 @@ export const TextSignUpLinkParagraph = styled(TextParagraph)`
   width: 46px;
   height: 29px;
   color: ${theme.textColor};
-  font-family: ${theme.fontFamily};
   font-size: 12px;
   font-weight: 700;
   text-align: center;
@@ -127,7 +113,6 @@ export const TextErrorParagraph = styled.p`
   max-width: 227px;
   height: 27px;
   color: red;
-  font-family: ${theme.fontFamily};
   font-size: 10px;
   font-weight: 700;
   line-height: 2.5;
@@ -155,7 +140,6 @@ export const PwdSignUpSettingPageLink = styled.div`
   display: flex;
   margin-top: 20px;
   color: #868686;
-  font-family: Inter;
   font-size: 20px;
   cursor: pointer;
 `;

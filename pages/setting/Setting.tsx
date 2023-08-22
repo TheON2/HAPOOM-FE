@@ -14,12 +14,12 @@ import {
 } from '@/redux/reducers/userSlice';
 import { SettingLayout, AccordianContent, LogOutBtn } from '@/styles/setting';
 import Profile from '@/components/Setting/Profile';
-import { useRouter } from 'next/router';
+import { NextRouter, useRouter } from 'next/router';
 
 const Setting = () => {
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
-  const router = useRouter();
+  const router: NextRouter = useRouter();
   const { mutate: logOut_mutate } = useMutation(userLogOut, {
     onSuccess: () => {
       queryClient.invalidateQueries('user');
@@ -27,6 +27,7 @@ const Setting = () => {
       router.push('/');
     },
   });
+
   const onLogOut = useCallback(() => {
     logOut_mutate();
     alert('로그아웃 되었습니다');
@@ -42,12 +43,12 @@ const Setting = () => {
       cacheTime: 0,
     }
   );
+
   const { data: userSetting } = useQuery('userSetting', getUserSetting, {
     onSuccess: (data) => {},
     cacheTime: 0,
   });
-  console.log('data', userData);
-
+  console.log(userData);
   return (
     <>
       <SettingLayout>

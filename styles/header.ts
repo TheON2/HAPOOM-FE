@@ -21,13 +21,20 @@ export const HeaderLayout = styled.header<HeaderProps>`
   align-items: center;
   gap: 12px;
   color: #2797ff;
-  @media screen and (max-width: 1260px) {
-    padding: 0 24px;
+  @media screen and (min-width: 768px) {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(5px);
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
   }
   /* @media screen and (max-width: 786px) {
     position: fixed;
     background: none;
   } */
+  .center {
+    display: flex;
+    justify-content: space-between;
+  }
   .search-icon {
     width: 36px;
     height: 36px;
@@ -129,8 +136,8 @@ export const GoWriteLink = styled(Link)`
   justify-content: center;
   align-items: center;
   position: fixed;
-  bottom: 20vh;
-  right: 60px;
+  bottom: 12vh;
+  right: 56px;
   background-color: #fff;
   z-index: 14;
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
@@ -142,6 +149,9 @@ export const GoWriteLink = styled(Link)`
   }
   &:active {
     background-color: #7dc1ff;
+  }
+  @media screen and (max-width: 786px) {
+    display: none;
   }
 `;
 export const ProfileButton = styled.button`

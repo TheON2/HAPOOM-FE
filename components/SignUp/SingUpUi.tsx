@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useCallback, useState } from 'react';
 import {
   SignUpSection,
   MainHeadText,
@@ -21,10 +21,25 @@ import {
 } from '@/styles/signUp';
 import { useMutation } from 'react-query';
 import { addUser } from '@/api/user';
-import { useRouter } from 'next/router';
+import { NextRouter, useRouter } from 'next/router';
 import MobileBottomNav from '../common/MobileBottomNav';
 import SocialLogin from '../SignIn/SocialLogIn';
 import { SecretEye } from '../common/SVG';
+
+const validateEmail = (email: string) => {
+  const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
+  return emailRegex.test(email);
+};
+
+const validatePassword = (password: string) => {
+  const passwordPattern = /^(?=.*\d)(?=.*[a-zA-Z]).{8,}$/;
+  return passwordPattern.test(password);
+};
+
+const validateNickname = (nickname: string) => {
+  const nicknamePattern = /^.{2,15}$/;
+  return nicknamePattern.test(nickname);
+};
 
 export interface Signup {
   email: string;
@@ -48,7 +63,7 @@ export interface CheckBoxInterface {
 type TextInputType = 'email' | 'password' | 'passwordConfirm' | 'nickname';
 
 const SignUpUi = () => {
-  const router = useRouter();
+  const router: NextRouter = useRouter();
   const [signUpState, setSignUpState] = useState<Signup>({
     email: '',
     password: '',
@@ -76,17 +91,6 @@ const SignUpUi = () => {
     'password' | 'text'
   >('password');
 
-  const togglePasswordVisibility = () => {
-    setPasswordInputType(
-      passwordInputType === 'password' ? 'text' : 'password'
-    );
-  };
-  const togglePasswordConfirmVisibility = () => {
-    setPasswordConfirmInputType(
-      passwordConfirmInputType === 'password' ? 'text' : 'password'
-    );
-  };
-
   const addUserMutation = useMutation(addUser, {
     onSuccess: () => {
       router.push('/signUpComplete/SignUpComplete');
@@ -96,70 +100,74 @@ const SignUpUi = () => {
     },
   });
 
-  const moveSignInPageHandeler = () => {
+  const togglePasswordVisibility = useCallback(() => {
+    setPasswordInputType(
+      passwordInputType === 'password' ? 'text' : 'password'
+    );
+  }, [passwordInputType]);
+
+  const togglePasswordConfirmVisibility = useCallback(() => {
+    setPasswordConfirmInputType(
+      passwordConfirmInputType === 'password' ? 'text' : 'password'
+    );
+  }, [passwordConfirmInputType]);
+
+  const moveSignInPageHandeler = useCallback(() => {
     router.push('/auth/SignIn');
-  };
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement & { name: TextInputType }>
-  ) => {
-    const { name, value } = e.target;
+  }, [router]);
+  const moveHomePageHandeler = useCallback(() => {
+    router.push('/');
+  }, [router]);
 
-    setSignUpState((prevSignUpState) => ({
-      ...prevSignUpState,
-      [name]: value,
-    }));
-  };
-
-  const validateEmail = (email: string) => {
-    const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
-    return emailRegex.test(email);
-  };
-
-  const validatePassword = (password: string) => {
-    const passwordPattern = /^(?=.*\d)(?=.*[a-zA-Z]).{8,}$/;
-    return passwordPattern.test(password);
-  };
-
-  const validateNickname = (nickname: string) => {
-    const nicknamePattern = /^.{2,15}$/;
-    return nicknamePattern.test(nickname);
-  };
-
-  const handleCheckboxChange = (
-    e: React.ChangeEvent<HTMLInputElement & { name: keyof CheckBoxInterface }>
-  ) => {
-    const { name, checked } = e.target;
-
-    setCheckboxes((prevState) => {
-      const newState = {
+  const handleInputChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement & { name: TextInputType }>) => {
+      const { name, value } = e.target;
+      setSignUpState((prevState) => ({
         ...prevState,
-        [name]: checked,
-      };
+        [name]: value,
+      }));
+    },
+    []
+  );
 
-      if (name === 'checkAll') {
-        newState.checkTerms = checked;
-        newState.checkPersonalInfo = checked;
-        newState.checkNewsletter = checked;
-      } else {
-        newState.checkAll =
-          newState.checkTerms &&
-          newState.checkPersonalInfo &&
-          newState.checkNewsletter;
-      }
+  const handleCheckboxChange = useCallback(
+    (
+      e: React.ChangeEvent<HTMLInputElement & { name: keyof CheckBoxInterface }>
+    ) => {
+      const { name, checked } = e.target;
 
-      if (
-        newState.checkTerms ||
-        newState.checkPersonalInfo ||
-        newState.checkNewsletter
-      ) {
-        setCheckboxErrorMessage('');
-      } else {
-        setCheckboxErrorMessage('필수 동의사항에 체크해주세요.');
-      }
+      setCheckboxes((prevState) => {
+        const newState = {
+          ...prevState,
+          [name]: checked,
+        };
 
-      return newState;
-    });
-  };
+        if (name === 'checkAll') {
+          newState.checkTerms = checked;
+          newState.checkPersonalInfo = checked;
+          newState.checkNewsletter = checked;
+        } else {
+          newState.checkAll =
+            newState.checkTerms &&
+            newState.checkPersonalInfo &&
+            newState.checkNewsletter;
+        }
+
+        if (
+          newState.checkTerms ||
+          newState.checkPersonalInfo ||
+          newState.checkNewsletter
+        ) {
+          setCheckboxErrorMessage('');
+        } else {
+          setCheckboxErrorMessage('필수 동의사항에 체크해주세요.');
+        }
+
+        return newState;
+      });
+    },
+    []
+  );
 
   const submitUser = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -222,7 +230,7 @@ const SignUpUi = () => {
 
   return (
     <SignUpSection>
-      <MainHeadText>HAPOOM</MainHeadText>
+      <MainHeadText onClick={moveHomePageHandeler}>HAPOOM</MainHeadText>
       <SubHeadText color="#000" $marginBottom="12px">
         회원가입
       </SubHeadText>
@@ -296,7 +304,7 @@ const SignUpUi = () => {
             style={{
               position: 'absolute',
               right: '10px',
-              top: '50%',
+              top: '88%',
               transform: 'translateY(-50%)',
               cursor: 'pointer',
             }}

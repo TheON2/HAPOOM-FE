@@ -10,9 +10,10 @@ import {
 } from '@/styles/user';
 import { UserPost, UserPageData } from './UserUi';
 import { useMutation } from 'react-query';
-import { likePost } from '@/api/post';
+import { getPost, likePost } from '@/api/post';
 import ImageContent from '../Home/ImageContent';
 import { ImageContentsContainer } from '@/styles/imageContainer';
+import { useInfiniteData } from '../../hooks/useInfiniteData';
 
 interface PostLike {
   data: LocalUserPageData | undefined;
@@ -41,8 +42,9 @@ const Posts: React.FC<PostProps> = ({
 
   const onLikeClickHandler = (event: React.MouseEvent) => {
     event.stopPropagation();
-    setIsLike(!isLike);
-    handleLikeClick(postId, !isLike);
+    const newIsLike = !isLike;
+    setIsLike(newIsLike);
+    handleLikeClick(postId, newIsLike);
   };
 
   return (
@@ -62,6 +64,42 @@ const PostLike: React.FC<PostLike> = ({
     data?.likedPosts || []
   );
 
+  const method = 'GET'; // Assuming this is the correct method
+  const queryType = selectedTab === 0 ? 'post' : 'like';
+
+  const {
+    data: infiniteData,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useInfiniteData(queryType, method);
+
+  useEffect(() => {
+    if (selectedTab === 0) {
+      setDisplayedPosts(infiniteData?.pages.flat() ?? []);
+    } else if (selectedTab === 1) {
+      setDisplayedPosts(data?.likedPosts ?? []);
+    }
+  }, [data, selectedTab, infiniteData]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (
+        window.innerHeight + window.scrollY >=
+        document.body.offsetHeight - 500
+      ) {
+        if (hasNextPage && !isFetchingNextPage) {
+          fetchNextPage();
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [hasNextPage, fetchNextPage, isFetchingNextPage]);
+
   const mutation = useMutation(likePost, {
     onSuccess: (data, variables) => {
       // const newPost = displayedPosts?.find(
@@ -78,13 +116,11 @@ const PostLike: React.FC<PostLike> = ({
 
   const handleLikeClick = (postId: number, isLiked: boolean) => {
     if (isLiked) {
-      // 좋아요 눌린 경우, likedPosts에 추가
       const post = data?.posts.find((p) => p.postId === postId);
       if (post) {
         setLikedPosts((prevPosts) => [...prevPosts, post]);
       }
     } else {
-      // 좋아요 취소된 경우, likedPosts에서 제거
       setLikedPosts((prevPosts) =>
         prevPosts.filter((p) => p.postId !== postId)
       );
@@ -97,7 +133,7 @@ const PostLike: React.FC<PostLike> = ({
     } else if (selectedTab === 1) {
       setDisplayedPosts(data?.likedPosts);
     }
-  }, [data, likedPosts, selectedTab]);
+  }, [data, selectedTab]);
 
   useEffect(() => {
     const updateIndicator = () => {
@@ -123,6 +159,7 @@ const PostLike: React.FC<PostLike> = ({
         setDisplayedPosts(likedPosts);
       }
     };
+
   return (
     <PostBox>
       <PostContentBox>

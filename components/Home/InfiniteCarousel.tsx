@@ -12,32 +12,18 @@ import {
   SliderList,
   SlideDotBox,
 } from '@/styles/home';
+import { BannerSliderProps } from '@/types/home';
 import { debounce } from 'lodash';
-//TODO: 메인배너 빈번한 크기 조정으로 인한 성능 이슈
-import styled from 'styled-components';
+
 const DEFAULT_INTERVAL = 5 * 1000;
 const FAST_INTERVAL = 100;
 
 type Props = {
-  data: any;
+  data: BannerSliderProps[];
 };
 
-const BackgroundGradient = styled.div`
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  background: linear-gradient(
-    36deg,
-    rgba(2, 0, 36, 0.2) 0%,
-    rgba(0, 212, 255, 0) 100%
-  );
-  /* opacity: 0.3; */
-`;
-
-const MainBannerSlider: React.FC<Props> = ({ data }) => {
-  const copiedArr: [any] = data;
+const InfiniteCarousel: React.FC<Props> = ({ data }) => {
+  const copiedArr: BannerSliderProps[] = data;
   const SLIDE_NUM = copiedArr.length;
   const beforeSlide = copiedArr[SLIDE_NUM - 1];
   const afterSlide = copiedArr[0];
@@ -47,13 +33,11 @@ const MainBannerSlider: React.FC<Props> = ({ data }) => {
     useState<number>(DEFAULT_INTERVAL);
   const sliedListRef = useRef<HTMLUListElement>(null);
   const sliedContainerRef = useRef<HTMLDivElement>(null);
-  // console.log(slideIndex);
   const sliedArr = useMemo(
     () => [beforeSlide, ...copiedArr, afterSlide],
     [beforeSlide, copiedArr, afterSlide]
   );
 
-  // let sliedArr = [beforeSlide, ...copiedArr, afterSlide];
   // 무한 로드 슬라이드
   useEffect(() => {
     const interval = setInterval(
@@ -126,7 +110,6 @@ const MainBannerSlider: React.FC<Props> = ({ data }) => {
                 loading="eager"
                 priority={true}
               />
-              <BackgroundGradient></BackgroundGradient>
             </SliderItem>
           );
         })}
@@ -146,4 +129,4 @@ const MainBannerSlider: React.FC<Props> = ({ data }) => {
   );
 };
 
-export default MainBannerSlider;
+export default InfiniteCarousel;

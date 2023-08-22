@@ -7,24 +7,14 @@ export const FollowContainer = styled.div`
 export const TabContainer = styled.div`
   width: 100%;
   display: flex;
-  justify-content: center;
   margin-bottom: 20px;
   display: flex;
-  position: relative; // TabUnderline의 위치를 위해 필요합니다.
-  border-bottom: 1px solid #c2c2c2; // 이 줄을 추가합니다.
-  padding-left: 24px;
-  padding-right: 24px;
-
-  @media screen and (max-width: 768px) {
-    gap: 90px; // 태블릿 및 모바일 화면에서의 간격을 조절합니다.
-  }
-
-  @media screen and (max-width: 480px) {
-    gap: 50px; // 모바일 화면에서의 간격을 조절합니다.
-  }
+  position: relative;
+  border-bottom: 1px solid #c2c2c2;
 `;
 
 export const TabButton = styled.button`
+  width: 100%;
   padding: 10px 20px;
   font-size: 18px;
   font-weight: 700;
@@ -47,11 +37,27 @@ export const UserList = styled.div`
 `;
 
 export const UserListItemStyled = styled.div`
+  width: 100%;
+  padding: 0 24px;
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  margin-bottom: 15px;
+  gap: 24px;
+  margin-bottom: 32px;
+  .button-follow {
+    width: 20%;
+  }
 `;
 
+export const UserProfileImageBox = styled.div`
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  /* margin-right: 10px; */
+  /* border: 1px solid black; */
+  background-color: black;
+  overflow: hidden;
+`;
 export const UserProfileImage = styled.img`
   width: 50px;
   height: 50px;
@@ -62,20 +68,25 @@ export const UserProfileImage = styled.img`
 `;
 
 export const UserInfo = styled.div`
+  width: 70%;
   flex: 1;
   display: flex;
   flex-direction: column;
-  margin-right: 15px;
+  line-height: 18px;
+  /* margin-right: 15px; */
+  text-align: start;
 `;
 
-export const Nickname = styled.strong`
+export const Nickname = styled.p`
   font-size: 18px;
+  font-weight: 700;
   margin-bottom: 3px;
+  color: #333;
 `;
 
 export const Email = styled.p`
   font-size: 14px;
-  font-weight: 300;
+  font-weight: 400;
   color: #777;
 `;
 
@@ -97,12 +108,10 @@ export const FollowButtonStyled = styled.button`
 `;
 
 type TabUnderlineProps = {
-  activeTab: 'followers' | 'followings';
+  $activeTab: 'followers' | 'followings';
 };
 
-export const TabUnderline = styled.div.attrs<TabUnderlineProps>((props) => ({
-  activeTab: props.activeTab,
-}))`
+export const TabUnderline = styled.div<TabUnderlineProps>`
   position: absolute;
   bottom: -2px;
   left: 0;
@@ -113,5 +122,5 @@ export const TabUnderline = styled.div.attrs<TabUnderlineProps>((props) => ({
   transition: transform 0.3s ease-in-out;
 
   transform: ${(props) =>
-    props.activeTab === 'followers' ? 'translateX(0%)' : 'translateX(100%)'};
+    props.$activeTab === 'followers' ? 'translateX(0%)' : 'translateX(100%)'};
 `;

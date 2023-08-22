@@ -8,11 +8,12 @@ import React, { ReactNode, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { ModalWarning } from './SVG';
 import Button from '@/components/common/Button';
+
 interface ModalProps {
   isOpen: boolean;
   setIsOpen: any;
   actionText: string;
-  onClickEvent: () => void | null;
+  onClickEvent: (() => void) | null;
   children: ReactNode;
 }
 

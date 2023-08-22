@@ -1,24 +1,12 @@
 import Link from 'next/link';
 import { FollowBtn } from '@/styles/user';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import Modal from '../common/Modal';
 
 interface FollowButtonProps {
   currentUserId?: string;
   profileUserId?: string;
 }
-
-const ConfirmModal: React.FC<{
-  onClose: () => void;
-  onConfirm: () => void;
-}> = ({ onClose, onConfirm }) => {
-  return (
-    <div>
-      언팔로우 하시겠습니까?
-      <button onClick={onConfirm}>예</button>
-      <button onClick={onClose}>아니오</button>
-    </div>
-  );
-};
 
 const FollowButton: React.FC<FollowButtonProps> = ({
   currentUserId,
@@ -27,13 +15,8 @@ const FollowButton: React.FC<FollowButtonProps> = ({
   const [isFollowing, setIsFollowing] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  useEffect(() => {
-    // TODO: API 호출 로직 추가
-    // 임시 팔로우 상태 설정
-    setIsFollowing(false);
-  }, [currentUserId, profileUserId]);
-
-  const handleFollowClick = () => {
+  const handleFollowClick = (e: React.MouseEvent) => {
+    e.preventDefault();
     if (isFollowing) {
       setIsModalOpen(true);
     } else {
@@ -49,21 +32,26 @@ const FollowButton: React.FC<FollowButtonProps> = ({
   return (
     <>
       {currentUserId === profileUserId ? (
-        <FollowBtn $status="설정">
-          <Link href="/setting/Setting">설정</Link>
-        </FollowBtn>
+        <Link href="/setting/Setting">
+          <FollowBtn $status="설정">설정</FollowBtn>
+        </Link>
       ) : (
-        <FollowBtn $status={isFollowing ? '팔로잉' : '팔로우'}>
-          <button onClick={handleFollowClick}>
-            {isFollowing ? '팔로잉' : '팔로우'}
-          </button>
+        <FollowBtn
+          $status={isFollowing ? '팔로잉' : '팔로우'}
+          onClick={handleFollowClick}
+        >
+          {isFollowing ? '팔로잉' : '팔로우'}
         </FollowBtn>
       )}
       {isModalOpen && (
-        <ConfirmModal
-          onClose={() => setIsModalOpen(false)}
-          onConfirm={handleConfirmUnfollow}
-        />
+        <Modal
+          isOpen={isModalOpen}
+          setIsOpen={setIsModalOpen}
+          actionText="예"
+          onClickEvent={handleConfirmUnfollow}
+        >
+          언팔로우 하시겠습니까?
+        </Modal>
       )}
     </>
   );

@@ -1,11 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import Button from '@/components/common/Button';
-import {
-  StyledInput,
-  TextErrorParagraph,
-  TextParagraphSns,
-} from '@/styles/signUp';
+import { StyledInput, TextErrorParagraph } from '@/styles/signUp';
 import { useMutation, useQueryClient } from 'react-query';
 import { updateUserSetting } from '@/api/user';
 import { TextParagraph } from '@/styles/signIn';
@@ -14,12 +10,6 @@ import { TextParagraphPwdCheck } from '@/styles/setting';
 export interface Signup {
   password: string;
   passwordConfirm: string;
-}
-export interface CheckBoxInterface {
-  checkAll: boolean;
-  checkTerms: boolean;
-  checkPersonalInfo: boolean;
-  checkNewsletter: boolean;
 }
 
 type TextInputType = 'email' | 'password' | 'passwordConfirm' | 'nickname';
@@ -62,14 +52,14 @@ const UpdatePassword = () => {
     (formData: FormData) => updateUserSetting(formData),
     {
       onSuccess: () => {
+        alert('비밀번호 수정이 완료되었습니다.');
         queryClient.invalidateQueries('userSetting');
       },
     }
   );
 
-  const submitUser = async (event: any) => {
+  const submitUser = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
     let errors: Signup = {
       password: '',
       passwordConfirm: '',
@@ -88,16 +78,13 @@ const UpdatePassword = () => {
 
     if (Object.keys(errors).length > 0) {
       setError(errors);
-      return;
     } else {
       setError({ password: '', passwordConfirm: '' });
     }
 
-    if (Object.keys(errors).length === 0) {
-      const formData = new FormData();
-      formData.append('password', signUpState.password);
-      await mutate.mutateAsync(formData);
-    }
+    const formData = new FormData();
+    formData.append('password', signUpState.password);
+    await mutate.mutateAsync(formData);
   };
 
   return (
@@ -140,4 +127,4 @@ const UpdatePassword = () => {
   );
 };
 
-export default UpdatePassword;
+export default React.memo(UpdatePassword);
