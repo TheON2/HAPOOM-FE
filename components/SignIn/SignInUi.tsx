@@ -57,6 +57,7 @@ const SignInUi = () => {
     onError: (error: AxiosError) => {
       if (error.response && error.response.data) {
         setError((prev) => ({ ...prev, password: error.response?.data }));
+        alert('아이디와 비밀번호를 다시 확인해주세요');
       }
     },
   });
@@ -82,7 +83,7 @@ const SignInUi = () => {
 
     if (!validateEmail(signInState.email)) {
       if (!validatePassword(signInState.password)) {
-        errors.message = '아이디와 비밀번호를 다시 확인해주세요 ';
+        errors.message = '아이디와 비밀번호를 다시 확인해주세요';
       }
     }
 
@@ -111,6 +112,7 @@ const SignInUi = () => {
         {error.message && (
           <TextErrorParagraph>{error.message}</TextErrorParagraph>
         )}
+
         <SignInControls signInState={signInState} />
 
         <SocialLogin />
