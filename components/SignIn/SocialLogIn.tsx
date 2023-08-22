@@ -43,4 +43,4 @@ const SocialLogin = () => {
   );
 };
 
-export default SocialLogin;
+export default React.memo(SocialLogin);
