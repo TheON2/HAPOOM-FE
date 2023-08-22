@@ -26,38 +26,27 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState, wrapper } from '@/redux/config/configStore';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
-import Header from '@/components/common/Header';
-import Footer from '@/components/common/Footer';
 import { getAuthToken } from '@/api/user';
 import { AUTH_USER, UserResponse } from '@/redux/reducers/userSlice';
-import MainBannerSlider from '@/components/Home/MainBannerSlider';
+import MainBannerSlider from '@/components/Home/InfiniteCarousel';
 import DetailProfile from '@/components/Detail/DetailProfile';
-import MobileBottomNav from '@/components/common/MobileBottomNav';
 import { parseCookies, setCookie } from 'nookies';
 import { GetServerSidePropsContext, NextPage } from 'next';
-import styled from 'styled-components';
 import HeartIcon from '@/components/common/HeartIcon';
-import Image from 'next/image';
-import Button from '@/components/common/Button';
-import Comment from '@/components/Detail/Comment';
+import Comment from '@/components/Detail/DetailComments';
 import KebabMenuUI, {
   KebabMenuStyle,
   KebabMenuAptionButton,
 } from '@/components/common/KebabMenuUI';
-import PageLayout from '@/components/common/layout/PageLayout';
-import {
-  getComment,
-  updateComment,
-  deleteComment,
-  addComment,
-  reportPost,
-} from '@/api/post';
+import { getComment, reportPost } from '@/api/post';
 import { identity } from 'lodash';
 import Link from 'next/link';
-import UpAndDownTab from '@/components/common/UpAndDownTab';
 import CustomPlayer from '@/components/Write/CustomPlayer';
 import Modal from '@/components/common/Modal';
+import { ReadOnlyMap } from '@/components/Write/ReadOnlyMap';
+import ReadOnlyYoutube from '@/components/Write/ReadOnlyYoutube';
 
+import { BannerSliderProps } from '@/types/home';
 const DynamicComponentWithNoSSR = dynamic(
   () => import('@/components/Write/YoutubePlayer'),
   { ssr: false }
@@ -70,32 +59,16 @@ interface Props {
   update: string;
   updateId: string;
 }
-
-type CommentData = {
-  formData: FormData;
-  id: string;
-};
-
-type CommentUpdateData = {
-  formData: FormData;
-  id: string;
-  commentId: number;
-};
-
-type CommentDelete = {
-  id: string;
-  commentId: number;
-};
-
 const Detail: NextPage = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const id = typeof router.query.id === 'string' ? router.query.id : '';
-  const [images, setImages] = useState<File[]>([]);
+  const [images, setImages] = useState<BannerSliderProps[]>([]);
   const [content, setContent] = useState<string>('');
-  const [musicChoose, setMusicChoose] = useState<number>();
   const [selectedTitle, setSelectedTitle] = useState<string>('');
   const [musicTitle, setMusicTitle] = useState<string>('');
+  const [musicType, setMusicType] = useState<number>(0);
+  const [musicChoose, setMusicChoose] = useState<number>(0);
   const [audioURL, setAudioURL] = useState<string | undefined>(undefined);
   const [videoId, setVideoId] = useState<string>('');
   const [tags, setTags] = useState<string>('');
@@ -169,6 +142,7 @@ const Detail: NextPage = () => {
     ['post', id],
     () => getPost(id),
     {
+      enabled: id !== '',
       onSuccess: async (data) => {
         setMusicChoose(data.post.musicType);
         setImages(data.images);
@@ -188,12 +162,16 @@ const Detail: NextPage = () => {
     }
   );
 
-  const { data: commentsData } = useQuery('comments', () => getComment(id));
-
+  const { data: commentsData } = useQuery(
+    ['comment', id],
+    () => getComment(id),
+    {
+      enabled: id !== '',
+    }
+  );
   if (!isSuccess) return <div>Loading...</div>;
   return (
     <>
-      <>{!(location.x === 0) && <></>}</>
       <GlobalStyle />
       <Modal
         isOpen={isModalOpen}
@@ -238,9 +216,12 @@ const Detail: NextPage = () => {
           <HeartIcon postId={parseInt(id)} />
           <p className="detail-content-text">{content}</p>
           <HashtagBox>
-            {tags.split(',').map((tag, index) => (
-              <Hashtag key={index}>#{tag.trim()}</Hashtag>
-            ))}
+            {tags.length !== 0 &&
+              tags
+                .split(',')
+                .map((tag, index) => (
+                  <Hashtag key={index}>#{tag.trim()}</Hashtag>
+                ))}
           </HashtagBox>
         </DetialContentSection>
         <DetialContentSection
@@ -252,12 +233,7 @@ const Detail: NextPage = () => {
         >
           {musicChoose === 1 && (
             <>
-              <DynamicComponentWithNoSSR
-                videoId={videoId}
-                setVideoId={setVideoId}
-                setSelectedTitle={setSelectedTitle}
-                update={'3'}
-              />
+              <ReadOnlyYoutube videoId={videoId} update={'3'} />
             </>
           )}
           {musicChoose === 2 && (
@@ -265,6 +241,9 @@ const Detail: NextPage = () => {
               setAudioUrl={setAudioURL}
               audioUrl={audioURL}
               title={musicTitle}
+              setMusicChoose={setMusicChoose}
+              setMusicType={setMusicType}
+              update={'3'}
             />
           )}
           {musicChoose === 3 && (
@@ -272,24 +251,18 @@ const Detail: NextPage = () => {
               setAudioUrl={setAudioURL}
               audioUrl={audioURL}
               title={musicTitle}
+              setMusicChoose={setMusicChoose}
+              setMusicType={setMusicType}
+              update={'3'}
             />
           )}
         </DetialContentSection>
         <DetialContentSection>
-          <MapComponent
-            setLocation={setLocation}
-            location={location}
-            update={'3'}
-          />
+          {!(location.x === 0) && <ReadOnlyMap location={location} />}
         </DetialContentSection>
         <DetialContentSection>
           <h3>댓글</h3>
-          <Comment
-            data={commentsData}
-            id={id}
-            userData={userData}
-            writeUser={data?.user}
-          />
+          <Comment data={commentsData?.comments} id={id} userData={userData} />
         </DetialContentSection>
       </ContentsContainer>
     </>

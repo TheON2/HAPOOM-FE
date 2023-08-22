@@ -1,9 +1,8 @@
 import React, { ReactNode } from 'react';
 import styled from 'styled-components';
-
+import { childrenProps } from '@/types/common';
 const MainLayout = styled.main`
   width: 100%;
-  /* padding-bottom: 100px; */
   height: calc(100vh - 252px);
   overflow-y: auto;
   transform: translateY(-107px);
@@ -11,12 +10,14 @@ const MainLayout = styled.main`
   &::-webkit-scrollbar {
     display: none;
   }
-  -ms-overflow-style: none; /* 인터넷 익스플로러 */
-  scrollbar-width: none; /* 파이어폭스 */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
   @media screen and (min-width: 768px) {
-    height: calc(100vh - 43vh);
-    transform: translateY(-215px);
-    /* overflow-y: initial; */
+    transform: translateY(0);
+  }
+  @media screen and (min-width: 1260px) {
+    height: auto;
+    transform: translateY(0);
   }
   .center {
     margin: 0 auto;
@@ -25,11 +26,7 @@ const MainLayout = styled.main`
   }
 `;
 
-type MainProps = {
-  children: ReactNode;
-};
-
-const Main = ({ children }: MainProps) => {
+const Main = ({ children }: childrenProps) => {
   return <MainLayout>{children}</MainLayout>;
 };
 

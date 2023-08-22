@@ -1,52 +1,33 @@
-import React, { useState } from 'react';
-import MainBannerSlider from '@/components/Home/MainBannerSlider';
+import React, { useEffect, useState } from 'react';
+import MainBannerSlider from '@/components/Home/InfiniteCarousel';
 import HashtagNavBar from '@/components/Home/HashtagNavBar';
 import HashtagContents from '@/components/Home/HashtagContents';
-import Main from '@/components/Home/Main';
-import PopularContents from '@/components/Home/PopularContents';
+import Main from '@/components/Home/HomeMain';
 import MainBanner from '@/components/Home/MainBanner';
 import Header from '@/components/common/Header';
 import Footer from '@/components/common/Footer';
 import PopularContentsCarousel from '@/components/Home/PopularContentsCarousel';
-import styled from 'styled-components';
-import {
-  sliderImages,
-  SliderImage,
-  hashtagImages,
-  hashtagContentsImages,
-  popularContentsImages,
-} from '../public/data';
+import { sliderImages, hashtagImages } from '../public/data';
 import { GetStaticProps, NextPage, GetServerSideProps } from 'next';
 import { useQuery } from 'react-query';
+import { getMain } from '@/api/post';
 import axios from 'axios';
-import MobileBottomNav from '@/components/common/MobileBottomNav';
 import { getAuthToken } from '@/api/user';
 import { AUTH_USER, UserResponse } from '@/redux/reducers/userSlice';
 import { useDispatch } from 'react-redux';
 import { setCookie } from 'nookies';
-import api from '../axios/api';
-interface Props {
-  data: SliderImage[];
-  hashtagData: SliderImage[];
-  hashContent: any;
-  popularContent: any;
-}
+import { HomePageLayout } from '@/styles/home';
+import { MainPageProps } from '@/types/home';
 
-const HomePageLayout = styled.div`
-  width: 100%;
-  height: 100vh;
-  overflow: hidden;
-  /* @media screen and (min-width: 768px) {
-    overflow: initial;
-  } */
-`;
-
-const Home: NextPage<Props> = ({
+const Home: NextPage<MainPageProps> = ({
   data,
   hashtagData,
+  serverProps,
   hashContent,
   popularContent,
 }) => {
+  const [hashTag, setHashTag] = useState<string>('#해시태그');
+
   const dispatch = useDispatch();
   const isClientSide = typeof window !== 'undefined';
   const tokenExists = isClientSide ? !!localStorage.getItem('token') : false;
@@ -66,24 +47,37 @@ const Home: NextPage<Props> = ({
   const onClickBottomNavHandler = () => {
     setIsClick(!isClick);
   };
-
+  const { data: mainData } = useQuery('Main', getMain, {
+    initialData: serverProps,
+  });
+  useEffect(() => {
+    const handleWheel = (event: WheelEvent) => {
+      if (event.deltaY > 0) {
+        setIsClick(true);
+      }
+      window.removeEventListener('wheel', handleWheel);
+    };
+    window.addEventListener('wheel', handleWheel);
+    return () => {
+      window.removeEventListener('wheel', handleWheel);
+    };
+  }, [isClick]);
   if (typeof window !== 'undefined') {
     setCookie(null, 'update', '1', { path: '/' });
     setCookie(null, 'updateId', '0', { path: '/' });
   }
-
   return (
     <HomePageLayout>
-      <Header $sticky={'sticky'} />
       <MainBanner data={data} $isClick={isClick} />
       <HashtagNavBar
         data={hashtagData}
         $isClick={isClick}
         onClickEvent={onClickBottomNavHandler}
+        setHashTag={setHashTag}
       />
       <Main>
-        <HashtagContents data={hashContent} />
-        <PopularContentsCarousel data={popularContent} />
+        <HashtagContents data={mainData.posts} hashTag={hashTag} />
+        <PopularContentsCarousel data={mainData.likePosts} />
         <Footer />
       </Main>
     </HomePageLayout>
@@ -104,6 +98,7 @@ export const getStaticProps: GetStaticProps = async () => {
     props: {
       data,
       hashtagData,
+      serverProps: response.data,
       hashContent: response.data.posts,
       popularContent: response.data.likePosts,
     },

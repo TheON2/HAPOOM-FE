@@ -16,6 +16,22 @@ const ButtonStyle = styled.button<Button>`
   border: 1px solid #2797ff;
   background-color: #2797ff;
   cursor: pointer;
+  &.secondary {
+    color: #818181;
+    background-color: #e1e1e1;
+    &:hover {
+      background-color: #f1f1f1;
+    }
+    &:active {
+      background-color: #d9d9d9;
+    }
+  }
+  &:hover {
+    background-color: #7dc1ff;
+  }
+  &:active {
+    background-color: #2797ff;
+  }
 `;
 
 type buttonProps = {

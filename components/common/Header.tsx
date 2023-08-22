@@ -32,23 +32,10 @@ import { setCookie } from 'nookies';
 import ProfileImage from '@/components/common/ProfileImage';
 import { RootState } from '@/redux/config/configStore';
 const Header = ({ $sticky }: any) => {
-  const dispatch = useDispatch();
   const { user }: { user: UserState['user'] } = useSelector(
     (state: RootState) => state.user
   );
   const router = useRouter();
-  const queryClient = useQueryClient();
-  // const { mutate: logOut_mutate } = useMutation(userLogOut, {
-  //   onSuccess: () => {
-  //     queryent.invalidateQueries('user');
-  //     dispatch(LOGOUT_USER());
-  //     router.push('/');
-  //   },
-  // });
-
-  // const onLogOut = useCallback(() => {
-  //   logOut_mutate();
-  // }, [logOut_mutate]);
 
   const [isShowMenu, setIsShowMenu] = useState<boolean>(false);
 
@@ -79,40 +66,39 @@ const Header = ({ $sticky }: any) => {
   return (
     <>
       <HeaderLayout $sticky={$sticky}>
-        <LogoBox href={'/'} onClick={handleLogoClick} $sticky={$sticky}>
-          <h1>HAPOOM</h1>
-        </LogoBox>
-        <AccountActionsContainer>
-          <Link href={'/search'} className="search-icon">
-            <SearchIcon fillColor={$sticky ? '#fff' : '#2797FF'} />
-          </Link>
-          <GoWriteLink onClick={goToWritePage} href={'/post/Write'}>
-            <EditIcon />
-          </GoWriteLink>
-          {!isAuth ? (
-            <AuthButtonBox>
-              <Link href={'/auth/SignIn'}>로그인</Link>|
-              <Link href={'/auth/SignUp'}>회원가입</Link>
-              {/* <Link href={'/record/2'}>레코드 테스트</Link>
-              <a href="#" onClick={onLogOut}>
-                로그아웃
-              </a> */}
-            </AuthButtonBox>
-          ) : null}
-          <ProfileButton onClick={onClickShowMenuHandler}>
-            <ProfileImage
-              preset={user?.preset || 5}
-              userImage={user?.userImage || ''}
-              loading="eager"
-            />
-          </ProfileButton>
-        </AccountActionsContainer>
-        <MobileBox>
-          <IconButton>
-            <Bell fillColor={$sticky ? '#fff' : '#2797FF'} />
-          </IconButton>
-        </MobileBox>
+        <div className="center">
+          <LogoBox href={'/'} onClick={handleLogoClick} $sticky={$sticky}>
+            <h1>HAPOOM</h1>
+          </LogoBox>
+          <AccountActionsContainer>
+            <Link href={'/search'} className="search-icon">
+              <SearchIcon fillColor={$sticky ? '#fff' : '#2797FF'} />
+            </Link>
+
+            {!isAuth ? (
+              <AuthButtonBox>
+                <Link href={'/auth/SignIn'}>로그인</Link>|
+                <Link href={'/auth/SignUp'}>회원가입</Link>
+              </AuthButtonBox>
+            ) : null}
+            <ProfileButton onClick={onClickShowMenuHandler}>
+              <ProfileImage
+                preset={user?.preset || 5}
+                userImage={user?.userImage || ''}
+                loading="eager"
+              />
+            </ProfileButton>
+          </AccountActionsContainer>
+          <MobileBox>
+            <IconButton>
+              <Bell fillColor={$sticky ? '#fff' : '#2797FF'} />
+            </IconButton>
+          </MobileBox>
+        </div>
       </HeaderLayout>
+      <GoWriteLink onClick={goToWritePage} href={'/post/Write'}>
+        <EditIcon />
+      </GoWriteLink>
       {isShowMenu && (
         <SideNav setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu} />
       )}

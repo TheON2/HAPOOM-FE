@@ -1,47 +1,34 @@
 import React from 'react';
 import styled from 'styled-components';
 import ImageContent from '@/components/Home/ImageContent';
-import {
-  SectionTitle,
-  HashtagContentsLayout,
-  HashtagContentsContainer,
-} from '@/styles/home';
+import { SectionTitle, HashtagContentsLayout } from '@/styles/home';
 import { ImageContentsContainer } from '@/styles/imageContainer';
-type Props = {
-  data: Post[];
-};
-interface Post {
-  postId: number;
-  content: string;
-  musicTitle: string;
-  musicUrl: string;
-  tag: string;
-  placeName: string;
-  latitude: number;
-  longitude: number;
-  private: boolean;
-  createdAt: string;
-  updatedAt: string;
-  userId: number;
-  image: string;
-}
+import { MainPageDataProps } from '@/types/home';
+import { useQuery } from 'react-query';
 
-const HashtagContents: React.FC<Props> = ({ data }) => {
+type Props = {
+  data: MainPageDataProps[];
+  hashTag: string;
+};
+
+const HashtagContents: React.FC<Props> = ({ data, hashTag }) => {
   return (
     <HashtagContentsLayout>
-      <SectionTitle>#랜덤글</SectionTitle>
-      <HashtagContentsContainer>
-        {data.map((content, index) => {
-          return (
-            <ImageContent
-              key={index}
-              src={content.image}
-              alt={'date'}
-              postId={content.postId}
-            />
-          );
-        })}
-      </HashtagContentsContainer>
+      <div className="center">
+        <SectionTitle>{hashTag}</SectionTitle>
+        <ImageContentsContainer>
+          {data.map((content, index) => {
+            return (
+              <ImageContent
+                key={index}
+                src={content.image}
+                alt={'date'}
+                postId={content.postId}
+              />
+            );
+          })}
+        </ImageContentsContainer>
+      </div>
     </HashtagContentsLayout>
   );
 };
