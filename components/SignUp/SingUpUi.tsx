@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useCallback, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import {
   SignUpSection,
   MainHeadText,
@@ -6,25 +6,20 @@ import {
   SignUpBtn,
   StyledInputBox,
   StyledInput,
-  Checkbox,
-  SignUpCheckBox,
-  SignUpCheckBoxLayout,
-  StyledLabel,
-  StyledLabelAll,
-  Line,
   TextErrorParagraph,
-  StyledLabelEssential,
   TextParagraphSns,
   SnsLine,
   TextParagraphInfo,
-  TextParagrapValidate,
 } from '@/styles/signUp';
 import { useMutation } from 'react-query';
 import { addUser } from '@/api/user';
 import { NextRouter, useRouter } from 'next/router';
 import MobileBottomNav from '../common/MobileBottomNav';
 import SocialLogin from '../SignIn/SocialLogIn';
-import { SecretEye } from '../common/SVG';
+import SignUpPwd from './SignUpPwd';
+import SignUpNickname from './SignUpNickname';
+import SignUpCheck from './SignUpCheck';
+import SignUpcontrol from './SignUpControl';
 
 const validateEmail = (email: string) => {
   const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
@@ -60,7 +55,6 @@ export interface CheckBoxInterface {
   checkPersonalInfo: boolean;
   checkNewsletter: boolean;
 }
-type TextInputType = 'email' | 'password' | 'passwordConfirm' | 'nickname';
 
 const SignUpUi = () => {
   const router: NextRouter = useRouter();
@@ -84,51 +78,36 @@ const SignUpUi = () => {
     checkNewsletter: false,
   });
   const [checkboxErrorMessage, setCheckboxErrorMessage] = useState('');
-  const [passwordInputType, setPasswordInputType] = useState<
-    'password' | 'text'
-  >('password');
-  const [passwordConfirmInputType, setPasswordConfirmInputType] = useState<
-    'password' | 'text'
-  >('password');
 
   const addUserMutation = useMutation(addUser, {
     onSuccess: () => {
       router.push('/signUpComplete/SignUpComplete');
     },
     onError: (error) => {
+      alert(
+        '회원가입에 실패하였습니다. 아이디 혹은 비밀번호를 다시 한번 확인해주세요'
+      );
       console.error('회원가입 실패:', error);
     },
   });
 
-  const togglePasswordVisibility = useCallback(() => {
-    setPasswordInputType(
-      passwordInputType === 'password' ? 'text' : 'password'
-    );
-  }, [passwordInputType]);
-
-  const togglePasswordConfirmVisibility = useCallback(() => {
-    setPasswordConfirmInputType(
-      passwordConfirmInputType === 'password' ? 'text' : 'password'
-    );
-  }, [passwordConfirmInputType]);
-
   const moveSignInPageHandeler = useCallback(() => {
     router.push('/auth/SignIn');
   }, [router]);
+
   const moveHomePageHandeler = useCallback(() => {
     router.push('/');
   }, [router]);
 
-  const handleInputChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement & { name: TextInputType }>) => {
-      const { name, value } = e.target;
-      setSignUpState((prevState) => ({
-        ...prevState,
-        [name]: value,
-      }));
-    },
-    []
-  );
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement & { name: string }>
+  ) => {
+    setSignUpState({
+      ...signUpState,
+      [e.target.name]: e.target.value,
+    });
+    setError({ ...error, [e.target.name]: '' });
+  };
 
   const handleCheckboxChange = useCallback(
     (
@@ -266,162 +245,29 @@ const SignUpUi = () => {
           </SignUpBtn>
         </StyledInputBox>
 
-        <StyledInputBox>
-          <TextParagraphInfo $marginBottom="7px">비밀번호</TextParagraphInfo>
-          <TextParagrapValidate>
-            영문, 숫자를 포함한 8자 이상의 비밀번호를 입력해주세요.
-          </TextParagrapValidate>
-          <StyledInput
-            type={passwordInputType}
-            name="password"
-            value={signUpState.password}
-            placeholder="비밀번호"
-            onChange={handleInputChange}
-          />
-          <SecretEye
-            onClick={togglePasswordVisibility}
-            style={{
-              position: 'absolute',
-              right: '10px',
-              top: '50%',
-              transform: 'translateY(-50%)',
-              cursor: 'pointer',
-            }}
-          />
-          {error.password && (
-            <TextErrorParagraph>{error.password}</TextErrorParagraph>
-          )}
-          <TextParagraphInfo>비밀번호 확인</TextParagraphInfo>
-          <StyledInput
-            type={passwordConfirmInputType}
-            name="passwordConfirm"
-            value={signUpState.passwordConfirm}
-            placeholder="비밀번호 확인"
-            onChange={handleInputChange}
-          />
-          <SecretEye
-            onClick={togglePasswordConfirmVisibility}
-            style={{
-              position: 'absolute',
-              right: '10px',
-              top: '88%',
-              transform: 'translateY(-50%)',
-              cursor: 'pointer',
-            }}
-          />
-          {error.passwordConfirm && (
-            <TextErrorParagraph>{error.passwordConfirm}</TextErrorParagraph>
-          )}
-        </StyledInputBox>
-
-        <StyledInputBox>
-          <TextParagraphInfo>닉네임</TextParagraphInfo>
-          <TextParagrapValidate>
-            다른 유저와 겹치지 않도록 입력해주세요.(2~15자)
-          </TextParagrapValidate>
-          <StyledInput
-            type="text"
-            name="nickname"
-            value={signUpState.nickname}
-            placeholder="닉네임은 2자에서 15자입니다."
-            onChange={handleInputChange}
-          />
-          {error.nickname && (
-            <TextErrorParagraph>{error.nickname}</TextErrorParagraph>
-          )}
-        </StyledInputBox>
-
-        <SignUpCheckBoxLayout>
-          <SignUpCheckBox>
-            <Checkbox
-              id="checkAll"
-              type="checkbox"
-              name="checkAll"
-              checked={checkboxes.checkAll}
-              onChange={handleCheckboxChange}
-            />
-            <label htmlFor="checkAll"></label>
-            <StyledLabelAll>전체동의</StyledLabelAll>
-            <StyledLabel>선택항목에 대한 동의 포함</StyledLabel>
-          </SignUpCheckBox>
-          <Line></Line>
-
-          <SignUpCheckBox>
-            <Checkbox
-              id="check-terms"
-              type="checkbox"
-              name="checkTerms"
-              checked={checkboxes.checkTerms}
-              onChange={handleCheckboxChange}
-            />
-            <label htmlFor="check-terms"></label>
-            <StyledLabelEssential>이용약관 (필수)</StyledLabelEssential>
-          </SignUpCheckBox>
-
-          <SignUpCheckBox>
-            <Checkbox
-              id="check-personalInfo"
-              type="checkbox"
-              name="checkPersonalInfo"
-              checked={checkboxes.checkPersonalInfo}
-              onChange={handleCheckboxChange}
-            />
-            <label htmlFor="check-personalInfo"></label>
-            <StyledLabelEssential>
-              개인정보 수집/이용 동의 (필수)
-            </StyledLabelEssential>
-          </SignUpCheckBox>
-
-          <SignUpCheckBox>
-            <Checkbox
-              id="check-newsletter"
-              type="checkbox"
-              name="checkNewsletter"
-              checked={checkboxes.checkNewsletter}
-              onChange={handleCheckboxChange}
-            />
-            <label htmlFor="check-newsletter"></label>
-            <StyledLabelEssential>
-              개인정보 마케팅 활용 동의 (필수)
-            </StyledLabelEssential>
-          </SignUpCheckBox>
-        </SignUpCheckBoxLayout>
-
-        {checkboxErrorMessage && (
-          <TextErrorParagraph style={{ marginTop: '10px' }}>
-            {checkboxErrorMessage}
-          </TextErrorParagraph>
-        )}
-
-        <SignUpBtn
-          style={{
-            margin: '12px 0 20px 0',
-            backgroundColor:
-              signUpState.email &&
-              signUpState.password &&
-              signUpState.passwordConfirm &&
-              signUpState.nickname
-                ? '#0078FF'
-                : '#B3B3B3',
-            borderColor:
-              signUpState.email &&
-              signUpState.password &&
-              signUpState.passwordConfirm &&
-              signUpState.nickname
-                ? '#0078FF'
-                : '#B3B3B3',
+        <SignUpPwd
+          signUpState={signUpState}
+          handleInputChange={handleInputChange}
+          error={{
+            password: error.password,
+            passwordConfirm: error.passwordConfirm,
           }}
-          disabled={
-            !signUpState.email &&
-            !signUpState.password &&
-            !signUpState.passwordConfirm &&
-            !signUpState.nickname
-          }
-          type="submit"
-        >
-          회원가입하기
-        </SignUpBtn>
+        />
+        <SignUpNickname
+          signUpState={signUpState}
+          handleInputChange={handleInputChange}
+          error={{
+            nickname: error.nickname,
+          }}
+        />
+        <SignUpCheck
+          checkboxErrorMessage={checkboxErrorMessage}
+          checkboxes={checkboxes}
+          handleCheckboxChange={handleCheckboxChange}
+        />
+        <SignUpcontrol signUpState={signUpState} />
       </form>
+
       <SubHeadText
         color="#0084FF"
         style={{ cursor: 'pointer' }}
@@ -434,4 +280,4 @@ const SignUpUi = () => {
   );
 };
 
-export default SignUpUi;
+export default React.memo(SignUpUi);

@@ -1,27 +1,47 @@
-import React, { ChangeEvent, useCallback, useState } from 'react';
+import React from 'react';
 import {
-  SignUpSection,
-  MainHeadText,
-  SubHeadText,
-  SignUpBtn,
   StyledInputBox,
   StyledInput,
-  Checkbox,
-  SignUpCheckBox,
-  SignUpCheckBoxLayout,
-  StyledLabel,
-  StyledLabelAll,
-  Line,
   TextErrorParagraph,
-  StyledLabelEssential,
-  TextParagraphSns,
-  SnsLine,
   TextParagraphInfo,
   TextParagrapValidate,
 } from '@/styles/signUp';
-import { useMutation } from 'react-query';
-import { addUser } from '@/api/user';
-import { NextRouter, useRouter } from 'next/router';
-import MobileBottomNav from '../common/MobileBottomNav';
-import SocialLogin from '../SignIn/SocialLogIn';
-import { SecretEye } from '../common/SVG';
+
+interface Props {
+  signUpState: {
+    nickname: string;
+  };
+  handleInputChange: (
+    e: React.ChangeEvent<HTMLInputElement & { name: string }>
+  ) => void;
+  error: {
+    nickname: string;
+  };
+}
+
+const SignUpNickname: React.FC<Props> = ({
+  signUpState,
+  handleInputChange,
+  error,
+}) => {
+  return (
+    <StyledInputBox>
+      <TextParagraphInfo>닉네임</TextParagraphInfo>
+      <TextParagrapValidate>
+        다른 유저와 겹치지 않도록 입력해주세요.(2~15자)
+      </TextParagrapValidate>
+      <StyledInput
+        type="text"
+        name="nickname"
+        value={signUpState.nickname}
+        placeholder="닉네임은 2자에서 15자입니다."
+        onChange={handleInputChange}
+      />
+      {error.nickname && (
+        <TextErrorParagraph>{error.nickname}</TextErrorParagraph>
+      )}
+    </StyledInputBox>
+  );
+};
+
+export default React.memo(SignUpNickname);
