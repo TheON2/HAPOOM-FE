@@ -20,7 +20,13 @@ function MyApp({ Component, pageProps }: AppProps) {
   const [notification, setNotification] = useState<string | null>(null);
   const [randomPosts, setRandomPosts] = useState(null);
   const router = useRouter();
-  const excludedPages = ['/auth/SignIn', '/auth/SignUp'];
+  const excludedPages = [
+    '/auth/SignIn',
+    '/auth/SignUp',
+    '/findPassword/FindPwd',
+    '/findPwdComplete/FindPwdComplete',
+    '/signUpComplete/SignUpComplete',
+  ];
   const isExcludedPage = excludedPages.includes(router.pathname);
   useEffect(() => {
     // 로그인 성공 후 Socket.IO 클라이언트를 생성하고 서버에 연결합니다.

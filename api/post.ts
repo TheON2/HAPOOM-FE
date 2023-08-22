@@ -16,6 +16,11 @@ interface UpdateData {
   formData: FormData;
 }
 
+const getMain = async () => {
+  const response = await api.get('/api/main');
+  return response.data;
+};
+
 const addPost = async (postData: UpdateData) => {
   const config = {
     headers: {
@@ -121,6 +126,7 @@ const deleteComment = async ({ id, commentId }: commentDelete) => {
 };
 
 export {
+  getMain,
   addPost,
   updatePost,
   getPost,

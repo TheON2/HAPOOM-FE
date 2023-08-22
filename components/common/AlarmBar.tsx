@@ -38,6 +38,10 @@ const AlarmBox = styled.div`
     font-weight: 700;
     font-size: 14px;
     color: #fff;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* 인터넷익스플로러 */
+    user-select: none;
   }
   @keyframes fadeIn {
     0% {
