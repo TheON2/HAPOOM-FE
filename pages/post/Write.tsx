@@ -77,9 +77,6 @@ const Write: NextPage<Props> = ({ update = '1', updateId, data }) => {
   };
 
   const handleCommentShowHandler = () => {
-    // if (commentEdit.show) {
-    //   setMusicChoose(0);
-    // }
     setCommentEdit((pre: any) => ({
       ...pre,
       show: !commentEdit.show,
