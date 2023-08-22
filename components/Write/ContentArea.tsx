@@ -25,14 +25,11 @@ const ContentArea: React.FC<ContentAreaProps> = ({ content, setContent }) => {
       <div
         style={{
           position: 'relative',
-          width: 400,
-          height: 100,
-          marginBottom: 50,
+          width: '100%',
+          // marginBottom: 50,
         }}
       >
-        <label style={{ textAlign: 'left' }}>
-          <h3 style={{ margin: '10px 0' }}>문구입력</h3>
-        </label>
+        <label>문구입력</label>
         <textarea
           style={{
             width: '100%',

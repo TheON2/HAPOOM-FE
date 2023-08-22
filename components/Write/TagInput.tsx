@@ -1,6 +1,7 @@
 import { StyledAuthInput } from '@/styles/write';
 import React, { KeyboardEvent, useState, useCallback } from 'react';
 import Tag from './Tag';
+import { styled } from 'styled-components';
 
 interface TagInputProps {
   tags: string[];
@@ -8,6 +9,24 @@ interface TagInputProps {
 }
 
 const MAX_TAGS = 5;
+
+export const InputBox = styled.input`
+  display: block;
+  width: 100%;
+  padding: 10px 1.3rem;
+  /* margin: 5px; */
+  border: 1px solid #051619;
+  /* border-radius: 0; */
+  /* box-sizing: border-box; */
+  /* box-shadow: none; */
+  /* font: inherit; */
+  color: #051619;
+  /* transition: all 0.2s; */
+  outline: none;
+  /* box-shadow: none; */
+  border: 2px solid #0084ff;
+  font-size: 0.915rem;
+`;
 
 const TagInput: React.FC<TagInputProps> = ({ tags, setTags }) => {
   const [inputValue, setInputValue] = useState('');
@@ -56,16 +75,15 @@ const TagInput: React.FC<TagInputProps> = ({ tags, setTags }) => {
 
   return (
     <>
-      <StyledAuthInput
+      <InputBox
         type="text"
         placeholder="#태그"
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
         onKeyDown={handleTagChange}
-        style={{ width: '400px', border: '2px solid #0084ff' }}
         disabled={isMaxTags}
       />
-      <div style={{ position: 'relative', width: 400 }}>
+      <div style={{ position: 'relative', width: '100%' }}>
         <div
           style={{
             position: 'absolute',
