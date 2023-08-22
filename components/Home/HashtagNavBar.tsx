@@ -17,6 +17,7 @@ const HashtagNavBar: React.FC<HashtagNavBarProps> = ({
   const onClickhashtagHandler = (hashtag: string) => {
     setHashTag(hashtag);
   };
+  console.log(data);
   return (
     <HashtagNavBarLayout $isClick={$isClick}>
       <div className="background">
@@ -29,7 +30,7 @@ const HashtagNavBar: React.FC<HashtagNavBarProps> = ({
             return (
               <HashtagItem
                 key={index}
-                onClick={() => onClickhashtagHandler('#해시태그')}
+                onClick={() => onClickhashtagHandler(hashtag.tag)}
               >
                 <figure>
                   <Image
@@ -40,8 +41,7 @@ const HashtagNavBar: React.FC<HashtagNavBarProps> = ({
                     loading="eager"
                   />
                 </figure>
-                {/* <figcaption>{hashtag.hashtag}</figcaption> */}
-                <figcaption>#해시태그</figcaption>
+                <figcaption>{`#${hashtag.tag}`}</figcaption>
               </HashtagItem>
             );
           })}
