@@ -210,6 +210,7 @@ export const MapComponent: React.FC<MapComponentProps> = ({
         'click',
         handleMapClick
       );
+
     }
   };
 
@@ -222,6 +223,12 @@ export const MapComponent: React.FC<MapComponentProps> = ({
     setIsShowMap(false);
   };
 
+  useEffect(() => {
+    if (scriptLoaded) {
+      initializeMap();
+    }
+  }, [scriptLoaded, initializeMap]);
+
   return (
     <>
       <Script
@@ -229,6 +236,7 @@ export const MapComponent: React.FC<MapComponentProps> = ({
         type="text/javascript"
         src={`https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NEXT_PUBLIC_NAVERMAP_API_KEY}`}
         onReady={() => initializeMap()}
+
       />
       <h3 style={{ float: 'left', margin: '10px 0' }}>장소</h3>
       <label></label>
