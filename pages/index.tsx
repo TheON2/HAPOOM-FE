@@ -10,6 +10,7 @@ import PopularContentsCarousel from '@/components/Home/PopularContentsCarousel';
 import { sliderImages, hashtagImages } from '../public/data';
 import { GetStaticProps, NextPage, GetServerSideProps } from 'next';
 import { useQuery } from 'react-query';
+import { getMain } from '@/api/post';
 import axios from 'axios';
 import { getAuthToken } from '@/api/user';
 import { AUTH_USER, UserResponse } from '@/redux/reducers/userSlice';
@@ -21,9 +22,12 @@ import { MainPageProps } from '@/types/home';
 const Home: NextPage<MainPageProps> = ({
   data,
   hashtagData,
+  serverProps,
   hashContent,
   popularContent,
 }) => {
+  const [hashTag, setHashTag] = useState<string>('#해시태그');
+
   const dispatch = useDispatch();
   const isClientSide = typeof window !== 'undefined';
   const tokenExists = isClientSide ? !!localStorage.getItem('token') : false;
@@ -43,6 +47,9 @@ const Home: NextPage<MainPageProps> = ({
   const onClickBottomNavHandler = () => {
     setIsClick(!isClick);
   };
+  const { data: mainData } = useQuery('Main', getMain, {
+    initialData: serverProps,
+  });
   useEffect(() => {
     const handleWheel = (event: WheelEvent) => {
       if (event.deltaY > 0) {
@@ -59,7 +66,6 @@ const Home: NextPage<MainPageProps> = ({
     setCookie(null, 'update', '1', { path: '/' });
     setCookie(null, 'updateId', '0', { path: '/' });
   }
-
   return (
     <HomePageLayout>
       <MainBanner data={data} $isClick={isClick} />
@@ -67,10 +73,11 @@ const Home: NextPage<MainPageProps> = ({
         data={hashtagData}
         $isClick={isClick}
         onClickEvent={onClickBottomNavHandler}
+        setHashTag={setHashTag}
       />
       <Main>
-        <HashtagContents data={hashContent} />
-        <PopularContentsCarousel data={popularContent} />
+        <HashtagContents data={mainData.posts} hashTag={hashTag} />
+        <PopularContentsCarousel data={mainData.likePosts} />
         <Footer />
       </Main>
     </HomePageLayout>
@@ -91,6 +98,7 @@ export const getStaticProps: GetStaticProps = async () => {
     props: {
       data,
       hashtagData,
+      serverProps: response.data,
       hashContent: response.data.posts,
       popularContent: response.data.likePosts,
     },

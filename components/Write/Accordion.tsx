@@ -28,7 +28,7 @@ type PanelProps = {
 
 const Panel = styled.div<PanelProps>`
   padding: 0 18px;
-  height: ${(props) => (props.open ? '450px' : '0')};
+  height: ${(props) => (props.open ? '300px' : '0')};
   overflow: hidden;
   background-color: #f9f9f9;
   transition: height 0.4s;

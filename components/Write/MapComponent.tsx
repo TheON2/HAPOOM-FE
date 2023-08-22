@@ -1,8 +1,40 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import axios from 'axios';
 import Script from 'next/script';
 import { StyledAuthInput } from '@/styles/write';
 import styled from 'styled-components';
+import { debounce } from 'lodash';
+import Button from '../common/Button';
+
+const SuggestionsBox = styled.ul`
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+  text-align: left;
+`;
+
+const SuggestionItem = styled.li`
+  padding: 10px;
+  background-color: white;
+  border-bottom: 1px solid #f1f1f1;
+  cursor: pointer;
+  &:hover {
+    background-color: #f1f1f1;
+  }
+  &:last-child {
+    border-bottom: none;
+  }
+`;
 
 interface Location {
   name: string;
@@ -25,6 +57,7 @@ interface MapComponentProps {
   setLocation: React.Dispatch<React.SetStateAction<Location>>;
   location: Location;
   update: string;
+  setIsShowMap: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 declare global {
@@ -60,126 +93,134 @@ export const MapComponent: React.FC<MapComponentProps> = ({
   setLocation,
   location,
   update,
+  setIsShowMap,
 }) => {
-  const [mapOpen, setMapOpen] = useState(true);
+  const [mapOpen, setMapOpen] = useState(false);
   const [locationInput, setLocationInput] = useState('');
+  const [locationLatLng, setLocationLatLng] = useState({ x: 0, y: 0 });
+  const [suggestions, setSuggestions] = useState<any[]>([]);
   const mapContainerRef = useRef(null);
   const mapRef = useRef<any>(null);
   const markerRef = useRef<Marker | null>(null);
-
-  const handleSearchIconClick = useCallback(() => {
-    setMapOpen(true);
-  }, []);
 
   const handleMapClick = useCallback(
     async (event: MapClickEvent) => {
       const coord = event.coord;
       if (update === '3') return;
+      setLocation({
+        name: locationInput,
+        x: coord.x,
+        y: coord.y,
+      });
+
+      if (markerRef.current) {
+        markerRef.current.setMap(null);
+      }
+
+      markerRef.current = new window.naver.maps.Marker({
+        position: new window.naver.maps.LatLng(coord.y, coord.x),
+        map: mapRef.current,
+      });
+    },
+    [locationInput, update, setLocation]
+  );
+
+  const handleSearch = async (term: string) => {
+    if (term.length >= 4) {
       try {
         const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_LOCAL_SERVER}/api/util/map/reversegeocode`,
+          `${process.env.NEXT_PUBLIC_LOCAL_SERVER}/api/util/map/geocode`,
           {
             params: {
-              x: coord.x,
-              y: coord.y,
+              query: term,
             },
           }
         );
+        console.log(response.data);
+        const suggestions = response.data.addressInfo.map((info: any) => ({
+          address_name: info.road_address_name,
+          x: info.x,
+          y: info.y,
+        }));
 
-        const result = response.data.results[0];
+        // suggestions를 원하는 대로 사용할 수 있습니다.
+        setSuggestions(suggestions);
+      } catch (error) {
+        console.error('Geocode API 호출 중 오류가 발생했습니다:', error);
+      }
+    }
+  };
 
-        let roadAddress = `${result?.region?.area1?.name} ${result?.region?.area2?.name} ${result?.region?.area3?.name} ${result?.land?.name} ${result?.land?.number1} ${result?.land?.number2} ${result?.land?.addition0?.value}`;
+  const debouncedSearch = useMemo(() => debounce(handleSearch, 10), []);
 
-        if (roadAddress.includes('undefined')) roadAddress = '도로명 없음';
+  const handleKeyUp = useCallback(
+    (event: React.KeyboardEvent<HTMLInputElement>) => {
+      const value = event.currentTarget.value;
+      if (value.trim() === '') {
+        setSuggestions([]);
+      } else {
+        debouncedSearch(value);
+      }
+    },
+    [debouncedSearch]
+  );
 
-        setLocation({
-          name: roadAddress,
-          x: coord.x,
-          y: coord.y,
-        });
+  const handleSuggestionClick = useCallback(
+    (suggestion: any) => {
+      setLocationInput(suggestion.address_name);
+      setSuggestions([]);
+      // x, y 좌표를 기반으로 지도의 중심을 설정합니다.
+      const newPosition = new window.naver.maps.LatLng(
+        suggestion.y,
+        suggestion.x
+      );
+
+      // 지도가 아직 초기화되지 않았다면, 중심 좌표와 마커를 설정합니다.
+      if (mapRef.current) {
+        mapRef.current.setCenter(newPosition);
+        mapRef.current.setZoom(18);
 
         if (markerRef.current) {
           markerRef.current.setMap(null);
         }
 
+        // 해당 위치에 마커를 찍습니다.
         markerRef.current = new window.naver.maps.Marker({
-          position: new window.naver.maps.LatLng(coord.y, coord.x),
+          position: newPosition,
           map: mapRef.current,
         });
-
-        if (roadAddress === '도로명 없음') {
-          setLocationInput(`도로명 없음 x좌표:${coord.x}y좌표:${coord.y}`);
-        } else {
-          setLocationInput(roadAddress);
-        }
-      } catch (error) {
-        console.error('Geocoding API 호출 중 오류가 발생했습니다:', error);
       }
+
+      // 지도를 펼칩니다.
+      setLocationLatLng({ y: suggestion.y, x: suggestion.x });
+      setMapOpen(true);
     },
-    [setLocation, setLocationInput, update]
+    [setMapOpen]
   );
-  const handleCloseClick = useCallback(() => {
-    if (markerRef.current) {
-      markerRef.current.setMap(null);
-      markerRef.current = null;
-    }
-    setMapOpen(false);
-  }, []);
 
-  const initializeMap = useCallback(() => {
-    if (typeof window === 'undefined' || !window.naver || !window.naver.maps) {
-      return;
-    }
-    navigator.geolocation.getCurrentPosition((position) => {
-      const userLocation = {
-        x: position.coords.longitude,
-        y: position.coords.latitude,
-      };
-      if (update === '1') {
-        mapRef.current = new window.naver.maps.Map(mapContainerRef.current, {
-          center: new window.naver.maps.LatLng(userLocation.y, userLocation.x),
-        });
-        markerRef.current = new window.naver.maps.Marker({
-          position: new window.naver.maps.LatLng(
-            userLocation.y,
-            userLocation.x
-          ),
-          map: mapRef.current,
-        });
-        setLocation({
-          name: '현재위치',
-          x: userLocation.x,
-          y: userLocation.y,
-        });
-      } else {
-        mapRef.current = new window.naver.maps.Map(mapContainerRef.current, {
-          center: new window.naver.maps.LatLng(location.y, location.x),
-        });
-        markerRef.current = new window.naver.maps.Marker({
-          position: new window.naver.maps.LatLng(location.y, location.x),
-          map: mapRef.current,
-        });
-      }
+  const initializeMap = () => {
+    if (mapContainerRef.current) {
+      mapRef.current = new window.naver.maps.Map(mapContainerRef.current, {
+        center: new window.naver.maps.LatLng(37.5665, 126.978), // 기본 위치
+        zoom: 15,
+      });
 
       window.naver.maps.Event.addListener(
         mapRef.current,
         'click',
         handleMapClick
       );
-    });
-  }, [handleMapClick, location, update]);
-
-  useEffect(() => {
-    setLocationInput(
-      location.name + ' ' + 'X:' + location.x + '   ' + 'Y:' + location.y
-    );
-  }, [update, location]);
-
-  useEffect(() => {
-    if (mapOpen) {
-      initializeMap();
     }
-  }, [mapOpen]);
+  };
+
+  const submitLocation = () => {
+    setLocation({
+      name: locationInput,
+      x: locationLatLng.x,
+      y: locationLatLng.y,
+    });
+    setIsShowMap(false);
+  };
 
   return (
     <>
@@ -187,28 +228,62 @@ export const MapComponent: React.FC<MapComponentProps> = ({
         strategy="afterInteractive"
         type="text/javascript"
         src={`https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NEXT_PUBLIC_NAVERMAP_API_KEY}`}
-        onLoad={initializeMap}
+        onReady={() => initializeMap()}
       />
       <h3 style={{ float: 'left', margin: '10px 0' }}>장소</h3>
       <label></label>
       <StyledAuthInput
         type="text"
-        placeholder="🔍️"
+        placeholder="장소를 입력해주세요"
         value={locationInput}
-        onClick={handleSearchIconClick}
-        readOnly
+        onChange={(e) => setLocationInput(e.target.value)}
+        onKeyUp={handleKeyUp}
         style={{ width: '100%', border: '2px solid #0084ff', margin: '0' }}
       />
-      {mapOpen && (
-        <div style={{ position: 'relative', width: '100%', height: '80vh' }}>
-          <div
-            ref={mapContainerRef}
-            id="map"
-            style={{ width: '100%', height: '100%' }}
-          />
-          {/* <CloseButton onClick={handleCloseClick}>X</CloseButton> */}
-        </div>
-      )}
+      <div
+        style={{
+          position: 'relative',
+          width: '100%',
+          height: '40vh',
+          margin: '40px 0',
+        }}
+      >
+        {suggestions.length > 0 && (
+          <SuggestionsBox
+            style={{
+              position: 'absolute',
+              zIndex: 1, // 맵 위로 올리기
+            }}
+          >
+            {suggestions.map((suggestion, index) => (
+              <SuggestionItem
+                key={index}
+                onClick={() => handleSuggestionClick(suggestion)}
+              >
+                {suggestion.address_name}
+              </SuggestionItem>
+            ))}
+          </SuggestionsBox>
+        )}
+        <div
+          ref={mapContainerRef}
+          id="map"
+          style={{ width: '100%', height: '100%' }}
+        />
+      </div>
+      <div style={{ display: 'flex', gap: '20px' }}>
+        <Button type="button" className="secondary">
+          닫기
+        </Button>
+        <Button
+          onClick={submitLocation}
+          type="button"
+          className={!mapOpen ? 'secondary' : undefined}
+        >
+          확인
+        </Button>
+      </div>
+      <div style={{ height: '100px' }}></div>
     </>
   );
 };

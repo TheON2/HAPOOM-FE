@@ -1,14 +1,14 @@
-import { StyledAuthInput } from '@/styles/write';
 import { CloseButton, PlayerWrapper } from '@/styles/youtubeplayer';
 import Script from 'next/script';
 import React, { FormEvent, useEffect, useRef, useState } from 'react';
-import Button from '../common/Button';
 
 interface YoutubePlayerProps {
   videoId: string;
-  setVideoId: React.Dispatch<React.SetStateAction<string>>;
-  setSelectedTitle: React.Dispatch<React.SetStateAction<string>>;
-  setAudioSubmit: React.Dispatch<React.SetStateAction<boolean>>;
+  setVideoId?: React.Dispatch<React.SetStateAction<string>>;
+  setSelectedTitle?: React.Dispatch<React.SetStateAction<string>>;
+  setMusicType?: React.Dispatch<React.SetStateAction<number>>;
+  setMusicChoose?: React.Dispatch<React.SetStateAction<number>>;
+  setAudioSubmit?: React.Dispatch<React.SetStateAction<boolean>>;
   update: string;
 }
 
@@ -16,50 +16,30 @@ interface Windows extends Window {
   onYouTubeIframeAPIReady: () => void;
 }
 
-const YoutubePlayer = ({
+const ReadOnlyYoutube = ({
   videoId,
   setVideoId,
   setSelectedTitle,
+  setMusicType,
+  setMusicChoose,
   setAudioSubmit,
   update,
 }: YoutubePlayerProps) => {
-  const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null);
   const [player, setPlayer] = useState<YT.Player | null>(null);
   const playerRef = useRef<HTMLDivElement | null>(null);
   const [playing, setPlaying] = useState(false);
   const [seek, setSeek] = useState(0);
   const [duration, setDuration] = useState(0);
   const [title, setTitle] = useState<string | null>(null);
-  const [inputURL, setInputURL] = useState(''); // 입력된 URL을 추적
-  const [validURL, setValidURL] = useState(true); // URL 유효성을 추적
-
-  // URL 유효성 검사 함수
-  const handleURLValidation = () => {
-    setValidURL(true);
-    try {
-      const url = new URL(inputURL);
-      const videoIdParam = url.searchParams.get('v');
-      if (videoIdParam) {
-        setVideoId(inputURL); // 일단 영상 ID를 설정
-        //setAudioSubmit(true);
-        // setValidURL(true); // 여기에서는 유효성을 설정하지 않습니다.
-      } else {
-        throw new Error('Invalid URL');
-      }
-    } catch (error) {
-      setValidURL(false);
-    }
-  };
 
   const handleClosePlayer = (e: FormEvent) => {
     e.preventDefault();
-    if (intervalId) {
-      clearInterval(intervalId); // 인터벌 종료
-    }
-    setAudioSubmit(false);
-    setVideoId(''); // 비디오 ID를 지워 플레이어를 닫습니다.
     setTitle('');
-    setSelectedTitle('');
+    if (setVideoId) setVideoId('');
+    if (setSelectedTitle) setSelectedTitle('');
+    if (setMusicType) setMusicType(0);
+    if (setMusicChoose) setMusicChoose(0);
+    if (setAudioSubmit) setAudioSubmit(false);
     setSeek(0);
     setDuration(0);
   };
@@ -89,7 +69,6 @@ const YoutubePlayer = ({
               },
               onStateChange: (event) => {
                 if (event.data === YT.PlayerState.PLAYING) {
-                  setAudioSubmit(true);
                   setPlaying(true);
                 } else if (event.data === YT.PlayerState.PAUSED) {
                   setPlaying(false);
@@ -100,14 +79,10 @@ const YoutubePlayer = ({
               },
               onError: (event) => {
                 if ([2, 5, 100, 101, 150].includes(event.data)) {
-                  setValidURL(false); // 여기에서 비디오의 유효성을 다시 검사
-                  setAudioSubmit(false);
-                  if (intervalId) {
-                    clearInterval(intervalId);
-                  }
-                  setVideoId('');
+                  if (setVideoId) setVideoId('');
+                  if (setSelectedTitle) setSelectedTitle('');
+                  if (setMusicType) setMusicType(0);
                   setTitle('');
-                  setSelectedTitle('');
                   setSeek(0);
                   setDuration(0);
                 }
@@ -131,17 +106,6 @@ const YoutubePlayer = ({
 
   return (
     <>
-      <StyledAuthInput
-        type="text"
-        placeholder="YouTube URL을 입력하세요"
-        value={inputURL}
-        onChange={(e) => setInputURL(e.target.value)}
-        style={{ width: '100%', border: '2px solid #0084ff', margin: '0' }}
-      />
-      <Button type="button" onClick={handleURLValidation}>
-        확인
-      </Button>
-      {!validURL && <div>URL이 유효하지 않습니다.</div>}
       <PlayerWrapper videoId={videoId}>
         {update !== '3' && (
           <CloseButton onClick={handleClosePlayer}>X</CloseButton>
@@ -153,4 +117,4 @@ const YoutubePlayer = ({
   );
 };
 
-export default YoutubePlayer;
+export default ReadOnlyYoutube;

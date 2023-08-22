@@ -163,14 +163,15 @@ export const HashtagContentsLayout = styled.section`
 `;
 
 export const ScrollBar = styled.div`
-  width: 30px;
+  width: 100%;
   padding: 8px 0 10px;
+  cursor: pointer;
   span {
     display: block;
     background-color: #e4e1e1;
-    width: 100%;
+    width: 30px;
     height: 4px;
-    margin-bottom: 1px;
+    margin: 0 auto 1px;
     border-radius: 2px;
   }
   @media screen and (min-width: 768px) {
