@@ -13,7 +13,7 @@ import { useMutation } from 'react-query';
 import { getPost, likePost } from '@/api/post';
 import ImageContent from '../Home/ImageContent';
 import { ImageContentsContainer } from '@/styles/imageContainer';
-import useInfiniteData from '../../hooks/useInfiniteData';
+import { useInfiniteData } from '../../hooks/useInfiniteData';
 
 interface PostLike {
   data: LocalUserPageData | undefined;
@@ -64,7 +64,41 @@ const PostLike: React.FC<PostLike> = ({
     data?.likedPosts || []
   );
 
-  console.log(data);
+  const method = 'GET'; // Assuming this is the correct method
+  const queryType = selectedTab === 0 ? 'post' : 'like';
+
+  const {
+    data: infiniteData,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useInfiniteData(queryType, method);
+
+  useEffect(() => {
+    if (selectedTab === 0) {
+      setDisplayedPosts(infiniteData?.pages.flat() ?? []);
+    } else if (selectedTab === 1) {
+      setDisplayedPosts(data?.likedPosts ?? []);
+    }
+  }, [data, selectedTab, infiniteData]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (
+        window.innerHeight + window.scrollY >=
+        document.body.offsetHeight - 500
+      ) {
+        if (hasNextPage && !isFetchingNextPage) {
+          fetchNextPage();
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [hasNextPage, fetchNextPage, isFetchingNextPage]);
 
   const mutation = useMutation(likePost, {
     onSuccess: (data, variables) => {
