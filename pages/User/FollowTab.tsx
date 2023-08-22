@@ -15,13 +15,20 @@ import {
   UserInfo,
   UserList,
   UserListItemStyled,
-  UserProfileImage,
   UserProfileImageBox,
 } from '@/styles/followTab';
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Modal from '@/components/common/Modal';
-import { useAuth } from '@/hooks/useAuth';
+import ProfileImage from '@/components/common/ProfileImage';
+
+export interface User {
+  userId: number;
+  email: string;
+  nickname: string;
+  userImage: string;
+  preset: number;
+}
 
 interface FollowTabUser {
   userId: number;
@@ -36,24 +43,49 @@ interface FollowTabProps {
 }
 
 const UserListItem: React.FC<
-  FollowTabUser & { onUnfollow?: (userId: number) => void }
-> = ({ userId, userImage, nickname, email, onUnfollow }) => (
-  <UserListItemStyled>
-    <UserProfileImage
-      src={userImage || 'DEFAULT_IMAGE_URL_OR_EMPTY_STRING'}
-      alt={nickname || 'Unknown'}
-    />
-    <UserInfo>
-      <Nickname>{nickname || '알 수 없음'}</Nickname>
-      <Email>{email || '이메일 없음'}</Email>
-    </UserInfo>
-    {onUnfollow && (
-      <FollowButtonStyled onClick={() => onUnfollow(userId)}>
-        언팔로우
-      </FollowButtonStyled>
-    )}
-  </UserListItemStyled>
-);
+  FollowTabUser & {
+    showUnfollowButton?: boolean;
+    handleOpenModal?: (userId: number) => void;
+  }
+> = ({
+  userId,
+  userImage,
+  nickname,
+  email,
+  showUnfollowButton,
+  preset,
+  handleOpenModal,
+}) => {
+  const router = useRouter(); // useRouter 훅을 사용하여 router 객체를 가져옵니다.
+
+  const handleNicknameClick = () => {
+    router.push(`/User/${userId}`); // 닉네임을 클릭하면 해당 사용자의 프로필 페이지로 이동합니다.
+  };
+
+  return (
+    <UserListItemStyled>
+      <UserProfileImageBox>
+        <ProfileImage
+          onClick={handleNicknameClick}
+          userImage={userImage}
+          preset={preset}
+        />
+      </UserProfileImageBox>
+      <UserInfo>
+        <Nickname onClick={handleNicknameClick}>{nickname}</Nickname>{' '}
+        <Email>{email}</Email>
+      </UserInfo>
+
+      {showUnfollowButton && (
+        <FollowButtonStyled
+          onClick={() => handleOpenModal && handleOpenModal(userId)}
+        >
+          언팔로우
+        </FollowButtonStyled>
+      )}
+    </UserListItemStyled>
+  );
+};
 
 const FollowTab: React.FC<FollowTabProps> = () => {
   const router = useRouter();
