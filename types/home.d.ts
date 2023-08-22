@@ -1,14 +1,21 @@
 export interface MainPageProps {
   data: SliderImage[];
-  hashtagData: SliderImage[];
+  hashtagData: HashtagDataProps[];
   hashContent: MainPageDataProps[];
   popularContent: MainPageDataProps[];
+  serverProps: any;
 }
 
 export type SliderImage = {
   id: number;
   src: string;
   alt: string;
+};
+export type HashtagDataProps = {
+  id: number;
+  src: string;
+  alt: string;
+  hashtag: string;
 };
 
 export interface MainPageDataProps {
@@ -23,9 +30,10 @@ export interface MainPageDataProps {
 export type ImageContentProps = Pick<MainPageDataProps, 'postId' | 'image'>;
 
 export type HashtagNavBarProps = {
-  data: SliderImage[];
+  data: HashtagDataProps[];
   $isClick?: boolean;
   onClickEvent?: any;
+  setHashTag: any;
 };
 
 export type ImageContentProps = Pick<MainPageDataProps, 'postId' | 'image'>;

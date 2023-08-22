@@ -2,7 +2,7 @@ import React, { FormEvent, useState } from 'react';
 import { Selecter } from '@/components/common/SelectUI';
 import useInput from '@/hooks/useInput';
 import IconButton from '@/components/common/IconButton';
-import { hashtagContentsImages } from '@/public/data';
+import { sliderImages } from '@/public/data';
 import { Cloud } from '@/components/common/SVG';
 import SearchResult from '@/components/Search/SearchResult';
 import Image from 'next/image';
@@ -23,7 +23,7 @@ const SELECT_OPTION = [
 const Search = () => {
   const [search, searchHandler, setSearch] = useInput('');
   const [option, setOption] = useState<string>('user');
-  const data = hashtagContentsImages;
+  const data = sliderImages;
   const onSubmitSearchHandler = (e: FormEvent) => {
     e.preventDefault();
     if (search === '') {

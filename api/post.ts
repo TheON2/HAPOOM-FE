@@ -16,6 +16,11 @@ interface UpdateData {
   formData: FormData;
 }
 
+const getMain = async () => {
+  const response = await api.get('/api/main');
+  return response.data;
+};
+
 const addPost = async (postData: UpdateData) => {
   const config = {
     headers: {
@@ -46,6 +51,20 @@ const getPost = async (id: string) => {
 const likePost = async (postId: string) => {
   const response = await api.put(`/api/post/${postId}/like`);
   return response.data;
+};
+
+const getMyPosts = async (method: string, page: number) => {
+  const response = await api.get(`/api/user/myprofile`, {
+    params: { method, page },
+  });
+  return response.data.posts;
+};
+
+const getMyLikedPosts = async (method: string, page: number) => {
+  const response = await api.get(`/api/user/myprofile`, {
+    params: { method, page },
+  });
+  return response.data.likedPosts;
 };
 
 const deletePost = async (postId: string) => {
@@ -121,6 +140,7 @@ const deleteComment = async ({ id, commentId }: commentDelete) => {
 };
 
 export {
+  getMain,
   addPost,
   updatePost,
   getPost,
@@ -133,4 +153,6 @@ export {
   deletePost,
   updateComment,
   deleteComment,
+  getMyLikedPosts,
+  getMyPosts,
 };

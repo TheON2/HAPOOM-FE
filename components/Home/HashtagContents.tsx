@@ -4,16 +4,18 @@ import ImageContent from '@/components/Home/ImageContent';
 import { SectionTitle, HashtagContentsLayout } from '@/styles/home';
 import { ImageContentsContainer } from '@/styles/imageContainer';
 import { MainPageDataProps } from '@/types/home';
+import { useQuery } from 'react-query';
 
 type Props = {
   data: MainPageDataProps[];
+  hashTag: string;
 };
 
-const HashtagContents: React.FC<Props> = ({ data }) => {
+const HashtagContents: React.FC<Props> = ({ data, hashTag }) => {
   return (
     <HashtagContentsLayout>
       <div className="center">
-        <SectionTitle>#랜덤글</SectionTitle>
+        <SectionTitle>{hashTag}</SectionTitle>
         <ImageContentsContainer>
           {data.map((content, index) => {
             return (
