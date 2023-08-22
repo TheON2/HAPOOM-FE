@@ -121,4 +121,4 @@ const SignInUi = () => {
   );
 };
 
-export default SignInUi;
+export default React.memo(SignInUi);
