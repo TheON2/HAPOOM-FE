@@ -37,11 +37,27 @@ export const UserList = styled.div`
 `;
 
 export const UserListItemStyled = styled.div`
+  width: 100%;
+  padding: 0 24px;
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  margin-bottom: 15px;
+  gap: 24px;
+  margin-bottom: 32px;
+  .button-follow {
+    width: 20%;
+  }
 `;
 
+export const UserProfileImageBox = styled.div`
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  /* margin-right: 10px; */
+  /* border: 1px solid black; */
+  background-color: black;
+  overflow: hidden;
+`;
 export const UserProfileImage = styled.img`
   width: 50px;
   height: 50px;
@@ -52,20 +68,25 @@ export const UserProfileImage = styled.img`
 `;
 
 export const UserInfo = styled.div`
+  width: 70%;
   flex: 1;
   display: flex;
   flex-direction: column;
-  margin-right: 15px;
+  line-height: 18px;
+  /* margin-right: 15px; */
+  text-align: start;
 `;
 
-export const Nickname = styled.strong`
+export const Nickname = styled.p`
   font-size: 18px;
+  font-weight: 700;
   margin-bottom: 3px;
+  color: #333;
 `;
 
 export const Email = styled.p`
   font-size: 14px;
-  font-weight: 300;
+  font-weight: 400;
   color: #777;
 `;
 
