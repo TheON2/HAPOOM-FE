@@ -386,6 +386,7 @@ const SignUpUi = () => {
             </StyledLabelEssential>
           </SignUpCheckBox>
         </SignUpCheckBoxLayout>
+
         {checkboxErrorMessage && (
           <TextErrorParagraph style={{ marginTop: '10px' }}>
             {checkboxErrorMessage}
