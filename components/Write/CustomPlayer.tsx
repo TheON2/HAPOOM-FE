@@ -21,8 +21,12 @@ import pauseImage from '@/public/pause.png';
 interface UniversalPlayerProps {
   audioUrl: string | undefined;
   setAudioUrl: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setMusicType?: React.Dispatch<React.SetStateAction<number>>;
+  setMusicChoose?: React.Dispatch<React.SetStateAction<number>>;
+  setAudioSubmit?: React.Dispatch<React.SetStateAction<boolean>>;
   title?: string;
   propsduration?: number;
+  update: string;
 }
 
 const formatTime = (time: number) => {
@@ -34,8 +38,12 @@ const formatTime = (time: number) => {
 const CustomPlayer = ({
   audioUrl,
   setAudioUrl,
+  setMusicType,
+  setMusicChoose,
+  setAudioSubmit,
   title,
   propsduration,
+  update,
 }: UniversalPlayerProps) => {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [playing, setPlaying] = useState(false);
@@ -73,6 +81,13 @@ const CustomPlayer = ({
     setAudioUrl(''); // 플레이어 제거
     setSeek(0);
     setDuration(0);
+    if (setMusicChoose && setMusicType) {
+      setMusicChoose(0);
+      setMusicType(0);
+    }
+    if (setAudioSubmit) {
+      setAudioSubmit(false);
+    }
   };
 
   useEffect(() => {
@@ -113,9 +128,11 @@ const CustomPlayer = ({
   return (
     <>
       <CustomPlayerWrapper>
-        <CloseButton type="button" onClick={handleClosePlayer}>
-          X
-        </CloseButton>
+        {update !== '3' && (
+          <CloseButton type="button" onClick={handleClosePlayer}>
+            X
+          </CloseButton>
+        )}
         <Title>{title}</Title>
         <audio ref={audioRef} src={audioUrl} style={{ display: 'none' }} />
 

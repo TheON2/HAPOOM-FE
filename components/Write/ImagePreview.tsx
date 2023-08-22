@@ -3,10 +3,15 @@ import { useCallback, useState } from 'react';
 
 interface ImagePreviewProps {
   images: File[];
+  imageURLs: string[];
   removeImage: (index: number) => void;
 }
 
-const ImagePreview: React.FC<ImagePreviewProps> = ({ images, removeImage }) => {
+const ImagePreview: React.FC<ImagePreviewProps> = ({
+  images,
+  imageURLs,
+  removeImage,
+}) => {
   const [isMouseOver, setIsMouseOver] = useState<{ [key: number]: boolean }>(
     {}
   );
@@ -27,7 +32,7 @@ const ImagePreview: React.FC<ImagePreviewProps> = ({ images, removeImage }) => {
 
   return (
     <>
-      {images.map((image, index) => (
+      {imageURLs.map((image, index) => (
         <div
           key={index + 1}
           style={{ position: 'relative', border: 'solid 1px', margin: '10px' }}
@@ -36,7 +41,7 @@ const ImagePreview: React.FC<ImagePreviewProps> = ({ images, removeImage }) => {
           onMouseOut={() => handleMouseOut(index)}
         >
           <Image
-            src={URL.createObjectURL(image)}
+            src={image}
             alt={`Upload preview ${index + 2}`}
             width={50}
             height={50}
