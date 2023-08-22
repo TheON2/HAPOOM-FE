@@ -38,6 +38,7 @@ import { ReadOnlyMap } from '@/components/Write/ReadOnlyMap';
 import YoutubePlayer from '@/components/Write/YoutubePlayer';
 import Button from '@/components/common/Button';
 import ReadOnlyYoutube from '@/components/Write/ReadOnlyYoutube';
+import { styled } from 'styled-components';
 
 const DynamicComponentWithNoSSR = dynamic(
   () => import('@/components/Write/YoutubePlayer'),
@@ -52,6 +53,17 @@ interface Props {
   updateId: string;
   data: any;
 }
+
+const Box = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: start;
+  label {
+  }
+  /* align-items: center; */
+`;
 
 const Write: NextPage<Props> = ({ update = '1', updateId, data }) => {
   const [isShow, setIsShow] = useState<boolean>(false);
@@ -275,21 +287,13 @@ const Write: NextPage<Props> = ({ update = '1', updateId, data }) => {
       {!(update === '2' && location.x === 0) && (
         <>
           <div style={{ minHeight: '800px' }}>
-            <GlobalStyle />
+            {/* <GlobalStyle /> */}
             <form
               onSubmit={handlePostSubmit}
               style={{ display: 'block', textAlign: 'center' }}
             >
               <ImageContainer>
-                {update === '2' ? (
-                  <h1 style={{ alignSelf: 'flex-start', margin: '25px' }}>
-                    게시글 수정
-                  </h1>
-                ) : (
-                  <h1 style={{ alignSelf: 'flex-start', margin: '25px' }}>
-                    새 게시글
-                  </h1>
-                )}
+                {update === '2' ? <h2>게시글 수정</h2> : <h2>새 게시글</h2>}
                 <Dropzone
                   images={images}
                   setImages={setImages}
@@ -306,14 +310,13 @@ const Write: NextPage<Props> = ({ update = '1', updateId, data }) => {
               </ImageContainer>
               <ImageContainer>
                 <ContentArea content={content} setContent={setContent} />
-                <div
-                  style={{
-                    position: 'relative',
-                    width: 400,
-                  }}
-                >
-                  <label style={{ textAlign: 'left' }}>
-                    <h3 style={{ margin: '10px 0' }}>음악추가</h3>
+                <div>
+                  <label
+                    style={{
+                      display: 'block',
+                    }}
+                  >
+                    음악추가
                   </label>
                   <CustomButton
                     type="button"
@@ -369,25 +372,17 @@ const Write: NextPage<Props> = ({ update = '1', updateId, data }) => {
                     update={'2'}
                   />
                 )}
-                <div
-                  style={{
-                    position: 'relative',
-                    width: 400,
-                  }}
-                >
-                  <label style={{ textAlign: 'left' }}>
-                    <h3 style={{ margin: '10px 0' }}>태그</h3>
-                  </label>
+                <Box>
+                  <label>태그</label>
                   <TagInput tags={tags} setTags={setTags} />
-                </div>
-                <div
-                  style={{
-                    position: 'relative',
-                    width: 400,
-                  }}
-                >
-                  <label style={{ textAlign: 'left' }}>
-                    <h3 style={{ margin: '10px 0' }}>장소</h3>
+                </Box>
+                <Box>
+                  <label
+                    style={{
+                      display: 'block',
+                    }}
+                  >
+                    장소
                   </label>
                   <CustomButton type="button" onClick={handleMapCreateHandler}>
                     위치 설정하기
@@ -396,7 +391,7 @@ const Write: NextPage<Props> = ({ update = '1', updateId, data }) => {
                   {location.x !== 0 && location.y !== 0 && (
                     <ReadOnlyMap location={location} />
                   )}
-                </div>
+                </Box>
                 <StyledButton type="submit">
                   {update === '2' ? (
                     <h3>사진 수정하기</h3>
@@ -458,7 +453,7 @@ const Write: NextPage<Props> = ({ update = '1', updateId, data }) => {
                           setMusicType={setMusicType}
                         />
                       </Accordion>
-                      <div style={{ display: 'flex', gap: '20px' }}>
+                      <div>
                         <Button type="button" className="secondary">
                           닫기
                         </Button>

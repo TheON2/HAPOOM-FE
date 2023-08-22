@@ -2,7 +2,7 @@ import { useDropzone } from 'react-dropzone';
 import Image from 'next/image';
 import { useCallback } from 'react';
 import plus from '../../public/addImage.png';
-
+import styled from 'styled-components';
 interface DropzoneProps {
   images: File[];
   setImages: (images: any) => void;
@@ -11,6 +11,19 @@ interface DropzoneProps {
 }
 
 const MAX_IMAGES = 5;
+
+const DropContainer = styled.div`
+  height: 200px;
+  width: 100%;
+  border: #0084ff dashed 2px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* margin: 20px; */
+  position: relative;
+  overflow: hidden;
+`;
 
 const Dropzone: React.FC<DropzoneProps> = ({
   images,
@@ -31,21 +44,7 @@ const Dropzone: React.FC<DropzoneProps> = ({
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   return (
-    <div
-      {...getRootProps()}
-      style={{
-        height: '200px',
-        width: '400px',
-        border: ' #0084ff dashed 2px',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        margin: '20px',
-        position: 'relative',
-        overflow: 'hidden',
-      }}
-    >
+    <DropContainer {...getRootProps()}>
       <input {...getInputProps()} />
       {imageURLs[0] ? (
         <Image
@@ -66,7 +65,7 @@ const Dropzone: React.FC<DropzoneProps> = ({
           <h4>jpg,png/5개 까지 업로드됩니다.</h4>
         </>
       )}
-    </div>
+    </DropContainer>
   );
 };
 
