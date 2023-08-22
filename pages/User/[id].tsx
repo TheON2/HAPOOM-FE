@@ -4,9 +4,6 @@ import { UserState } from '@/redux/reducers/userSlice';
 import { RootState } from '@/redux/config/configStore';
 import { useSelector } from 'react-redux';
 
-import { useEffect } from 'react';
-import { setCookie } from 'nookies';
-
 const UserId = () => {
   const router = useRouter();
   const id = typeof router.query.id === 'string' ? router.query.id : '';

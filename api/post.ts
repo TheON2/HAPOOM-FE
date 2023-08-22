@@ -53,6 +53,20 @@ const likePost = async (postId: string) => {
   return response.data;
 };
 
+const getMyPosts = async (method: string, page: number) => {
+  const response = await api.get(`/api/user/myprofile`, {
+    params: { method, page },
+  });
+  return response.data.posts;
+};
+
+const getMyLikedPosts = async (method: string, page: number) => {
+  const response = await api.get(`/api/user/myprofile`, {
+    params: { method, page },
+  });
+  return response.data.likedPosts;
+};
+
 const deletePost = async (postId: string) => {
   const response = await api.delete(`/api/post/${postId}`);
   return response.data;
@@ -139,4 +153,6 @@ export {
   deletePost,
   updateComment,
   deleteComment,
+  getMyLikedPosts,
+  getMyPosts,
 };
