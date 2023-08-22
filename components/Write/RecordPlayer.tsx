@@ -8,6 +8,9 @@ import CustomPlayer from './CustomPlayer';
 import RecordingInfo from './RecordingInfo';
 import { GetServerSidePropsContext } from 'next';
 import { parseCookies } from 'nookies';
+import record1 from '@/public/voice1.png';
+import record2 from '@/public/voice2.png';
+import Image from 'next/image';
 
 const CloseButton = styled.button`
   position: absolute;
@@ -55,6 +58,9 @@ interface RecordPlayerProps {
   slicedAudioURL: string | undefined;
   setSlicedAudioURL: React.Dispatch<React.SetStateAction<string | undefined>>;
   setIsShow: (state: boolean) => void;
+  setMusicType: React.Dispatch<React.SetStateAction<number>>;
+  setMusicChoose: React.Dispatch<React.SetStateAction<number>>;
+  setAudioSubmit: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const RecordPlayer: React.FC<RecordPlayerProps> = ({
@@ -65,6 +71,9 @@ const RecordPlayer: React.FC<RecordPlayerProps> = ({
   audioURL,
   setAudioURL,
   setIsShow,
+  setMusicType,
+  setMusicChoose,
+  setAudioSubmit,
 }) => {
   const [recording, setInternalRecording] = useState(false);
   const [playing, setPlaying] = useState(false);
@@ -107,6 +116,7 @@ const RecordPlayer: React.FC<RecordPlayerProps> = ({
       const url = URL.createObjectURL(blob);
       setAudioURL(url);
       setInternalRecording(false);
+      setAudioSubmit(true);
 
       console.log('Recorded Blob:', blob); // 녹음된 Blob 객체를 출력
       console.log('Audio URL:', url); // 오디오 URL을 출력
@@ -119,7 +129,7 @@ const RecordPlayer: React.FC<RecordPlayerProps> = ({
         // 부모 컴포넌트에게 오디오 파일 전달
         setAudioFile(blob);
       }
-      setIsShow(false);
+      //setIsShow(false);
     }
   };
 
@@ -208,6 +218,8 @@ const RecordPlayer: React.FC<RecordPlayerProps> = ({
               audioUrl={audioURL}
               setAudioUrl={setAudioURL}
               title={'녹음된 파일'}
+              setAudioSubmit={setAudioSubmit}
+              update={'2'}
             />
             <StyledSlider
               value={[selectionStart, selectionEnd]}
@@ -231,18 +243,37 @@ const RecordPlayer: React.FC<RecordPlayerProps> = ({
                   audioUrl={slicedAudioURL}
                   setAudioUrl={setSlicedAudioURL}
                   title={'잘라낸 녹음 파일'}
+                  update={'2'}
                 />
               </div>
             )}
           </>
         ) : recording ? (
-          <button type="button" onClick={stopRecording}>
-            Stop Recording
-          </button>
+          <>
+            <Image
+              onClick={stopRecording}
+              src={record1}
+              alt={'start record'}
+              width={50}
+              height={50}
+              style={{ border: 'none', backgroundColor: 'none' }}
+            />
+          </>
         ) : (
-          <button type="button" onClick={startRecording}>
-            Start Recording
-          </button>
+          <>
+            <div>
+              <h3>녹음 정보</h3>
+              <p>녹음 시간: 0:00</p>
+            </div>
+            <Image
+              onClick={startRecording}
+              src={record2}
+              alt={'start record'}
+              width={50}
+              height={50}
+              style={{ border: 'none', backgroundColor: 'none' }}
+            />
+          </>
         )}
       </div>
     </Container>

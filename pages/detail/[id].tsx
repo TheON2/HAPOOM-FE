@@ -43,6 +43,9 @@ import { identity } from 'lodash';
 import Link from 'next/link';
 import CustomPlayer from '@/components/Write/CustomPlayer';
 import Modal from '@/components/common/Modal';
+import { ReadOnlyMap } from '@/components/Write/ReadOnlyMap';
+import ReadOnlyYoutube from '@/components/Write/ReadOnlyYoutube';
+
 import { BannerSliderProps } from '@/types/home';
 const DynamicComponentWithNoSSR = dynamic(
   () => import('@/components/Write/YoutubePlayer'),
@@ -62,9 +65,10 @@ const Detail: NextPage = () => {
   const id = typeof router.query.id === 'string' ? router.query.id : '';
   const [images, setImages] = useState<BannerSliderProps[]>([]);
   const [content, setContent] = useState<string>('');
-  const [musicChoose, setMusicChoose] = useState<number>();
   const [selectedTitle, setSelectedTitle] = useState<string>('');
   const [musicTitle, setMusicTitle] = useState<string>('');
+  const [musicType, setMusicType] = useState<number>(0);
+  const [musicChoose, setMusicChoose] = useState<number>(0);
   const [audioURL, setAudioURL] = useState<string | undefined>(undefined);
   const [videoId, setVideoId] = useState<string>('');
   const [tags, setTags] = useState<string>('');
@@ -168,7 +172,6 @@ const Detail: NextPage = () => {
   if (!isSuccess) return <div>Loading...</div>;
   return (
     <>
-      <>{!(location.x === 0) && <></>}</>
       <GlobalStyle />
       <Modal
         isOpen={isModalOpen}
@@ -230,12 +233,7 @@ const Detail: NextPage = () => {
         >
           {musicChoose === 1 && (
             <>
-              <DynamicComponentWithNoSSR
-                videoId={videoId}
-                setVideoId={setVideoId}
-                setSelectedTitle={setSelectedTitle}
-                update={'3'}
-              />
+              <ReadOnlyYoutube videoId={videoId} update={'3'} />
             </>
           )}
           {musicChoose === 2 && (
@@ -243,6 +241,9 @@ const Detail: NextPage = () => {
               setAudioUrl={setAudioURL}
               audioUrl={audioURL}
               title={musicTitle}
+              setMusicChoose={setMusicChoose}
+              setMusicType={setMusicType}
+              update={'3'}
             />
           )}
           {musicChoose === 3 && (
@@ -250,15 +251,14 @@ const Detail: NextPage = () => {
               setAudioUrl={setAudioURL}
               audioUrl={audioURL}
               title={musicTitle}
+              setMusicChoose={setMusicChoose}
+              setMusicType={setMusicType}
+              update={'3'}
             />
           )}
         </DetialContentSection>
         <DetialContentSection>
-          <MapComponent
-            setLocation={setLocation}
-            location={location}
-            update={'3'}
-          />
+          {!(location.x === 0) && <ReadOnlyMap location={location} />}
         </DetialContentSection>
         <DetialContentSection>
           <h3>댓글</h3>
