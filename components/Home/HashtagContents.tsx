@@ -15,7 +15,7 @@ const HashtagContents: React.FC<Props> = ({ data, hashTag }) => {
   return (
     <HashtagContentsLayout>
       <div className="center">
-        <SectionTitle>{hashTag}</SectionTitle>
+        <SectionTitle>#{hashTag}</SectionTitle>
         <ImageContentsContainer>
           {data.map((content, index) => {
             return (

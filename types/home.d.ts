@@ -15,8 +15,8 @@ export type HashtagDataProps = {
   postId: number;
   image: string;
   private: boolean;
-  // alt: string;
-  // hashtag: string;
+  tag: string;
+  tagId: number;
 };
 
 export interface MainPageDataProps {
