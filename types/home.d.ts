@@ -12,10 +12,11 @@ export type SliderImage = {
   alt: string;
 };
 export type HashtagDataProps = {
-  id: number;
-  src: string;
-  alt: string;
-  hashtag: string;
+  postId: number;
+  image: string;
+  private: boolean;
+  // alt: string;
+  // hashtag: string;
 };
 
 export interface MainPageDataProps {

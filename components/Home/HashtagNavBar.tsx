@@ -29,18 +29,19 @@ const HashtagNavBar: React.FC<HashtagNavBarProps> = ({
             return (
               <HashtagItem
                 key={index}
-                onClick={() => onClickhashtagHandler(hashtag.hashtag)}
+                onClick={() => onClickhashtagHandler('#해시태그')}
               >
                 <figure>
                   <Image
-                    src={hashtag.src}
+                    src={hashtag.image}
                     alt="v13 image"
                     width={200}
                     height={200}
                     loading="eager"
                   />
                 </figure>
-                <figcaption>{hashtag.hashtag}</figcaption>
+                {/* <figcaption>{hashtag.hashtag}</figcaption> */}
+                <figcaption>#해시태그</figcaption>
               </HashtagItem>
             );
           })}
