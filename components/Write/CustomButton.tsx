@@ -10,7 +10,7 @@ const ButtonStyle = styled.button<Button>`
   width: 400px;
   padding: 12px 16px 8px;
   //margin-top: ${({ $marginTop }) => $marginTop};
-  margin: 20px 0;
+  margin: 0 auto;
   border-radius: 3px;
   color: #fff;
   border: 1px solid #2797ff;

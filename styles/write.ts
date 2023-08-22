@@ -24,9 +24,10 @@ export const Box = styled.div`
   flex-direction: column;
   justify-content: center;
   text-align: start;
+  margin-bottom: 36px;
   label {
+    margin-bottom: 16px;
   }
-  /* align-items: center; */
 `;
 
 export const PreviewContainer = styled.div`

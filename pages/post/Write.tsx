@@ -4,6 +4,7 @@ import {
   ImageContainer,
   PreviewContainer,
   StyledButton,
+  Box,
 } from '../../styles/write';
 import Dropzone from '@/components/Write/Dropzone';
 import ImagePreview from '@/components/Write/ImagePreview';
@@ -54,18 +55,18 @@ interface Props {
   data: any;
 }
 
-const Box = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  text-align: start;
-  margin-bottom: 36px;
-  label {
-    margin-bottom: 24px;
-  }
-  /* align-items: center; */
-`;
+// const Box = styled.div`
+//   width: 100%;
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+//   text-align: start;
+//   margin-bottom: 36px;
+//   label {
+//     margin-bottom: 24px;
+//   }
+//   /* align-items: center; */
+// `;
 
 const WritePageContainer = styled.div`
   min-height: 800px;
@@ -314,6 +315,10 @@ const Write: NextPage<Props> = ({ update = '1', updateId, data }) => {
               </Box>
               <ContentArea content={content} setContent={setContent} />
               <Box>
+                <label>태그</label>
+                <TagInput tags={tags} setTags={setTags} />
+              </Box>
+              <Box>
                 <label
                   style={{
                     display: 'block',
@@ -375,10 +380,7 @@ const Write: NextPage<Props> = ({ update = '1', updateId, data }) => {
                   update={'2'}
                 />
               )}
-              <Box>
-                <label>태그</label>
-                <TagInput tags={tags} setTags={setTags} />
-              </Box>
+
               <Box>
                 <label
                   style={{

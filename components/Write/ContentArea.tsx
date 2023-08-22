@@ -25,6 +25,7 @@ const ContentArea: React.FC<ContentAreaProps> = ({ content, setContent }) => {
       <Box
         style={{
           display: 'flex',
+          position: 'relative',
           // marginBottom: 50,
         }}
       >
@@ -32,9 +33,9 @@ const ContentArea: React.FC<ContentAreaProps> = ({ content, setContent }) => {
         <textarea
           style={{
             width: '100%',
-            height: '100%',
+            height: '120px',
             resize: 'none',
-            padding: '5px',
+            padding: '24px',
             border: '2px solid #0084ff',
           }}
           value={content}
