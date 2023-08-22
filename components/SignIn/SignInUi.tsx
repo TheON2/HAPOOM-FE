@@ -1,14 +1,8 @@
 import {
   MainHeadText,
-  PwdSignUpSettingPageLink,
-  Separator,
-  SignInBtn,
   SignInContainer,
   SignInSection,
   TextErrorParagraph,
-  TextSnsParagraph,
-  TextPwSetParagraph,
-  TextSignUpLinkParagraph,
 } from '@/styles/signIn';
 import React, { FormEvent, useState } from 'react';
 import SocialLogin from './SocialLogIn';
