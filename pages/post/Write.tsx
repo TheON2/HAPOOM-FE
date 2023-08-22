@@ -60,9 +60,16 @@ const Box = styled.div`
   flex-direction: column;
   justify-content: center;
   text-align: start;
+  margin-bottom: 36px;
   label {
+    margin-bottom: 24px;
   }
   /* align-items: center; */
+`;
+
+const WritePageContainer = styled.div`
+  min-height: 800px;
+  padding: 0 24px;
 `;
 
 const Write: NextPage<Props> = ({ update = '1', updateId, data }) => {
@@ -286,13 +293,10 @@ const Write: NextPage<Props> = ({ update = '1', updateId, data }) => {
     <>
       {!(update === '2' && location.x === 0) && (
         <>
-          <div style={{ minHeight: '800px' }}>
+          <WritePageContainer>
             {/* <GlobalStyle /> */}
-            <form
-              onSubmit={handlePostSubmit}
-              style={{ display: 'block', textAlign: 'center' }}
-            >
-              <ImageContainer>
+            <form onSubmit={handlePostSubmit}>
+              <Box>
                 {update === '2' ? <h2>게시글 수정</h2> : <h2>새 게시글</h2>}
                 <Dropzone
                   images={images}
@@ -307,99 +311,99 @@ const Write: NextPage<Props> = ({ update = '1', updateId, data }) => {
                     imageURLs={imageURLs}
                   />
                 </PreviewContainer>
-              </ImageContainer>
-              <ImageContainer>
-                <ContentArea content={content} setContent={setContent} />
-                <div>
-                  <label
-                    style={{
-                      display: 'block',
-                    }}
-                  >
-                    음악추가
-                  </label>
-                  <CustomButton
-                    type="button"
-                    onClick={handleCommentCreateHandler}
-                    className={musicType !== 0 ? 'secondary' : undefined}
-                  >
-                    음악 설정하기
-                  </CustomButton>
-                </div>
-                {musicType === 1 && (
-                  <>
-                    <ReadOnlyYoutube
-                      videoId={videoId}
-                      update={update}
-                      setVideoId={setVideoId}
-                      setMusicType={setMusicType}
-                      setSelectedTitle={setSelectedTitle}
-                      setMusicChoose={setMusicChoose}
-                      setAudioSubmit={setAudioSubmit}
-                    />
-                  </>
-                )}
-                {musicType === 2 && (
-                  <CustomPlayer
-                    audioUrl={musicURL}
-                    setAudioUrl={setMusicURL}
-                    title={selectedTitle}
-                    setMusicChoose={setMusicChoose}
+              </Box>
+              <ContentArea content={content} setContent={setContent} />
+              <Box>
+                <label
+                  style={{
+                    display: 'block',
+                  }}
+                >
+                  음악추가
+                </label>
+                <CustomButton
+                  type="button"
+                  onClick={handleCommentCreateHandler}
+                  className={musicType !== 0 ? 'secondary' : undefined}
+                >
+                  음악 설정하기
+                </CustomButton>
+              </Box>
+              {musicType === 1 && (
+                <>
+                  <ReadOnlyYoutube
+                    videoId={videoId}
+                    update={update}
+                    setVideoId={setVideoId}
                     setMusicType={setMusicType}
-                    setAudioSubmit={setAudioSubmit}
-                    update={'2'}
-                  />
-                )}
-                {musicType === 3 && slicedAudioURL && (
-                  <CustomPlayer
-                    title={'잘라낸 녹음 파일'}
-                    audioUrl={slicedAudioURL}
-                    setAudioUrl={setAudioURL}
+                    setSelectedTitle={setSelectedTitle}
                     setMusicChoose={setMusicChoose}
-                    setMusicType={setMusicType}
                     setAudioSubmit={setAudioSubmit}
-                    update={'2'}
                   />
-                )}
-                {musicType === 3 && audioURL && !slicedAudioURL && (
-                  <CustomPlayer
-                    title={'녹음된 파일'}
-                    audioUrl={audioURL}
-                    setAudioUrl={setAudioURL}
-                    setMusicChoose={setMusicChoose}
-                    setMusicType={setMusicType}
-                    setAudioSubmit={setAudioSubmit}
-                    update={'2'}
-                  />
-                )}
-                <Box>
-                  <label>태그</label>
-                  <TagInput tags={tags} setTags={setTags} />
-                </Box>
-                <Box>
-                  <label
-                    style={{
-                      display: 'block',
-                    }}
-                  >
-                    장소
-                  </label>
-                  <CustomButton type="button" onClick={handleMapCreateHandler}>
-                    위치 설정하기
-                  </CustomButton>
+                </>
+              )}
+              {musicType === 2 && (
+                <CustomPlayer
+                  audioUrl={musicURL}
+                  setAudioUrl={setMusicURL}
+                  title={selectedTitle}
+                  setMusicChoose={setMusicChoose}
+                  setMusicType={setMusicType}
+                  setAudioSubmit={setAudioSubmit}
+                  update={'2'}
+                />
+              )}
+              {musicType === 3 && slicedAudioURL && (
+                <CustomPlayer
+                  title={'잘라낸 녹음 파일'}
+                  audioUrl={slicedAudioURL}
+                  setAudioUrl={setAudioURL}
+                  setMusicChoose={setMusicChoose}
+                  setMusicType={setMusicType}
+                  setAudioSubmit={setAudioSubmit}
+                  update={'2'}
+                />
+              )}
+              {musicType === 3 && audioURL && !slicedAudioURL && (
+                <CustomPlayer
+                  title={'녹음된 파일'}
+                  audioUrl={audioURL}
+                  setAudioUrl={setAudioURL}
+                  setMusicChoose={setMusicChoose}
+                  setMusicType={setMusicType}
+                  setAudioSubmit={setAudioSubmit}
+                  update={'2'}
+                />
+              )}
+              <Box>
+                <label>태그</label>
+                <TagInput tags={tags} setTags={setTags} />
+              </Box>
+              <Box>
+                <label
+                  style={{
+                    display: 'block',
+                  }}
+                >
+                  장소
+                </label>
+                <CustomButton type="button" onClick={handleMapCreateHandler}>
+                  위치 설정하기
+                </CustomButton>
 
-                  {location.x !== 0 && location.y !== 0 && (
-                    <ReadOnlyMap location={location} />
-                  )}
-                </Box>
-                <StyledButton type="submit">
-                  {update === '2' ? (
-                    <h3>사진 수정하기</h3>
-                  ) : (
-                    <h3>사진 게시하기</h3>
-                  )}
-                </StyledButton>
-              </ImageContainer>
+                {location.x !== 0 && location.y !== 0 && (
+                  <ReadOnlyMap location={location} />
+                )}
+              </Box>
+
+              <StyledButton type="submit">
+                {update === '2' ? (
+                  <h3>사진 수정하기</h3>
+                ) : (
+                  <h3>사진 게시하기</h3>
+                )}
+              </StyledButton>
+
               {isShow ? (
                 <UpAndDownTab
                   onClickEvent={handleCommentShowHandler}
@@ -488,7 +492,7 @@ const Write: NextPage<Props> = ({ update = '1', updateId, data }) => {
                 </UpAndDownTab>
               ) : null}
             </form>
-          </div>
+          </WritePageContainer>
         </>
       )}
     </>
