@@ -182,7 +182,7 @@ const Detail: NextPage = () => {
       </Modal>
       <ContentsContainer>
         <OtherProfileBox>
-          <Link href={`/User/sss@gmail.com`}>
+          <Link href={`/User/${data?.user?.userId}`}>
             <DetailProfile
               userImage={data?.user?.userImage}
               preset={data?.user?.preset}

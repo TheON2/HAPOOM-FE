@@ -1,37 +1,70 @@
-import Link from 'next/link';
 import { FollowBtn } from '@/styles/user';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Modal from '../common/Modal';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/redux/config/configStore';
+import { getUserProfile } from '@/api/user';
+import Link from 'next/link';
+import { useFollow } from '@/hooks/useFollow';
 
 interface FollowButtonProps {
-  currentUserId?: string;
   profileUserId?: string;
 }
 
-const FollowButton: React.FC<FollowButtonProps> = ({
-  currentUserId,
-  profileUserId,
-}) => {
+const FollowButton: React.FC<FollowButtonProps> = ({ profileUserId }) => {
+  const { follow, unfollow, followers } = useFollow(profileUserId || '');
+
   const [isFollowing, setIsFollowing] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [profileUserEmail, setProfileUserEmail] = useState<string | null>(null);
+
+  const loggedInUserEmail = useSelector(
+    (state: RootState) => state.user.user.email
+  );
+
+  useEffect(() => {
+    const fetchProfileUserEmail = async () => {
+      try {
+        const profileData = await getUserProfile({ UserId: profileUserId });
+        setProfileUserEmail(profileData.user.email);
+      } catch (error) {
+        console.error('Error fetching profile user data:', error);
+      }
+    };
+
+    if (profileUserId) {
+      fetchProfileUserEmail();
+    }
+
+    if (
+      followers &&
+      followers.some((user) => user.email === loggedInUserEmail)
+    ) {
+      setIsFollowing(true);
+    } else {
+      setIsFollowing(false);
+    }
+  }, [profileUserId, followers]);
 
   const handleFollowClick = (e: React.MouseEvent) => {
     e.preventDefault();
     if (isFollowing) {
       setIsModalOpen(true);
     } else {
+      follow();
       setIsFollowing(true);
     }
   };
 
   const handleConfirmUnfollow = () => {
+    unfollow();
     setIsFollowing(false);
     setIsModalOpen(false);
   };
 
   return (
     <>
-      {currentUserId === profileUserId ? (
+      {loggedInUserEmail === profileUserEmail ? (
         <Link href="/setting/Setting">
           <FollowBtn $status="설정">설정</FollowBtn>
         </Link>

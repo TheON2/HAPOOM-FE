@@ -9,9 +9,6 @@ export const UserPageSection = styled.section`
   align-items: center;
   justify-content: center;
   margin: 0 auto;
-
-  @media screen and (max-width: 1260px) {
-  }
 `;
 export const UserPageContainer = styled.div`
   width: 100%;
@@ -23,9 +20,6 @@ export const UserPageContainer = styled.div`
     text-align: left;
     /* margin-top: 20px; */
   }
-
-  @media screen and (max-width: 1260px) {
-  }
 `;
 export const UserProfileCardBox = styled.div`
   margin: auto;
@@ -33,10 +27,7 @@ export const UserProfileCardBox = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-
-  @media screen and (max-width: 1260px) {
-    padding: 24px;
-  }
+  padding: 24px;
 
   img {
     border-radius: 50%;
