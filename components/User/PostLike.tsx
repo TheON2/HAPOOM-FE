@@ -67,12 +67,7 @@ const PostLike: React.FC<PostLike> = ({
   const method = 'GET'; // Assuming this is the correct method
   const queryType = selectedTab === 0 ? 'post' : 'like';
 
-  const {
-    data: infiniteData,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-  } = useInfiniteData(queryType, method);
+  const { data: infiniteData } = useInfiniteData(queryType, method);
 
   useEffect(() => {
     if (selectedTab === 0) {
@@ -81,38 +76,6 @@ const PostLike: React.FC<PostLike> = ({
       setDisplayedPosts(data?.likedPosts ?? []);
     }
   }, [data, selectedTab, infiniteData]);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (
-        window.innerHeight + window.scrollY >=
-        document.body.offsetHeight - 500
-      ) {
-        if (hasNextPage && !isFetchingNextPage) {
-          fetchNextPage();
-        }
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, [hasNextPage, fetchNextPage, isFetchingNextPage]);
-
-  const mutation = useMutation(likePost, {
-    onSuccess: (data, variables) => {
-      // const newPost = displayedPosts?.find(
-      //   (post) => post.postId.toString() === variables
-      // );
-      // if (newPost) {
-      //   setLikedPosts((prev) => [...prev, newPost]);
-      // }
-    },
-    onError: (error) => {
-      console.error('Failed to like the post', error);
-    },
-  });
 
   const handleLikeClick = (postId: number, isLiked: boolean) => {
     if (isLiked) {

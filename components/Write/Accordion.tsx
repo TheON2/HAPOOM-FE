@@ -7,18 +7,34 @@ const AccordionWrapper = styled.div`
 `;
 
 const AccordionButton = styled.button`
-  background-color: #f1f1f1;
+  background-color: #333;
+  padding: 12px 0 8px;
   cursor: pointer;
-  width: 400px;
+  width: 100%;
   //text-align: left;
+  border-radius: 5px;
   border: none;
   outline: none;
   transition: 0.4s;
   //display: flex;
   align-items: center; // Image를 중앙에 배치
+  background-color: #ccc;
+
   &:hover,
   &.active {
-    background-color: #ccc;
+    &.youtube {
+      background-color: #ed1f23;
+    }
+    &.music {
+      background-color: #2797ff;
+    }
+    &.record {
+      background-color: #52acff;
+    }
+  }
+  img {
+    width: 30%;
+    object-fit: contain;
   }
 `;
 
@@ -27,15 +43,17 @@ type PanelProps = {
 };
 
 const Panel = styled.div<PanelProps>`
-  padding: 0 18px;
-  height: ${(props) => (props.open ? '300px' : '0')};
-  overflow: hidden;
-  background-color: #f9f9f9;
+  padding: 0 0 12px;
+  height: ${(props) => (props.open ? '260px' : '0')};
+  overflow-y: scroll;
+  position: relative;
+  /* background-color: #f9f9f9; */
   transition: height 0.4s;
 `;
 
 type AccordionProps = {
   image?: StaticImageData;
+  bgClass: string;
   selected: boolean;
   onClick: () => void;
   children?: React.ReactNode;
@@ -43,6 +61,7 @@ type AccordionProps = {
 
 const Accordion: React.FC<AccordionProps> = ({
   image,
+  bgClass,
   children,
   selected,
   onClick,
@@ -52,7 +71,7 @@ const Accordion: React.FC<AccordionProps> = ({
       <AccordionButton
         onClick={onClick}
         type="button"
-        className={selected ? 'active' : ''}
+        className={selected ? `active ${bgClass}` : `${bgClass}`}
       >
         {image && <Image src={image} width={400} height={150} alt="icon" />}
       </AccordionButton>

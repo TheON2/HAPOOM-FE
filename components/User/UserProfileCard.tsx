@@ -42,9 +42,13 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({ data }) => {
           <p className="nickName">{data?.user.nickname}</p>
         </NicknameBox>
         <FollowBox>
-          <Link href="/User/FollowTab?tab=followers">팔로워 3</Link>
+          <Link href="/User/FollowTab?tab=followers">
+            팔로워 {data.followerCount}
+          </Link>
           <span>|</span>
-          <Link href="/User/FollowTab?tab=followings">팔로잉 3</Link>
+          <Link href="/User/FollowTab?tab=followings">
+            팔로잉 {data.followingCount}
+          </Link>
         </FollowBox>
       </ProfileContentsBox>
     </UserProfileCardBox>

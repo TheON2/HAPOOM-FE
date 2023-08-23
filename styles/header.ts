@@ -50,7 +50,7 @@ export const HeaderLayout = styled.header<HeaderProps>`
 
 export const LogoBox = styled(Link)<HeaderProps>`
   /* width: 20%; */
-  height: 46px;
+  /* height: 100%; */
   display: flex;
   justify-content: center;
   align-items: center;

@@ -575,3 +575,54 @@ export const CommentIcon = () => (
     />
   </svg>
 );
+export const FeedPlayer = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="22"
+    height="22"
+    viewBox="0 0 22 22"
+    fill="none"
+  >
+    <circle cx="11" cy="11" r="11" fill="url(#paint0_linear_1915_2364)" />
+    <path d="M17 11L8 16.1962L8 5.80385L17 11Z" fill="white" />
+    <defs>
+      <linearGradient
+        id="paint0_linear_1915_2364"
+        x1="2"
+        y1="2"
+        x2="19"
+        y2="22"
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop stop-color="#4AA8FF" />
+        <stop offset="1" stop-color="#2B99FF" />
+      </linearGradient>
+    </defs>
+  </svg>
+);
+export const Xmark = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="20"
+    height="20"
+    viewBox="0 0 20 20"
+    fill="none"
+  >
+    <rect
+      x="3"
+      y="4.37134"
+      width="1.93936"
+      height="17.9038"
+      transform="rotate(-45 3 4.37134)"
+      fill="#929AA7"
+    />
+    <rect
+      x="4.37109"
+      y="17.0312"
+      width="1.93936"
+      height="17.9038"
+      transform="rotate(-135 4.37109 17.0312)"
+      fill="#929AA7"
+    />
+  </svg>
+);

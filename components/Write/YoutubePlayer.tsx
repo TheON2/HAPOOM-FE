@@ -1,8 +1,14 @@
-import { StyledAuthInput } from '@/styles/write';
+import {
+  StyledAuthInput,
+  InputBox,
+  Box,
+  RecordButtonBox,
+} from '@/styles/write';
 import { CloseButton, PlayerWrapper } from '@/styles/youtubeplayer';
 import Script from 'next/script';
 import React, { FormEvent, useEffect, useRef, useState } from 'react';
 import Button from '../common/Button';
+import { Xmark } from '../common/SVG';
 
 interface YoutubePlayerProps {
   videoId: string;
@@ -130,26 +136,37 @@ const YoutubePlayer = ({
   }, [videoId, player]);
 
   return (
-    <>
-      <StyledAuthInput
+    <RecordButtonBox>
+      <InputBox
         type="text"
         placeholder="YouTube URL을 입력하세요"
         value={inputURL}
         onChange={(e) => setInputURL(e.target.value)}
-        style={{ width: '100%', border: '2px solid #0084ff', margin: '0' }}
       />
-      <Button type="button" onClick={handleURLValidation}>
-        확인
-      </Button>
+
       {!validURL && <div>URL이 유효하지 않습니다.</div>}
       <PlayerWrapper videoId={videoId}>
         {update !== '3' && (
-          <CloseButton onClick={handleClosePlayer}>X</CloseButton>
+          <CloseButton onClick={handleClosePlayer}>
+            <Xmark />
+          </CloseButton>
         )}
         <div id="player" ref={playerRef} />
         <Script src="https://www.youtube.com/iframe_api" />
       </PlayerWrapper>
-    </>
+      {videoId ? (
+        <Button type="button" onClick={handleClosePlayer}>
+          취소
+        </Button>
+      ) : (
+        <Button type="button" onClick={handleURLValidation}>
+          확인
+        </Button>
+      )}
+      {/* <Button type="button" onClick={handleURLValidation}>
+        확인
+      </Button> */}
+    </RecordButtonBox>
   );
 };
 
