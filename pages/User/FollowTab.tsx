@@ -15,11 +15,11 @@ import {
 import React, { useState, useEffect } from 'react';
 
 // 사용자 정보 타입
-interface User {
+interface FollowTabUser {
   userId: number;
-  email: string;
-  nickname: string;
-  userImage: string;
+  email: string | null;
+  nickname?: string;
+  userImage: string | null; // 여기를 변경
 }
 
 interface FollowTabProps {
@@ -30,13 +30,20 @@ interface TabUnderlineProps {
   $activeTab: 'followers' | 'followings';
 }
 
-const UserListItem: React.FC<User> = ({ userImage, nickname, email }) => {
+const UserListItem: React.FC<FollowTabUser> = ({
+  userImage,
+  nickname,
+  email,
+}) => {
   return (
     <UserListItemStyled>
-      <UserProfileImage src={userImage} alt={nickname} />
+      <UserProfileImage
+        src={userImage || 'DEFAULT_IMAGE_URL_OR_EMPTY_STRING'}
+        alt={nickname || 'Unknown'}
+      />
       <UserInfo>
-        <Nickname>{nickname}</Nickname>
-        <Email>{email}</Email>
+        <Nickname>{nickname || '알 수 없음'}</Nickname>
+        <Email>{email || '이메일 없음'}</Email>
       </UserInfo>
       <FollowButtonStyled>팔로잉</FollowButtonStyled>
     </UserListItemStyled>
@@ -47,8 +54,8 @@ const FollowTab: React.FC<FollowTabProps> = ({ userId }) => {
   const [activeTab, setActiveTab] = useState<'followers' | 'followings'>(
     'followers'
   );
-  const [followers, setFollowers] = useState<User[]>([]);
-  const [followings, setFollowings] = useState<User[]>([]);
+  const [followers, setFollowers] = useState<FollowTabUser[]>([]);
+  const [followings, setFollowings] = useState<FollowTabUser[]>([]);
 
   useEffect(() => {
     const fetchFollowers = async () => {
