@@ -99,6 +99,7 @@ export const ContentsContainer = styled.div`
     margin-bottom: 12px;
   }
   .detail-content-text {
+    min-height: 120px;
     margin-bottom: 12px;
   }
   .carousel-box {
@@ -113,10 +114,14 @@ export const HashtagBox = styled.div`
 `;
 
 export const Hashtag = styled.div`
-  padding: 4px 12px 2px;
-  border: 1px solid #000;
+  color: #0084ff;
+  cursor: pointer;
+  display: inline-block;
+  padding: 8px 20px 6px;
   border-radius: 20px;
-  font-size: 10px;
+  border: 2px solid #0084ff;
+  text-align: center;
+  font-size: 14px;
 `;
 
 export const CommentForm = styled.form`
