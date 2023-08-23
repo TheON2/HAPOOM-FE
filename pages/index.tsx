@@ -25,13 +25,14 @@ const Home: NextPage<MainPageProps> = ({
   serverProps,
   hashContent,
   popularContent,
+  randomPosts,
 }) => {
   const [hashTag, setHashTag] = useState<string>('#해시태그');
+  console.log(randomPosts);
 
   const dispatch = useDispatch();
   const isClientSide = typeof window !== 'undefined';
   const tokenExists = isClientSide ? !!localStorage.getItem('token') : false;
-
   const { data: userData, isSuccess: tokenSuccess } = useQuery(
     'user',
     getAuthToken,
@@ -68,7 +69,7 @@ const Home: NextPage<MainPageProps> = ({
   }
   return (
     <HomePageLayout>
-      <MainBanner data={data} $isClick={isClick} />
+      <MainBanner data={data} $isClick={isClick} randomPosts={randomPosts} />
       <HashtagNavBar
         data={mainData.mainTags}
         $isClick={isClick}
