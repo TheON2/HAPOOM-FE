@@ -3,12 +3,13 @@ import {
   CustomPlayerWrapper,
   PlayButton,
   PlayButtonGroup,
+  PlayHeader,
   PlayerControls,
   PlayerWrapper,
   SeekSlider,
   SeekSliderGroup,
   TimeLabel,
-  Title,
+  TitleBox,
   VolumeSlider,
   VolumeSliderGroup,
 } from '@/styles/youtubeplayer';
@@ -128,15 +129,8 @@ const CustomPlayer = ({
   return (
     <>
       <CustomPlayerWrapper>
-        {update !== '3' && (
-          <CloseButton type="button" onClick={handleClosePlayer}>
-            X
-          </CloseButton>
-        )}
-        <Title>{title}</Title>
         <audio ref={audioRef} src={audioUrl} style={{ display: 'none' }} />
-
-        <PlayerControls>
+        <PlayHeader>
           <PlayButtonGroup>
             <PlayButton type="button" onClick={handlePlayPause}>
               {playing ? (
@@ -146,6 +140,14 @@ const CustomPlayer = ({
               )}
             </PlayButton>
           </PlayButtonGroup>
+          <TitleBox>{title}</TitleBox>
+          {update !== '3' && (
+            <CloseButton type="button" onClick={handleClosePlayer}>
+              X
+            </CloseButton>
+          )}
+        </PlayHeader>
+        <PlayerControls>
           <SeekSliderGroup>
             <TimeLabel>{formatTime(seek)}</TimeLabel>
             <SeekSlider
@@ -156,17 +158,20 @@ const CustomPlayer = ({
               onChange={handleSeekChange}
               step={0.01}
             />
-            <TimeLabel>{formatTime(propsduration ?? duration)}</TimeLabel>
+            <TimeLabel className="end">
+              {formatTime(propsduration ?? duration)}
+            </TimeLabel>
           </SeekSliderGroup>
-          <VolumeSliderGroup>
-            <VolumeSlider
-              type="range"
-              min="0"
-              max="100"
-              onChange={handleVolumeChange}
-            />
-          </VolumeSliderGroup>
         </PlayerControls>
+
+        <VolumeSliderGroup>
+          <VolumeSlider
+            type="range"
+            min="0"
+            max="100"
+            onChange={handleVolumeChange}
+          />
+        </VolumeSliderGroup>
       </CustomPlayerWrapper>
     </>
   );

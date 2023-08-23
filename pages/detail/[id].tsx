@@ -6,7 +6,6 @@ import React, {
   useState,
 } from 'react';
 import {
-  GlobalStyle,
   ImageContainer,
   PreviewContainer,
   StyledButton,
@@ -172,7 +171,7 @@ const Detail: NextPage = () => {
   if (!isSuccess) return <div>Loading...</div>;
   return (
     <>
-      <GlobalStyle />
+      {/* <GlobalStyle /> */}
       <Modal
         isOpen={isModalOpen}
         setIsOpen={setIsModalOpen}

@@ -1,6 +1,7 @@
 import { ImageContainer } from '@/styles/write';
-import React from 'react';
+import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form';
+import { styled } from 'styled-components';
 
 const musicOptions = [
   {
@@ -65,4 +66,133 @@ const MusicSelector: React.FC<MusicSelectorProps> = ({
   );
 };
 
-export default MusicSelector;
+type selectProps = {
+  selectOption: { value: string; text: string }[];
+  setOption: any;
+};
+
+export const Selecter = ({
+  musicURL,
+  setMusicURL,
+  setAudioSubmit,
+  setSelectedTitle,
+}: MusicSelectorProps) => {
+  const [isShow, setIsShow] = useState(false);
+  const [selectText, setSelectText] = useState(musicOptions[0].name);
+
+  const SelectClick = () => {
+    setIsShow(!isShow);
+  };
+
+  const OptionClick = (value: string, url: string) => {
+    setSelectText(value);
+    setIsShow(!isShow);
+    // setOption(value);
+    setSelectedTitle(value); // 현재 선택된 음악의 이름을 설정
+    setMusicURL(url);
+    setAudioSubmit(true);
+  };
+
+  return (
+    <SelectBox $show={isShow}>
+      <SelectBarButton
+        type="button"
+        onClick={SelectClick}
+        aria-label="Select NCS MUSIC"
+      >
+        {selectText}
+      </SelectBarButton>
+      {isShow && (
+        <SelectList>
+          {musicOptions.map((option, idx) => {
+            return (
+              <SelectItem
+                key={idx}
+                value={option.name}
+                onClick={() => OptionClick(option.name, option.url)}
+              >
+                {idx + 1}.{option.name}
+              </SelectItem>
+            );
+          })}
+        </SelectList>
+      )}
+    </SelectBox>
+  );
+};
+// 이게 꼭 필요한 것인가?
+// const SelectItemNonHidden = ({ children }) => {
+//     return <ItemNonHidden>{children}</ItemNonHidden>;
+// };
+const WIDTH = '100%';
+
+const SelectBarButton = styled.button`
+  /* width: 250px; */
+  width: ${WIDTH};
+  height: 40px;
+  padding: 0px 16px;
+  background-color: #e8eef3;
+  border: none;
+  border-radius: 8px 8px 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* gap: 16px; */
+  color: #1b3255;
+  font-size: 14px;
+  font-weight: 700;
+  transition: all 0.3s ease-in-out;
+
+  svg {
+    transform: scale(0.8) rotate(90deg);
+    path {
+      fill: #fff;
+    }
+  }
+  &:hover {
+    background-color: #efefef;
+  }
+`;
+const SelectList = styled.ul`
+  width: ${WIDTH};
+`;
+const SelectItem = styled.li`
+  width: 100%;
+  height: 40px;
+  padding: 0px 16px;
+  /* border-radius: 8px; */
+  color: #777;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+  &:hover {
+    background-color: #f3f9ff;
+  }
+`;
+
+type Props = {
+  $show: boolean;
+};
+
+const SelectBox = styled.div<Props>`
+  width: ${WIDTH};
+  height: ${(props) => (props.$show ? 'calc(40px * 6)' : '40px')};
+  margin-top: 12px;
+  /* background-color: #f0efef; */
+  border-radius: ${(props) => (props.$show ? '15px' : '20px')};
+  border-radius: 8px;
+  overflow: hidden;
+  position: absolute;
+  z-index: 14;
+  transition: all 0.3s ease-in-out;
+  border: 2px solid #e8eef3;
+  /* top: 4px; */
+  /* left: 12px; */
+  /* transform: translateY(-50%); */
+`;
+
+export default Selecter;

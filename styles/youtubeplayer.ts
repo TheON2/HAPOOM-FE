@@ -5,7 +5,13 @@ interface PlayerWrapperProps {
 }
 
 export const PlayButton = styled.button`
-  background: transparent;
+  background: #349eff;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
   border: none;
   color: white;
   cursor: pointer;
@@ -48,14 +54,22 @@ export const VolumeSlider = styled.input`
     border-radius: 50%;
   }
 `;
-
-export const Title = styled.div`
+export const PlayHeader = styled.div`
   width: 100%;
-  text-align: center;
+  padding: 8px 8px 20px;
+  display: flex;
+  align-items: center;
+  background-color: #eff7ff;
+  border: 2px solid #dfefff;
+  border-radius: 30px 30px 0 0;
+`;
+export const TitleBox = styled.div`
+  width: 100%;
+  text-align: start;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: white;
+  color: #174172;
   padding: 5px;
   font-size: 16px;
 `;
@@ -64,13 +78,13 @@ export const SeekSlider = styled.input`
   -webkit-appearance: none;
   appearance: none;
   width: 100%;
-  background: #444;
+  background: #2797ff;
   outline: none;
   opacity: 0.7;
   transition: opacity 0.2s;
-  height: 5px;
-  border-radius: 3px;
-  margin: 5px 0;
+  height: 14px;
+  /* border-radius: 3px; */
+  /* margin: 5px 0; */
 
   &:hover {
     opacity: 1;
@@ -82,6 +96,7 @@ export const SeekSlider = styled.input`
     width: 15px;
     height: 15px;
     background: #fff;
+    border: 1px solid #2797ff;
     cursor: pointer;
     border-radius: 50%;
   }
@@ -109,9 +124,11 @@ export const PlayerControls = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  background-color: whitesmoke;
+  /* background-color: #eff7ff;
+  border: 2px solid #dfefff; */
+  /* border-radius: 30px; */
   color: white;
-  padding: 10px;
+  /* padding: 10px; */
 `;
 
 export const ControlGroup = styled.div`
@@ -120,12 +137,9 @@ export const ControlGroup = styled.div`
 `;
 
 export const CloseButton = styled.button`
-  position: absolute;
-  right: 30px;
-  top: 5px;
-  background: transparent;
+  background: none;
   border: none;
-  color: white;
+  color: #174172;
   font-size: 20px;
   cursor: pointer;
 `;
@@ -138,7 +152,7 @@ export const PlayerWrapper = styled.div<PlayerWrapperProps>`
   flex-direction: column;
   align-items: center;
   background: #222;
-  border-radius: 45px;
+  border-radius: 20px;
   overflow: hidden;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   &:hover ${CloseButton} {
@@ -149,18 +163,20 @@ export const PlayerWrapper = styled.div<PlayerWrapperProps>`
 
 export const CustomPlayerWrapper = styled.div`
   position: relative;
-  width: 400px;
+  max-width: 360px;
+  width: 100%;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: #0084ff;
-  border-radius: 45px;
-  overflow: hidden;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  /* background: #0084ff; */
+  border-radius: 12px;
+  /* overflow: hidden; */
+  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); */
   &:hover ${CloseButton} {
     display: block;
   }
-  margin: 10px;
+  /* margin: 10px; */
 `;
 
 export const PlayButtonGroup = styled(ControlGroup)`
@@ -169,6 +185,7 @@ export const PlayButtonGroup = styled(ControlGroup)`
 
 export const SeekSliderGroup = styled(ControlGroup)`
   flex: 7; // 70%의 공간을 차지
+  position: relative;
 `;
 
 export const VolumeSliderGroup = styled(ControlGroup)`
@@ -196,4 +213,8 @@ export const TimeLabel = styled.span`
   color: black;
   font-size: 12px;
   margin: 0 5px;
+  position: absolute;
+  &.end {
+    right: 0;
+  }
 `;

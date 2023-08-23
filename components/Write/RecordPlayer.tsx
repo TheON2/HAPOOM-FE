@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import Recorder from 'recorder-js';
 import Slider from 'react-slider';
 import toWav from 'audiobuffer-to-wav';
-import { Title } from '@/styles/youtubeplayer';
+import { TitleBox } from '@/styles/youtubeplayer';
 import styled from 'styled-components';
 import CustomPlayer from './CustomPlayer';
 import RecordingInfo from './RecordingInfo';
@@ -11,7 +11,9 @@ import { parseCookies } from 'nookies';
 import record1 from '@/public/voice1.png';
 import record2 from '@/public/voice2.png';
 import Image from 'next/image';
-
+import RecordButton from '../common/RecordButton';
+import Button from '@/components/common/Button';
+import { RecordButtonBox } from '@/styles/write';
 const CloseButton = styled.button`
   position: absolute;
   top: 5px;
@@ -204,7 +206,7 @@ const RecordPlayer: React.FC<RecordPlayerProps> = ({
   return (
     <Container>
       <div style={{ width: '400px', position: 'relative' }}>
-        <Title>Audio Recorder</Title>
+        <TitleBox>Audio Recorder</TitleBox>
 
         {recording && (
           <>
@@ -231,12 +233,13 @@ const RecordPlayer: React.FC<RecordPlayerProps> = ({
                 <Thumb {...props}>{state.valueNow}</Thumb>
               )}
             />
-            <button
+
+            <Button
               type="button"
               onClick={() => sliceAudio(selectionStart, selectionEnd)}
             >
               Slice Audio
-            </button>
+            </Button>
             {slicedAudioURL && (
               <div>
                 <CustomPlayer
@@ -260,20 +263,21 @@ const RecordPlayer: React.FC<RecordPlayerProps> = ({
             />
           </>
         ) : (
-          <>
+          <RecordButtonBox>
             <div>
               <h3>녹음 정보</h3>
               <p>녹음 시간: 0:00</p>
             </div>
-            <Image
+            <RecordButton onClickEvent={startRecording} />
+            {/* <Image
               onClick={startRecording}
               src={record2}
               alt={'start record'}
               width={50}
               height={50}
               style={{ border: 'none', backgroundColor: 'none' }}
-            />
-          </>
+            /> */}
+          </RecordButtonBox>
         )}
       </div>
     </Container>
