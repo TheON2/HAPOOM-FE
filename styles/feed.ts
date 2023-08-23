@@ -39,11 +39,12 @@ export const FeedIcon = styled.div`
   right: 0;
 `
 export const MainImageContainer = styled.div`
+  height: 189px;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 8px;
   overflow: hidden;
+  cursor: pointer;
 `
 export const FeedMusicLikeBox = styled.div`
   width: 272px;

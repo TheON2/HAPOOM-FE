@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import React from 'react';
+import React, { useState } from 'react';
 import {
   FeedContainer,
   FeedHeader,
@@ -10,14 +10,20 @@ import {
   FeedUserNickName,
   MusicBox,
   MainImageContainer,
-  Equalizer,
   LikeIconContainer,
 } from '../../styles/feed';
 import { FeedPlayer } from '../common/SVG';
 import HeartIcon from '../common/HeartIcon';
-import { useQuery } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import axios from 'axios';
 import ProfileImage from '../common/ProfileImage';
+import { useRouter } from 'next/router';
+import KebabMenuUI, {
+  KebabMenuAptionButton,
+  KebabMenuStyle,
+} from '../common/KebabMenuUI';
+import { reportPost } from '@/api/post';
+import Modal from '../common/Modal';
 
 const timeSince = (date: string) => {
   const now: Date = new Date();
@@ -39,16 +45,62 @@ const timeSince = (date: string) => {
     return '방금 전';
   }
 };
+interface ModalMessage {
+  actionText: string;
+  modalMessge: string | undefined;
+  onClickEvent: any;
+}
 const FeedUi = () => {
+  const router = useRouter();
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [modalMessge, setModalMessge] = useState<ModalMessage>({
+    actionText: '',
+    modalMessge: '',
+    onClickEvent: '',
+  });
+
   const getFeed = async () => {
     const response = await axios.get(`http://localhost:3001/api/main/feed`);
     return response.data;
   };
-  const { data } = useQuery('feedData', getFeed);
-  console.log(data?.feed);
+
+  const { data } = useQuery('feed', getFeed);
+  console.log(data?.feed[0].postId);
+
+  const { mutate: report } = useMutation(reportPost, {
+    onSuccess: (messag) => {
+      setModalMessge({
+        actionText: '확인',
+        modalMessge: messag,
+        onClickEvent: null,
+      });
+      setIsModalOpen(true);
+    },
+  });
+
+  const moveDetailPage = (id: number) => {
+    router.push(`/detail/${id}`);
+  };
+
+  const handleReportClick = (id: any) => {
+    setModalMessge({
+      actionText: '신고',
+      modalMessge: '해당 사용자를 신고하시겠습니까?',
+      onClickEvent: () => report(id),
+    });
+    setIsModalOpen(true);
+  };
 
   return (
     <FeedSection>
+      <Modal
+        isOpen={isModalOpen}
+        setIsOpen={setIsModalOpen}
+        actionText={modalMessge.actionText}
+        onClickEvent={modalMessge.onClickEvent}
+      >
+        {modalMessge.modalMessge}
+      </Modal>
       {data?.feed.map((feed: any) => {
         return (
           <FeedContainer key={feed.postId}>
@@ -58,7 +110,19 @@ const FeedUi = () => {
               </div>
               <FeedUserNickName>{feed.nickname}</FeedUserNickName>
               <FeedTime>{timeSince(feed.updatedAt)}</FeedTime>
-              <FeedIcon>...I</FeedIcon>
+              <FeedIcon>
+                <KebabMenuUI>
+                  <KebabMenuStyle>
+                    {feed.postId && (
+                      <KebabMenuAptionButton
+                        onClick={() => handleReportClick(feed.postId)}
+                      >
+                        신고하기 <span></span>
+                      </KebabMenuAptionButton>
+                    )}
+                  </KebabMenuStyle>
+                </KebabMenuUI>
+              </FeedIcon>
             </FeedHeader>
 
             <MainImageContainer>
@@ -68,6 +132,7 @@ const FeedUi = () => {
                 width={272}
                 height={189}
                 quality={100}
+                onClick={() => moveDetailPage(feed.postId)}
               />
             </MainImageContainer>
 
