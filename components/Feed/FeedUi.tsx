@@ -12,18 +12,18 @@ import {
   MainImageContainer,
   LikeIconContainer,
 } from '../../styles/feed';
-import { FeedPlayer } from '../common/SVG';
-import HeartIcon from '../common/HeartIcon';
-import { useMutation, useQuery } from 'react-query';
-import axios from 'axios';
-import ProfileImage from '../common/ProfileImage';
-import { useRouter } from 'next/router';
 import KebabMenuUI, {
   KebabMenuAptionButton,
   KebabMenuStyle,
 } from '../common/KebabMenuUI';
+import { FeedPlayer } from '../common/SVG';
+import { useMutation, useQuery } from 'react-query';
+import { useRouter } from 'next/router';
 import { reportPost } from '@/api/post';
 import Modal from '../common/Modal';
+import HeartIcon from '../common/HeartIcon';
+import ProfileImage from '../common/ProfileImage';
+import axios from 'axios';
 
 const timeSince = (date: string) => {
   const now: Date = new Date();
@@ -65,7 +65,7 @@ const FeedUi = () => {
   };
 
   const { data } = useQuery('feed', getFeed);
-  console.log(data?.feed[0].postId);
+  console.log(data?.feed);
 
   const { mutate: report } = useMutation(reportPost, {
     onSuccess: (messag) => {
@@ -80,6 +80,9 @@ const FeedUi = () => {
 
   const moveDetailPage = (id: number) => {
     router.push(`/detail/${id}`);
+  };
+  const moveUserPage = (email: string) => {
+    router.push(`/User/${email}`);
   };
 
   const handleReportClick = (id: any) => {
@@ -105,7 +108,7 @@ const FeedUi = () => {
         return (
           <FeedContainer key={feed.postId}>
             <FeedHeader>
-              <div>
+              <div onClick={() => moveUserPage(feed.email)}>
                 <ProfileImage userImage={feed.userImage} preset={feed.preset} />
               </div>
               <FeedUserNickName>{feed.nickname}</FeedUserNickName>
