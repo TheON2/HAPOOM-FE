@@ -50,6 +50,17 @@ interface ModalMessage {
   modalMessge: string | undefined;
   onClickEvent: any;
 }
+type Feed = {
+  email: string;
+  image: string;
+  musicTitle: string;
+  musicUrl: string | null;
+  nickname: string;
+  postId: number;
+  preset: number;
+  updatedAt: string;
+  userImage: string;
+};
 const FeedUi = () => {
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -104,7 +115,7 @@ const FeedUi = () => {
       >
         {modalMessge.modalMessge}
       </Modal>
-      {data?.feed.map((feed: any) => {
+      {data?.feed.map((feed: Feed) => {
         return (
           <FeedContainer key={feed.postId}>
             <FeedHeader>
