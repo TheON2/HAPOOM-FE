@@ -113,9 +113,9 @@ const unFollow = async (userId: string) => {
   return response.data;
 };
 
-const getFollowers = async (userId: string): Promise<User[]> => {
+const getFollowers = async (userId: string | number): Promise<User[]> => {
   try {
-    const response = await api.get(`/api/user/${userId}/follower`);
+    const response = await api.get(`/api/user/${String(userId)}/follower`);
     if (response.data && Array.isArray(response.data.followers)) {
       return response.data.followers;
     }

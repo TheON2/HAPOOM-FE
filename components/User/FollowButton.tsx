@@ -8,11 +8,13 @@ import Link from 'next/link';
 import { useFollow } from '@/hooks/useFollow';
 
 interface FollowButtonProps {
-  profileUserId?: string;
+  profileUserId?: number | undefined;
 }
 
 const FollowButton: React.FC<FollowButtonProps> = ({ profileUserId }) => {
-  const { follow, unfollow, followers } = useFollow(profileUserId || '');
+  const { follow, unfollow, followers } = useFollow(
+    String(profileUserId) || ''
+  );
 
   const [isFollowing, setIsFollowing] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -24,11 +26,16 @@ const FollowButton: React.FC<FollowButtonProps> = ({ profileUserId }) => {
 
   useEffect(() => {
     const fetchProfileUserEmail = async () => {
-      try {
-        const profileData = await getUserProfile({ UserId: profileUserId });
-        setProfileUserEmail(profileData.user.email);
-      } catch (error) {
-        console.error('Error fetching profile user data:', error);
+      if (profileUserId) {
+        // 조건문 추가
+        try {
+          const profileData = await getUserProfile({
+            UserId: String(profileUserId),
+          });
+          setProfileUserEmail(profileData.user.email);
+        } catch (error) {
+          console.error('Error fetching profile user data:', error);
+        }
       }
     };
 
@@ -44,7 +51,7 @@ const FollowButton: React.FC<FollowButtonProps> = ({ profileUserId }) => {
     } else {
       setIsFollowing(false);
     }
-  }, [profileUserId, followers]);
+  }, [profileUserId, followers, loggedInUserEmail]);
 
   const handleFollowClick = (e: React.MouseEvent) => {
     e.preventDefault();
