@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import React from 'react';
+import React, { useState } from 'react';
 import {
   FeedContainer,
   FeedHeader,
@@ -10,12 +10,20 @@ import {
   FeedUserNickName,
   MusicBox,
   MainImageContainer,
-  Equalizer,
   LikeIconContainer,
 } from '../../styles/feed';
-import { feedData } from './data';
 import { FeedPlayer } from '../common/SVG';
 import HeartIcon from '../common/HeartIcon';
+import { useMutation, useQuery } from 'react-query';
+import axios from 'axios';
+import ProfileImage from '../common/ProfileImage';
+import { useRouter } from 'next/router';
+import KebabMenuUI, {
+  KebabMenuAptionButton,
+  KebabMenuStyle,
+} from '../common/KebabMenuUI';
+import { reportPost } from '@/api/post';
+import Modal from '../common/Modal';
 
 const timeSince = (date: string) => {
   const now: Date = new Date();
@@ -37,37 +45,94 @@ const timeSince = (date: string) => {
     return '방금 전';
   }
 };
-
+interface ModalMessage {
+  actionText: string;
+  modalMessge: string | undefined;
+  onClickEvent: any;
+}
 const FeedUi = () => {
-  const data = feedData;
+  const router = useRouter();
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [modalMessge, setModalMessge] = useState<ModalMessage>({
+    actionText: '',
+    modalMessge: '',
+    onClickEvent: '',
+  });
+
+  const getFeed = async () => {
+    const response = await axios.get(`http://localhost:3001/api/main/feed`);
+    return response.data;
+  };
+
+  const { data } = useQuery('feed', getFeed);
+  console.log(data?.feed[0].postId);
+
+  const { mutate: report } = useMutation(reportPost, {
+    onSuccess: (messag) => {
+      setModalMessge({
+        actionText: '확인',
+        modalMessge: messag,
+        onClickEvent: null,
+      });
+      setIsModalOpen(true);
+    },
+  });
+
+  const moveDetailPage = (id: number) => {
+    router.push(`/detail/${id}`);
+  };
+
+  const handleReportClick = (id: any) => {
+    setModalMessge({
+      actionText: '신고',
+      modalMessge: '해당 사용자를 신고하시겠습니까?',
+      onClickEvent: () => report(id),
+    });
+    setIsModalOpen(true);
+  };
 
   return (
     <FeedSection>
-      {data.map((feed) => {
+      <Modal
+        isOpen={isModalOpen}
+        setIsOpen={setIsModalOpen}
+        actionText={modalMessge.actionText}
+        onClickEvent={modalMessge.onClickEvent}
+      >
+        {modalMessge.modalMessge}
+      </Modal>
+      {data?.feed.map((feed: any) => {
         return (
-          <FeedContainer key={feed.id}>
+          <FeedContainer key={feed.postId}>
             <FeedHeader>
               <div>
-                <Image
-                  src={feed.userImage}
-                  alt={feed.alt}
-                  width={33}
-                  height={33}
-                  quality={100}
-                />
+                <ProfileImage userImage={feed.userImage} preset={feed.preset} />
               </div>
-              <FeedUserNickName>{feed.userNickname}</FeedUserNickName>
-              <FeedTime>{timeSince(feed.createdAt)}</FeedTime>
-              <FeedIcon>...I</FeedIcon>
+              <FeedUserNickName>{feed.nickname}</FeedUserNickName>
+              <FeedTime>{timeSince(feed.updatedAt)}</FeedTime>
+              <FeedIcon>
+                <KebabMenuUI>
+                  <KebabMenuStyle>
+                    {feed.postId && (
+                      <KebabMenuAptionButton
+                        onClick={() => handleReportClick(feed.postId)}
+                      >
+                        신고하기 <span></span>
+                      </KebabMenuAptionButton>
+                    )}
+                  </KebabMenuStyle>
+                </KebabMenuUI>
+              </FeedIcon>
             </FeedHeader>
 
             <MainImageContainer>
               <Image
-                src={feed.src}
-                alt={feed.alt}
+                src={feed.image}
+                alt={'Feed Image'}
                 width={272}
                 height={189}
                 quality={100}
+                onClick={() => moveDetailPage(feed.postId)}
               />
             </MainImageContainer>
 
@@ -75,10 +140,9 @@ const FeedUi = () => {
               <MusicBox>
                 <FeedPlayer />
                 <div>{feed.musicTitle}</div>
-                <Equalizer>EI</Equalizer>
               </MusicBox>
               <LikeIconContainer>
-                <HeartIcon postId={feed.id} />
+                <HeartIcon postId={feed.postId} />
               </LikeIconContainer>
             </FeedMusicLikeBox>
           </FeedContainer>
