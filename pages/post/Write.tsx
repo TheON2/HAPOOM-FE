@@ -274,226 +274,215 @@ const Write: NextPage<Props> = ({ update = '1', updateId, data }) => {
     <>
       {!(update === '2' && location.x === 0) && (
         <>
-          <div style={{ minHeight: '800px' }}>
-            <GlobalStyle />
-            <form
-              onSubmit={handlePostSubmit}
-              style={{ display: 'block', textAlign: 'center' }}
-            >
-              <ImageContainer>
-                {update === '2' ? (
-                  <h1 style={{ alignSelf: 'flex-start', margin: '25px' }}>
-                    게시글 수정
-                  </h1>
-                ) : (
-                  <h1 style={{ alignSelf: 'flex-start', margin: '25px' }}>
-                    새 게시글
-                  </h1>
-                )}
-                <Dropzone
+          <form onSubmit={handlePostSubmit}>
+            <ImageContainer>
+              {update === '2' ? (
+                <h1 style={{ alignSelf: 'flex-start', margin: '25px' }}>
+                  게시글 수정
+                </h1>
+              ) : (
+                <h1 style={{ alignSelf: 'flex-start', margin: '25px' }}>
+                  새 게시글
+                </h1>
+              )}
+              <Dropzone
+                images={images}
+                setImages={setImages}
+                imageURLs={imageURLs}
+                setImageURLs={setImageURLs}
+              />
+              <PreviewContainer>
+                <ImagePreview
                   images={images}
-                  setImages={setImages}
+                  removeImage={removeImage}
                   imageURLs={imageURLs}
-                  setImageURLs={setImageURLs}
                 />
-                <PreviewContainer>
-                  <ImagePreview
-                    images={images}
-                    removeImage={removeImage}
-                    imageURLs={imageURLs}
-                  />
-                </PreviewContainer>
-              </ImageContainer>
-              <ImageContainer>
-                <ContentArea content={content} setContent={setContent} />
-                <div
-                  style={{
-                    position: 'relative',
-                    width: 400,
-                  }}
+              </PreviewContainer>
+            </ImageContainer>
+            <ImageContainer>
+              <ContentArea content={content} setContent={setContent} />
+              <div
+                style={{
+                  position: 'relative',
+                }}
+              >
+                <label style={{ textAlign: 'left' }}>
+                  <h3 style={{ margin: '10px 0' }}>음악추가</h3>
+                </label>
+                <CustomButton
+                  type="button"
+                  onClick={handleCommentCreateHandler}
+                  className={musicType !== 0 ? 'secondary' : undefined}
                 >
-                  <label style={{ textAlign: 'left' }}>
-                    <h3 style={{ margin: '10px 0' }}>음악추가</h3>
-                  </label>
-                  <CustomButton
-                    type="button"
-                    onClick={handleCommentCreateHandler}
-                    className={musicType !== 0 ? 'secondary' : undefined}
-                  >
-                    음악 설정하기
-                  </CustomButton>
-                </div>
-                {musicType === 1 && (
-                  <>
-                    <ReadOnlyYoutube
-                      videoId={videoId}
-                      update={update}
-                      setVideoId={setVideoId}
-                      setMusicType={setMusicType}
-                      setSelectedTitle={setSelectedTitle}
-                      setMusicChoose={setMusicChoose}
-                      setAudioSubmit={setAudioSubmit}
-                    />
-                  </>
-                )}
-                {musicType === 2 && (
-                  <CustomPlayer
-                    audioUrl={musicURL}
-                    setAudioUrl={setMusicURL}
-                    title={selectedTitle}
-                    setMusicChoose={setMusicChoose}
+                  음악 설정하기
+                </CustomButton>
+              </div>
+              {musicType === 1 && (
+                <>
+                  <ReadOnlyYoutube
+                    videoId={videoId}
+                    update={update}
+                    setVideoId={setVideoId}
                     setMusicType={setMusicType}
-                    setAudioSubmit={setAudioSubmit}
-                    update={'2'}
-                  />
-                )}
-                {musicType === 3 && slicedAudioURL && (
-                  <CustomPlayer
-                    title={'잘라낸 녹음 파일'}
-                    audioUrl={slicedAudioURL}
-                    setAudioUrl={setAudioURL}
+                    setSelectedTitle={setSelectedTitle}
                     setMusicChoose={setMusicChoose}
-                    setMusicType={setMusicType}
                     setAudioSubmit={setAudioSubmit}
-                    update={'2'}
                   />
-                )}
-                {musicType === 3 && audioURL && !slicedAudioURL && (
-                  <CustomPlayer
-                    title={'녹음된 파일'}
-                    audioUrl={audioURL}
-                    setAudioUrl={setAudioURL}
-                    setMusicChoose={setMusicChoose}
-                    setMusicType={setMusicType}
-                    setAudioSubmit={setAudioSubmit}
-                    update={'2'}
-                  />
-                )}
-                <div
-                  style={{
-                    position: 'relative',
-                    width: 400,
-                  }}
-                >
-                  <label style={{ textAlign: 'left' }}>
-                    <h3 style={{ margin: '10px 0' }}>태그</h3>
-                  </label>
-                  <TagInput tags={tags} setTags={setTags} />
-                </div>
-                <div
-                  style={{
-                    position: 'relative',
-                    width: 400,
-                  }}
-                >
-                  <label style={{ textAlign: 'left' }}>
-                    <h3 style={{ margin: '10px 0' }}>장소</h3>
-                  </label>
-                  <CustomButton type="button" onClick={handleMapCreateHandler}>
-                    위치 설정하기
-                  </CustomButton>
+                </>
+              )}
+              {musicType === 2 && (
+                <CustomPlayer
+                  audioUrl={musicURL}
+                  setAudioUrl={setMusicURL}
+                  title={selectedTitle}
+                  setMusicChoose={setMusicChoose}
+                  setMusicType={setMusicType}
+                  setAudioSubmit={setAudioSubmit}
+                  update={'2'}
+                />
+              )}
+              {musicType === 3 && slicedAudioURL && (
+                <CustomPlayer
+                  title={'잘라낸 녹음 파일'}
+                  audioUrl={slicedAudioURL}
+                  setAudioUrl={setAudioURL}
+                  setMusicChoose={setMusicChoose}
+                  setMusicType={setMusicType}
+                  setAudioSubmit={setAudioSubmit}
+                  update={'2'}
+                />
+              )}
+              {musicType === 3 && audioURL && !slicedAudioURL && (
+                <CustomPlayer
+                  title={'녹음된 파일'}
+                  audioUrl={audioURL}
+                  setAudioUrl={setAudioURL}
+                  setMusicChoose={setMusicChoose}
+                  setMusicType={setMusicType}
+                  setAudioSubmit={setAudioSubmit}
+                  update={'2'}
+                />
+              )}
+              <div
+                style={{
+                  position: 'relative',
+                }}
+              >
+                <label style={{ textAlign: 'left' }}>
+                  <h3 style={{ margin: '10px 0' }}>태그</h3>
+                </label>
+                <TagInput tags={tags} setTags={setTags} />
+              </div>
+              <div
+                style={{
+                  position: 'relative',
+                }}
+              >
+                <label style={{ textAlign: 'left' }}>
+                  <h3 style={{ margin: '10px 0' }}>장소</h3>
+                </label>
+                <CustomButton type="button" onClick={handleMapCreateHandler}>
+                  위치 설정하기
+                </CustomButton>
 
-                  {location.x !== 0 && location.y !== 0 && (
-                    <ReadOnlyMap location={location} />
-                  )}
-                </div>
-                <StyledButton type="submit">
-                  {update === '2' ? (
-                    <h3>사진 수정하기</h3>
-                  ) : (
-                    <h3>사진 게시하기</h3>
-                  )}
-                </StyledButton>
-              </ImageContainer>
-              {isShow ? (
-                <UpAndDownTab
-                  onClickEvent={handleCommentShowHandler}
-                  $isUp={commentEdit.show}
-                >
-                  {commentEdit.show && (
-                    <div>
-                      <Accordion
-                        image={youtube}
-                        selected={musicChoose === 1}
-                        onClick={() => handleAccordionClick(1)}
-                      >
-                        <>
-                          <YoutubePlayer
-                            setVideoId={setVideoId}
-                            setSelectedTitle={setSelectedTitle}
-                            update={update}
-                            videoId={videoId}
-                            setAudioSubmit={setAudioSubmit}
-                          />
-                        </>
-                      </Accordion>
-                      <Accordion
-                        image={music}
-                        selected={musicChoose === 2}
-                        onClick={() => handleAccordionClick(2)}
-                      >
-                        <MusicSelector
-                          musicURL={musicURL}
-                          setMusicURL={setMusicURL}
-                          setIsShow={setIsShow}
-                          setAudioSubmit={setAudioSubmit}
+                {location.x !== 0 && location.y !== 0 && (
+                  <ReadOnlyMap location={location} />
+                )}
+              </div>
+              <StyledButton type="submit">
+                {update === '2' ? (
+                  <h3>사진 수정하기</h3>
+                ) : (
+                  <h3>사진 게시하기</h3>
+                )}
+              </StyledButton>
+            </ImageContainer>
+            {isShow ? (
+              <UpAndDownTab
+                onClickEvent={handleCommentShowHandler}
+                $isUp={commentEdit.show}
+              >
+                {commentEdit.show && (
+                  <div>
+                    <Accordion
+                      image={youtube}
+                      selected={musicChoose === 1}
+                      onClick={() => handleAccordionClick(1)}
+                    >
+                      <>
+                        <YoutubePlayer
+                          setVideoId={setVideoId}
                           setSelectedTitle={setSelectedTitle}
-                        />
-                      </Accordion>
-                      <Accordion
-                        image={record}
-                        selected={musicChoose === 3}
-                        onClick={() => handleAccordionClick(3)}
-                      >
-                        <RecordPlayer
-                          setAudioFile={setAudioFile}
-                          setSlicedAudioFile={setSlicedAudioFile}
-                          setSlicedAudioURL={setSlicedAudioURL}
-                          slicedAudioURL={slicedAudioURL}
-                          audioURL={audioURL}
-                          setAudioURL={setAudioURL}
-                          setIsShow={setIsShow}
+                          update={update}
+                          videoId={videoId}
                           setAudioSubmit={setAudioSubmit}
-                          setMusicChoose={setMusicChoose}
-                          setMusicType={setMusicType}
                         />
-                      </Accordion>
-                      <div style={{ display: 'flex', gap: '20px' }}>
-                        <Button type="button" className="secondary">
-                          닫기
-                        </Button>
-                        <Button
-                          onClick={submitMusic}
-                          type="button"
-                          className={!audioSubmit ? 'secondary' : undefined}
-                        >
-                          확인
-                        </Button>
-                      </div>
-                      {commentEdit.show && (
-                        <div style={{ height: '50px' }}></div>
-                      )}
+                      </>
+                    </Accordion>
+                    <Accordion
+                      image={music}
+                      selected={musicChoose === 2}
+                      onClick={() => handleAccordionClick(2)}
+                    >
+                      <MusicSelector
+                        musicURL={musicURL}
+                        setMusicURL={setMusicURL}
+                        setIsShow={setIsShow}
+                        setAudioSubmit={setAudioSubmit}
+                        setSelectedTitle={setSelectedTitle}
+                      />
+                    </Accordion>
+                    <Accordion
+                      image={record}
+                      selected={musicChoose === 3}
+                      onClick={() => handleAccordionClick(3)}
+                    >
+                      <RecordPlayer
+                        setAudioFile={setAudioFile}
+                        setSlicedAudioFile={setSlicedAudioFile}
+                        setSlicedAudioURL={setSlicedAudioURL}
+                        slicedAudioURL={slicedAudioURL}
+                        audioURL={audioURL}
+                        setAudioURL={setAudioURL}
+                        setIsShow={setIsShow}
+                        setAudioSubmit={setAudioSubmit}
+                        setMusicChoose={setMusicChoose}
+                        setMusicType={setMusicType}
+                      />
+                    </Accordion>
+                    <div style={{ display: 'flex', gap: '20px' }}>
+                      <Button type="button" className="secondary">
+                        닫기
+                      </Button>
+                      <Button
+                        onClick={submitMusic}
+                        type="button"
+                        className={!audioSubmit ? 'secondary' : undefined}
+                      >
+                        확인
+                      </Button>
                     </div>
-                  )}
-                </UpAndDownTab>
-              ) : null}
-              {isShowMap ? (
-                <UpAndDownTab
-                  onClickEvent={handleMapShowHandler}
-                  $isUp={mapEdit.show}
-                >
-                  {mapEdit.show && (
-                    <MapComponent
-                      setLocation={setLocation}
-                      location={location}
-                      update={update}
-                      setIsShowMap={setIsShowMap}
-                    />
-                  )}
-                </UpAndDownTab>
-              ) : null}
-            </form>
-          </div>
+                    {commentEdit.show && <div style={{ height: '50px' }}></div>}
+                  </div>
+                )}
+              </UpAndDownTab>
+            ) : null}
+            {isShowMap ? (
+              <UpAndDownTab
+                onClickEvent={handleMapShowHandler}
+                $isUp={mapEdit.show}
+              >
+                {mapEdit.show && (
+                  <MapComponent
+                    setLocation={setLocation}
+                    location={location}
+                    update={update}
+                    setIsShowMap={setIsShowMap}
+                  />
+                )}
+              </UpAndDownTab>
+            ) : null}
+          </form>
         </>
       )}
     </>
