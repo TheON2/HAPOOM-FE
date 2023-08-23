@@ -34,42 +34,42 @@ interface MusicSelectorProps {
   setAudioSubmit: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const MusicSelector: React.FC<MusicSelectorProps> = ({
-  musicURL,
-  setMusicURL,
-  setIsShow,
-  setSelectedTitle,
-  setAudioSubmit,
-}) => {
-  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedIndex = e.target.selectedIndex; // 옵션 인덱스에서 1을 뺀다. (첫 번째 옵션을 고려)
-    const selectedOption = musicOptions[selectedIndex];
-    setMusicURL(selectedOption.url);
-    setSelectedTitle(selectedOption.name); // 현재 선택된 음악의 이름을 설정
-    setAudioSubmit(true);
-  };
+// const MusicSelector: React.FC<MusicSelectorProps> = ({
+//   musicURL,
+//   setMusicURL,
+//   setIsShow,
+//   setSelectedTitle,
+//   setAudioSubmit,
+// }) => {
+//   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+//     const selectedIndex = e.target.selectedIndex; // 옵션 인덱스에서 1을 뺀다. (첫 번째 옵션을 고려)
+//     const selectedOption = musicOptions[selectedIndex];
+//     setMusicURL(selectedOption.url);
+//     setSelectedTitle(selectedOption.name); // 현재 선택된 음악의 이름을 설정
+//     setAudioSubmit(true);
+//   };
 
-  return (
-    <>
-      <Form.Select
-        aria-label="Select NCS MUSIC"
-        onChange={handleChange}
-        value={musicURL}
-      >
-        {musicOptions.map((option, index) => (
-          <option key={index} value={option.url}>
-            {index + 1}.{option.name}
-          </option>
-        ))}
-      </Form.Select>
-    </>
-  );
-};
+//   return (
+//     <>
+//       <Form.Select
+//         aria-label="Select NCS MUSIC"
+//         onChange={handleChange}
+//         value={musicURL}
+//       >
+//         {musicOptions.map((option, index) => (
+//           <option key={index} value={option.url}>
+//             {index + 1}.{option.name}
+//           </option>
+//         ))}
+//       </Form.Select>
+//     </>
+//   );
+// };
 
-type selectProps = {
-  selectOption: { value: string; text: string }[];
-  setOption: any;
-};
+// type selectProps = {
+//   selectOption: { value: string; text: string }[];
+//   setOption: any;
+// };
 
 export const Selecter = ({
   musicURL,
@@ -77,7 +77,7 @@ export const Selecter = ({
   setAudioSubmit,
   setSelectedTitle,
 }: MusicSelectorProps) => {
-  const [isShow, setIsShow] = useState(false);
+  const [isShow, setIsShow] = useState(true);
   const [selectText, setSelectText] = useState(musicOptions[0].name);
 
   const SelectClick = () => {
@@ -120,10 +120,7 @@ export const Selecter = ({
     </SelectBox>
   );
 };
-// 이게 꼭 필요한 것인가?
-// const SelectItemNonHidden = ({ children }) => {
-//     return <ItemNonHidden>{children}</ItemNonHidden>;
-// };
+
 const WIDTH = '100%';
 
 const SelectBarButton = styled.button`
@@ -155,11 +152,13 @@ const SelectBarButton = styled.button`
 `;
 const SelectList = styled.ul`
   width: ${WIDTH};
+  /* border: 2px solid #e8eef3; */
+  /* border-radius: 0 0 8px 8px; */
 `;
 const SelectItem = styled.li`
   width: 100%;
-  height: 40px;
-  padding: 0px 16px;
+  /* height: 40px; */
+  padding: 12px 16px;
   /* border-radius: 8px; */
   color: #777;
   font-size: 12px;
@@ -169,6 +168,7 @@ const SelectItem = styled.li`
   background-color: #fff;
   transition: all 0.3s ease-in-out;
   cursor: pointer;
+
   &:hover {
     background-color: #f3f9ff;
   }
@@ -189,7 +189,9 @@ const SelectBox = styled.div<Props>`
   position: absolute;
   z-index: 14;
   transition: all 0.3s ease-in-out;
-  border: 2px solid #e8eef3;
+  border-left: 2px solid #e8eef3;
+  border-right: 2px solid #e8eef3;
+  border-bottom: 2px solid #e8eef3;
   /* top: 4px; */
   /* left: 12px; */
   /* transform: translateY(-50%); */

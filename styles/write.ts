@@ -4,19 +4,19 @@ export const GlobalFonts = createGlobalStyle`
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap');
 `;
 
-// export const GlobalStyle = createGlobalStyle`
-//   body{
-//     color: #051619;
-//     font-size: 14px;
-//     font-family: "Noto Sans KR","Apple SD Gothic Neo",sans-serif;
-//     line-height: 1.8;
-//     -webkit-text-size-adjust: 100%;
-//     -webkit-font-smoothing: antialiased;
-//     text-rendering: optimizeLegibility;
-//     letter-spacing: -.0125rem;
-//     margin: 0;
-//   }
-//   `;
+export const GlobalStyle = createGlobalStyle`
+  body{
+    color: #051619;
+    font-size: 14px;
+    font-family: "Noto Sans KR","Apple SD Gothic Neo",sans-serif;
+    line-height: 1.8;
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    letter-spacing: -.0125rem;
+    margin: 0;
+  }
+  `;
 
 export const Box = styled.div`
   width: 100%;
@@ -25,11 +25,43 @@ export const Box = styled.div`
   justify-content: center;
   text-align: start;
   margin-bottom: 36px;
+  position: relative;
+  h2 {
+    font-size: 20px;
+    margin-bottom: 8px;
+    text-align: center;
+    padding: 12px 36px;
+    background-color: #eff7ff;
+    border-radius: 30px;
+    border: 2px solid #dfefff;
+    color: #1f6cb9;
+  }
   label {
     margin-bottom: 16px;
+    font-weight: 700;
+    color: #334765;
   }
 `;
-
+type limitProps = {
+  $color: boolean;
+};
+export const InputContainer = styled.div`
+  width: 100%;
+  position: relative;
+  label {
+    font-weight: 700;
+    color: #334765;
+  }
+  input {
+    margin-top: 16px;
+  }
+`;
+export const LimitNumBox = styled.span<limitProps>`
+  position: absolute;
+  bottom: 5px;
+  right: 10px;
+  color: ${(props) => (props.$color ? '#FF5D5D' : '#334765')};
+`;
 export const InputBox = styled.input`
   display: block;
   width: 100%;
@@ -44,16 +76,25 @@ export const InputBox = styled.input`
 `;
 export const TagBox = styled.div`
   display: flex;
+  flex-wrap: wrap;
   gap: 12px;
-  margin-top: 12px;
+  margin-top: 20px;
 `;
 export const RecordButtonBox = styled.div`
+  width: 100%;
   display: flex;
+  margin-top: 16px;
   flex-direction: column;
   align-items: center;
   text-align: center;
+  gap: 12px;
 `;
-
+export const RecordEditBox = styled.div`
+  max-width: 360px;
+  width: 100%;
+  margin: 8px auto;
+  padding: 8px 0;
+`;
 export const PreviewContainer = styled.div`
   display: flex;
   justify-content: center;

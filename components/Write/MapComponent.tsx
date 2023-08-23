@@ -7,7 +7,7 @@ import React, {
 } from 'react';
 import axios from 'axios';
 import Script from 'next/script';
-import { StyledAuthInput } from '@/styles/write';
+import { InputBox, StyledAuthInput } from '@/styles/write';
 import styled from 'styled-components';
 import { debounce } from 'lodash';
 import Button from '../common/Button';
@@ -221,7 +221,9 @@ export const MapComponent: React.FC<MapComponentProps> = ({
     });
     setIsShowMap(false);
   };
-
+  const onClickCloseHandler = () => {
+    setIsShowMap(false);
+  };
   return (
     <>
       <Script
@@ -232,20 +234,19 @@ export const MapComponent: React.FC<MapComponentProps> = ({
       />
       <h3 style={{ float: 'left', margin: '10px 0' }}>장소</h3>
       <label></label>
-      <StyledAuthInput
+      <InputBox
         type="text"
         placeholder="장소를 입력해주세요"
         value={locationInput}
         onChange={(e) => setLocationInput(e.target.value)}
         onKeyUp={handleKeyUp}
-        style={{ width: '100%', border: '2px solid #0084ff', margin: '0' }}
       />
       <div
         style={{
           position: 'relative',
           width: '100%',
           height: '40vh',
-          margin: '40px 0',
+          margin: '20px 0',
         }}
       >
         {suggestions.length > 0 && (
@@ -272,7 +273,11 @@ export const MapComponent: React.FC<MapComponentProps> = ({
         />
       </div>
       <div style={{ display: 'flex', gap: '20px' }}>
-        <Button type="button" className="secondary">
+        <Button
+          type="button"
+          className="secondary"
+          onClick={onClickCloseHandler}
+        >
           닫기
         </Button>
         <Button
@@ -283,7 +288,6 @@ export const MapComponent: React.FC<MapComponentProps> = ({
           확인
         </Button>
       </div>
-      <div style={{ height: '100px' }}></div>
     </>
   );
 };

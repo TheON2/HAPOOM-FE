@@ -18,6 +18,7 @@ import Image from 'next/image';
 
 import playImage from '@/public/play.png';
 import pauseImage from '@/public/pause.png';
+import { Xmark } from '../common/SVG';
 
 interface UniversalPlayerProps {
   audioUrl: string | undefined;
@@ -131,19 +132,10 @@ const CustomPlayer = ({
       <CustomPlayerWrapper>
         <audio ref={audioRef} src={audioUrl} style={{ display: 'none' }} />
         <PlayHeader>
-          <PlayButtonGroup>
-            <PlayButton type="button" onClick={handlePlayPause}>
-              {playing ? (
-                <Image src={pauseImage} alt="Pause" width={25} height={25} />
-              ) : (
-                <Image src={playImage} alt="Play" width={25} height={25} />
-              )}
-            </PlayButton>
-          </PlayButtonGroup>
           <TitleBox>{title}</TitleBox>
           {update !== '3' && (
             <CloseButton type="button" onClick={handleClosePlayer}>
-              X
+              <Xmark />
             </CloseButton>
           )}
         </PlayHeader>
@@ -162,16 +154,25 @@ const CustomPlayer = ({
               {formatTime(propsduration ?? duration)}
             </TimeLabel>
           </SeekSliderGroup>
+          <PlayButtonGroup>
+            <PlayButton type="button" onClick={handlePlayPause}>
+              {playing ? (
+                <Image src={pauseImage} alt="Pause" width={25} height={25} />
+              ) : (
+                <Image src={playImage} alt="Play" width={25} height={25} />
+              )}
+            </PlayButton>
+          </PlayButtonGroup>
         </PlayerControls>
 
-        <VolumeSliderGroup>
+        {/* <VolumeSliderGroup>
           <VolumeSlider
             type="range"
             min="0"
             max="100"
             onChange={handleVolumeChange}
           />
-        </VolumeSliderGroup>
+        </VolumeSliderGroup> */}
       </CustomPlayerWrapper>
     </>
   );

@@ -6,6 +6,7 @@ type recordButton = {
 };
 type recordProps = {
   onClickEvent: () => void;
+  className?: string;
 };
 
 const RecordButtonStyle = styled.button`
@@ -16,6 +17,7 @@ const RecordButtonStyle = styled.button`
   border: 2px solid #333;
   overflow: hidden;
   position: relative;
+  margin: 0 auto;
   &::after {
     content: '';
     display: block;
@@ -39,7 +41,7 @@ const RecordButtonStyle = styled.button`
   }
 `;
 
-const RecordButton = ({ onClickEvent }: recordProps) => {
+const RecordButton = ({ onClickEvent, className }: recordProps) => {
   const [isClick, setIsClick] = useState<boolean>(false);
   const onClickRecordHandler = () => {
     setIsClick(!isClick);
@@ -50,7 +52,7 @@ const RecordButton = ({ onClickEvent }: recordProps) => {
       // $isClick={isClick}
       onClick={onClickRecordHandler}
       type="button"
-      className={isClick ? 'recording' : ''}
+      className={className}
     ></RecordButtonStyle>
   );
 };

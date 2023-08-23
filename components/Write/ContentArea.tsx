@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import styled from 'styled-components';
-import { Box } from '@/styles/write';
+import { Box, LimitNumBox } from '@/styles/write';
 interface ContentAreaProps {
   content: string;
   setContent: React.Dispatch<React.SetStateAction<string>>;
@@ -10,11 +10,13 @@ const TextArea = styled.textarea`
   width: 100%;
   height: 120px;
   resize: none;
-  padding: 24px;
+  padding: 20px 24px;
   border: 2px solid #e8e8e8;
   border-radius: 12px;
   background-color: #f0efef;
   font-size: 15px;
+  outline: none;
+  line-height: 24px;
 `;
 
 const ContentArea: React.FC<ContentAreaProps> = ({ content, setContent }) => {
@@ -34,29 +36,16 @@ const ContentArea: React.FC<ContentAreaProps> = ({ content, setContent }) => {
 
   return (
     <>
-      <Box
-        style={{
-          display: 'flex',
-          position: 'relative',
-          // marginBottom: 50,
-        }}
-      >
+      <Box>
         <label>문구입력</label>
         <TextArea
           value={content}
           onChange={handleInputChange}
           placeholder="문구를 입력해주세요"
         />
-        <div
-          style={{
-            position: 'absolute',
-            bottom: 5,
-            right: 10,
-            color: color,
-          }}
-        >
+        <LimitNumBox $color={isMaxLength}>
           {content.length}/{maxLength}
-        </div>
+        </LimitNumBox>
       </Box>
     </>
   );

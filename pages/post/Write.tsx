@@ -304,17 +304,16 @@ const Write: NextPage<Props> = ({ update = '1', updateId, data }) => {
                   imageURLs={imageURLs}
                   setImageURLs={setImageURLs}
                 />
-                <PreviewContainer>
-                  <ImagePreview
-                    images={images}
-                    removeImage={removeImage}
-                    imageURLs={imageURLs}
-                  />
-                </PreviewContainer>
+                {/* <PreviewContainer> */}
+                <ImagePreview
+                  images={images}
+                  removeImage={removeImage}
+                  imageURLs={imageURLs}
+                />
+                {/* </PreviewContainer> */}
               </Box>
               <ContentArea content={content} setContent={setContent} />
               <Box>
-                <label>태그</label>
                 <TagInput tags={tags} setTags={setTags} />
               </Box>
               <Box>
@@ -325,13 +324,7 @@ const Write: NextPage<Props> = ({ update = '1', updateId, data }) => {
                 >
                   음악추가
                 </label>
-                <CustomButton
-                  type="button"
-                  onClick={handleCommentCreateHandler}
-                  className={musicType !== 0 ? 'secondary' : undefined}
-                >
-                  음악 설정하기
-                </CustomButton>
+
                 {musicType === 1 && (
                   <>
                     <ReadOnlyYoutube
@@ -378,23 +371,23 @@ const Write: NextPage<Props> = ({ update = '1', updateId, data }) => {
                     update={'2'}
                   />
                 )}
+                <CustomButton
+                  type="button"
+                  onClick={handleCommentCreateHandler}
+                  className={musicType !== 0 ? 'secondary' : undefined}
+                >
+                  음악 설정하기
+                </CustomButton>
               </Box>
 
               <Box>
-                <label
-                  style={{
-                    display: 'block',
-                  }}
-                >
-                  장소
-                </label>
-                <CustomButton type="button" onClick={handleMapCreateHandler}>
-                  위치 설정하기
-                </CustomButton>
-
+                <label>장소</label>
                 {location.x !== 0 && location.y !== 0 && (
                   <ReadOnlyMap location={location} />
                 )}
+                <CustomButton type="button" onClick={handleMapCreateHandler}>
+                  위치 설정하기
+                </CustomButton>
               </Box>
               <Box>
                 <CustomButton type="submit">
@@ -408,7 +401,7 @@ const Write: NextPage<Props> = ({ update = '1', updateId, data }) => {
                   $isUp={commentEdit.show}
                 >
                   {commentEdit.show && (
-                    <div>
+                    <>
                       <Accordion
                         image={youtube}
                         selected={musicChoose === 1}
@@ -459,7 +452,11 @@ const Write: NextPage<Props> = ({ update = '1', updateId, data }) => {
                         />
                       </Accordion>
                       <div style={{ display: 'flex', gap: '20px' }}>
-                        <Button type="button" className="secondary">
+                        <Button
+                          type="button"
+                          className="secondary"
+                          onClick={handleCommentShowHandler}
+                        >
                           닫기
                         </Button>
                         <Button
@@ -470,10 +467,7 @@ const Write: NextPage<Props> = ({ update = '1', updateId, data }) => {
                           확인
                         </Button>
                       </div>
-                      {commentEdit.show && (
-                        <div style={{ height: '50px' }}></div>
-                      )}
-                    </div>
+                    </>
                   )}
                 </UpAndDownTab>
               ) : null}
