@@ -600,3 +600,29 @@ export const FeedPlayer = () => (
     </defs>
   </svg>
 );
+export const Xmark = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="20"
+    height="20"
+    viewBox="0 0 20 20"
+    fill="none"
+  >
+    <rect
+      x="3"
+      y="4.37134"
+      width="1.93936"
+      height="17.9038"
+      transform="rotate(-45 3 4.37134)"
+      fill="#929AA7"
+    />
+    <rect
+      x="4.37109"
+      y="17.0312"
+      width="1.93936"
+      height="17.9038"
+      transform="rotate(-135 4.37109 17.0312)"
+      fill="#929AA7"
+    />
+  </svg>
+);

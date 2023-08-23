@@ -7,6 +7,7 @@ interface Button {
 
 const ButtonStyle = styled.button<Button>`
   /* height: 36px; */
+  max-width: 360px;
   width: 100%;
   padding: 10px 16px 8px;
   margin-top: ${({ $marginTop }) => $marginTop};

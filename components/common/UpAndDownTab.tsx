@@ -8,7 +8,7 @@ type styleProps = {
 const UpAndDownTabLayout = styled.div<styleProps>`
   width: 100%;
   /* height: 80vh; */
-  padding: 0px 24px 12px;
+  padding: 0px 24px 80px;
   position: fixed;
   bottom: 0;
   left: 0;
@@ -16,7 +16,7 @@ const UpAndDownTabLayout = styled.div<styleProps>`
   border-radius: 25px 25px 0 0;
   background-color: #fff;
   box-shadow: 0px -5px 10px rgba(0, 0, 0, 0.2);
-
+  transform: translateX(50%);
   &.up {
     animation: comment-up 0.8s forwards;
   }
@@ -41,7 +41,7 @@ const UpAndDownTabLayout = styled.div<styleProps>`
       transform: translateY(70%);
     }
     100% {
-      transform: translateY();
+      transform: translateY(0);
     }
   }
   @keyframes comment-down {
@@ -52,6 +52,12 @@ const UpAndDownTabLayout = styled.div<styleProps>`
       transform: translateY(70%);
     }
   }
+`;
+
+const UpAndDownTabInner = styled.div`
+  max-width: 360px;
+  width: 100%;
+  margin: 0 auto;
 `;
 
 type Props = {
@@ -66,7 +72,7 @@ const UpAndDownTab = ({ children, $isUp, onClickEvent }: Props) => {
       <div className="click-hit-area" onClick={onClickEvent}>
         <span></span>
       </div>
-      {children}
+      <UpAndDownTabInner>{children}</UpAndDownTabInner>
     </UpAndDownTabLayout>
   );
 };

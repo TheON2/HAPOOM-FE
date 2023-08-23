@@ -6,7 +6,6 @@ import React, {
   useState,
 } from 'react';
 import {
-  GlobalStyle,
   ImageContainer,
   PreviewContainer,
   StyledButton,
@@ -172,7 +171,7 @@ const Detail: NextPage = () => {
   if (!isSuccess) return <div>Loading...</div>;
   return (
     <>
-      <GlobalStyle />
+      {/* <GlobalStyle /> */}
       <Modal
         isOpen={isModalOpen}
         setIsOpen={setIsModalOpen}
@@ -183,7 +182,7 @@ const Detail: NextPage = () => {
       </Modal>
       <ContentsContainer>
         <OtherProfileBox>
-          <Link href={`/User/sss@gmail.com`}>
+          <Link href={`/User/${data?.user?.userId}`}>
             <DetailProfile
               userImage={data?.user?.userImage}
               preset={data?.user?.preset}
