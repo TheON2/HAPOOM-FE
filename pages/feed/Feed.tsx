@@ -4,10 +4,8 @@ import { useDispatch } from 'react-redux';
 import { useQuery } from 'react-query';
 import { getAuthToken } from '@/api/user';
 import { AUTH_USER, UserResponse } from '@/redux/reducers/userSlice';
-import { GetStaticProps, NextPage } from 'next';
-import { getMain } from '@/api/post';
 
-const Feed: NextPage<any> = ({ data }) => {
+const Feed = () => {
   const dispatch = useDispatch();
   const isClientSide = typeof window !== 'undefined';
   const tokenExists = isClientSide ? !!localStorage.getItem('token') : false;
@@ -22,18 +20,20 @@ const Feed: NextPage<any> = ({ data }) => {
       cacheTime: 0,
     }
   );
-  return <FeedUi data={data} />;
+  return <FeedUi />;
 };
 
 export default Feed;
 
-export const getStaticProps: GetStaticProps = async () => {
-  const response = await getMain();
+// export const getStaticProps: GetStaticProps = async () => {
+//   const response = await axios.get(
+//     `${process.env.NEXT_PUBLIC_LOCAL_SERVER}/api/main/feed`
+//   );
 
-  const data = response;
+//   const data = response;
 
-  return {
-    props: { data },
-    revalidate: 60,
-  };
-};
+//   return {
+//     props: { data },
+//     revalidate: 5,
+//   };
+// };

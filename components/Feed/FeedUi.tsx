@@ -13,9 +13,11 @@ import {
   Equalizer,
   LikeIconContainer,
 } from '../../styles/feed';
-import { feedData } from './data';
 import { FeedPlayer } from '../common/SVG';
 import HeartIcon from '../common/HeartIcon';
+import { useQuery } from 'react-query';
+import axios from 'axios';
+import ProfileImage from '../common/ProfileImage';
 
 const timeSince = (date: string) => {
   const now: Date = new Date();
@@ -37,37 +39,32 @@ const timeSince = (date: string) => {
     return '방금 전';
   }
 };
-type FeedUiProps = {
-  data: any; // data 프롭을 위한 타입 정의
-};
-const FeedUi: React.FC<FeedUiProps> = ({ data }) => {
-  const dataa = feedData;
-  console.log(data.posts);
+const FeedUi = () => {
+  const getFeed = async () => {
+    const response = await axios.get(`http://localhost:3001/api/main/feed`);
+    return response.data;
+  };
+  const { data } = useQuery('feedData', getFeed);
+  console.log(data?.feed);
 
   return (
     <FeedSection>
-      {dataa.map((feed: any) => {
+      {data?.feed.map((feed: any) => {
         return (
-          <FeedContainer key={feed.id}>
+          <FeedContainer key={feed.postId}>
             <FeedHeader>
               <div>
-                <Image
-                  src={feed.userImage}
-                  alt={feed.alt}
-                  width={33}
-                  height={33}
-                  quality={100}
-                />
+                <ProfileImage userImage={feed.userImage} preset={feed.preset} />
               </div>
-              <FeedUserNickName>{feed.userNickname}</FeedUserNickName>
-              <FeedTime>{timeSince(feed.createdAt)}</FeedTime>
+              <FeedUserNickName>{feed.nickname}</FeedUserNickName>
+              <FeedTime>{timeSince(feed.updatedAt)}</FeedTime>
               <FeedIcon>...I</FeedIcon>
             </FeedHeader>
 
             <MainImageContainer>
               <Image
-                src={feed.src}
-                alt={feed.alt}
+                src={feed.image}
+                alt={'Feed Image'}
                 width={272}
                 height={189}
                 quality={100}
@@ -78,10 +75,9 @@ const FeedUi: React.FC<FeedUiProps> = ({ data }) => {
               <MusicBox>
                 <FeedPlayer />
                 <div>{feed.musicTitle}</div>
-                <Equalizer>EI</Equalizer>
               </MusicBox>
               <LikeIconContainer>
-                <HeartIcon postId={feed.id} />
+                <HeartIcon postId={feed.postId} />
               </LikeIconContainer>
             </FeedMusicLikeBox>
           </FeedContainer>
