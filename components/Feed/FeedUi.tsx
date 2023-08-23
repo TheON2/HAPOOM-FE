@@ -144,8 +144,9 @@ const FeedUi = () => {
                 src={feed.image}
                 alt={'Feed Image'}
                 width={272}
-                height={189}
+                height={188}
                 quality={100}
+                priority
                 onClick={() => moveDetailPage(feed.postId)}
               />
             </MainImageContainer>
