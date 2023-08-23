@@ -1,11 +1,18 @@
+import { RecordButtonBox } from '@/styles/write';
 import React, { useEffect, useState } from 'react';
+import RecordButton from '../common/RecordButton';
 
 interface RecordingInfoProps {
   audioUrl: string | undefined;
   recording: boolean;
+  onClickEvent: () => void;
 }
 
-const RecordingInfo = ({ audioUrl, recording }: RecordingInfoProps) => {
+const RecordingInfo = ({
+  audioUrl,
+  recording,
+  onClickEvent,
+}: RecordingInfoProps) => {
   const [recordingTime, setRecordingTime] = useState(0);
 
   useEffect(() => {
@@ -31,10 +38,11 @@ const RecordingInfo = ({ audioUrl, recording }: RecordingInfoProps) => {
   };
 
   return (
-    <div>
+    <RecordButtonBox>
       <h3>녹음 정보</h3>
       <p>녹음 시간: {formatTime(recordingTime)}</p>
-    </div>
+      <RecordButton onClickEvent={onClickEvent} className={'recording'} />
+    </RecordButtonBox>
   );
 };
 

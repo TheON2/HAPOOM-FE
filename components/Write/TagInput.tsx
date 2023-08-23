@@ -1,6 +1,13 @@
-import { StyledAuthInput } from '@/styles/write';
+import {
+  Box,
+  InputBox,
+  InputContainer,
+  LimitNumBox,
+  TagBox,
+} from '@/styles/write';
 import React, { KeyboardEvent, useState, useCallback } from 'react';
 import Tag from './Tag';
+import { styled } from 'styled-components';
 
 interface TagInputProps {
   tags: string[];
@@ -56,32 +63,27 @@ const TagInput: React.FC<TagInputProps> = ({ tags, setTags }) => {
 
   return (
     <>
-      <StyledAuthInput
-        type="text"
-        placeholder="#태그"
-        value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
-        onKeyDown={handleTagChange}
-        style={{ width: '400px', border: '2px solid #0084ff' }}
-        disabled={isMaxTags}
-      />
-      <div style={{ position: 'relative', width: 400 }}>
-        <div
-          style={{
-            position: 'absolute',
-            bottom: 5,
-            right: 10,
-            color: color,
-          }}
-        >
+      <InputContainer>
+        <label>태그</label>
+        <InputBox
+          type="text"
+          placeholder="#태그"
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+          onKeyDown={handleTagChange}
+          disabled={isMaxTags}
+        />
+
+        <LimitNumBox $color={isMaxTags}>
           {tags.length}/{MAX_TAGS}
-        </div>
-      </div>
-      <div style={{ display: 'flex', gap: '10px' }}>
+        </LimitNumBox>
+      </InputContainer>
+
+      <TagBox>
         {tags.map((tag, index) => (
           <Tag key={index} tag={tag} onDelete={handleDelete} />
         ))}
-      </div>
+      </TagBox>
     </>
   );
 };

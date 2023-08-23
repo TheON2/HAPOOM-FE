@@ -10,6 +10,7 @@ import socketIOClient from 'socket.io-client';
 import Layout from '@/components/common/layout/Layout';
 import MobileBottomNav from '@/components/common/MobileBottomNav';
 import { useRouter } from 'next/router';
+import Script from 'next/script';
 const queryClient = new QueryClient();
 const ENDPOINT = `${process.env.NEXT_PUBLIC_LOCAL_SERVER}`;
 
@@ -57,6 +58,10 @@ function MyApp({ Component, pageProps }: AppProps) {
       }, 10000);
     });
 
+    // socket.on('latest-posts', (latestPosts) => {
+    //   alert(latestPosts.post.postId);
+    // });
+
     // 컴포넌트가 언마운트될 때 소켓 연결을 닫습니다.
     return () => {
       socket.disconnect();
@@ -65,6 +70,22 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <>
+      {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS && (
+        <>
+          <Script
+            strategy="afterInteractive"
+            src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`}
+          />
+          <Script id="ga-gtag" strategy="afterInteractive">
+            {`
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}');
+            `}
+          </Script>
+        </>
+      )}
       <QueryClientProvider client={queryClient}>
         {!isExcludedPage ? (
           <>
