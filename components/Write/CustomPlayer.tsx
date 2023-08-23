@@ -3,12 +3,13 @@ import {
   CustomPlayerWrapper,
   PlayButton,
   PlayButtonGroup,
+  PlayHeader,
   PlayerControls,
   PlayerWrapper,
   SeekSlider,
   SeekSliderGroup,
   TimeLabel,
-  Title,
+  TitleBox,
   VolumeSlider,
   VolumeSliderGroup,
 } from '@/styles/youtubeplayer';
@@ -17,6 +18,7 @@ import Image from 'next/image';
 
 import playImage from '@/public/play.png';
 import pauseImage from '@/public/pause.png';
+import { Xmark } from '../common/SVG';
 
 interface UniversalPlayerProps {
   audioUrl: string | undefined;
@@ -128,24 +130,16 @@ const CustomPlayer = ({
   return (
     <>
       <CustomPlayerWrapper>
-        {update !== '3' && (
-          <CloseButton type="button" onClick={handleClosePlayer}>
-            X
-          </CloseButton>
-        )}
-        <Title>{title}</Title>
         <audio ref={audioRef} src={audioUrl} style={{ display: 'none' }} />
-
+        <PlayHeader>
+          <TitleBox>{title}</TitleBox>
+          {update !== '3' && (
+            <CloseButton type="button" onClick={handleClosePlayer}>
+              <Xmark />
+            </CloseButton>
+          )}
+        </PlayHeader>
         <PlayerControls>
-          <PlayButtonGroup>
-            <PlayButton type="button" onClick={handlePlayPause}>
-              {playing ? (
-                <Image src={pauseImage} alt="Pause" width={25} height={25} />
-              ) : (
-                <Image src={playImage} alt="Play" width={25} height={25} />
-              )}
-            </PlayButton>
-          </PlayButtonGroup>
           <SeekSliderGroup>
             <TimeLabel>{formatTime(seek)}</TimeLabel>
             <SeekSlider
@@ -156,17 +150,29 @@ const CustomPlayer = ({
               onChange={handleSeekChange}
               step={0.01}
             />
-            <TimeLabel>{formatTime(propsduration ?? duration)}</TimeLabel>
+            <TimeLabel className="end">
+              {formatTime(propsduration ?? duration)}
+            </TimeLabel>
           </SeekSliderGroup>
-          <VolumeSliderGroup>
-            <VolumeSlider
-              type="range"
-              min="0"
-              max="100"
-              onChange={handleVolumeChange}
-            />
-          </VolumeSliderGroup>
+          <PlayButtonGroup>
+            <PlayButton type="button" onClick={handlePlayPause}>
+              {playing ? (
+                <Image src={pauseImage} alt="Pause" width={25} height={25} />
+              ) : (
+                <Image src={playImage} alt="Play" width={25} height={25} />
+              )}
+            </PlayButton>
+          </PlayButtonGroup>
         </PlayerControls>
+
+        {/* <VolumeSliderGroup>
+          <VolumeSlider
+            type="range"
+            min="0"
+            max="100"
+            onChange={handleVolumeChange}
+          />
+        </VolumeSliderGroup> */}
       </CustomPlayerWrapper>
     </>
   );
