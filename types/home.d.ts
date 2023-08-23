@@ -4,6 +4,7 @@ export interface MainPageProps {
   hashContent: MainPageDataProps[];
   popularContent: MainPageDataProps[];
   serverProps: any;
+  randomPosts: any;
 }
 
 export type SliderImage = {
