@@ -45,7 +45,12 @@ export const UserListItemStyled = styled.div`
   gap: 24px;
   margin-bottom: 32px;
   .button-follow {
-    width: 20%;
+    width: 30%;
+  }
+  @media screen and (min-width: 460px) {
+    .button-follow {
+      width: 20%;
+    }
   }
 `;
 
