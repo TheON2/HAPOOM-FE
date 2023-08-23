@@ -1,4 +1,4 @@
-import { StyledAuthInput } from '@/styles/write';
+import { StyledAuthInput, InputBox } from '@/styles/write';
 import { CloseButton, PlayerWrapper } from '@/styles/youtubeplayer';
 import Script from 'next/script';
 import React, { FormEvent, useEffect, useRef, useState } from 'react';
@@ -130,13 +130,16 @@ const YoutubePlayer = ({
   }, [videoId, player]);
 
   return (
-    <>
-      <StyledAuthInput
+    <div
+      style={{
+        marginTop: '12px',
+      }}
+    >
+      <InputBox
         type="text"
         placeholder="YouTube URL을 입력하세요"
         value={inputURL}
         onChange={(e) => setInputURL(e.target.value)}
-        style={{ width: '100%', border: '2px solid #0084ff', margin: '0' }}
       />
       <Button type="button" onClick={handleURLValidation}>
         확인
@@ -149,7 +152,7 @@ const YoutubePlayer = ({
         <div id="player" ref={playerRef} />
         <Script src="https://www.youtube.com/iframe_api" />
       </PlayerWrapper>
-    </>
+    </div>
   );
 };
 

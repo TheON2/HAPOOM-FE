@@ -1,6 +1,5 @@
 import React, { FormEvent, useEffect, useState } from 'react';
 import {
-  GlobalStyle,
   ImageContainer,
   PreviewContainer,
   StyledButton,
@@ -31,7 +30,7 @@ import MusicSelector from '@/components/Write/MusicSelector';
 import { Form } from 'react-bootstrap';
 import Accordion from '@/components/Write/Accordion';
 import youtube from '@/public/youtube.png';
-import music from '@/public/music.png';
+import music from '@/public/musiclibrary.png';
 import record from '@/public/record.png';
 import UpAndDownTab from '@/components/common/UpAndDownTab';
 import CustomButton from '@/components/Write/CustomButton';
@@ -333,53 +332,53 @@ const Write: NextPage<Props> = ({ update = '1', updateId, data }) => {
                 >
                   음악 설정하기
                 </CustomButton>
-              </Box>
-              {musicType === 1 && (
-                <>
-                  <ReadOnlyYoutube
-                    videoId={videoId}
-                    update={update}
-                    setVideoId={setVideoId}
-                    setMusicType={setMusicType}
-                    setSelectedTitle={setSelectedTitle}
+                {musicType === 1 && (
+                  <>
+                    <ReadOnlyYoutube
+                      videoId={videoId}
+                      update={update}
+                      setVideoId={setVideoId}
+                      setMusicType={setMusicType}
+                      setSelectedTitle={setSelectedTitle}
+                      setMusicChoose={setMusicChoose}
+                      setAudioSubmit={setAudioSubmit}
+                    />
+                  </>
+                )}
+                {musicType === 2 && (
+                  <CustomPlayer
+                    audioUrl={musicURL}
+                    setAudioUrl={setMusicURL}
+                    title={selectedTitle}
                     setMusicChoose={setMusicChoose}
+                    setMusicType={setMusicType}
                     setAudioSubmit={setAudioSubmit}
+                    update={'2'}
                   />
-                </>
-              )}
-              {musicType === 2 && (
-                <CustomPlayer
-                  audioUrl={musicURL}
-                  setAudioUrl={setMusicURL}
-                  title={selectedTitle}
-                  setMusicChoose={setMusicChoose}
-                  setMusicType={setMusicType}
-                  setAudioSubmit={setAudioSubmit}
-                  update={'2'}
-                />
-              )}
-              {musicType === 3 && slicedAudioURL && (
-                <CustomPlayer
-                  title={'잘라낸 녹음 파일'}
-                  audioUrl={slicedAudioURL}
-                  setAudioUrl={setAudioURL}
-                  setMusicChoose={setMusicChoose}
-                  setMusicType={setMusicType}
-                  setAudioSubmit={setAudioSubmit}
-                  update={'2'}
-                />
-              )}
-              {musicType === 3 && audioURL && !slicedAudioURL && (
-                <CustomPlayer
-                  title={'녹음된 파일'}
-                  audioUrl={audioURL}
-                  setAudioUrl={setAudioURL}
-                  setMusicChoose={setMusicChoose}
-                  setMusicType={setMusicType}
-                  setAudioSubmit={setAudioSubmit}
-                  update={'2'}
-                />
-              )}
+                )}
+                {musicType === 3 && slicedAudioURL && (
+                  <CustomPlayer
+                    title={'잘라낸 녹음 파일'}
+                    audioUrl={slicedAudioURL}
+                    setAudioUrl={setAudioURL}
+                    setMusicChoose={setMusicChoose}
+                    setMusicType={setMusicType}
+                    setAudioSubmit={setAudioSubmit}
+                    update={'2'}
+                  />
+                )}
+                {musicType === 3 && audioURL && !slicedAudioURL && (
+                  <CustomPlayer
+                    title={'녹음된 파일'}
+                    audioUrl={audioURL}
+                    setAudioUrl={setAudioURL}
+                    setMusicChoose={setMusicChoose}
+                    setMusicType={setMusicType}
+                    setAudioSubmit={setAudioSubmit}
+                    update={'2'}
+                  />
+                )}
+              </Box>
 
               <Box>
                 <label
@@ -397,14 +396,11 @@ const Write: NextPage<Props> = ({ update = '1', updateId, data }) => {
                   <ReadOnlyMap location={location} />
                 )}
               </Box>
-
-              <StyledButton type="submit">
-                {update === '2' ? (
-                  <h3>사진 수정하기</h3>
-                ) : (
-                  <h3>사진 게시하기</h3>
-                )}
-              </StyledButton>
+              <Box>
+                <CustomButton type="submit">
+                  {update === '2' ? '사진 수정하기' : '사진 게시하기'}
+                </CustomButton>
+              </Box>
 
               {isShow ? (
                 <UpAndDownTab
@@ -417,6 +413,7 @@ const Write: NextPage<Props> = ({ update = '1', updateId, data }) => {
                         image={youtube}
                         selected={musicChoose === 1}
                         onClick={() => handleAccordionClick(1)}
+                        bgClass={'youtube'}
                       >
                         <>
                           <YoutubePlayer
@@ -432,6 +429,7 @@ const Write: NextPage<Props> = ({ update = '1', updateId, data }) => {
                         image={music}
                         selected={musicChoose === 2}
                         onClick={() => handleAccordionClick(2)}
+                        bgClass={'music'}
                       >
                         <MusicSelector
                           musicURL={musicURL}
@@ -445,6 +443,7 @@ const Write: NextPage<Props> = ({ update = '1', updateId, data }) => {
                         image={record}
                         selected={musicChoose === 3}
                         onClick={() => handleAccordionClick(3)}
+                        bgClass={'record'}
                       >
                         <RecordPlayer
                           setAudioFile={setAudioFile}
@@ -459,7 +458,7 @@ const Write: NextPage<Props> = ({ update = '1', updateId, data }) => {
                           setMusicType={setMusicType}
                         />
                       </Accordion>
-                      <div>
+                      <div style={{ display: 'flex', gap: '20px' }}>
                         <Button type="button" className="secondary">
                           닫기
                         </Button>

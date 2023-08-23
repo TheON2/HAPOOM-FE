@@ -30,6 +30,30 @@ export const Box = styled.div`
   }
 `;
 
+export const InputBox = styled.input`
+  display: block;
+  width: 100%;
+  padding: 16px 1.3rem;
+  color: #051619;
+  outline: none;
+  padding: 12px 24px 10px;
+  border: 2px solid #e8e8e8;
+  border-radius: 12px;
+  background-color: #f0efef;
+  font-size: 0.915rem;
+`;
+export const TagBox = styled.div`
+  display: flex;
+  gap: 12px;
+  margin-top: 12px;
+`;
+export const RecordButtonBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+`;
+
 export const PreviewContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -97,6 +121,7 @@ export const StyledA = styled.a`
 
 export const StyledButton = styled.button`
   min-width: 104px;
+  width: 100%;
   padding: 11px 1.3rem;
   cursor: pointer;
   position: relative;
@@ -105,8 +130,7 @@ export const StyledButton = styled.button`
   box-sizing: border-box;
   background: #0084ff;
   color: white;
-  width: 400px;
-  margin: 2rem 0;
+  /* margin: 2rem 0; */
   text-align: center;
 `;
 

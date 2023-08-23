@@ -8,7 +8,7 @@ type recordProps = {
   onClickEvent: () => void;
 };
 
-const RecordButtonStyle = styled.button<recordButton>`
+const RecordButtonStyle = styled.button`
   width: 50px;
   height: 50px;
   background-color: #fff;
@@ -19,9 +19,9 @@ const RecordButtonStyle = styled.button<recordButton>`
   &::after {
     content: '';
     display: block;
-    width: ${(props) => (props.$isClick ? '20px' : '40px')};
-    height: ${(props) => (props.$isClick ? '20px' : '40px')};
-    border-radius: ${(props) => (props.$isClick ? '4px' : '50%')};
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
     background-color: red;
     position: absolute;
     top: 50%;
@@ -29,6 +29,13 @@ const RecordButtonStyle = styled.button<recordButton>`
     transform-origin: center;
     transform: translate(-50%, -50%);
     transition: all 0.2s ease-in-out;
+  }
+  &.recording {
+    &::after {
+      width: 20px;
+      height: 20px;
+      border-radius: 4px;
+    }
   }
 `;
 
@@ -40,8 +47,10 @@ const RecordButton = ({ onClickEvent }: recordProps) => {
   };
   return (
     <RecordButtonStyle
-      $isClick={isClick}
+      // $isClick={isClick}
       onClick={onClickRecordHandler}
+      type="button"
+      className={isClick ? 'recording' : ''}
     ></RecordButtonStyle>
   );
 };

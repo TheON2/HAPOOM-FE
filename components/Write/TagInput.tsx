@@ -1,4 +1,4 @@
-import { StyledAuthInput } from '@/styles/write';
+import { InputBox, TagBox } from '@/styles/write';
 import React, { KeyboardEvent, useState, useCallback } from 'react';
 import Tag from './Tag';
 import { styled } from 'styled-components';
@@ -9,24 +9,6 @@ interface TagInputProps {
 }
 
 const MAX_TAGS = 5;
-
-export const InputBox = styled.input`
-  display: block;
-  width: 100%;
-  padding: 16px 1.3rem;
-  /* margin: 5px; */
-  border: 1px solid #051619;
-  /* border-radius: 0; */
-  /* box-sizing: border-box; */
-  /* box-shadow: none; */
-  /* font: inherit; */
-  color: #051619;
-  /* transition: all 0.2s; */
-  outline: none;
-  /* box-shadow: none; */
-  border: 2px solid #0084ff;
-  font-size: 0.915rem;
-`;
 
 const TagInput: React.FC<TagInputProps> = ({ tags, setTags }) => {
   const [inputValue, setInputValue] = useState('');
@@ -95,11 +77,11 @@ const TagInput: React.FC<TagInputProps> = ({ tags, setTags }) => {
           {tags.length}/{MAX_TAGS}
         </div>
       </div>
-      <div style={{ display: 'flex', gap: '10px' }}>
+      <TagBox>
         {tags.map((tag, index) => (
           <Tag key={index} tag={tag} onDelete={handleDelete} />
         ))}
-      </div>
+      </TagBox>
     </>
   );
 };

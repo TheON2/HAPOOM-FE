@@ -1,35 +1,26 @@
 import { useCallback, useState } from 'react';
-
+import styled from 'styled-components';
 interface TagProps {
   tag: string;
   onDelete: (tag: string) => void;
 }
 
-const Tag: React.FC<TagProps> = ({ tag, onDelete }) => {
-  const [isHovered, setIsHovered] = useState(false);
-  const handleMouseOver = useCallback(() => setIsHovered(true), []);
-  const handleMouseOut = useCallback(() => setIsHovered(false), []);
-  const color = isHovered ? 'red' : ' #0084ff';
+const TagStyle = styled.div`
+  color: #0084ff;
+  cursor: pointer;
+  display: inline-block;
+  padding: 8px 20px 6px;
+  border-radius: 20px;
+  border: 2px solid #0084ff;
+  text-align: center;
+  &:hover {
+    color: #ff5d5d;
+    border: 2px solid #ff5d5d;
+  }
+`;
 
-  return (
-    <div
-      style={{
-        color: color,
-        cursor: 'pointer',
-        display: 'inline-block',
-        padding: '5px 10px', // 내부 패딩
-        borderRadius: '20px', // 타원형 테두리
-        border: '2px solid', // 테두리
-        borderColor: color, // 테두리 색상
-        textAlign: 'center',
-      }}
-      onClick={() => onDelete(tag)}
-      onMouseOver={handleMouseOver}
-      onMouseOut={handleMouseOut}
-    >
-      #{tag}
-    </div>
-  );
+const Tag: React.FC<TagProps> = ({ tag, onDelete }) => {
+  return <TagStyle onClick={() => onDelete(tag)}>#{tag}</TagStyle>;
 };
 
 export default Tag;

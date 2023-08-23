@@ -1,3 +1,4 @@
+import { RecordButtonBox } from '@/styles/write';
 import React, { useEffect, useState } from 'react';
 
 interface RecordingInfoProps {
@@ -31,10 +32,10 @@ const RecordingInfo = ({ audioUrl, recording }: RecordingInfoProps) => {
   };
 
   return (
-    <div>
+    <RecordButtonBox>
       <h3>녹음 정보</h3>
       <p>녹음 시간: {formatTime(recordingTime)}</p>
-    </div>
+    </RecordButtonBox>
   );
 };
 
