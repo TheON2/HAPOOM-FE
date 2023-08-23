@@ -6,7 +6,7 @@ import React, {
   useState,
 } from 'react';
 import Script from 'next/script';
-import { StyledAuthInput } from '@/styles/write';
+import { InputBox, StyledAuthInput } from '@/styles/write';
 
 interface Location {
   name: string;
@@ -82,19 +82,18 @@ export const ReadOnlyMap: React.FC<MapComponentProps> = ({ location }) => {
         src={`https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NEXT_PUBLIC_NAVERMAP_API_KEY}`}
         onReady={() => initializeMap()}
       />
-      <StyledAuthInput
+      <InputBox
         type="text"
         placeholder="장소를 입력해주세요"
         value={location.name}
         readOnly
-        style={{ width: '100%', border: '2px solid #0084ff', margin: '0' }}
       />
       <div
         style={{
           position: 'relative',
           width: '100%',
           height: '40vh',
-          margin: '40px 0',
+          margin: '20px 0',
         }}
       >
         <div

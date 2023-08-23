@@ -15,14 +15,29 @@ const MAX_IMAGES = 5;
 const DropContainer = styled.div`
   height: 200px;
   width: 100%;
-  border: #0084ff dashed 2px;
+  padding: 12px;
+  border: 2px solid #e8e8e8;
+  border-radius: 12px;
+  background-color: #f0efef;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* margin: 20px; */
   position: relative;
   overflow: hidden;
+  color: #334765;
+  .bold {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 12px 0 8px;
+  }
+  img.upload {
+    position: absolute;
+    width: auto;
+    height: 90%;
+    object-fit: contain;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  }
 `;
 
 const Dropzone: React.FC<DropzoneProps> = ({
@@ -52,17 +67,15 @@ const Dropzone: React.FC<DropzoneProps> = ({
           alt={`Upload preview 1`}
           width={100}
           height={100}
-          style={{
-            position: 'absolute',
-          }}
+          className="upload"
         />
       ) : isDragActive ? (
-        <h1>그렇지 이미지를 여기다가 드랍해</h1>
+        <p className="bold">그렇지 이미지를 여기다가 드랍해</p>
       ) : (
         <>
           <Image src={plus} alt={`Upload preview 1`} width={50} height={50} />
-          <h1>이미지 업로드</h1>
-          <h4>jpg,png/5개 까지 업로드됩니다.</h4>
+          <p className="bold">이미지 업로드</p>
+          <p>jpg,png/5개 까지 업로드됩니다.</p>
         </>
       )}
     </DropContainer>

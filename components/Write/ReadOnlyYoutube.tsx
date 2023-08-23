@@ -1,6 +1,7 @@
 import { CloseButton, PlayerWrapper } from '@/styles/youtubeplayer';
 import Script from 'next/script';
 import React, { FormEvent, useEffect, useRef, useState } from 'react';
+import { Xmark } from '../common/SVG';
 
 interface YoutubePlayerProps {
   videoId: string;
@@ -108,7 +109,9 @@ const ReadOnlyYoutube = ({
     <>
       <PlayerWrapper videoId={videoId}>
         {update !== '3' && (
-          <CloseButton onClick={handleClosePlayer}>X</CloseButton>
+          <CloseButton onClick={handleClosePlayer}>
+            <Xmark />
+          </CloseButton>
         )}
         <div id="player" ref={playerRef} />
         <Script src="https://www.youtube.com/iframe_api" />
