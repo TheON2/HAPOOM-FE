@@ -96,9 +96,6 @@ const Write: NextPage<Props> = ({ update = '1', updateId, data }) => {
   };
 
   const handleCommentShowHandler = () => {
-    // if (commentEdit.show) {
-    //   setMusicChoose(0);
-    // }
     setCommentEdit((pre: any) => ({
       ...pre,
       show: !commentEdit.show,
@@ -346,18 +343,7 @@ const Write: NextPage<Props> = ({ update = '1', updateId, data }) => {
                     setMusicChoose={setMusicChoose}
                     setMusicType={setMusicType}
                     setAudioSubmit={setAudioSubmit}
-                    update={'2'}
-                  />
-                )}
-                {musicType === 3 && slicedAudioURL && (
-                  <CustomPlayer
-                    title={'잘라낸 녹음 파일'}
-                    audioUrl={slicedAudioURL}
-                    setAudioUrl={setAudioURL}
-                    setMusicChoose={setMusicChoose}
-                    setMusicType={setMusicType}
-                    setAudioSubmit={setAudioSubmit}
-                    update={'2'}
+                    update={update}
                   />
                 )}
                 {musicType === 3 && audioURL && !slicedAudioURL && (
@@ -447,8 +433,8 @@ const Write: NextPage<Props> = ({ update = '1', updateId, data }) => {
                           setAudioURL={setAudioURL}
                           setIsShow={setIsShow}
                           setAudioSubmit={setAudioSubmit}
-                          setMusicChoose={setMusicChoose}
                           setMusicType={setMusicType}
+                          setMusicChoose={setMusicChoose}
                         />
                       </Accordion>
                       <div style={{ display: 'flex', gap: '20px' }}>
