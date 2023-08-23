@@ -2,7 +2,7 @@ import { useDropzone } from 'react-dropzone';
 import Image from 'next/image';
 import { useCallback } from 'react';
 import plus from '../../public/addImage.png';
-
+import styled from 'styled-components';
 interface DropzoneProps {
   images: File[];
   setImages: (images: any) => void;
@@ -11,6 +11,34 @@ interface DropzoneProps {
 }
 
 const MAX_IMAGES = 5;
+
+const DropContainer = styled.div`
+  height: 200px;
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #e8e8e8;
+  border-radius: 12px;
+  background-color: #f0efef;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  color: #334765;
+  .bold {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 12px 0 8px;
+  }
+  img.upload {
+    position: absolute;
+    width: auto;
+    height: 90%;
+    object-fit: contain;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  }
+`;
 
 const Dropzone: React.FC<DropzoneProps> = ({
   images,
@@ -31,21 +59,7 @@ const Dropzone: React.FC<DropzoneProps> = ({
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   return (
-    <div
-      {...getRootProps()}
-      style={{
-        height: '200px',
-        width: '400px',
-        border: ' #0084ff dashed 2px',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        margin: '20px',
-        position: 'relative',
-        overflow: 'hidden',
-      }}
-    >
+    <DropContainer {...getRootProps()}>
       <input {...getInputProps()} />
       {imageURLs[0] ? (
         <Image
@@ -53,20 +67,18 @@ const Dropzone: React.FC<DropzoneProps> = ({
           alt={`Upload preview 1`}
           width={100}
           height={100}
-          style={{
-            position: 'absolute',
-          }}
+          className="upload"
         />
       ) : isDragActive ? (
-        <h1>그렇지 이미지를 여기다가 드랍해</h1>
+        <p className="bold">그렇지 이미지를 여기다가 드랍해</p>
       ) : (
         <>
           <Image src={plus} alt={`Upload preview 1`} width={50} height={50} />
-          <h1>이미지 업로드</h1>
-          <h4>jpg,png/5개 까지 업로드됩니다.</h4>
+          <p className="bold">이미지 업로드</p>
+          <p>jpg,png/5개 까지 업로드됩니다.</p>
         </>
       )}
-    </div>
+    </DropContainer>
   );
 };
 

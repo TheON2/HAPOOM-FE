@@ -1,9 +1,9 @@
 import React, { FormEvent, useEffect, useState } from 'react';
 import {
-  GlobalStyle,
   ImageContainer,
   PreviewContainer,
   StyledButton,
+  Box,
 } from '../../styles/write';
 import Dropzone from '@/components/Write/Dropzone';
 import ImagePreview from '@/components/Write/ImagePreview';
@@ -30,7 +30,7 @@ import MusicSelector from '@/components/Write/MusicSelector';
 import { Form } from 'react-bootstrap';
 import Accordion from '@/components/Write/Accordion';
 import youtube from '@/public/youtube.png';
-import music from '@/public/music.png';
+import music from '@/public/musiclibrary.png';
 import record from '@/public/record.png';
 import UpAndDownTab from '@/components/common/UpAndDownTab';
 import CustomButton from '@/components/Write/CustomButton';
@@ -38,6 +38,7 @@ import { ReadOnlyMap } from '@/components/Write/ReadOnlyMap';
 import YoutubePlayer from '@/components/Write/YoutubePlayer';
 import Button from '@/components/common/Button';
 import ReadOnlyYoutube from '@/components/Write/ReadOnlyYoutube';
+import { styled } from 'styled-components';
 
 const DynamicComponentWithNoSSR = dynamic(
   () => import('@/components/Write/YoutubePlayer'),
@@ -52,6 +53,24 @@ interface Props {
   updateId: string;
   data: any;
 }
+
+// const Box = styled.div`
+//   width: 100%;
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+//   text-align: start;
+//   margin-bottom: 36px;
+//   label {
+//     margin-bottom: 24px;
+//   }
+//   /* align-items: center; */
+// `;
+
+const WritePageContainer = styled.div`
+  min-height: 800px;
+  padding: 0 24px;
+`;
 
 const Write: NextPage<Props> = ({ update = '1', updateId, data }) => {
   const [isShow, setIsShow] = useState<boolean>(false);
@@ -274,55 +293,38 @@ const Write: NextPage<Props> = ({ update = '1', updateId, data }) => {
     <>
       {!(update === '2' && location.x === 0) && (
         <>
-          <div style={{ minHeight: '800px' }}>
-            <GlobalStyle />
-            <form
-              onSubmit={handlePostSubmit}
-              style={{ display: 'block', textAlign: 'center' }}
-            >
-              <ImageContainer>
-                {update === '2' ? (
-                  <h1 style={{ alignSelf: 'flex-start', margin: '25px' }}>
-                    게시글 수정
-                  </h1>
-                ) : (
-                  <h1 style={{ alignSelf: 'flex-start', margin: '25px' }}>
-                    새 게시글
-                  </h1>
-                )}
+          <WritePageContainer>
+            {/* <GlobalStyle /> */}
+            <form onSubmit={handlePostSubmit}>
+              <Box>
+                {update === '2' ? <h2>게시글 수정</h2> : <h2>새 게시글</h2>}
                 <Dropzone
                   images={images}
                   setImages={setImages}
                   imageURLs={imageURLs}
                   setImageURLs={setImageURLs}
                 />
-                <PreviewContainer>
-                  <ImagePreview
-                    images={images}
-                    removeImage={removeImage}
-                    imageURLs={imageURLs}
-                  />
-                </PreviewContainer>
-              </ImageContainer>
-              <ImageContainer>
-                <ContentArea content={content} setContent={setContent} />
-                <div
+                {/* <PreviewContainer> */}
+                <ImagePreview
+                  images={images}
+                  removeImage={removeImage}
+                  imageURLs={imageURLs}
+                />
+                {/* </PreviewContainer> */}
+              </Box>
+              <ContentArea content={content} setContent={setContent} />
+              <Box>
+                <TagInput tags={tags} setTags={setTags} />
+              </Box>
+              <Box>
+                <label
                   style={{
-                    position: 'relative',
-                    width: 400,
+                    display: 'block',
                   }}
                 >
-                  <label style={{ textAlign: 'left' }}>
-                    <h3 style={{ margin: '10px 0' }}>음악추가</h3>
-                  </label>
-                  <CustomButton
-                    type="button"
-                    onClick={handleCommentCreateHandler}
-                    className={musicType !== 0 ? 'secondary' : undefined}
-                  >
-                    음악 설정하기
-                  </CustomButton>
-                </div>
+                  음악추가
+                </label>
+
                 {musicType === 1 && (
                   <>
                     <ReadOnlyYoutube
@@ -369,53 +371,42 @@ const Write: NextPage<Props> = ({ update = '1', updateId, data }) => {
                     update={'2'}
                   />
                 )}
-                <div
-                  style={{
-                    position: 'relative',
-                    width: 400,
-                  }}
+                <CustomButton
+                  type="button"
+                  onClick={handleCommentCreateHandler}
+                  className={musicType !== 0 ? 'secondary' : undefined}
                 >
-                  <label style={{ textAlign: 'left' }}>
-                    <h3 style={{ margin: '10px 0' }}>태그</h3>
-                  </label>
-                  <TagInput tags={tags} setTags={setTags} />
-                </div>
-                <div
-                  style={{
-                    position: 'relative',
-                    width: 400,
-                  }}
-                >
-                  <label style={{ textAlign: 'left' }}>
-                    <h3 style={{ margin: '10px 0' }}>장소</h3>
-                  </label>
-                  <CustomButton type="button" onClick={handleMapCreateHandler}>
-                    위치 설정하기
-                  </CustomButton>
+                  음악 설정하기
+                </CustomButton>
+              </Box>
 
-                  {location.x !== 0 && location.y !== 0 && (
-                    <ReadOnlyMap location={location} />
-                  )}
-                </div>
-                <StyledButton type="submit">
-                  {update === '2' ? (
-                    <h3>사진 수정하기</h3>
-                  ) : (
-                    <h3>사진 게시하기</h3>
-                  )}
-                </StyledButton>
-              </ImageContainer>
+              <Box>
+                <label>장소</label>
+                {location.x !== 0 && location.y !== 0 && (
+                  <ReadOnlyMap location={location} />
+                )}
+                <CustomButton type="button" onClick={handleMapCreateHandler}>
+                  위치 설정하기
+                </CustomButton>
+              </Box>
+              <Box>
+                <CustomButton type="submit">
+                  {update === '2' ? '사진 수정하기' : '사진 게시하기'}
+                </CustomButton>
+              </Box>
+
               {isShow ? (
                 <UpAndDownTab
                   onClickEvent={handleCommentShowHandler}
                   $isUp={commentEdit.show}
                 >
                   {commentEdit.show && (
-                    <div>
+                    <>
                       <Accordion
                         image={youtube}
                         selected={musicChoose === 1}
                         onClick={() => handleAccordionClick(1)}
+                        bgClass={'youtube'}
                       >
                         <>
                           <YoutubePlayer
@@ -431,6 +422,7 @@ const Write: NextPage<Props> = ({ update = '1', updateId, data }) => {
                         image={music}
                         selected={musicChoose === 2}
                         onClick={() => handleAccordionClick(2)}
+                        bgClass={'music'}
                       >
                         <MusicSelector
                           musicURL={musicURL}
@@ -444,6 +436,7 @@ const Write: NextPage<Props> = ({ update = '1', updateId, data }) => {
                         image={record}
                         selected={musicChoose === 3}
                         onClick={() => handleAccordionClick(3)}
+                        bgClass={'record'}
                       >
                         <RecordPlayer
                           setAudioFile={setAudioFile}
@@ -459,7 +452,11 @@ const Write: NextPage<Props> = ({ update = '1', updateId, data }) => {
                         />
                       </Accordion>
                       <div style={{ display: 'flex', gap: '20px' }}>
-                        <Button type="button" className="secondary">
+                        <Button
+                          type="button"
+                          className="secondary"
+                          onClick={handleCommentShowHandler}
+                        >
                           닫기
                         </Button>
                         <Button
@@ -470,10 +467,7 @@ const Write: NextPage<Props> = ({ update = '1', updateId, data }) => {
                           확인
                         </Button>
                       </div>
-                      {commentEdit.show && (
-                        <div style={{ height: '50px' }}></div>
-                      )}
-                    </div>
+                    </>
                   )}
                 </UpAndDownTab>
               ) : null}
@@ -493,7 +487,7 @@ const Write: NextPage<Props> = ({ update = '1', updateId, data }) => {
                 </UpAndDownTab>
               ) : null}
             </form>
-          </div>
+          </WritePageContainer>
         </>
       )}
     </>
