@@ -37,13 +37,16 @@ const timeSince = (date: string) => {
     return '방금 전';
   }
 };
-
-const FeedUi = () => {
-  const data = feedData;
+type FeedUiProps = {
+  data: any; // data 프롭을 위한 타입 정의
+};
+const FeedUi: React.FC<FeedUiProps> = ({ data }) => {
+  const dataa = feedData;
+  console.log(data.posts);
 
   return (
     <FeedSection>
-      {data.map((feed) => {
+      {dataa.map((feed: any) => {
         return (
           <FeedContainer key={feed.id}>
             <FeedHeader>
