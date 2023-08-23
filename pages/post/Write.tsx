@@ -297,8 +297,9 @@ const Write: NextPage<Props> = ({ update = '1', updateId, data }) => {
                 {update === '2' ? <h2>게시글 수정</h2> : <h2>새 게시글</h2>}
                 <Dropzone
                   images={images}
-                  removeImage={removeImage}
+                  setImages={setImages}
                   imageURLs={imageURLs}
+                  setImageURLs={setImageURLs}
                 />
                 {/* <PreviewContainer> */}
                 <ImagePreview
@@ -341,9 +342,8 @@ const Write: NextPage<Props> = ({ update = '1', updateId, data }) => {
                     title={selectedTitle}
                     setMusicChoose={setMusicChoose}
                     setMusicType={setMusicType}
-                    setSelectedTitle={setSelectedTitle}
-                    setMusicChoose={setMusicChoose}
                     setAudioSubmit={setAudioSubmit}
+                    update={update}
                   />
                 )}
                 {musicType === 3 && audioURL && !slicedAudioURL && (
@@ -433,6 +433,8 @@ const Write: NextPage<Props> = ({ update = '1', updateId, data }) => {
                           setAudioURL={setAudioURL}
                           setIsShow={setIsShow}
                           setAudioSubmit={setAudioSubmit}
+                          setMusicType={setMusicType}
+                          setMusicChoose={setMusicChoose}
                         />
                       </Accordion>
                       <div style={{ display: 'flex', gap: '20px' }}>

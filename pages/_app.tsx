@@ -58,6 +58,10 @@ function MyApp({ Component, pageProps }: AppProps) {
       }, 5000);
     });
 
+    // socket.on('latest-posts', (latestPosts) => {
+    //   alert(latestPosts.post.postId);
+    // });
+
     // 컴포넌트가 언마운트될 때 소켓 연결을 닫습니다.
     return () => {
       socket.disconnect();
