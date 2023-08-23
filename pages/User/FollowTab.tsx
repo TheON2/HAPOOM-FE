@@ -1,3 +1,4 @@
+import { getFollowers, getFollowings } from '@/api/user';
 import {
   Email,
   FollowButtonStyled,
@@ -11,7 +12,7 @@ import {
   UserListItemStyled,
   UserProfileImage,
 } from '@/styles/followTab';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 // 사용자 정보 타입
 interface User {
@@ -22,8 +23,7 @@ interface User {
 }
 
 interface FollowTabProps {
-  followers: User[];
-  followings: User[];
+  userId: string;
 }
 
 interface TabUnderlineProps {
@@ -43,28 +43,35 @@ const UserListItem: React.FC<User> = ({ userImage, nickname, email }) => {
   );
 };
 
-const mockFollowers: User[] = [
-  {
-    userId: 1,
-    email: 'follower1@example.com',
-    nickname: 'Follower 1',
-    userImage: 'path_to_image1',
-  },
-];
-
-const mockFollowings: User[] = [
-  {
-    userId: 2,
-    email: 'following1@example.com',
-    nickname: 'Following 1',
-    userImage: 'path_to_image2',
-  },
-];
-
-const FollowTab: React.FC = () => {
+const FollowTab: React.FC<FollowTabProps> = ({ userId }) => {
   const [activeTab, setActiveTab] = useState<'followers' | 'followings'>(
     'followers'
   );
+  const [followers, setFollowers] = useState<User[]>([]);
+  const [followings, setFollowings] = useState<User[]>([]);
+
+  useEffect(() => {
+    const fetchFollowers = async () => {
+      try {
+        const result = await getFollowers(userId);
+        setFollowers(result);
+      } catch (error) {
+        console.error('Failed to fetch followers:', error);
+      }
+    };
+
+    const fetchFollowings = async () => {
+      try {
+        const result = await getFollowings(userId);
+        setFollowings(result);
+      } catch (error) {
+        console.error('Failed to fetch followings:', error);
+      }
+    };
+
+    fetchFollowers();
+    fetchFollowings();
+  }, [userId]);
 
   const handleTabClick = (tab: 'followers' | 'followings') => {
     setActiveTab(tab);
@@ -84,13 +91,18 @@ const FollowTab: React.FC = () => {
 
       <UserList>
         {activeTab === 'followers' &&
-          mockFollowers.map((user) => (
-            <UserListItem key={user.userId} {...user} />
-          ))}
+          (Array.isArray(followers)
+            ? followers.map((user) => (
+                <UserListItem key={user.userId} {...user} />
+              ))
+            : null)}
+
         {activeTab === 'followings' &&
-          mockFollowings.map((user) => (
-            <UserListItem key={user.userId} {...user} />
-          ))}
+          (Array.isArray(followings)
+            ? followings.map((user) => (
+                <UserListItem key={user.userId} {...user} />
+              ))
+            : null)}
       </UserList>
     </FollowContainer>
   );

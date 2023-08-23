@@ -47,12 +47,19 @@ const updateUserSetting = async (userData: FormData) => {
 };
 
 type getUserProps = {
-  savedUserId: string;
+  UserId: string;
 };
 
-const getUserProfile = async ({ savedUserId: userId }: getUserProps) => {
-  const response = await api.get(`/api/user/profile/${userId}`);
-  return response.data;
+const getUserProfile = async ({ UserId: userId }: getUserProps) => {
+  try {
+    console.log('Fetching user profile for userId:', userId);
+    const response = await api.get(`/api/user/profile/${userId}`);
+    console.log('API response data:', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching user profile:', error);
+    throw error;
+  }
 };
 
 const getMyProfile = async () => {
@@ -96,6 +103,44 @@ const test = async () => {
   await api.get(`/test/test`);
 };
 
+const follow = async (userId: string) => {
+  const response = await api.post(`/api/user/${userId}/follow`);
+  return response.data;
+};
+
+const unFollow = async (userId: string) => {
+  const response = await api.post(`/api/user/${userId}/unfollow`);
+  return response.data;
+};
+
+const getFollowers = async (userId: string): Promise<User[]> => {
+  try {
+    const response = await api.get(`/api/user/${userId}/follower`);
+    if (response.data && Array.isArray(response.data.followers)) {
+      return response.data.followers;
+    }
+    console.error('Unexpected format in response:', response.data);
+    return [];
+  } catch (error) {
+    console.error('Error fetching followers:', error);
+    return [];
+  }
+};
+
+const getFollowings = async (userId: string): Promise<User[]> => {
+  try {
+    const response = await api.get(`/api/user/${userId}/following`);
+    if (response.data && Array.isArray(response.data.following)) {
+      return response.data.following;
+    }
+    console.error('Unexpected format in response:', response.data);
+    return [];
+  } catch (error) {
+    console.error('Error fetching followings:', error);
+    return [];
+  }
+};
+
 export {
   addUser,
   getUser,
@@ -110,4 +155,8 @@ export {
   getUserProfile,
   getMyProfile,
   test,
+  follow,
+  unFollow,
+  getFollowers,
+  getFollowings,
 };
