@@ -18,6 +18,7 @@ interface UpdateData {
 
 const getMain = async () => {
   const response = await api.get('/api/main');
+  console.log(response);
   return response.data;
 };
 

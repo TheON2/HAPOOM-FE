@@ -37,65 +37,22 @@ import CustomButton from '@/components/Write/CustomButton';
 import axios from 'axios';
 import Write from '../post/Write';
 
-const DynamicComponentWithNoSSR = dynamic(
-  () => import('@/components/Write/YoutubePlayer'),
-  { ssr: false }
-);
+const Update = () => {
+  const router = useRouter();
+  const { id } = router.query;
 
-interface Image {
-  url: string;
-}
-interface Props {
-  update: string;
-  updateId: string;
-}
+  // id가 정의되지 않았거나 배열이라면 에러 처리
+  if (!id || Array.isArray(id)) {
+    // 여기서 에러 처리 로직을 작성하거나
+    // 다른 페이지로 리다이렉트할 수 있습니다.
+    return null;
+  }
 
-interface Props {
-  id: string;
-  data: any;
-}
-
-const Update: React.FC<Props> = ({ updateId, data }) => {
   return (
     <>
-      <Write update={'2'} updateId={updateId} data={data} />
+      <Write update={'2'} updateId={id} />
     </>
   );
 };
 
 export default Update;
-
-export const getServerSideProps = async (
-  context: GetServerSidePropsContext
-) => {
-  const updateId = context.query.id as string;
-
-  try {
-    const data = await getPost(updateId);
-
-    if (!data) {
-      return {
-        redirect: {
-          destination: '/', // 메인 페이지로 리다이렉션
-          permanent: false,
-        },
-      };
-    }
-
-    return {
-      props: {
-        updateId,
-        data,
-      },
-    };
-  } catch (error) {
-    console.error(error);
-
-    return {
-      redirect: {
-        destination: '/', // 메인 페이지로 리다이렉션
-        permanent: false,
-      },
-    };
-  }
-};

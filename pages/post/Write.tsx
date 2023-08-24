@@ -48,18 +48,9 @@ const CustomPlayer = dynamic(() => import('@/components/Write/CustomPlayer'), {
   loading: () => <div>Loading...</div>,
 });
 
-const DynamicComponentWithNoSSR = dynamic(
-  () => import('@/components/Write/YoutubePlayer'),
-  { ssr: false }
-);
-
-interface Image {
-  url: string;
-}
 interface Props {
   update: string;
   updateId: string;
-  data: any;
 }
 
 // const Box = styled.div`
@@ -80,7 +71,7 @@ const WritePageContainer = styled.div`
   padding: 0 24px;
 `;
 
-const Write: NextPage<Props> = ({ update = '1', updateId, data }) => {
+const Write: NextPage<Props> = ({ update = '1', updateId }) => {
   const [isShow, setIsShow] = useState<boolean>(false);
   const [commentEdit, setCommentEdit] = useState<any>({
     show: false,
@@ -271,28 +262,33 @@ const Write: NextPage<Props> = ({ update = '1', updateId, data }) => {
     mutationOptions
   );
 
-  useEffect(() => {
-    if (update === '2') {
-      data.images.map((image: any) => {
-        setImageURLs((images) => [...images, image.url]);
-      });
+  const { isLoading, isError, data, isSuccess } = useQuery(
+    ['post', updateId],
+    () => getPost(updateId),
+    {
+      onSuccess: async (data) => {
+        data.images.map((image: any) => {
+          setImageURLs((images) => [...images, image.url]);
+        });
 
-      setContent(data.post.content);
-      setSelectedTitle(data.post.musicTitle);
+        setContent(data.post.content);
+        setSelectedTitle(data.post.musicTitle);
 
-      setMusicType(data.post.musicType);
-      data.post.musicType === 1 && setVideoId(data.post.musicUrl);
-      data.post.musicType === 2 && setMusicURL(data.post.musicUrl);
-      data.post.musicType === 3 && setAudioURL(data.post.musicUrl);
+        setMusicType(data.post.musicType);
+        data.post.musicType === 1 && setVideoId(data.post.musicUrl);
+        data.post.musicType === 2 && setMusicURL(data.post.musicUrl);
+        data.post.musicType === 3 && setAudioURL(data.post.musicUrl);
 
-      setTags(data.post.tag.split(', '));
-      setLocation({
-        name: data.post.placeName,
-        x: data.post.latitude,
-        y: data.post.longitude,
-      });
+        setTags(data.post.tag.split(', '));
+        setLocation({
+          name: data.post.placeName,
+          x: data.post.latitude,
+          y: data.post.longitude,
+        });
+      },
+      enabled: update === '2',
     }
-  }, []);
+  );
 
   return (
     <>

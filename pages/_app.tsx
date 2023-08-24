@@ -19,7 +19,7 @@ const wrapper = createWrapper(makeStore);
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [notification, setNotification] = useState<string | null>(null);
-  const [randomPosts, setRandomPosts] = useState(null);
+  const [randomPosts, setRandomPosts] = useState<any[] | null>(null);
   const router = useRouter();
   const excludedPages = [
     '/auth/SignIn',
@@ -55,7 +55,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       // 2초 후에 게시물 숨기기
       setTimeout(() => {
         setRandomPosts(null);
-      }, 5000);
+      }, 10000);
     });
 
     // socket.on('latest-posts', (latestPosts) => {
@@ -122,17 +122,17 @@ function MyApp({ Component, pageProps }: AppProps) {
                   animation: 'fadeIn 0.5s, fadeOut 0.5s 1.5s',
                 }}
               >
-                {/* {randomPosts &&
+                {randomPosts &&
                   randomPosts.map((post, index) => (
                     <div key={index} className="fade-in-post">
-                      <h3>{post.title}</h3>
+                      {/* <h3>{post.title}</h3> */}
                       <p>{post.content}</p>
                     </div>
-                  ))} */}
+                  ))}
               </div>
             )}
             <Layout>
-              <Component {...pageProps} />
+              <Component {...pageProps} randomPosts={randomPosts} />
             </Layout>
             <MobileBottomNav />
           </>
