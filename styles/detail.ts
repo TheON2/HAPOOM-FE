@@ -244,5 +244,6 @@ export const NoneComment = styled.div`
   width: 100%;
   padding: 36px 0;
   text-align: center;
+  line-height: 1.8;
   color: #777;
 `;
