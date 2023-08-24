@@ -13,6 +13,7 @@ import {
   SelectBox,
   NoneSearchResult,
 } from '@/styles/search';
+import SearchComponent from '@/components/Search/SearchComponent';
 
 const SELECT_OPTION = [
   { value: 'user', text: '유저' },
@@ -34,6 +35,7 @@ const Search = () => {
 
   return (
     <>
+      <SearchComponent />
       <SearchLayout>
         <p className="keyword">
           {search === '' ? (
