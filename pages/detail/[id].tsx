@@ -70,7 +70,7 @@ const Detail: NextPage = () => {
   const [musicChoose, setMusicChoose] = useState<number>(0);
   const [audioURL, setAudioURL] = useState<string | undefined>(undefined);
   const [videoId, setVideoId] = useState<string>('');
-  const [tags, setTags] = useState<string>('');
+  const [tags, setTags] = useState<string[]>([]);
   const [location, setLocation] = useState({ name: '', x: 0, y: 0 });
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [modalMessge, setModalMessge] = useState<any>({
@@ -149,7 +149,7 @@ const Detail: NextPage = () => {
         setSelectedTitle(data.post.musicTitle);
         setVideoId(data.post.musicUrl);
         setAudioURL(data.post.musicUrl);
-        setTags(data.post.tag);
+        setTags(data.tag);
         setMusicTitle(data.post.musicTitle);
         setLocation({
           name: data.post.placeName,
@@ -216,11 +216,9 @@ const Detail: NextPage = () => {
           <p className="detail-content-text">{content}</p>
           <HashtagBox>
             {tags.length !== 0 &&
-              tags
-                .split(',')
-                .map((tag, index) => (
-                  <Hashtag key={index}>#{tag.trim()}</Hashtag>
-                ))}
+              tags.map((tag, index) => (
+                <Hashtag key={index}>#{tag.trim()}</Hashtag>
+              ))}
           </HashtagBox>
         </DetialContentSection>
         <DetialContentSection
