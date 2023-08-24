@@ -14,41 +14,34 @@ import {
 } from '@/styles/followTab';
 import React, { useState, useEffect } from 'react';
 
-// 사용자 정보 타입
 interface FollowTabUser {
   userId: number;
   email: string | null;
   nickname?: string;
-  userImage: string | null; // 여기를 변경
+  userImage: string | null;
 }
 
 interface FollowTabProps {
   userId: string;
 }
 
-interface TabUnderlineProps {
-  $activeTab: 'followers' | 'followings';
-}
-
 const UserListItem: React.FC<FollowTabUser> = ({
   userImage,
   nickname,
   email,
-}) => {
-  return (
-    <UserListItemStyled>
-      <UserProfileImage
-        src={userImage || 'DEFAULT_IMAGE_URL_OR_EMPTY_STRING'}
-        alt={nickname || 'Unknown'}
-      />
-      <UserInfo>
-        <Nickname>{nickname || '알 수 없음'}</Nickname>
-        <Email>{email || '이메일 없음'}</Email>
-      </UserInfo>
-      <FollowButtonStyled>팔로잉</FollowButtonStyled>
-    </UserListItemStyled>
-  );
-};
+}) => (
+  <UserListItemStyled>
+    <UserProfileImage
+      src={userImage || 'DEFAULT_IMAGE_URL_OR_EMPTY_STRING'}
+      alt={nickname || 'Unknown'}
+    />
+    <UserInfo>
+      <Nickname>{nickname || '알 수 없음'}</Nickname>
+      <Email>{email || '이메일 없음'}</Email>
+    </UserInfo>
+    <FollowButtonStyled>팔로잉</FollowButtonStyled>
+  </UserListItemStyled>
+);
 
 const FollowTab: React.FC<FollowTabProps> = ({ userId }) => {
   const [activeTab, setActiveTab] = useState<'followers' | 'followings'>(
@@ -58,58 +51,36 @@ const FollowTab: React.FC<FollowTabProps> = ({ userId }) => {
   const [followings, setFollowings] = useState<FollowTabUser[]>([]);
 
   useEffect(() => {
-    const fetchFollowers = async () => {
+    const fetchData = async () => {
       try {
-        const result = await getFollowers(userId);
-        setFollowers(result);
+        const fetchedFollowers = await getFollowers(userId);
+        setFollowers(fetchedFollowers);
+
+        const fetchedFollowings = await getFollowings(userId);
+        setFollowings(fetchedFollowings);
       } catch (error) {
-        console.error('Failed to fetch followers:', error);
+        console.error('Failed to fetch data:', error);
       }
     };
 
-    const fetchFollowings = async () => {
-      try {
-        const result = await getFollowings(userId);
-        setFollowings(result);
-      } catch (error) {
-        console.error('Failed to fetch followings:', error);
-      }
-    };
-
-    fetchFollowers();
-    fetchFollowings();
+    fetchData();
   }, [userId]);
 
-  const handleTabClick = (tab: 'followers' | 'followings') => {
-    setActiveTab(tab);
-  };
+  const activeData = activeTab === 'followers' ? followers : followings;
 
   return (
     <FollowContainer>
       <TabContainer>
-        <TabButton onClick={() => handleTabClick('followers')}>
-          팔로워
-        </TabButton>
-        <TabButton onClick={() => handleTabClick('followings')}>
-          팔로잉
-        </TabButton>
+        <TabButton onClick={() => setActiveTab('followers')}>팔로워</TabButton>
+        <TabButton onClick={() => setActiveTab('followings')}>팔로잉</TabButton>
         <TabUnderline $activeTab={activeTab} />
       </TabContainer>
 
       <UserList>
-        {activeTab === 'followers' &&
-          (Array.isArray(followers)
-            ? followers.map((user) => (
-                <UserListItem key={user.userId} {...user} />
-              ))
-            : null)}
-
-        {activeTab === 'followings' &&
-          (Array.isArray(followings)
-            ? followings.map((user) => (
-                <UserListItem key={user.userId} {...user} />
-              ))
-            : null)}
+        {Array.isArray(activeData) &&
+          activeData.map((user) => (
+            <UserListItem key={user.userId} {...user} />
+          ))}
       </UserList>
     </FollowContainer>
   );
