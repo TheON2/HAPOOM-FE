@@ -2,10 +2,7 @@ import Image from 'next/image';
 import React from 'react';
 import { MainBannerContainer } from '@/styles/home';
 
-const MOCK = '집에 가고 싶다.,집 떠나면 개고생이다.';
-
 const MainBanner = ({ data, $isClick, randomPosts }: any) => {
-  console.log(randomPosts);
   return (
     <MainBannerContainer $isClick={$isClick}>
       {randomPosts && (
