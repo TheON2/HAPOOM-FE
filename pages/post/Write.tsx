@@ -262,11 +262,9 @@ const Write: NextPage<Props> = ({ update = '1', updateId }) => {
     mutationOptions
   );
 
-  const { isLoading, isError, data, isSuccess } = useQuery(
-    ['post', updateId],
-    () => getPost(updateId),
-    {
-      onSuccess: async (data) => {
+  useEffect(() => {
+    if (update === '2') {
+      getPost(updateId).then((data) => {
         data.images.map((image: any) => {
           setImageURLs((images) => [...images, image.url]);
         });
@@ -279,16 +277,15 @@ const Write: NextPage<Props> = ({ update = '1', updateId }) => {
         data.post.musicType === 2 && setMusicURL(data.post.musicUrl);
         data.post.musicType === 3 && setAudioURL(data.post.musicUrl);
 
-        setTags(data.post.tag.split(', '));
+        setTags(data.tag);
         setLocation({
           name: data.post.placeName,
           x: data.post.latitude,
           y: data.post.longitude,
         });
-      },
-      enabled: update === '2',
+      });
     }
-  );
+  }, [update, updateId]);
 
   return (
     <>
