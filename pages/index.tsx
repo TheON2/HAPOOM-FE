@@ -7,7 +7,7 @@ import MainBanner from '@/components/Home/MainBanner';
 import Header from '@/components/common/Header';
 import Footer from '@/components/common/Footer';
 import PopularContentsCarousel from '@/components/Home/PopularContentsCarousel';
-import { sliderImages, hashtagImages } from '../public/data';
+import { sliderImages } from '../public/data';
 import { GetStaticProps, NextPage, GetServerSideProps } from 'next';
 import { useQuery } from 'react-query';
 import { getMain } from '@/api/post';
@@ -25,13 +25,14 @@ const Home: NextPage<MainPageProps> = ({
   serverProps,
   hashContent,
   popularContent,
+  randomPosts,
 }) => {
   const [hashTag, setHashTag] = useState<string>('#해시태그');
+  console.log(randomPosts);
 
   const dispatch = useDispatch();
   const isClientSide = typeof window !== 'undefined';
   const tokenExists = isClientSide ? !!localStorage.getItem('token') : false;
-
   const { data: userData, isSuccess: tokenSuccess } = useQuery(
     'user',
     getAuthToken,
@@ -47,9 +48,6 @@ const Home: NextPage<MainPageProps> = ({
   const onClickBottomNavHandler = () => {
     setIsClick(!isClick);
   };
-  const { data: mainData } = useQuery('Main', getMain, {
-    initialData: serverProps,
-  });
   useEffect(() => {
     const handleWheel = (event: WheelEvent) => {
       if (event.deltaY > 0) {
@@ -68,16 +66,16 @@ const Home: NextPage<MainPageProps> = ({
   }
   return (
     <HomePageLayout>
-      <MainBanner data={data} $isClick={isClick} />
+      <MainBanner data={data} $isClick={isClick} randomPosts={randomPosts} />
       <HashtagNavBar
-        data={hashtagData}
+        data={serverProps.mainTags}
         $isClick={isClick}
         onClickEvent={onClickBottomNavHandler}
         setHashTag={setHashTag}
       />
       <Main>
-        <HashtagContents data={mainData.posts} hashTag={hashTag} />
-        <PopularContentsCarousel data={mainData.likePosts} />
+        <HashtagContents data={serverProps.posts} hashTag={hashTag} />
+        <PopularContentsCarousel data={serverProps.likePosts} />
         <Footer />
       </Main>
     </HomePageLayout>
@@ -92,12 +90,12 @@ export const getStaticProps: GetStaticProps = async () => {
   );
 
   const data = sliderImages;
-  const hashtagData = hashtagImages;
+  // const hashtagData = hashtagImages;
 
   return {
     props: {
       data,
-      hashtagData,
+      hashtagData: response.data.mainTags,
       serverProps: response.data,
       hashContent: response.data.posts,
       popularContent: response.data.likePosts,
