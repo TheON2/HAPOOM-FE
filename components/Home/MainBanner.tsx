@@ -2,13 +2,19 @@ import Image from 'next/image';
 import React from 'react';
 import { MainBannerContainer } from '@/styles/home';
 
-const MainBanner = ({ data, $isClick }: any) => {
+const MOCK = '집에 가고 싶다.,집 떠나면 개고생이다.';
+
+const MainBanner = ({ data, $isClick, randomPosts }: any) => {
+  console.log(randomPosts);
   return (
     <MainBannerContainer $isClick={$isClick}>
-      <p>
-        집에 가고 싶다.
-        <br /> 집 떠나면 개고생이다.
-      </p>
+      {randomPosts && (
+        <p>
+          {randomPosts[0].content1}
+          <br />
+          {randomPosts[0].content2}
+        </p>
+      )}
       <Image
         src={data[0]?.src}
         alt="v13 image"
