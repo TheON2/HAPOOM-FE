@@ -5,18 +5,6 @@ import { useQuery } from 'react-query';
 import { getAuthToken } from '@/api/user';
 import { AUTH_USER, UserResponse } from '@/redux/reducers/userSlice';
 
-// interface FeedDataProps {
-//   email: string;
-//   image: string;
-//   musicTitle: string;
-//   musicUrl: string | null;
-//   nickname: string;
-//   postId: number;
-//   preset: number;
-//   updatedAt: string;
-//   userImage: string;
-// };
-
 const Feed = () => {
   const dispatch = useDispatch();
   const isClientSide = typeof window !== 'undefined';
