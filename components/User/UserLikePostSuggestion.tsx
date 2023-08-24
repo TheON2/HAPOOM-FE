@@ -20,15 +20,15 @@ const UserLikePostSuggestion: React.FC<postsCountProps> = ({ data }) => {
       <ImageBox>
         <UserLike />
         <InfoContainer>
-          <InfoText>좋아요</InfoText>
-          <InfoNumber>{data?.likePostsCount}</InfoNumber>
+          <InfoText>게시물</InfoText>
+          <InfoNumber>{data?.postsCount}</InfoNumber>
         </InfoContainer>
       </ImageBox>
       <ImageBox>
         <UserPost />
         <InfoContainer>
-          <InfoText>게시물</InfoText>
-          <InfoNumber>{data?.postsCount}</InfoNumber>
+          <InfoText>좋아요</InfoText>
+          <InfoNumber>{data?.likePostsCount}</InfoNumber>
         </InfoContainer>
       </ImageBox>
     </LikePostSuggestionBox>
