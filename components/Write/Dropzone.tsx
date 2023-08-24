@@ -47,6 +47,10 @@ const Dropzone: React.FC<DropzoneProps> = ({
   setImageURLs,
 }) => {
   const resizeImage = (imageFile: File, callback: (file: File) => void) => {
+    if (imageFile.type !== 'image/jpeg' && imageFile.type !== 'image/png') {
+      alert('Only JPEG and PNG files are allowed.');
+      return;
+    }
     const reader = new FileReader();
     reader.readAsDataURL(imageFile);
     reader.onload = (event) => {
@@ -84,7 +88,7 @@ const Dropzone: React.FC<DropzoneProps> = ({
         ctx?.drawImage(img, 0, 0, width, height);
 
         // JPEG 형식으로 base64 문자열로 변환, 품질은 0.8로 설정
-        const dataUrl = canvas.toDataURL('image/jpeg', 0.8);
+        const dataUrl = canvas.toDataURL(imageFile.type, 0.8);
 
         // data URL을 Blob으로 변환
         const byteString = atob(dataUrl.split(',')[1]);
@@ -96,7 +100,7 @@ const Dropzone: React.FC<DropzoneProps> = ({
         }
         const blob = new Blob([ab], { type: mimeString });
 
-        callback(new File([blob], imageFile.name, { type: 'image/jpeg' }));
+        callback(new File([blob], imageFile.name, { type: imageFile.type }));
       };
     };
   };
