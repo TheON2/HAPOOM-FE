@@ -64,17 +64,17 @@ const Dropzone: React.FC<DropzoneProps> = ({
         let width = img.width;
         let height = img.height;
 
-        if (width > height) {
-          if (width > maxWidth) {
-            height *= maxWidth / width;
-            width = maxWidth;
-          }
-        } else {
-          if (height > maxHeight) {
-            width *= maxHeight / height;
-            height = maxHeight;
-          }
-        }
+        // if (width > height) {
+        //   if (width > maxWidth) {
+        //     height *= maxWidth / width;
+        //     width = maxWidth;
+        //   }
+        // } else {
+        //   if (height > maxHeight) {
+        //     width *= maxHeight / height;
+        //     height = maxHeight;
+        //   }
+        // }
 
         canvas.width = width;
         canvas.height = height;
