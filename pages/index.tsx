@@ -48,9 +48,6 @@ const Home: NextPage<MainPageProps> = ({
   const onClickBottomNavHandler = () => {
     setIsClick(!isClick);
   };
-  const { data: mainData } = useQuery('Main', getMain, {
-    initialData: serverProps,
-  });
   useEffect(() => {
     const handleWheel = (event: WheelEvent) => {
       if (event.deltaY > 0) {
@@ -71,14 +68,14 @@ const Home: NextPage<MainPageProps> = ({
     <HomePageLayout>
       <MainBanner data={data} $isClick={isClick} randomPosts={randomPosts} />
       <HashtagNavBar
-        data={mainData.mainTags}
+        data={serverProps.mainTags}
         $isClick={isClick}
         onClickEvent={onClickBottomNavHandler}
         setHashTag={setHashTag}
       />
       <Main>
-        <HashtagContents data={mainData.posts} hashTag={hashTag} />
-        <PopularContentsCarousel data={mainData.likePosts} />
+        <HashtagContents data={serverProps.posts} hashTag={hashTag} />
+        <PopularContentsCarousel data={serverProps.likePosts} />
         <Footer />
       </Main>
     </HomePageLayout>

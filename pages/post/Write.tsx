@@ -277,7 +277,7 @@ const Write: NextPage<Props> = ({ update = '1', updateId, data }) => {
       data.post.musicType === 2 && setMusicURL(data.post.musicUrl);
       data.post.musicType === 3 && setAudioURL(data.post.musicUrl);
 
-      setTags(data.post.tag.split(', '));
+      setTags(data.tag);
       setLocation({
         name: data.post.placeName,
         x: data.post.latitude,
