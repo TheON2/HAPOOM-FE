@@ -64,17 +64,20 @@ const Dropzone: React.FC<DropzoneProps> = ({
         let width = img.width;
         let height = img.height;
 
-        // if (width > height) {
-        //   if (width > maxWidth) {
-        //     height *= maxWidth / width;
-        //     width = maxWidth;
-        //   }
-        // } else {
-        //   if (height > maxHeight) {
-        //     width *= maxHeight / height;
-        //     height = maxHeight;
-        //   }
-        // }
+        // 원본 비율 계산
+        const originalRatio = width / height;
+
+        // 최대 너비와 비율에 맞게 높이 조정
+        if (width > maxWidth) {
+          width = maxWidth;
+          height = width / originalRatio;
+        }
+
+        // 최대 높이와 비율에 맞게 너비 조정
+        if (height > maxHeight) {
+          height = maxHeight;
+          width = height * originalRatio;
+        }
 
         canvas.width = width;
         canvas.height = height;
