@@ -19,6 +19,7 @@ const handleFollowingClick = (e: React.MouseEvent) => {
   e.preventDefault();
 };
 const UserProfileCard: React.FC<UserProfileCardProps> = ({ data }) => {
+  console.log(data);
   if (!data) {
     return null;
   }
@@ -43,11 +44,11 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({ data }) => {
         </NicknameBox>
         <FollowBox>
           <Link href="/User/FollowTab?tab=followers">
-            팔로워 {data.followerCount}
+            팔로워 {data?.followerCount ?? 0}
           </Link>
           <span>|</span>
           <Link href="/User/FollowTab?tab=followings">
-            팔로잉 {data.followingCount}
+            팔로잉 {data?.followingCount ?? 0}
           </Link>
         </FollowBox>
       </ProfileContentsBox>
