@@ -51,15 +51,8 @@ type getUserProps = {
 };
 
 const getUserProfile = async ({ UserId: userId }: getUserProps) => {
-  try {
-    console.log('Fetching user profile for userId:', userId);
-    const response = await api.get(`/api/user/profile/${userId}`);
-    console.log('API response data:', response.data);
-    return response.data;
-  } catch (error) {
-    console.error('Error fetching user profile:', error);
-    throw error;
-  }
+  const response = await api.get(`/api/user/profile/${userId}`);
+  return response.data;
 };
 
 const getMyProfile = async () => {
@@ -113,7 +106,7 @@ const unFollow = async (userId: string) => {
   return response.data;
 };
 
-const getFollowers = async (userId: string | number): Promise<User[]> => {
+const getFollowers = async (userId: string): Promise<User[]> => {
   const response = await api.get(`/api/user/${userId}/follower`);
   return response.data.followers;
 };

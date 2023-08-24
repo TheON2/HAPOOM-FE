@@ -13,6 +13,7 @@ import {
   UserProfileImage,
 } from '@/styles/followTab';
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 
 interface FollowTabUser {
   userId: number;
@@ -43,7 +44,9 @@ const UserListItem: React.FC<FollowTabUser> = ({
   </UserListItemStyled>
 );
 
-const FollowTab: React.FC<FollowTabProps> = ({ userId }) => {
+const FollowTab: React.FC<FollowTabProps> = () => {
+  const router = useRouter();
+  const userId = router.query.userId as string;
   const [activeTab, setActiveTab] = useState<'followers' | 'followings'>(
     'followers'
   );
