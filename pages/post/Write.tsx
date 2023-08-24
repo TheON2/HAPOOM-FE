@@ -25,7 +25,6 @@ import MobileBottomNav from '@/components/common/MobileBottomNav';
 import { parseCookies, setCookie } from 'nookies';
 import { GetServerSidePropsContext, NextPage } from 'next';
 import RecordPlayer from '@/components/Write/RecordPlayer';
-import CustomPlayer from '@/components/Write/CustomPlayer';
 import MusicSelector from '@/components/Write/MusicSelector';
 import { Form } from 'react-bootstrap';
 import Accordion from '@/components/Write/Accordion';
@@ -37,8 +36,17 @@ import CustomButton from '@/components/Write/CustomButton';
 import { ReadOnlyMap } from '@/components/Write/ReadOnlyMap';
 import YoutubePlayer from '@/components/Write/YoutubePlayer';
 import Button from '@/components/common/Button';
-import ReadOnlyYoutube from '@/components/Write/ReadOnlyYoutube';
+//import CustomPlayer from '@/components/Write/CustomPlayer';
+//import ReadOnlyYoutube from '@/components/Write/ReadOnlyYoutube';
 import { styled } from 'styled-components';
+
+const ReadOnlyYoutube = dynamic(
+  () => import('@/components/Write/ReadOnlyYoutube'),
+  { loading: () => <div>Loading...</div> }
+);
+const CustomPlayer = dynamic(() => import('@/components/Write/CustomPlayer'), {
+  loading: () => <div>Loading...</div>,
+});
 
 const DynamicComponentWithNoSSR = dynamic(
   () => import('@/components/Write/YoutubePlayer'),
