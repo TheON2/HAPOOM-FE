@@ -262,11 +262,9 @@ const Write: NextPage<Props> = ({ update = '1', updateId }) => {
     mutationOptions
   );
 
-  const { isLoading, isError, data, isSuccess } = useQuery(
-    ['post', updateId],
-    () => getPost(updateId),
-    {
-      onSuccess: async (data) => {
+  useEffect(() => {
+    if (update === '2') {
+      getPost(updateId).then((data) => {
         data.images.map((image: any) => {
           setImageURLs((images) => [...images, image.url]);
         });
@@ -285,10 +283,9 @@ const Write: NextPage<Props> = ({ update = '1', updateId }) => {
           x: data.post.latitude,
           y: data.post.longitude,
         });
-      },
-      enabled: update === '2',
+      });
     }
-  );
+  }, [update, updateId]);
 
   return (
     <>
