@@ -52,7 +52,7 @@ const CustomPlayer = ({
   const [playing, setPlaying] = useState(false);
   const [duration, setDuration] = useState(0);
   const [seek, setSeek] = useState(0);
-  const [isVolume, setIsVolume] = useState<boolean>(true);
+  const [isVolume, setIsVolume] = useState<boolean>(false);
 
   const handleVolumeClick = () => {
     setIsVolume(!isVolume);
