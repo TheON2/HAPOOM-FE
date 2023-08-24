@@ -20,12 +20,30 @@ export const PlayButton = styled.button`
     color: #ffdd57;
   }
 `;
-
+export const VolumeButton = styled.button`
+  background: #d4eaff;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  border: 1px solid #a9d5ff;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  svg {
+    fill: #7dc1ff;
+  }
+  &:hover {
+    color: #ffdd57;
+  }
+`;
 export const VolumeSlider = styled.input`
   -webkit-appearance: none;
   appearance: none;
   width: 100px;
-  background: #444;
+  background: #7dc1ff;
   outline: none;
   opacity: 0.7;
   transition: opacity 0.2s;
@@ -41,7 +59,8 @@ export const VolumeSlider = styled.input`
     appearance: none;
     width: 15px;
     height: 15px;
-    background: #fff;
+    background: #fafcff;
+    border: 1px solid #a9d5ff;
     cursor: pointer;
     border-radius: 50%;
   }
@@ -123,7 +142,7 @@ export const PlayerControls = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  gap: 16px;
+  gap: 8px;
   background-color: #eff7ff;
   border: 2px solid #dfefff;
   border-radius: 30px;
@@ -207,6 +226,14 @@ export const SeekSliderGroup = styled(ControlGroup)`
 
 export const VolumeSliderGroup = styled(ControlGroup)`
   flex: 2; // 20%의 공간을 차지
+  position: absolute;
+  transform: rotate(-90deg) translate(-50%, 115%);
+  padding: 8px;
+  background-color: #fff;
+  border: 1px solid #7dc1ff;
+  border-radius: 10px;
+  right: 0;
+  bottom: 0;
 `;
 
 export const TimeControls = styled.div`
