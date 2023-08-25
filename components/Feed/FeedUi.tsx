@@ -12,18 +12,17 @@ import {
   MainImageContainer,
   LikeIconContainer,
 } from '../../styles/feed';
-import { FeedPlayer } from '../common/SVG';
-import HeartIcon from '../common/HeartIcon';
-import { useMutation, useQuery } from 'react-query';
-import ProfileImage from '../common/ProfileImage';
-import { useRouter } from 'next/router';
 import KebabMenuUI, {
   KebabMenuAptionButton,
   KebabMenuStyle,
 } from '../common/KebabMenuUI';
+import { FeedPlayer } from '../common/SVG';
+import { useMutation, useQuery } from 'react-query';
+import { useRouter } from 'next/router';
 import { getFeed, reportPost } from '@/api/post';
 import Modal from '../common/Modal';
-import { FeedData } from '@/pages/feed/Feed';
+import HeartIcon from '../common/HeartIcon';
+import ProfileImage from '../common/ProfileImage';
 
 const timeSince = (date: string) => {
   const now: Date = new Date();
@@ -50,10 +49,19 @@ interface ModalMessage {
   modalMessge: string | undefined;
   onClickEvent: any;
 }
-type FeedUiProps = {
-  initialFeedData: FeedData;
-};
-const FeedUi: React.FC<FeedUiProps> = ({ initialFeedData }) => {
+interface Feed {
+  email: string;
+  image: string;
+  musicTitle: string;
+  musicUrl: string | null;
+  nickname: string;
+  updatedAt: string;
+  userImage: string;
+  postId: number;
+  preset: number;
+  userId: number;
+}
+const FeedUi = () => {
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [modalMessge, setModalMessge] = useState<ModalMessage>({
@@ -62,9 +70,8 @@ const FeedUi: React.FC<FeedUiProps> = ({ initialFeedData }) => {
     onClickEvent: '',
   });
 
-  const { data } = useQuery('feed', getFeed, { initialData: initialFeedData });
-  console.log(data?.feed);
-
+  const { data } = useQuery('feed', getFeed);
+  console.log('feeddata', data?.feed);
   const { mutate: report } = useMutation(reportPost, {
     onSuccess: (messag) => {
       setModalMessge({
@@ -78,6 +85,9 @@ const FeedUi: React.FC<FeedUiProps> = ({ initialFeedData }) => {
 
   const moveDetailPage = (id: number) => {
     router.push(`/detail/${id}`);
+  };
+  const moveUserPage = (userId: number) => {
+    router.push(`/User/${userId}`);
   };
 
   const handleReportClick = (id: any) => {
@@ -99,11 +109,11 @@ const FeedUi: React.FC<FeedUiProps> = ({ initialFeedData }) => {
       >
         {modalMessge.modalMessge}
       </Modal>
-      {data?.feed.map((feed: any) => {
+      {data?.feed.map((feed: Feed) => {
         return (
           <FeedContainer key={feed.postId}>
             <FeedHeader>
-              <div>
+              <div onClick={() => moveUserPage(feed.userId)}>
                 <ProfileImage userImage={feed.userImage} preset={feed.preset} />
               </div>
               <FeedUserNickName>{feed.nickname}</FeedUserNickName>
@@ -128,8 +138,9 @@ const FeedUi: React.FC<FeedUiProps> = ({ initialFeedData }) => {
                 src={feed.image}
                 alt={'Feed Image'}
                 width={272}
-                height={189}
+                height={188}
                 quality={100}
+                priority
                 onClick={() => moveDetailPage(feed.postId)}
               />
             </MainImageContainer>
