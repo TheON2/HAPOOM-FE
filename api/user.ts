@@ -51,15 +51,8 @@ type getUserProps = {
 };
 
 const getUserProfile = async ({ UserId: userId }: getUserProps) => {
-  try {
-    console.log('Fetching user profile for userId:', userId);
-    const response = await api.get(`/api/user/profile/${userId}`);
-    console.log('API response data:', response.data);
-    return response.data;
-  } catch (error) {
-    console.error('Error fetching user profile:', error);
-    throw error;
-  }
+  const response = await api.get(`/api/user/profile/${userId}`);
+  return response.data;
 };
 
 const getMyProfile = async () => {
@@ -113,32 +106,14 @@ const unFollow = async (userId: string) => {
   return response.data;
 };
 
-const getFollowers = async (userId: string | number): Promise<User[]> => {
-  try {
-    const response = await api.get(`/api/user/${String(userId)}/follower`);
-    if (response.data && Array.isArray(response.data.followers)) {
-      return response.data.followers;
-    }
-    console.error('Unexpected format in response:', response.data);
-    return [];
-  } catch (error) {
-    console.error('Error fetching followers:', error);
-    return [];
-  }
+const getFollowers = async (userId: string): Promise<User[]> => {
+  const response = await api.get(`/api/user/${userId}/follower`);
+  return response.data.followers;
 };
 
 const getFollowings = async (userId: string): Promise<User[]> => {
-  try {
-    const response = await api.get(`/api/user/${userId}/following`);
-    if (response.data && Array.isArray(response.data.following)) {
-      return response.data.following;
-    }
-    console.error('Unexpected format in response:', response.data);
-    return [];
-  } catch (error) {
-    console.error('Error fetching followings:', error);
-    return [];
-  }
+  const response = await api.get(`/api/user/${userId}/following`);
+  return response.data.following;
 };
 
 export {
