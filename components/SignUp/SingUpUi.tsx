@@ -11,7 +11,7 @@ import {
   SnsLine,
   TextParagraphInfo,
 } from '@/styles/signUp';
-import { useMutation, useQuery } from 'react-query';
+import { useMutation } from 'react-query';
 import { addUser } from '@/api/user';
 import { NextRouter, useRouter } from 'next/router';
 import MobileBottomNav from '../common/MobileBottomNav';
@@ -80,13 +80,11 @@ const SignUpUi = () => {
   });
   const [checkboxErrorMessage, setCheckboxErrorMessage] = useState('');
 
-  const getForgotPwd = async (email: any) => {
-    const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_LOCAL_SERVER}/api/auth/${email}`
-    );
+  const getForgotPwd = async (email: string) => {
+    const response = await axios.get(`http://localhost:3001/api/auth/${email}`);
     return response.data;
   };
-  const forgtPwd = useQuery('forgtPwd', getForgotPwd, {
+  const forgotPwdMutaion = useMutation(getForgotPwd, {
     onSuccess: () => {
       console.log('성공');
     },
@@ -220,6 +218,14 @@ const SignUpUi = () => {
     }
   };
 
+  const handleEmailValidateSubmit = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    event.preventDefault();
+    alert('성실');
+    forgotPwdMutaion.mutate(signUpState.email);
+  };
+
   return (
     <SignUpSection>
       <MainHeadText onClick={moveHomePageHandeler}>HAPOOM</MainHeadText>
@@ -251,7 +257,7 @@ const SignUpUi = () => {
               backgroundColor: signUpState.email ? '#0078FF' : '#B3B3B3',
               borderColor: signUpState.email ? '#0078FF' : '#B3B3B3',
             }}
-            onClick={() => forgtPwd}
+            onClick={handleEmailValidateSubmit}
             disabled={!signUpState.email}
           >
             이메일 인증하기
