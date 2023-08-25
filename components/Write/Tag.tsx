@@ -5,7 +5,7 @@ interface TagProps {
   onDelete: (tag: string) => void;
 }
 
-const TagStyle = styled.div`
+export const TagStyle = styled.div`
   color: #0084ff;
   cursor: pointer;
   display: inline-block;

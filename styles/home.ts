@@ -96,6 +96,12 @@ export const MainBannerLayout = styled.div`
   height: 100%;
   overflow: hidden;
   position: relative;
+  background-color: #efefef;
+  .sigle-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
 `;
 
 export const SliderList = styled.ul<SliderListProps>`
@@ -115,11 +121,13 @@ export const SliderItem = styled.li<WidthOnly>`
   width: ${(props) => (props.width ? `${props.width}px` : `100vw`)};
   height: 100%;
   position: relative;
+
   /* padding: 50px 100px; */
   img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
+    /* box-shadow: 0 0 20px rgba(0, 0, 0, 1); */
   }
   p {
     position: absolute;
