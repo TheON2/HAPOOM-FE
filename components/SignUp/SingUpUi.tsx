@@ -11,7 +11,7 @@ import {
   SnsLine,
   TextParagraphInfo,
 } from '@/styles/signUp';
-import { useMutation } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import { addUser } from '@/api/user';
 import { NextRouter, useRouter } from 'next/router';
 import MobileBottomNav from '../common/MobileBottomNav';
@@ -20,6 +20,7 @@ import SignUpPwd from './SignUpPwd';
 import SignUpNickname from './SignUpNickname';
 import SignUpCheck from './SignUpCheck';
 import SignUpcontrol from './SignUpControl';
+import axios from 'axios';
 
 const validateEmail = (email: string) => {
   const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
@@ -79,6 +80,20 @@ const SignUpUi = () => {
   });
   const [checkboxErrorMessage, setCheckboxErrorMessage] = useState('');
 
+  const getForgotPwd = async (email: any) => {
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_LOCAL_SERVER}/api/auth/${email}`
+    );
+    return response.data;
+  };
+  const forgtPwd = useQuery('forgtPwd', getForgotPwd, {
+    onSuccess: () => {
+      console.log('성공');
+    },
+    onError: (error) => {
+      console.log('실패', error);
+    },
+  });
   const addUserMutation = useMutation(addUser, {
     onSuccess: () => {
       router.push('/signUpComplete/SignUpComplete');
@@ -236,7 +251,7 @@ const SignUpUi = () => {
               backgroundColor: signUpState.email ? '#0078FF' : '#B3B3B3',
               borderColor: signUpState.email ? '#0078FF' : '#B3B3B3',
             }}
-            onClick={() => alert('준비 중 입니다.')}
+            onClick={() => forgtPwd}
             disabled={!signUpState.email}
           >
             이메일 인증하기
