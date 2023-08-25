@@ -63,15 +63,14 @@ const SignUpPwd: React.FC<Props> = ({
         style={{
           position: 'absolute',
           right: '10px',
-          top: '50%',
+          top: error.password ? '38%' : '45%',
           transform: 'translateY(-50%)',
           cursor: 'pointer',
         }}
       />
-      {error.password && (
-        <TextErrorParagraph>{error.password}</TextErrorParagraph>
-      )}
-      <TextParagraphInfo>비밀번호 확인</TextParagraphInfo>
+      <TextParagraphInfo $marginTop={'8px'} $marginBottom={'8px'}>
+        비밀번호 확인
+      </TextParagraphInfo>
       <StyledInput
         type={passwordConfirmInputType}
         name="passwordConfirm"
@@ -84,13 +83,13 @@ const SignUpPwd: React.FC<Props> = ({
         style={{
           position: 'absolute',
           right: '10px',
-          top: '88%',
+          top: error.password ? '76%' : '89%',
           transform: 'translateY(-50%)',
           cursor: 'pointer',
         }}
       />
-      {error.passwordConfirm && (
-        <TextErrorParagraph>{error.passwordConfirm}</TextErrorParagraph>
+      {error.password && (
+        <TextErrorParagraph>{error.password}</TextErrorParagraph>
       )}
     </StyledInputBox>
   );
