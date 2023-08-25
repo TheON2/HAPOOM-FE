@@ -5,7 +5,7 @@ import React from 'react';
 const SignUp = () => {
   return (
     <>
-      <GlobalStyle />
+      {/* <GlobalStyle /> */}
       <SignUpUi />
     </>
   );

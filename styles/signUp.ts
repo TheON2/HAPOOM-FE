@@ -173,10 +173,11 @@ export const Line = styled.div<Props>`
 `;
 export const TextErrorParagraph = styled.p`
   max-width: 227px;
-  height: 28px;
+  height: 18px;
   color: red;
   font-size: 10px;
   font-weight: 400;
-  line-height: 2.5;
+  line-height: 1.5;
   margin-left: 4px;
+  margin-top: 8px;
 `;
