@@ -22,7 +22,6 @@ const HashtagContents: React.FC<Props> = ({
   hashTag,
   tagCategory,
 }) => {
-  console.log(undefindeTag);
   return (
     <HashtagContentsLayout>
       <div className="center">
@@ -36,27 +35,6 @@ const HashtagContents: React.FC<Props> = ({
             tagData={tagData}
             undefindeTag={undefindeTag}
           />
-          {/* {isAll
-            ? serverPropData.map((content, index) => {
-                return (
-                  <ImageContent
-                    key={index}
-                    src={content?.image}
-                    alt={'date'}
-                    postId={content?.postId}
-                  />
-                );
-              })
-            : tagData?.map((content, index) => {
-                return (
-                  <ImageContent
-                    key={index}
-                    src={content?.Images[0]?.url}
-                    alt={'date'}
-                    postId={content?.postId}
-                  />
-                );
-              })} */}
         </ImageContentsContainer>
       </div>
     </HashtagContentsLayout>
