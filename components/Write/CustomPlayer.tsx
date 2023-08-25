@@ -10,6 +10,7 @@ import {
   SeekSliderGroup,
   TimeLabel,
   TitleBox,
+  VolumeButton,
   VolumeSlider,
   VolumeSliderGroup,
 } from '@/styles/youtubeplayer';
@@ -18,7 +19,7 @@ import Image from 'next/image';
 
 import playImage from '@/public/play.png';
 import pauseImage from '@/public/pause.png';
-import { Xmark } from '../common/SVG';
+import { Volume, Xmark } from '../common/SVG';
 
 interface UniversalPlayerProps {
   audioUrl: string | undefined;
@@ -51,6 +52,11 @@ const CustomPlayer = ({
   const [playing, setPlaying] = useState(false);
   const [duration, setDuration] = useState(0);
   const [seek, setSeek] = useState(0);
+  const [isVolume, setIsVolume] = useState<boolean>(false);
+
+  const handleVolumeClick = () => {
+    setIsVolume(!isVolume);
+  };
 
   const handlePlayPause = () => {
     if (audioRef.current) {
@@ -163,16 +169,23 @@ const CustomPlayer = ({
               )}
             </PlayButton>
           </PlayButtonGroup>
+          <PlayButtonGroup>
+            <VolumeButton type="button" onClick={handleVolumeClick}>
+              <Volume />
+              {/* <Image src={pauseImage} alt="Pause" width={25} height={25} /> */}
+            </VolumeButton>
+          </PlayButtonGroup>
+          {isVolume && (
+            <VolumeSliderGroup>
+              <VolumeSlider
+                type="range"
+                min="0"
+                max="100"
+                onChange={handleVolumeChange}
+              />
+            </VolumeSliderGroup>
+          )}
         </PlayerControls>
-
-        {/* <VolumeSliderGroup>
-          <VolumeSlider
-            type="range"
-            min="0"
-            max="100"
-            onChange={handleVolumeChange}
-          />
-        </VolumeSliderGroup> */}
       </CustomPlayerWrapper>
     </>
   );

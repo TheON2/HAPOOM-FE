@@ -92,7 +92,7 @@ type Props = {
   alarm: string;
 };
 
-const AlarmBar = ({ className, alarm }: Props) => {
+export const AlarmBar = ({ className, alarm }: Props) => {
   const [isShow, setIsShow] = useState<boolean>(true);
   // const onClickAlarmHandler = () => {
   //   setIsShow(!isShow);

@@ -19,7 +19,6 @@ const Layout = ({ children }: layoutProps) => {
       <GlobalStyle />
       <LayoutStyle $isHome={isHome}>
         <Header $sticky={isHome} />
-        <AlarmBar />
         {isHome ? (
           <>{children}</>
         ) : (

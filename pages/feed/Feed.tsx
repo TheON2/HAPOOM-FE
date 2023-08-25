@@ -24,16 +24,3 @@ const Feed = () => {
 };
 
 export default Feed;
-
-// export const getStaticProps: GetStaticProps = async () => {
-//   const response = await axios.get(
-//     `${process.env.NEXT_PUBLIC_LOCAL_SERVER}/api/main/feed`
-//   );
-
-//   const data = response;
-
-//   return {
-//     props: { data },
-//     revalidate: 5,
-//   };
-// };

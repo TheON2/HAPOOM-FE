@@ -11,6 +11,8 @@ import { InputBox, StyledAuthInput } from '@/styles/write';
 import styled from 'styled-components';
 import { debounce } from 'lodash';
 import Button from '../common/Button';
+import nookies from 'nookies';
+import Modal from '../common/Modal';
 
 const SuggestionsBox = styled.ul`
   list-style-type: none;
@@ -102,16 +104,18 @@ export const MapComponent: React.FC<MapComponentProps> = ({
   const mapContainerRef = useRef(null);
   const mapRef = useRef<any>(null);
   const markerRef = useRef<Marker | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [modalMessge, setModalMessge] = useState<any>({
+    actionText: '',
+    modalMessge: '',
+    onClickEvent: '',
+  });
 
   const handleMapClick = useCallback(
     async (event: MapClickEvent) => {
       const coord = event.coord;
       if (update === '3') return;
-      setLocation({
-        name: locationInput,
-        x: coord.x,
-        y: coord.y,
-      });
+      setLocationLatLng({ x: coord.x, y: coord.y });
 
       if (markerRef.current) {
         markerRef.current.setMap(null);
@@ -122,7 +126,7 @@ export const MapComponent: React.FC<MapComponentProps> = ({
         map: mapRef.current,
       });
     },
-    [locationInput, update, setLocation]
+    [update, setLocationLatLng]
   );
 
   const handleSearch = async (term: string) => {
@@ -221,11 +225,83 @@ export const MapComponent: React.FC<MapComponentProps> = ({
     });
     setIsShowMap(false);
   };
+
   const onClickCloseHandler = () => {
     setIsShowMap(false);
   };
+
+  const setToCurrentLocation = useCallback(() => {
+    const { currentlocation } = nookies.get();
+
+    if (!currentlocation) {
+      alert('브라우저 상단의 위치정보 사용을 허용해주세요.');
+    }
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        nookies.set(null, 'currentlocation', 'true', { path: '/' });
+        const { latitude, longitude } = position.coords;
+        setLocationInput('내 위치');
+        setMapOpen(true);
+
+        if (mapRef.current) {
+          const newPosition = new window.naver.maps.LatLng(latitude, longitude);
+          mapRef.current.setCenter(newPosition);
+          mapRef.current.setZoom(18);
+
+          if (markerRef.current) {
+            markerRef.current.setMap(null);
+          }
+
+          markerRef.current = new window.naver.maps.Marker({
+            position: newPosition,
+            map: mapRef.current,
+          });
+        }
+
+        setLocationLatLng({ y: latitude, x: longitude });
+      },
+      async (error) => {
+        if (error.code === error.PERMISSION_DENIED) {
+          alert(
+            '이 기능을 사용하려면 브라우저 설정에서 위치 권한을 허용한후 브라우저를 재부팅 해주세요.'
+          );
+        } else {
+          console.error('지금 위치를 찾을 수 없습니다.', error);
+        }
+      }
+    );
+  }, [setMapOpen]);
+
+  // const handleDeleteClick = () => {
+  //   setModalMessge({
+  //     actionText: '삭제',
+  //     modalMessge: '정말로 해당 게시글을 삭제하시겠습니까?',
+  //     onClickEvent: () => delete_mutate(id),
+  //   });
+  //   setIsModalOpen(true);
+  // };
+
+  // const { mutate: report } = useMutation(reportPost, {
+  //   onSuccess: (messag) => {
+  //     setModalMessge({
+  //       actionText: '확인',
+  //       modalMessge: messag,
+  //       onClickEvent: null,
+  //     });
+  //     setIsModalOpen(true);
+  //   },
+  // });
+
   return (
     <>
+      <Modal
+        isOpen={isModalOpen}
+        setIsOpen={setIsModalOpen}
+        actionText={modalMessge.actionText}
+        onClickEvent={modalMessge.onClickEvent}
+      >
+        {modalMessge.modalMessge}
+      </Modal>
       <Script
         strategy="afterInteractive"
         type="text/javascript"
@@ -279,6 +355,9 @@ export const MapComponent: React.FC<MapComponentProps> = ({
           onClick={onClickCloseHandler}
         >
           닫기
+        </Button>
+        <Button type="button" onClick={setToCurrentLocation}>
+          간편 찾기
         </Button>
         <Button
           onClick={submitLocation}

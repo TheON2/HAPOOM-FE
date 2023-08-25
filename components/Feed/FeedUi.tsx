@@ -12,18 +12,17 @@ import {
   MainImageContainer,
   LikeIconContainer,
 } from '../../styles/feed';
-import { FeedPlayer } from '../common/SVG';
-import HeartIcon from '../common/HeartIcon';
-import { useMutation, useQuery } from 'react-query';
-import axios from 'axios';
-import ProfileImage from '../common/ProfileImage';
-import { useRouter } from 'next/router';
 import KebabMenuUI, {
   KebabMenuAptionButton,
   KebabMenuStyle,
 } from '../common/KebabMenuUI';
-import { reportPost } from '@/api/post';
+import { FeedPlayer } from '../common/SVG';
+import { useMutation, useQuery } from 'react-query';
+import { useRouter } from 'next/router';
+import { getFeed, reportPost } from '@/api/post';
 import Modal from '../common/Modal';
+import HeartIcon from '../common/HeartIcon';
+import ProfileImage from '../common/ProfileImage';
 
 const timeSince = (date: string) => {
   const now: Date = new Date();
@@ -50,6 +49,18 @@ interface ModalMessage {
   modalMessge: string | undefined;
   onClickEvent: any;
 }
+interface Feed {
+  email: string;
+  image: string;
+  musicTitle: string;
+  musicUrl: string | null;
+  nickname: string;
+  updatedAt: string;
+  userImage: string;
+  postId: number;
+  preset: number;
+  userId: number;
+}
 const FeedUi = () => {
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -59,14 +70,8 @@ const FeedUi = () => {
     onClickEvent: '',
   });
 
-  const getFeed = async () => {
-    const response = await axios.get(`http://localhost:3001/api/main/feed`);
-    return response.data;
-  };
-
   const { data } = useQuery('feed', getFeed);
-  console.log(data?.feed[0].postId);
-
+  console.log('feeddata', data?.feed);
   const { mutate: report } = useMutation(reportPost, {
     onSuccess: (messag) => {
       setModalMessge({
@@ -80,6 +85,9 @@ const FeedUi = () => {
 
   const moveDetailPage = (id: number) => {
     router.push(`/detail/${id}`);
+  };
+  const moveUserPage = (userId: number) => {
+    router.push(`/User/${userId}`);
   };
 
   const handleReportClick = (id: any) => {
@@ -101,11 +109,11 @@ const FeedUi = () => {
       >
         {modalMessge.modalMessge}
       </Modal>
-      {data?.feed.map((feed: any) => {
+      {data?.feed.map((feed: Feed) => {
         return (
           <FeedContainer key={feed.postId}>
             <FeedHeader>
-              <div>
+              <div onClick={() => moveUserPage(feed.userId)}>
                 <ProfileImage userImage={feed.userImage} preset={feed.preset} />
               </div>
               <FeedUserNickName>{feed.nickname}</FeedUserNickName>
@@ -130,8 +138,9 @@ const FeedUi = () => {
                 src={feed.image}
                 alt={'Feed Image'}
                 width={272}
-                height={189}
+                height={188}
                 quality={100}
+                priority
                 onClick={() => moveDetailPage(feed.postId)}
               />
             </MainImageContainer>

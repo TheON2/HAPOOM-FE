@@ -66,8 +66,10 @@ export const SearchInput = styled.input`
   border-radius: 22px;
   border: none;
   font-size: 12px;
+  transition: all 0.3s ease-in-out;
   &:focus {
     outline: none;
+    background-color: #eef7ff;
   }
 `;
 
@@ -88,4 +90,9 @@ export const NoneSearchResult = styled.div`
   text-align: center;
   line-height: 30px;
   gap: 30px;
+`;
+
+export const SearchResultBox = styled.div`
+  width: 100%;
+  min-height: 70vh;
 `;
