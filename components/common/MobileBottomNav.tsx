@@ -105,7 +105,7 @@ const MobileBottomNav = () => {
         })}
         <BottomNavItem>
           <IconBox
-            onClick={() => routerHandler(`/User/${user.email}`, 'my')}
+            onClick={() => routerHandler(`/User/my`, 'my')}
             className={active === 3 ? 'active' : ''}
           >
             <div className="image-box">
