@@ -50,7 +50,7 @@ interface ModalMessage {
   modalMessge: string | undefined;
   onClickEvent: any;
 }
-type Feed = {
+interface Feed {
   email: string;
   image: string;
   musicTitle: string;
@@ -60,7 +60,7 @@ type Feed = {
   preset: number;
   updatedAt: string;
   userImage: string;
-};
+}
 const FeedUi = () => {
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
