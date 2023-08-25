@@ -61,7 +61,6 @@ export interface ParsedCookies {
 const UserUi: React.FC<UserUiProps> = ({ userId }) => {
   const isOwnProfile = userId;
 
-
   const {
     data,
     error,
@@ -74,7 +73,6 @@ const UserUi: React.FC<UserUiProps> = ({ userId }) => {
       {
         enabled: !!userId, // userId가 유효한 값일 때만 쿼리가 실행되게 함
       }
-
     );
 
   if (error) {
@@ -83,12 +81,11 @@ const UserUi: React.FC<UserUiProps> = ({ userId }) => {
 
   return (
     <>
-
       {isSuccess && (
         <>
           <UserPageSection>
             <UserPageContainer>
-              <UserProfileCard data={data} />
+              <UserProfileCard data={data} userId={userId} />
               <FollowButton profileUserId={data?.user?.userId} />
               <UserLikePostSuggestion data={data} />
               <PostLike data={data} />
@@ -96,7 +93,6 @@ const UserUi: React.FC<UserUiProps> = ({ userId }) => {
           </UserPageSection>
         </>
       )}
-
     </>
   );
 };
