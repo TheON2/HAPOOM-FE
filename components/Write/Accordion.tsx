@@ -45,10 +45,15 @@ type PanelProps = {
 const Panel = styled.div<PanelProps>`
   padding: 0 0 12px;
   height: ${(props) => (props.open ? '260px' : '0')};
-  overflow-y: scroll;
+  overflow-y: auto;
   position: relative;
   /* background-color: #f9f9f9; */
   transition: height 0.4s;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 `;
 
 type AccordionProps = {
