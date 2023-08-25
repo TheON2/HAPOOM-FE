@@ -63,7 +63,7 @@ const SignUpPwd: React.FC<Props> = ({
         style={{
           position: 'absolute',
           right: '10px',
-          top: error.password ? '38%' : '45%',
+          top: error.password ? '36%' : '43%',
           transform: 'translateY(-50%)',
           cursor: 'pointer',
         }}
@@ -83,7 +83,7 @@ const SignUpPwd: React.FC<Props> = ({
         style={{
           position: 'absolute',
           right: '10px',
-          top: error.password ? '76%' : '89%',
+          top: error.password ? '74%' : '87%',
           transform: 'translateY(-50%)',
           cursor: 'pointer',
         }}
