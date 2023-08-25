@@ -58,8 +58,8 @@ export interface ParsedCookies {
   [key: string]: string | undefined;
 }
 
-const UserUi: React.FC<UserUiProps> = ({ userId }) => {
-  const isOwnProfile = userId;
+const UserUi: React.FC<UserUiProps> = ({ userId, loggedInEmail }) => {
+  const isOwnProfile = userId === loggedInEmail;
 
   const {
     data,
