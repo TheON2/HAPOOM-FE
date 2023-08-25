@@ -64,7 +64,7 @@ const PostLike: React.FC<PostLike> = ({
     data?.likedPosts || []
   );
 
-  const method = 'GET'; // Assuming this is the correct method
+  const method = 'GET';
   const queryType = selectedTab === 0 ? 'post' : 'like';
 
   const { data: infiniteData } = useInfiniteData(queryType, method);

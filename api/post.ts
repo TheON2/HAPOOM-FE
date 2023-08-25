@@ -18,6 +18,7 @@ interface UpdateData {
 
 const getMain = async () => {
   const response = await api.get('/api/main');
+  console.log(response);
   return response.data;
 };
 
@@ -144,6 +145,33 @@ const deleteComment = async ({ id, commentId }: commentDelete) => {
   return response.data;
 };
 
+type searchProps = {
+  search: string;
+  option: string;
+};
+
+const getSearch = async ({
+  option: category,
+  search: keyword,
+}: searchProps) => {
+  try {
+    const response = await api.get(`/api/search`, {
+      params: {
+        q: keyword,
+        category,
+      },
+      withCredentials: true,
+    });
+    return response.data;
+  } catch (error: any) {
+    if (error.response.status === 400) {
+      return '400';
+    } else {
+      return 'otherError';
+    }
+  }
+};
+
 export {
   getMain,
   getFeed,
@@ -161,4 +189,5 @@ export {
   deleteComment,
   getMyLikedPosts,
   getMyPosts,
+  getSearch,
 };

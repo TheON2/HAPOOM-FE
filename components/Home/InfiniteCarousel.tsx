@@ -129,4 +129,23 @@ const InfiniteCarousel: React.FC<Props> = ({ data }) => {
   );
 };
 
-export default InfiniteCarousel;
+const DetailImageViewBox = ({ data }: any) => {
+  if (data.length === 1) {
+    return (
+      <MainBannerLayout>
+        <Image
+          src={data[0]?.url}
+          alt="v13 image"
+          width={768}
+          height={800}
+          loading="eager"
+          priority={true}
+          className="sigle-image"
+        />
+      </MainBannerLayout>
+    );
+  } else {
+    return <InfiniteCarousel data={data} />;
+  }
+};
+export default DetailImageViewBox;
