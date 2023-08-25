@@ -12,6 +12,7 @@ import styled from 'styled-components';
 import { debounce } from 'lodash';
 import Button from '../common/Button';
 import nookies from 'nookies';
+import Modal from '../common/Modal';
 
 const SuggestionsBox = styled.ul`
   list-style-type: none;
@@ -103,6 +104,12 @@ export const MapComponent: React.FC<MapComponentProps> = ({
   const mapContainerRef = useRef(null);
   const mapRef = useRef<any>(null);
   const markerRef = useRef<Marker | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [modalMessge, setModalMessge] = useState<any>({
+    actionText: '',
+    modalMessge: '',
+    onClickEvent: '',
+  });
 
   const handleMapClick = useCallback(
     async (event: MapClickEvent) => {
@@ -265,8 +272,36 @@ export const MapComponent: React.FC<MapComponentProps> = ({
     );
   }, [setMapOpen]);
 
+  // const handleDeleteClick = () => {
+  //   setModalMessge({
+  //     actionText: '삭제',
+  //     modalMessge: '정말로 해당 게시글을 삭제하시겠습니까?',
+  //     onClickEvent: () => delete_mutate(id),
+  //   });
+  //   setIsModalOpen(true);
+  // };
+
+  // const { mutate: report } = useMutation(reportPost, {
+  //   onSuccess: (messag) => {
+  //     setModalMessge({
+  //       actionText: '확인',
+  //       modalMessge: messag,
+  //       onClickEvent: null,
+  //     });
+  //     setIsModalOpen(true);
+  //   },
+  // });
+
   return (
     <>
+      <Modal
+        isOpen={isModalOpen}
+        setIsOpen={setIsModalOpen}
+        actionText={modalMessge.actionText}
+        onClickEvent={modalMessge.onClickEvent}
+      >
+        {modalMessge.modalMessge}
+      </Modal>
       <Script
         strategy="afterInteractive"
         type="text/javascript"
