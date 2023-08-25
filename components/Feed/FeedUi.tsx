@@ -15,15 +15,15 @@ import {
 import { FeedPlayer } from '../common/SVG';
 import HeartIcon from '../common/HeartIcon';
 import { useMutation, useQuery } from 'react-query';
-import axios from 'axios';
 import ProfileImage from '../common/ProfileImage';
 import { useRouter } from 'next/router';
 import KebabMenuUI, {
   KebabMenuAptionButton,
   KebabMenuStyle,
 } from '../common/KebabMenuUI';
-import { reportPost } from '@/api/post';
+import { getFeed, reportPost } from '@/api/post';
 import Modal from '../common/Modal';
+import { FeedData } from '@/pages/feed/Feed';
 
 const timeSince = (date: string) => {
   const now: Date = new Date();
@@ -50,7 +50,10 @@ interface ModalMessage {
   modalMessge: string | undefined;
   onClickEvent: any;
 }
-const FeedUi = () => {
+type FeedUiProps = {
+  initialFeedData: FeedData;
+};
+const FeedUi: React.FC<FeedUiProps> = ({ initialFeedData }) => {
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [modalMessge, setModalMessge] = useState<ModalMessage>({
@@ -59,13 +62,8 @@ const FeedUi = () => {
     onClickEvent: '',
   });
 
-  const getFeed = async () => {
-    const response = await axios.get(`http://localhost:3001/api/main/feed`);
-    return response.data;
-  };
-
-  const { data } = useQuery('feed', getFeed);
-  console.log(data?.feed[0].postId);
+  const { data } = useQuery('feed', getFeed, { initialData: initialFeedData });
+  console.log(data?.feed);
 
   const { mutate: report } = useMutation(reportPost, {
     onSuccess: (messag) => {

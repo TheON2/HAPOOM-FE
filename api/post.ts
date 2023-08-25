@@ -21,6 +21,11 @@ const getMain = async () => {
   return response.data;
 };
 
+const getFeed = async () => {
+  const response = await api.get('/api/main/feed');
+  return response.data;
+};
+
 const addPost = async (postData: UpdateData) => {
   const config = {
     headers: {
@@ -141,6 +146,7 @@ const deleteComment = async ({ id, commentId }: commentDelete) => {
 
 export {
   getMain,
+  getFeed,
   addPost,
   updatePost,
   getPost,
