@@ -36,7 +36,7 @@ export const useInfiniteData = (type: 'post' | 'like', enabled = true) => {
 
       if (
         window.innerHeight + window.scrollY >=
-        document.body.offsetHeight - 500
+        document.body.offsetHeight - 300
       ) {
         if (hasNextPage && !isFetchingNextPage) {
           fetchNextPage();
