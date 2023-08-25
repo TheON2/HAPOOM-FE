@@ -11,6 +11,7 @@ import { InputBox, StyledAuthInput } from '@/styles/write';
 import styled from 'styled-components';
 import { debounce } from 'lodash';
 import Button from '../common/Button';
+import nookies from 'nookies';
 
 const SuggestionsBox = styled.ul`
   list-style-type: none;
@@ -223,8 +224,14 @@ export const MapComponent: React.FC<MapComponentProps> = ({
   };
 
   const setToCurrentLocation = useCallback(() => {
+    const { currentlocation } = nookies.get();
+
+    if (!currentlocation) {
+      alert('브라우저 상단의 위치정보 사용을 허용해주세요.');
+    }
     navigator.geolocation.getCurrentPosition(
       (position) => {
+        nookies.set(null, 'currentlocation', 'true', { path: '/' });
         const { latitude, longitude } = position.coords;
         setLocationInput('내 위치');
         setMapOpen(true);
@@ -248,10 +255,8 @@ export const MapComponent: React.FC<MapComponentProps> = ({
       },
       async (error) => {
         if (error.code === error.PERMISSION_DENIED) {
-          // 위치 권한이 거부된 상태
-          // 사용자에게 위치 권한이 필요한 이유와 브라우저 설정에서 권한을 허용하는 방법을 설명하는 커스텀 모달 또는 메시지를 표시합니다.
           alert(
-            '이 기능을 사용하려면 브라우저 설정에서 위치 권한을 허용해주세요.'
+            '이 기능을 사용하려면 브라우저 설정에서 위치 권한을 허용한후 브라우저를 재부팅 해주세요.'
           );
         } else {
           console.error('지금 위치를 찾을 수 없습니다.', error);
@@ -316,12 +321,8 @@ export const MapComponent: React.FC<MapComponentProps> = ({
         >
           닫기
         </Button>
-        <Button
-          type="button"
-          className="secondary"
-          onClick={setToCurrentLocation}
-        >
-          지금 위치로 지정하기
+        <Button type="button" onClick={setToCurrentLocation}>
+          간편 찾기
         </Button>
         <Button
           onClick={submitLocation}

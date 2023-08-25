@@ -10,6 +10,7 @@ const theme = {
 };
 interface Props {
   $marginBottom?: string;
+  $marginTop?: string;
   color?: string;
   width?: string;
   $borderColor?: string;
@@ -51,6 +52,7 @@ export const TextParagraphInfo = styled(TextParagraph)<Props>`
   color: ${theme.textColor};
   font-size: 12px;
   font-weight: 700;
+  margin-top:${({ $marginTop }) => $marginTop || '0'};
   margin-bottom: ${({ $marginBottom }) => $marginBottom || '0'};
 `;
 export const TextParagraphSns = styled(TextParagraph)`

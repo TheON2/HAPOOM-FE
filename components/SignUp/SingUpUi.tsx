@@ -159,15 +159,13 @@ const SignUpUi = () => {
       errors.email = '이메일을 확인해주세요.';
     }
 
-    if (!signUpState.password) {
-      errors.password = '비밀번호를 입력해주세요.';
+    if (
+      !signUpState.password &&
+      signUpState.password !== signUpState.passwordConfirm
+    ) {
+      errors.password = '비밀번호를 확인해주세요';
     } else if (!validatePassword(signUpState.password)) {
-      errors.password =
-        '비밀번호는 영문, 숫자를 포함하여 8자 이상이어야합니다.';
-    }
-
-    if (signUpState.password !== signUpState.passwordConfirm) {
-      errors.passwordConfirm = '비밀번호가 일치하지 않습니다.';
+      errors.password = '비밀번호를 확인해주세요';
     }
 
     if (!signUpState.nickname) {
