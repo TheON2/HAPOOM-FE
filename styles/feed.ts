@@ -1,14 +1,14 @@
-import { styled } from "styled-components";
+import { styled } from 'styled-components';
 
 export const FeedSection = styled.section`
   width: 320px;
   margin: 0 auto;
-`
+`;
 export const FeedContainer = styled.div`
-  width:100%;
-  border: 1px solid #FF3434;
+  width: 100%;
+  border: 1px solid #ff3434;
   margin: 0 auto;
-`
+`;
 export const FeedHeader = styled.div`
   width: 272px;
   display: flex;
@@ -17,27 +17,27 @@ export const FeedHeader = styled.div`
   margin: 4px auto;
   position: relative;
   gap: 4px;
-  div img{
+  div img {
     border-radius: 50%;
     width: 33px;
     height: 33px;
     margin: 0 auto;
-  } 
-`
+  }
+`;
 export const FeedUserNickName = styled.div`
   color: #232323;
   font-size: 16px;
   font-weight: 600;
-`
+`;
 export const FeedTime = styled.div`
-  color: #9E9E9E;
+  color: #9e9e9e;
   font-size: 12px;
   font-weight: 400;
-`
+`;
 export const FeedIcon = styled.div`
   position: absolute;
   right: 0;
-`
+`;
 export const MainImageContainer = styled.div`
   height: 189px;
   display: flex;
@@ -45,7 +45,7 @@ export const MainImageContainer = styled.div`
   align-items: center;
   overflow: hidden;
   cursor: pointer;
-`
+`;
 export const FeedMusicLikeBox = styled.div`
   width: 272px;
   margin: 8px auto;
@@ -53,7 +53,7 @@ export const FeedMusicLikeBox = styled.div`
   justify-content: flex-start;
   align-items: center;
   position: relative;
-`
+`;
 export const MusicBox = styled.div`
   width: 220px;
   height: 40px;
@@ -61,21 +61,20 @@ export const MusicBox = styled.div`
   justify-content: flex-start;
   align-items: center;
   border-radius: 20px;
-  border: 1px solid #DFEFFF;
-  background: #EFF7FF;
+  border: 1px solid #dfefff;
+  background: #eff7ff;
   position: relative;
   gap: 4px;
   padding: 12px 8px;
-`
+`;
 export const Equalizer = styled.div`
   position: absolute;
   right: 0;
-`
+`;
 export const LikeIconContainer = styled.div`
   width: 50px;
   height: 40px;
   position: relative;
   bottom: 2px;
   left: 6px;
-`
-
+`;

@@ -25,7 +25,6 @@ import MobileBottomNav from '@/components/common/MobileBottomNav';
 import { parseCookies, setCookie } from 'nookies';
 import { GetServerSidePropsContext, NextPage } from 'next';
 import RecordPlayer from '@/components/Write/RecordPlayer';
-import CustomPlayer from '@/components/Write/CustomPlayer';
 import MusicSelector from '@/components/Write/MusicSelector';
 import { Form } from 'react-bootstrap';
 import Accordion from '@/components/Write/Accordion';
@@ -37,21 +36,21 @@ import CustomButton from '@/components/Write/CustomButton';
 import { ReadOnlyMap } from '@/components/Write/ReadOnlyMap';
 import YoutubePlayer from '@/components/Write/YoutubePlayer';
 import Button from '@/components/common/Button';
-import ReadOnlyYoutube from '@/components/Write/ReadOnlyYoutube';
+//import CustomPlayer from '@/components/Write/CustomPlayer';
+//import ReadOnlyYoutube from '@/components/Write/ReadOnlyYoutube';
 import { styled } from 'styled-components';
 
-const DynamicComponentWithNoSSR = dynamic(
-  () => import('@/components/Write/YoutubePlayer'),
-  { ssr: false }
+const ReadOnlyYoutube = dynamic(
+  () => import('@/components/Write/ReadOnlyYoutube'),
+  { loading: () => <div>Loading...</div> }
 );
+const CustomPlayer = dynamic(() => import('@/components/Write/CustomPlayer'), {
+  loading: () => <div>Loading...</div>,
+});
 
-interface Image {
-  url: string;
-}
 interface Props {
   update: string;
   updateId: string;
-  data: any;
 }
 
 // const Box = styled.div`
@@ -72,7 +71,7 @@ const WritePageContainer = styled.div`
   padding: 0 24px;
 `;
 
-const Write: NextPage<Props> = ({ update = '1', updateId, data }) => {
+const Write: NextPage<Props> = ({ update = '1', updateId }) => {
   const [isShow, setIsShow] = useState<boolean>(false);
   const [commentEdit, setCommentEdit] = useState<any>({
     show: false,
@@ -265,26 +264,28 @@ const Write: NextPage<Props> = ({ update = '1', updateId, data }) => {
 
   useEffect(() => {
     if (update === '2') {
-      data.images.map((image: any) => {
-        setImageURLs((images) => [...images, image.url]);
-      });
+      getPost(updateId).then((data) => {
+        data.images.map((image: any) => {
+          setImageURLs((images) => [...images, image.url]);
+        });
 
-      setContent(data.post.content);
-      setSelectedTitle(data.post.musicTitle);
+        setContent(data.post.content);
+        setSelectedTitle(data.post.musicTitle);
 
-      setMusicType(data.post.musicType);
-      data.post.musicType === 1 && setVideoId(data.post.musicUrl);
-      data.post.musicType === 2 && setMusicURL(data.post.musicUrl);
-      data.post.musicType === 3 && setAudioURL(data.post.musicUrl);
+        setMusicType(data.post.musicType);
+        data.post.musicType === 1 && setVideoId(data.post.musicUrl);
+        data.post.musicType === 2 && setMusicURL(data.post.musicUrl);
+        data.post.musicType === 3 && setAudioURL(data.post.musicUrl);
 
-      setTags(data.post.tag.split(', '));
-      setLocation({
-        name: data.post.placeName,
-        x: data.post.latitude,
-        y: data.post.longitude,
+        setTags(data.tag);
+        setLocation({
+          name: data.post.placeName,
+          x: data.post.latitude,
+          y: data.post.longitude,
+        });
       });
     }
-  }, []);
+  }, [update, updateId]);
 
   return (
     <>

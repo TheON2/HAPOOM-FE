@@ -8,7 +8,7 @@ import FollowButton from './FollowButton';
 
 interface UserUiProps {
   userId: string;
-  loggedInEmail: string | null;
+  loggedInEmail: string | null | undefined;
 }
 
 interface UserProfile {
@@ -59,11 +59,20 @@ export interface ParsedCookies {
 }
 
 const UserUi: React.FC<UserUiProps> = ({ userId, loggedInEmail }) => {
-  const isOwnProfile = loggedInEmail && userId === loggedInEmail;
+  const isOwnProfile = userId === loggedInEmail;
 
-  const { data, error }: { data: UserPageData | undefined; error: any } =
-    useQuery<UserPageData>('users', () =>
-      isOwnProfile ? getMyProfile() : getUserProfile({ UserId: userId })
+  const {
+    data,
+    error,
+    isSuccess,
+  }: { data: UserPageData | undefined; error: any; isSuccess: any } =
+    useQuery<UserPageData>(
+      'users',
+      () =>
+        isOwnProfile ? getMyProfile() : getUserProfile({ UserId: userId }),
+      {
+        enabled: !!userId, // userId가 유효한 값일 때만 쿼리가 실행되게 함
+      }
     );
 
   if (error) {
@@ -72,14 +81,18 @@ const UserUi: React.FC<UserUiProps> = ({ userId, loggedInEmail }) => {
 
   return (
     <>
-      <UserPageSection>
-        <UserPageContainer>
-          <UserProfileCard data={data} />
-          <FollowButton profileUserId={data?.user?.userId} />
-          <UserLikePostSuggestion data={data} />
-          <PostLike data={data} />
-        </UserPageContainer>
-      </UserPageSection>
+      {isSuccess && (
+        <>
+          <UserPageSection>
+            <UserPageContainer>
+              <UserProfileCard data={data} userId={userId} />
+              <FollowButton profileUserId={data?.user?.userId} />
+              <UserLikePostSuggestion data={data} />
+              <PostLike data={data} />
+            </UserPageContainer>
+          </UserPageSection>
+        </>
+      )}
     </>
   );
 };

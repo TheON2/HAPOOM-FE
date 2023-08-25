@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import { likePost } from '@/api/post';
 import { LikeCloud } from './SVG';
 import { UserState } from '@/redux/reducers/userSlice';
@@ -59,7 +59,14 @@ const HeartIcon = ({ postId }: Props) => {
       setIsLike(false);
     }
   }, [user]);
-  const mutation = useMutation((postId: string) => likePost(postId));
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation((postId: string) => likePost(postId), {
+    // 뮤테이션 성공 시 쿼리 무효화
+    onSuccess: () => {
+      queryClient.invalidateQueries('users');
+    },
+  });
   const modalHandler = () => {
     router.push('/auth/SignIn');
   };

@@ -11,6 +11,7 @@ import Layout from '@/components/common/layout/Layout';
 import MobileBottomNav from '@/components/common/MobileBottomNav';
 import { useRouter } from 'next/router';
 import Script from 'next/script';
+import { AlarmBar } from '@/components/common/AlarmBar';
 const queryClient = new QueryClient();
 const ENDPOINT = `${process.env.NEXT_PUBLIC_LOCAL_SERVER}`;
 
@@ -19,7 +20,7 @@ const wrapper = createWrapper(makeStore);
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [notification, setNotification] = useState<string | null>(null);
-  const [randomPosts, setRandomPosts] = useState(null);
+  const [randomPosts, setRandomPosts] = useState<any[] | null>(null);
   const router = useRouter();
   const excludedPages = [
     '/auth/SignIn',
@@ -55,7 +56,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       // 2초 후에 게시물 숨기기
       setTimeout(() => {
         setRandomPosts(null);
-      }, 5000);
+      }, 10000);
     });
 
     // socket.on('latest-posts', (latestPosts) => {
@@ -89,50 +90,10 @@ function MyApp({ Component, pageProps }: AppProps) {
       <QueryClientProvider client={queryClient}>
         {!isExcludedPage ? (
           <>
-            {notification && (
-              <div
-                style={{
-                  position: 'fixed',
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  backgroundColor: 'rgba(0,0,0,0.7)',
-                  color: 'white',
-                  padding: '10px',
-                  textAlign: 'center',
-                  zIndex: 1000,
-                  animation: 'fadeIn 0.5s, fadeOut 0.5s 1.5s',
-                }}
-              >
-                {notification}
-              </div>
-            )}
-            {randomPosts && (
-              <div
-                style={{
-                  position: 'fixed',
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  backgroundColor: 'rgba(0,0,0,0.7)',
-                  color: 'white',
-                  padding: '10px',
-                  textAlign: 'center',
-                  zIndex: 1000,
-                  animation: 'fadeIn 0.5s, fadeOut 0.5s 1.5s',
-                }}
-              >
-                {/* {randomPosts &&
-                  randomPosts.map((post, index) => (
-                    <div key={index} className="fade-in-post">
-                      <h3>{post.title}</h3>
-                      <p>{post.content}</p>
-                    </div>
-                  ))} */}
-              </div>
-            )}
+            {notification && <AlarmBar alarm={notification} />}
+
             <Layout>
-              <Component {...pageProps} />
+              <Component {...pageProps} randomPosts={randomPosts} />
             </Layout>
             <MobileBottomNav />
           </>

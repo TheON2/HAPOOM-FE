@@ -19,11 +19,10 @@ import KebabMenuUI, {
 import { FeedPlayer } from '../common/SVG';
 import { useMutation, useQuery } from 'react-query';
 import { useRouter } from 'next/router';
-import { reportPost } from '@/api/post';
+import { getFeed, reportPost } from '@/api/post';
 import Modal from '../common/Modal';
 import HeartIcon from '../common/HeartIcon';
 import ProfileImage from '../common/ProfileImage';
-import axios from 'axios';
 
 const timeSince = (date: string) => {
   const now: Date = new Date();
@@ -56,10 +55,11 @@ interface Feed {
   musicTitle: string;
   musicUrl: string | null;
   nickname: string;
-  postId: number;
-  preset: number;
   updatedAt: string;
   userImage: string;
+  postId: number;
+  preset: number;
+  userId: number;
 }
 const FeedUi = () => {
   const router = useRouter();
@@ -70,14 +70,8 @@ const FeedUi = () => {
     onClickEvent: '',
   });
 
-  const getFeed = async () => {
-    const response = await axios.get(`http://localhost:3001/api/main/feed`);
-    return response.data;
-  };
-
   const { data } = useQuery('feed', getFeed);
-  console.log(data?.feed);
-
+  console.log('feeddata', data?.feed);
   const { mutate: report } = useMutation(reportPost, {
     onSuccess: (messag) => {
       setModalMessge({
@@ -92,8 +86,8 @@ const FeedUi = () => {
   const moveDetailPage = (id: number) => {
     router.push(`/detail/${id}`);
   };
-  const moveUserPage = (email: string) => {
-    router.push(`/User/${email}`);
+  const moveUserPage = (userId: number) => {
+    router.push(`/User/${userId}`);
   };
 
   const handleReportClick = (id: any) => {
@@ -119,7 +113,7 @@ const FeedUi = () => {
         return (
           <FeedContainer key={feed.postId}>
             <FeedHeader>
-              <div onClick={() => moveUserPage(feed.email)}>
+              <div onClick={() => moveUserPage(feed.userId)}>
                 <ProfileImage userImage={feed.userImage} preset={feed.preset} />
               </div>
               <FeedUserNickName>{feed.nickname}</FeedUserNickName>
