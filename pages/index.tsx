@@ -26,7 +26,6 @@ const Home: NextPage<MainPageProps> = ({
   popularContent,
   randomPosts,
 }) => {
-  console.log(hashtagData);
   const dispatch = useDispatch();
   const isClientSide = typeof window !== 'undefined';
   const tokenExists = isClientSide ? !!localStorage.getItem('token') : false;
