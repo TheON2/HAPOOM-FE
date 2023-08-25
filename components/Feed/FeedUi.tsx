@@ -73,10 +73,10 @@ const FeedUi = () => {
   const { data } = useQuery('feed', getFeed);
   console.log('feeddata', data?.feed);
   const { mutate: report } = useMutation(reportPost, {
-    onSuccess: (messag) => {
+    onSuccess: (message) => {
       setModalMessge({
         actionText: '확인',
-        modalMessge: messag,
+        modalMessge: message,
         onClickEvent: null,
       });
       setIsModalOpen(true);
@@ -148,7 +148,7 @@ const FeedUi = () => {
             <FeedMusicLikeBox>
               <MusicBox>
                 <FeedPlayer />
-                <div>{feed.musicTitle}</div>
+                <div>{feed.musicTitle || feed.musicUrl}</div>
               </MusicBox>
               <LikeIconContainer>
                 <HeartIcon postId={feed.postId} />
