@@ -5,49 +5,22 @@ import { NoneSearchResult } from '@/styles/search';
 import UserSearchResult from '@/components/Search/UserSearchResult';
 type searchProps = {
   option: string;
-  data: any[];
+  data: any[] | string;
 };
 
-const userData = [
-  {
-    userImage: '/b1.png',
-    preset: 1,
-    nickname: '닉네임',
-    email: 'aaa@gmail.com',
-  },
-  {
-    userImage: '/b1.png',
-    preset: 2,
-    nickname: '닉네임',
-    email: 'aaa@gmail.com',
-  },
-  {
-    userImage: '/b1.png',
-    preset: 3,
-    nickname: '닉네임',
-    email: 'aaa@gmail.com',
-  },
-  {
-    userImage: '/b1.png',
-    preset: 4,
-    nickname: '닉네임',
-    email: 'aaa@gmail.com',
-  },
-  {
-    userImage: '/b1.png',
-    preset: 5,
-    nickname: '닉네임',
-    email: 'aaa@gmail.com',
-  },
-  {
-    userImage: '/b1.png',
-    preset: 1,
-    nickname: '닉네임',
-    email: 'aaa@gmail.com',
-  },
-];
-
 const SearchResult = ({ option, data }: searchProps) => {
+  if (data === '400') {
+    return <NoneSearchResult>검색 결과가 없습니다</NoneSearchResult>;
+  }
+  if (data === 'otherError' || !Array.isArray(data)) {
+    return (
+      <NoneSearchResult>
+        예상치 못한 오류가 발생하였습니다.
+        <br /> 다시 검색을 시도해주세요
+      </NoneSearchResult>
+    );
+  }
+
   switch (option) {
     case 'users':
       return (
@@ -73,9 +46,9 @@ const SearchResult = ({ option, data }: searchProps) => {
             return (
               <ImageContent
                 key={idx}
-                src={result.src}
-                alt={result.alt}
-                postId={idx}
+                src={result.Images[0].url}
+                alt={'search result image'}
+                postId={result.postId}
               />
             );
           })}
@@ -88,9 +61,9 @@ const SearchResult = ({ option, data }: searchProps) => {
             return (
               <ImageContent
                 key={idx}
-                src={result.src}
-                alt={result.alt}
-                postId={idx}
+                src={result.Images[0].url}
+                alt={result.comment}
+                postId={result.postId}
               />
             );
           })}

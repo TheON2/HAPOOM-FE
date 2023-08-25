@@ -28,7 +28,7 @@ const Home: NextPage<MainPageProps> = ({
   randomPosts,
 }) => {
   const [hashTag, setHashTag] = useState<string>('#해시태그');
-  console.log(randomPosts);
+  // console.log(randomPosts);
 
   const dispatch = useDispatch();
   const isClientSide = typeof window !== 'undefined';

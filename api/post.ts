@@ -160,10 +160,10 @@ const getSearch = async ({
     return response.data;
   } catch (error: any) {
     if (error.response.status === 400) {
-      return console.log('400에러');
+      return '400';
+    } else {
+      return 'otherError';
     }
-    console.error('검색 에러:', error);
-    // alert('검색 중 에러가 발생했습니다.');
   }
 };
 
