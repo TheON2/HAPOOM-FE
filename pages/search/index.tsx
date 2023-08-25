@@ -14,25 +14,42 @@ import {
   NoneSearchResult,
 } from '@/styles/search';
 import SearchComponent from '@/components/Search/SearchComponent';
+import { getSearch } from '@/api/post';
+import { useQuery, useQueryClient } from 'react-query';
 
 const SELECT_OPTION = [
-  { value: 'user', text: '유저' },
-  { value: 'content', text: '게시글' },
-  { value: 'tag', text: '태그' },
+  { value: 'users', text: '유저' },
+  { value: 'posts', text: '게시글' },
+  { value: 'tags', text: '태그' },
 ];
 
 const Search = () => {
   const [search, searchHandler, setSearch] = useInput('');
-  const [option, setOption] = useState<string>('user');
+  const [isSearch, setIsSearch] = useState<boolean>(false);
+  const [option, setOption] = useState<string>(SELECT_OPTION[0].value);
+
+  const queryClient = useQueryClient();
   const data = sliderImages;
+
   const onSubmitSearchHandler = (e: FormEvent) => {
     e.preventDefault();
     if (search === '') {
       return alert('검색 내용을 입력해주세요');
     }
-    alert(search + option);
+    setIsSearch(true);
   };
 
+  const { data: searchData } = useQuery(
+    ['searchResults', option],
+    () => getSearch({ search, option }),
+    {
+      enabled: isSearch,
+      onSuccess: () => {
+        setIsSearch(false);
+        console.log('요청');
+      },
+    }
+  );
   return (
     <>
       <SearchComponent />
@@ -64,8 +81,8 @@ const Search = () => {
           </IconButton>
         </SearchForm>
       </SearchLayout>
-      {data ? (
-        <SearchResult option={option} data={data} />
+      {searchData ? (
+        <SearchResult option={option} data={searchData} />
       ) : (
         <NoneSearchResult>
           <Image

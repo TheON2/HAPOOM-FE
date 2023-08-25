@@ -140,6 +140,33 @@ const deleteComment = async ({ id, commentId }: commentDelete) => {
   return response.data;
 };
 
+type searchProps = {
+  search: string;
+  option: string;
+};
+
+const getSearch = async ({
+  option: category,
+  search: keyword,
+}: searchProps) => {
+  try {
+    const response = await api.get(`/api/search`, {
+      params: {
+        q: keyword,
+        category,
+      },
+      withCredentials: true,
+    });
+    return response.data;
+  } catch (error: any) {
+    if (error.response.status === 400) {
+      return console.log('400에러');
+    }
+    console.error('검색 에러:', error);
+    // alert('검색 중 에러가 발생했습니다.');
+  }
+};
+
 export {
   getMain,
   addPost,
@@ -156,4 +183,5 @@ export {
   deleteComment,
   getMyLikedPosts,
   getMyPosts,
+  getSearch,
 };

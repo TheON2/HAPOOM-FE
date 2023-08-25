@@ -49,10 +49,10 @@ const userData = [
 
 const SearchResult = ({ option, data }: searchProps) => {
   switch (option) {
-    case 'user':
+    case 'users':
       return (
         <>
-          {userData.map((user, idx) => {
+          {data.map((user, idx) => {
             return (
               <UserSearchResult
                 key={idx}
@@ -60,13 +60,13 @@ const SearchResult = ({ option, data }: searchProps) => {
                 nickname={user.nickname}
                 email={user.email}
                 preset={user.preset}
-                userId={1}
+                userId={user.userId}
               />
             );
           })}
         </>
       );
-    case 'content':
+    case 'posts':
       return (
         <ImageContentsContainer>
           {data.map((result, idx) => {
@@ -81,7 +81,7 @@ const SearchResult = ({ option, data }: searchProps) => {
           })}
         </ImageContentsContainer>
       );
-    case 'tag':
+    case 'tags':
       return (
         <ImageContentsContainer>
           {data.map((result, idx) => {
