@@ -4,12 +4,18 @@ import { styled } from 'styled-components';
 // import Button from '../components/Button';
 // import Icon from '../assets/icons/icons';
 import { RightArrow } from './SVG';
+
 type selectProps = {
   selectOption: { value: string; text: string }[];
   setOption: any;
+  setIsSearch: any;
 };
 
-export const Selecter = ({ selectOption, setOption }: selectProps) => {
+export const Selecter = ({
+  selectOption,
+  setOption,
+  setIsSearch,
+}: selectProps) => {
   const [isShow, setIsShow] = useState(false);
   const [selectText, setSelectText] = useState(selectOption[0].text);
 
@@ -21,6 +27,7 @@ export const Selecter = ({ selectOption, setOption }: selectProps) => {
     setSelectText(text);
     setIsShow(!isShow);
     setOption(value);
+    setIsSearch(true);
   };
 
   return (
