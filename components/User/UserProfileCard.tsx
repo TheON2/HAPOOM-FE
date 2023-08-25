@@ -32,6 +32,9 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({ data, userId }) => {
     return null;
   }
 
+  const followerCount = data.followerCount || 0;
+  const followingCount = data.followingCount || 0;
+
   const userImageSrc = data.user.userImage?.startsWith('http')
     ? data.user.userImage
     : b1;
@@ -51,15 +54,11 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({ data, userId }) => {
           <p className="nickName">{data.user.nickname}</p>
         </NicknameBox>
         <FollowBox>
-          <FollowLink
-            type="followers"
-            count={data.followerCount ?? 0}
-            userId={userId}
-          />
+          <FollowLink type="followers" count={followerCount} userId={userId} />
           <span>|</span>
           <FollowLink
             type="followings"
-            count={data.followingCount ?? 0}
+            count={followingCount}
             userId={userId}
           />
         </FollowBox>
