@@ -7,7 +7,6 @@ import {
   InfoNumber,
 } from '@/styles/user';
 import { UserPageData } from './UserUi';
-import { UserLike, UserPost } from '../common/SVG';
 
 interface postsCountProps {
   data: UserPageData | undefined;
@@ -17,14 +16,12 @@ const UserLikePostSuggestion: React.FC<postsCountProps> = ({ data }) => {
   return (
     <LikePostSuggestionBox>
       <ImageBox>
-        <UserLike />
         <InfoContainer>
           <InfoText>게시물</InfoText>
           <InfoNumber>{data?.postsCount}</InfoNumber>
         </InfoContainer>
       </ImageBox>
       <ImageBox>
-        <UserPost />
         <InfoContainer>
           <InfoText>좋아요</InfoText>
           <InfoNumber>{data?.likePostsCount}</InfoNumber>
