@@ -20,6 +20,7 @@ import {
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Modal from '@/components/common/Modal';
+import Link from 'next/link';
 
 interface FollowTabUser {
   userId: number;
@@ -50,6 +51,7 @@ const UserListItem: React.FC<
       src={userImage || 'DEFAULT_IMAGE_URL_OR_EMPTY_STRING'}
       alt={nickname || 'Unknown'}
     />
+
     <UserInfo>
       <Nickname>{nickname || '알 수 없음'}</Nickname>
       <Email>{email || '이메일 없음'}</Email>

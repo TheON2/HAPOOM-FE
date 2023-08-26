@@ -58,8 +58,6 @@ export const UserProfileImageBox = styled.div`
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  /* margin-right: 10px; */
-  /* border: 1px solid black; */
   background-color: black;
   overflow: hidden;
 `;
@@ -70,6 +68,7 @@ export const UserProfileImage = styled.img`
   margin-right: 10px;
   border: 1px solid black;
   background-color: black;
+  object-fit: cover;
 `;
 
 export const UserInfo = styled.div`
