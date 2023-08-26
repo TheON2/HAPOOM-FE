@@ -57,6 +57,11 @@ export const IconBox = styled.button`
     border-radius: 50%;
     border: 2px solid #777;
     overflow: hidden;
+    svg {
+      width: 90%;
+      height: 90%;
+      object-fit: contain;
+    }
   }
 
   img {
