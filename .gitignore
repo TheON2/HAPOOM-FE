@@ -14,6 +14,14 @@
 
 /public/sw.js.map
 /public/ws.js.map
+/public/service-worker.js
+/public/sw-custom.js
+**/public/service-*.js
+**/public/sw-*.js
+**/public/sw.js
+**/public/sw-custom.js
+**/public/service-worker.js
+
 # yarn.lock
 .map
 
@@ -27,6 +35,7 @@
 **/public/workbox-*.js.map
 **/public/worker-*.js.map
 **/public/fallback-*.js
+
 
 examples/**/yarn.lock
 examples/**/package-lock.json

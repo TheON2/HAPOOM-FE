@@ -27,7 +27,6 @@ const FollowButton: React.FC<FollowButtonProps> = ({ profileUserId }) => {
   useEffect(() => {
     const fetchProfileUserEmail = async () => {
       if (profileUserId) {
-        // 조건문 추가
         try {
           const profileData = await getUserProfile({
             UserId: String(profileUserId),
