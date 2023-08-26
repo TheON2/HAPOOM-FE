@@ -15,7 +15,7 @@ import {
 } from '@/styles/home';
 import { BannerSliderProps } from '@/types/home';
 import { debounce } from 'lodash';
-import { Images } from '../common/SVG';
+// import { Images } from '../common/SVG';
 import ZoomImage from '../Detail/ZoomImage';
 const DEFAULT_INTERVAL = 10 * 1000;
 const FAST_INTERVAL = 500;

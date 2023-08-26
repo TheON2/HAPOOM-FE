@@ -21,7 +21,7 @@ const Themes = ({ theme }: settingProps) => {
   );
 
   const onClickThemesHandler = async (themes: number) => {
-    console.log(themes);
+    alert('준비되지 않은 기능입니다. 조금만 기다려주세요!');
     const formData = new FormData();
     formData.append('theme', themes.toString());
     await mutate.mutateAsync(formData);
