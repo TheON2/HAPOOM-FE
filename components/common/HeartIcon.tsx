@@ -24,6 +24,7 @@ const HeartIconBox = styled.div<iconType>`
   top: 5px;
   right: 5px;
   transition: all 0.2s ease-in-out;
+  z-index: 101;
   cursor: pointer;
   svg {
     transform: translate(-1px, -1px);
