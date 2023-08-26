@@ -14,7 +14,6 @@ const HashtagNavBar: React.FC<HashtagNavBarProps> = ({
   data,
   onClickEvent,
   $isClick,
-
   hashTag,
   setHashTag,
   setTagCategory,

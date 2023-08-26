@@ -41,9 +41,9 @@ const DetailProfile = ({ userImage, preset, nick }: profileProps) => {
           <Image src={profileImage} alt={'image'} width={100} height={100} />
         )}
       </div>
-      <div>
-        <h2>{nickname}</h2>
-      </div>
+      {/* <div> */}
+      <h2>{nickname}</h2>
+      {/* </div> */}
     </ProfileBox>
   );
 };
