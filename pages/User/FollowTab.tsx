@@ -1,4 +1,9 @@
-import { getFollowers, getFollowings, unFollow } from '@/api/user';
+import {
+  getFollowers,
+  getFollowings,
+  getUserProfile,
+  unFollow,
+} from '@/api/user';
 import {
   Email,
   FollowButtonStyled,
@@ -15,7 +20,6 @@ import {
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Modal from '@/components/common/Modal';
-import { useAuth } from '@/hooks/useAuth';
 
 interface FollowTabUser {
   userId: number;
@@ -29,8 +33,18 @@ interface FollowTabProps {
 }
 
 const UserListItem: React.FC<
-  FollowTabUser & { onUnfollow?: (userId: number) => void }
-> = ({ userId, userImage, nickname, email, onUnfollow }) => (
+  FollowTabUser & {
+    showUnfollowButton?: boolean;
+    handleOpenModal?: (userId: number) => void;
+  }
+> = ({
+  userId,
+  userImage,
+  nickname,
+  email,
+  showUnfollowButton,
+  handleOpenModal,
+}) => (
   <UserListItemStyled>
     <UserProfileImage
       src={userImage || 'DEFAULT_IMAGE_URL_OR_EMPTY_STRING'}
@@ -40,8 +54,11 @@ const UserListItem: React.FC<
       <Nickname>{nickname || '알 수 없음'}</Nickname>
       <Email>{email || '이메일 없음'}</Email>
     </UserInfo>
-    {onUnfollow && (
-      <FollowButtonStyled onClick={() => onUnfollow(userId)}>
+
+    {showUnfollowButton && (
+      <FollowButtonStyled
+        onClick={() => handleOpenModal && handleOpenModal(userId)}
+      >
         언팔로우
       </FollowButtonStyled>
     )}
@@ -57,13 +74,13 @@ const FollowTab: React.FC<FollowTabProps> = () => {
   const [followers, setFollowers] = useState<FollowTabUser[]>([]);
   const [followings, setFollowings] = useState<FollowTabUser[]>([]);
 
-  const { userData } = useAuth();
-  const loggedInEmail = userData?.email;
+  const [loggedInUserId, setLoggedInUserId] = useState<number | null>(null);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [userToUnfollow, setUserToUnfollow] = useState<number | null>(null);
 
   const handleOpenUnfollowModal = (targetUserId: number) => {
+    if (loggedInUserId !== Number(userId)) return;
     setUserToUnfollow(targetUserId);
     setIsModalOpen(true);
   };
@@ -83,7 +100,6 @@ const FollowTab: React.FC<FollowTabProps> = () => {
   };
 
   useEffect(() => {
-    console.log('userData:', userData); // userData 콘솔 출력
     const fetchData = async () => {
       try {
         const fetchedFollowers = await getFollowers(userId);
@@ -97,7 +113,20 @@ const FollowTab: React.FC<FollowTabProps> = () => {
     };
 
     fetchData();
-  }, [userId, userData]);
+  }, [userId]);
+
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        const userProfile = await getUserProfile({ UserId: userId });
+        setLoggedInUserId(userProfile.user.userId);
+      } catch (error) {
+        console.error('Failed to fetch user profile:', error);
+      }
+    };
+
+    fetchUserProfile();
+  }, [userId]);
 
   const activeData = activeTab === 'followers' ? followers : followings;
 
@@ -111,17 +140,20 @@ const FollowTab: React.FC<FollowTabProps> = () => {
 
       <UserList>
         {Array.isArray(activeData) &&
-          activeData.map((user) => (
-            <UserListItem
-              key={user.userId}
-              {...user}
-              onUnfollow={
-                user.email !== loggedInEmail && activeTab === 'followings'
-                  ? () => handleOpenUnfollowModal(user.userId)
-                  : undefined
-              }
-            />
-          ))}
+          activeData.map((user) => {
+            return (
+              <UserListItem
+                key={user.userId}
+                {...user}
+                showUnfollowButton={
+                  activeTab === 'followings' &&
+                  loggedInUserId === Number(userId) &&
+                  loggedInUserId !== user.userId
+                }
+                handleOpenModal={handleOpenUnfollowModal}
+              />
+            );
+          })}
       </UserList>
       {isModalOpen && (
         <Modal
