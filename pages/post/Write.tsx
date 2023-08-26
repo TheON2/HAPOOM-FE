@@ -14,7 +14,7 @@ import TagInput from '@/components/Write/TagInput';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { addPost, getPost, updatePost } from '@/api/post';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState, wrapper } from '@/redux/config/configStore';
+import { RootState } from '@/redux/config/configStore';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import Header from '@/components/common/Header';
@@ -39,6 +39,9 @@ import Button from '@/components/common/Button';
 //import CustomPlayer from '@/components/Write/CustomPlayer';
 //import ReadOnlyYoutube from '@/components/Write/ReadOnlyYoutube';
 import { styled } from 'styled-components';
+import useModal from '@/hooks/useModal';
+import Modal from '@/components/common/Modal';
+import OneButtonModal from '@/components/common/OneButtonModal';
 
 const ReadOnlyYoutube = dynamic(
   () => import('@/components/Write/ReadOnlyYoutube'),
@@ -51,6 +54,12 @@ const CustomPlayer = dynamic(() => import('@/components/Write/CustomPlayer'), {
 interface Props {
   update: string;
   updateId: string;
+}
+
+interface ModalMessage {
+  actionText: string;
+  modalMessge: string;
+  onClickEvent?: () => void;
 }
 
 // const Box = styled.div`
@@ -73,6 +82,13 @@ const WritePageContainer = styled.div`
 
 const Write: NextPage<Props> = ({ update = '1', updateId }) => {
   const [isShow, setIsShow] = useState<boolean>(false);
+  const {
+    isModalOpen: oneModalOpen,
+    modalMessge: oneModalMessage,
+    openModal: openOneModal,
+    closeModal: closeOneModal,
+  } = useModal();
+  const { isModalOpen, modalMessge, openModal, closeModal } = useModal();
   const [commentEdit, setCommentEdit] = useState<any>({
     show: false,
     action: '',
@@ -189,12 +205,18 @@ const Write: NextPage<Props> = ({ update = '1', updateId }) => {
     event.preventDefault();
 
     if (images.length === 0 && imageURLs.length === 0) {
-      alert('최소한 한 장의 사진을 업로드해야 합니다.');
+      openModal({
+        actionText: '확인',
+        modalMessge: '최소한 한 장의 사진을 업로드해야 합니다.',
+      });
       return;
     }
 
     if (location.x === 0 || location.y === 0) {
-      alert('위치를 선택해주세요.');
+      openModal({
+        actionText: '확인',
+        modalMessge: '위치를 선택해주세요.',
+      });
       return;
     }
 
@@ -249,11 +271,22 @@ const Write: NextPage<Props> = ({ update = '1', updateId }) => {
     onSuccess: () => {
       queryClient.invalidateQueries('posts');
       if (update === '2') {
-        alert('게시물이 수정되었습니다!');
+        openOneModal({
+          actionText: '확인',
+          modalMessge: '게시물이 수정되었습니다!',
+          onClickEvent: () => {
+            router.push('/');
+          },
+        });
       } else {
-        alert('게시물이 추가되었습니다!');
+        openOneModal({
+          actionText: '확인',
+          modalMessge: '게시물이 추가되었습니다!',
+          onClickEvent: () => {
+            router.push('/');
+          },
+        });
       }
-      router.push('/');
     },
   };
 
@@ -291,6 +324,25 @@ const Write: NextPage<Props> = ({ update = '1', updateId }) => {
     <>
       {!(update === '2' && location.x === 0) && (
         <>
+          {oneModalOpen && (
+            <OneButtonModal
+              isOpen={oneModalOpen}
+              setIsOpen={closeOneModal}
+              onClickEvent={oneModalMessage.onClickEvent || null}
+            >
+              {oneModalMessage.modalMessge}
+            </OneButtonModal>
+          )}
+          {isModalOpen && (
+            <Modal
+              isOpen={isModalOpen}
+              setIsOpen={closeModal}
+              actionText={modalMessge.actionText}
+              onClickEvent={modalMessge.onClickEvent || null}
+            >
+              {modalMessge.modalMessge}
+            </Modal>
+          )}
           <WritePageContainer>
             {/* <GlobalStyle /> */}
             <form onSubmit={handlePostSubmit}>

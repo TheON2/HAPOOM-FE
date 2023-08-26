@@ -22,7 +22,7 @@ import { MapComponent } from '@/components/Write/MapComponent';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { addPost, deletePost, getPost, updatePost } from '@/api/post';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState, wrapper } from '@/redux/config/configStore';
+import { RootState } from '@/redux/config/configStore';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { getAuthToken } from '@/api/user';
@@ -46,6 +46,8 @@ import { ReadOnlyMap } from '@/components/Write/ReadOnlyMap';
 import ReadOnlyYoutube from '@/components/Write/ReadOnlyYoutube';
 
 import { BannerSliderProps } from '@/types/home';
+import useModal from '@/hooks/useModal';
+import OneButtonModal from '@/components/common/OneButtonModal';
 const DynamicComponentWithNoSSR = dynamic(
   () => import('@/components/Write/YoutubePlayer'),
   { ssr: false }
@@ -78,14 +80,23 @@ const Detail: NextPage = () => {
     modalMessge: '',
     onClickEvent: '',
   });
+  const {
+    isModalOpen: oneModalOpen,
+    modalMessge: oneModalMessage,
+    openModal: openOneModal,
+    closeModal: closeOneModal,
+  } = useModal();
   const queryClient = useQueryClient();
 
   const { mutate: delete_mutate } = useMutation(deletePost, {
     onSuccess: () => {
       queryClient.invalidateQueries('posts');
 
-      alert('게시글이 삭제되었습니다.');
-      router.push('/');
+      openOneModal({
+        actionText: '확인',
+        modalMessge: '게시물이 삭제 되었습니다.',
+        onClickEvent: () => router.push('/'), // 이 부분을 추가합니다.
+      });
     },
   });
 
@@ -172,6 +183,15 @@ const Detail: NextPage = () => {
   return (
     <>
       {/* <GlobalStyle /> */}
+      {oneModalOpen && (
+        <OneButtonModal
+          isOpen={oneModalOpen}
+          setIsOpen={closeOneModal}
+          onClickEvent={oneModalMessage.onClickEvent || null}
+        >
+          {oneModalMessage.modalMessge}
+        </OneButtonModal>
+      )}
       <Modal
         isOpen={isModalOpen}
         setIsOpen={setIsModalOpen}

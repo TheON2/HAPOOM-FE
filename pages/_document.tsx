@@ -38,6 +38,7 @@ export default class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
+          <meta name="theme-color" content="#0084ff" />
           <link rel="manifest" href="/manifest.json" />
         </Head>
         <body>
