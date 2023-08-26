@@ -97,7 +97,8 @@ export const Email = styled.p`
 
 export const FollowButtonStyled = styled.button`
   font-size: 14px;
-  width: 65px;
+  font-weight: 800;
+  width: 80px;
   height: 36px;
   border: none;
   padding: 5px 10px;

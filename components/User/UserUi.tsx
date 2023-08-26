@@ -74,6 +74,7 @@ const UserUi: React.FC<UserUiProps> = ({ userId, loggedInEmail }) => {
         enabled: !!userId, // userId가 유효한 값일 때만 쿼리가 실행되게 함
       }
     );
+  console.log('UserPageData:', data);
 
   if (error) {
     return <div>Error loading user data.</div>;
