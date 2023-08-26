@@ -28,7 +28,7 @@ const UpAndDownTabLayout = styled.div<styleProps>`
     padding: 20px 0 16px;
     cursor: pointer;
   }
-  span {
+  & > span {
     display: block;
     width: 23px;
     height: 3px;

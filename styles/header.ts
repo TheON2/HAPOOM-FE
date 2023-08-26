@@ -34,6 +34,7 @@ export const HeaderLayout = styled.header<HeaderProps>`
   .center {
     display: flex;
     justify-content: space-between;
+    align-items: center;
   }
   .search-icon {
     width: 36px;
@@ -65,6 +66,9 @@ export const LogoBox = styled(Link)<HeaderProps>`
     width: 100%;
     height: 100%;
     object-fit: contain;
+  }
+  path {
+    fill: ${(props) => (props.$sticky ? '#fff' : '#2797ff')};
   }
 `;
 

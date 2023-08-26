@@ -20,6 +20,8 @@ import {
   DetialContentSection,
   CommentForm,
   NoneComment,
+  TextareaBox,
+  LimitNumBox,
 } from '@/styles/detail';
 import {
   CommentUpdateData,
@@ -42,30 +44,37 @@ const CommentFormWrapper = ({
   onChangeCommentHandler,
   editTitle,
   editButton,
-}: CommentFormProps) => (
-  <UpAndDownTab onClickEvent={closeForm} $isUp={isOpen}>
-    <DetialContentSection>
-      <CommentForm onSubmit={onSubmitHandler}>
-        <h3>{editTitle}</h3>
-        <div>
-          <textarea
-            name=""
-            id=""
-            placeholder="댓글을 입력해주세요"
-            value={comment}
-            onChange={onChangeCommentHandler}
-          />
-        </div>
-        <div className="button-box">
-          <Button onClick={closeComment} className="secondary">
-            닫기
-          </Button>
-          <Button type="submit">{editButton}</Button>
-        </div>
-      </CommentForm>
-    </DetialContentSection>
-  </UpAndDownTab>
-);
+  maxLength,
+}: CommentFormProps) => {
+  const isMaxLength = comment.length >= maxLength;
+  return (
+    <UpAndDownTab onClickEvent={closeForm} $isUp={isOpen}>
+      <DetialContentSection>
+        <CommentForm onSubmit={onSubmitHandler}>
+          <h3>{editTitle}</h3>
+          <TextareaBox>
+            <textarea
+              name=""
+              id=""
+              placeholder="댓글을 입력해주세요"
+              value={comment}
+              onChange={onChangeCommentHandler}
+            />
+            <LimitNumBox $color={isMaxLength}>
+              {comment.length}/{maxLength}
+            </LimitNumBox>
+          </TextareaBox>
+          <div className="button-box">
+            <Button onClick={closeComment} className="secondary">
+              닫기
+            </Button>
+            <Button type="submit">{editButton}</Button>
+          </div>
+        </CommentForm>
+      </DetialContentSection>
+    </UpAndDownTab>
+  );
+};
 
 const LOGIN_MODAL_MESSAGE = {
   actionText: '로그인',
@@ -142,12 +151,15 @@ const CommentLayout = ({ data, id, userData }: commentProps) => {
     setComment('');
     setActive(null);
   };
-
-  const onChangeCommentHandler = (
-    e: React.ChangeEvent<HTMLTextAreaElement>
-  ) => {
-    setComment(e.target.value);
-  };
+  const maxLength = 140;
+  const onChangeCommentHandler = useCallback(
+    (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+      if (event.currentTarget.value.length <= maxLength) {
+        setComment(event.currentTarget.value);
+      }
+    },
+    [setComment]
+  );
   const { mutate: commentCreate } = useMutation<void, Error, CommentUploadData>(
     (comment) => addComment(comment),
     {
@@ -273,6 +285,7 @@ const CommentLayout = ({ data, id, userData }: commentProps) => {
           onChangeCommentHandler={onChangeCommentHandler}
           editTitle={commentEdit.uiTitle}
           editButton={commentEdit.buttonText}
+          maxLength={maxLength}
         />
       )}
       <Modal

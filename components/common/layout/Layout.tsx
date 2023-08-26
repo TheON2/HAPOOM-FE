@@ -24,7 +24,7 @@ const Layout = ({ children }: layoutProps) => {
         ) : (
           <LayoutWapper>
             <div className="center">{children}</div>
-            <Footer />
+            {/* <Footer /> */}
           </LayoutWapper>
         )}
       </LayoutStyle>
@@ -36,6 +36,7 @@ export default Layout;
 
 const LayoutWapper = styled.div`
   width: 100%;
+  padding-bottom: 100px;
   /* height: calc(100vh - 70px); */
   /* border-radius: 25px 25px 0 0; */
   background-color: #fff;

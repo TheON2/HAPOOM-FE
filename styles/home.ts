@@ -382,7 +382,7 @@ export const HashtagItem = styled.li`
     left: 50%;
     width: 52px;
     height: 52px;
-    transform: translate(-50%, -70%);
+    transform: translate(-50%, -69%);
     border-radius: 16px;
     border: 5px solid transparent;
     background-image: linear-gradient(#fff, #fff),
