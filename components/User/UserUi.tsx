@@ -1,6 +1,5 @@
 import { UserPageContainer, UserPageSection } from '@/styles/user';
 import UserProfileCard from './UserProfileCard';
-import UserLikePostSuggestion from './UserLikePostSuggestion';
 import PostLike from './PostLike';
 import { useQuery } from 'react-query';
 import { getMyProfile, getUserProfile } from '@/api/user';
@@ -88,7 +87,6 @@ const UserUi: React.FC<UserUiProps> = ({ userId, loggedInEmail }) => {
             <UserPageContainer>
               <UserProfileCard data={data} userId={userId} />
               <FollowButton profileUserId={data?.user?.userId} />
-              <UserLikePostSuggestion data={data} />
               <PostLike data={data} />
             </UserPageContainer>
           </UserPageSection>

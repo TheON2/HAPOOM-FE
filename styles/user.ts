@@ -31,8 +31,8 @@ export const UserProfileCardBox = styled.div`
 
   img {
     border-radius: 50%;
-    width: 60px;
-    height: 60px;
+    width: 90px;
+    height: 90px;
   }
 `;
 export const UserImage = styled(Image)`
@@ -59,14 +59,15 @@ export const NicknameBox = styled.div`
   justify-content: center; /* 내부 내용 중앙 정렬 */
 
   .nickName {
-    font-size: 20px;
+    font-size: 24px;
   }
 `;
 
 export const FollowBox = styled.div`
   display: flex;
-  gap: 10px;
+  gap: 6px;
   align-items: center;
+
   p {
     font-size: 16px;
     color: #c2c2c2;
@@ -89,11 +90,11 @@ export const SettingPageLink = styled(Link)`
 
 export const LikePostSuggestionBox = styled.div`
   width: 100%;
-  height: 90px;
+  height: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 30px;
+  gap: 10px;
 `;
 
 export const InfoContainer = styled.div`
@@ -103,18 +104,12 @@ export const InfoContainer = styled.div`
 `;
 
 export const InfoText = styled.div`
-  font-size: 12px;
-  font-weight: 700;
+  font-size: 16px;
 `;
 
 export const InfoNumber = styled.div`
-  font-size: 12px;
-  font-weight: 700;
-  color: white;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background-color: #0084ff;
+  font-size: 16px;
+  color: black;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -125,11 +120,6 @@ export const ImageBox = styled.div`
   justify-content: center;
   flex-direction: column;
   align-items: center;
-
-  svg {
-    width: 40px;
-    height: 40px;
-  }
 
   p {
     text-align: center;
@@ -156,7 +146,7 @@ export const PostParagraph = styled.p`
   cursor: pointer;
 `;
 export const Line = styled.div`
-  margin: 10px 0;
+  margin: 4px;
   border-bottom: 1px solid black;
 `;
 
@@ -185,16 +175,15 @@ export const TabContainer = styled.div`
 `;
 export const TabButton = styled.div`
   flex: 1;
-
-  padding: 12px;
+  font-size: 16px;
+  padding: 40px 0 10px 0px;
   color: #83818c;
   text-decoration: none;
   cursor: pointer;
   transition: 0.3s;
-  margin: 0 6px;
+  margin: 0 1px;
   z-index: 1;
-  font-family: 'DM Sans', sans-serif;
-  font-weight: 500;
+  font-weight: 700;
   position: relative;
   &:before {
     content: '';
@@ -211,8 +200,7 @@ export const TabButton = styled.div`
 `;
 export const TabIndicator = styled.span<{ width: number; $left: number }>`
   position: absolute;
-  bottom: -13px;
-  height: 3px;
+  bottom: -7px;
   transition: 0.2s;
   height: 5px;
   background-color: #2797ff;
@@ -227,15 +215,18 @@ interface ButtonProps {
 
 export const FollowBtn = styled.div<ButtonProps>`
   max-width: 300px;
+  height: 46px;
   width: 100%;
   border: none;
-  margin: 0 auto;
-  padding: 8px 0;
+  padding: 10px 0;
   text-align: center;
   border: none;
-  font-weight: 700px;
+  font-weight: 900;
   border-radius: 3px;
   box-shadow: 1px 2px 3px 0px rgba(0, 0, 0, 0.3);
+  font-size: 20px;
+  margin: 0 auto;
+  margin-top: 10px;
 
   background-color: ${({ $status }) => {
     switch ($status) {
@@ -257,6 +248,7 @@ export const FollowBtn = styled.div<ButtonProps>`
 export const SettingBtn = styled.div`
   width: 100%;
   text-align: center;
+
   button {
     width: 251px;
     height: 36px;

@@ -1,6 +1,8 @@
 import React from 'react';
 import {
   FollowBox,
+  InfoNumber,
+  InfoText,
   NicknameBox,
   ProfileContentsBox,
   UserProfileCardBox,
@@ -44,8 +46,8 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({ data, userId }) => {
       <Image
         src={userImageSrc}
         alt={'프로필사진'}
-        width={51}
-        height={51}
+        width={90}
+        height={90}
         quality={100}
         loading="eager"
       />
@@ -61,6 +63,13 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({ data, userId }) => {
             count={followingCount}
             userId={userId}
           />
+        </FollowBox>
+        <FollowBox>
+          <InfoText>게시물</InfoText>
+          <InfoNumber>{data.postsCount}</InfoNumber>
+          <span>|</span>
+          <InfoText>좋아요</InfoText>
+          <InfoNumber>{data.likePostsCount}</InfoNumber>
         </FollowBox>
       </ProfileContentsBox>
     </UserProfileCardBox>
