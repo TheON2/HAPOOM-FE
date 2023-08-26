@@ -7,6 +7,7 @@ type profileProps = {
   userImage: string | null | undefined;
   preset: number | null | undefined;
   loading?: 'eager' | 'lazy' | undefined;
+  onClick?: () => void;
 };
 
 const ProfileImage = ({ userImage, preset, ...restProps }: profileProps) => {
