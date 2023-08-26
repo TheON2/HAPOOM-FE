@@ -188,7 +188,7 @@ export const PlayerWrapper = styled.div<PlayerWrapperProps>`
     position: absolute;
     top: 12px;
     right: 12px;
-    z-index: 16;
+    z-index: 116;
   }
   /* margin: 15px 0; */
   iframe {

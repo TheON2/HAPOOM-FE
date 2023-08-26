@@ -16,6 +16,8 @@ import {
 import SearchComponent from '@/components/Search/SearchComponent';
 import { getSearch } from '@/api/post';
 import { useQuery } from 'react-query';
+import useModal from '@/hooks/useModal';
+import Modal from '@/components/common/Modal';
 
 const SELECT_OPTION = [
   { value: 'users', text: '유저' },
@@ -27,7 +29,7 @@ const Search = () => {
   const [search, searchHandler, setSearch] = useInput('');
   const [isSearch, setIsSearch] = useState<boolean>(false);
   const [option, setOption] = useState<string>(SELECT_OPTION[0].value);
-
+  const { isModalOpen, modalMessge, openModal, closeModal } = useModal();
   useEffect(() => {
     if (isSearch) {
       const timer = setTimeout(() => {
@@ -40,7 +42,11 @@ const Search = () => {
   const onSubmitSearchHandler = (e: FormEvent) => {
     e.preventDefault();
     if (search === '') {
-      return alert('검색 내용을 입력해주세요');
+      openModal({
+        actionText: '확인',
+        modalMessge: '검색 내용을 입력해주세요.',
+      });
+      return;
     } else {
       setIsSearch(true);
     }
@@ -82,6 +88,16 @@ const Search = () => {
   };
   return (
     <>
+      {isModalOpen && (
+        <Modal
+          isOpen={isModalOpen}
+          setIsOpen={closeModal}
+          actionText={modalMessge.actionText}
+          onClickEvent={modalMessge.onClickEvent || null}
+        >
+          {modalMessge.modalMessge}
+        </Modal>
+      )}
       <SearchLayout>
         <p className="keyword">{IntroMessage()}</p>
         <SearchForm onSubmit={onSubmitSearchHandler}>
