@@ -276,7 +276,7 @@ export const HashtagNavBarLayout = styled.nav<hashtagNavbarProps>`
   border-radius: 30px 30px 0 0;
   transform: translateY(-80%);
   position: relative;
-  z-index: 10;
+  z-index: 110;
   font-size: 10px;
   color: #fff;
   overflow: hidden;

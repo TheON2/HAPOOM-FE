@@ -48,7 +48,6 @@ const Setting = () => {
     onSuccess: (data) => {},
     cacheTime: 0,
   });
-  console.log(userData);
   return (
     <>
       <SettingLayout>

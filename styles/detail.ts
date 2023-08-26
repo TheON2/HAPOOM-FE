@@ -253,7 +253,7 @@ export const CommentButton = styled.button`
   background-color: #52acff;
   border: none;
   cursor: pointer;
-  z-index: 15;
+  z-index: 115;
 `;
 
 export const NoneComment = styled.div`

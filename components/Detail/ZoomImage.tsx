@@ -18,7 +18,7 @@ const ZoomBackground = styled.div`
   img {
     max-width: 768px;
     width: 100%;
-    height: auto;
+    height: 100%;
     object-fit: contain;
     box-shadow: 0 0px 20px rgba(0, 0, 0, 0.2);
   }
