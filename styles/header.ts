@@ -20,7 +20,7 @@ export const HeaderLayout = styled.header<HeaderProps>`
   justify-content: space-between;
   align-items: center;
   gap: 12px;
-  color: #2797ff;
+  color: ${(props) => (props.$sticky ? '#fff' : '#2797ff')};
   @media screen and (min-width: 768px) {
     background: rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(5px);
@@ -154,16 +154,23 @@ export const GoWriteLink = styled(Link)`
     display: none;
   }
 `;
-export const ProfileButton = styled.button`
+export const ProfileButton = styled.button<HeaderProps>`
   width: 50px;
   height: 50px;
   border-radius: 50%;
   position: relative;
   overflow: hidden;
-  border: none;
+  border: ${(props) =>
+    props.$sticky ? '2px solid #fff' : '2px solid #2797ff'};
+  background-color: ${(props) => (props.$sticky ? '#ffffff70' : '#2797ff70')};
   cursor: pointer;
   img {
     object-fit: cover;
+  }
+  svg {
+    width: 70%;
+    height: auto;
+    object-fit: contain;
   }
 `;
 
@@ -171,9 +178,13 @@ export const AuthButtonBox = styled.div`
   display: flex;
   align-items: center;
   gap: 8px;
+  font-weight: 700;
   button {
     border: none;
     background: none;
+  }
+  a:hover {
+    color: #1f6cb9;
   }
 `;
 
