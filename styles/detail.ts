@@ -263,3 +263,13 @@ export const NoneComment = styled.div`
   line-height: 1.8;
   color: #777;
 `;
+
+export const InputContainer = styled.div`
+  width: 100%;
+  position: relative;
+  label {
+    position: absolute;
+    top: calc(50% - 9px);
+    left: 13px;
+  }
+`;

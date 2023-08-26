@@ -65,7 +65,6 @@ export const LimitNumBox = styled.span<limitProps>`
 export const InputBox = styled.input`
   display: block;
   width: 100%;
-  padding: 16px 1.3rem;
   color: #051619;
   outline: none;
   padding: 12px 24px 10px;
