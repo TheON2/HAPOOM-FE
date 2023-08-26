@@ -11,7 +11,7 @@ export const HeaderLayout = styled.header<HeaderProps>`
   padding: 0 24px;
   /* position: fixed; */
   position: ${(props) => (props.$sticky ? 'fixed' : 'sticky')};
-  z-index: 15;
+  z-index: 115;
   top: 0;
   background: ${(props) => (props.$sticky ? 'none' : 'rgba(255,255,255,0.8)')};
   backdrop-filter: ${(props) => (props.$sticky ? 'none' : 'blur(1px)')};
@@ -139,7 +139,7 @@ export const GoWriteLink = styled(Link)`
   bottom: 12vh;
   right: 56px;
   background-color: #fff;
-  z-index: 14;
+  z-index: 114;
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
   svg {
     transform: scale(0.8) translate(2px, -1px);

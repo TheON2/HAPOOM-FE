@@ -12,7 +12,7 @@ const UpAndDownTabLayout = styled.div<styleProps>`
   position: fixed;
   bottom: 0;
   left: 0;
-  z-index: 15;
+  z-index: 115;
   border-radius: 25px 25px 0 0;
   background-color: #fff;
   box-shadow: 0px -5px 10px rgba(0, 0, 0, 0.2);

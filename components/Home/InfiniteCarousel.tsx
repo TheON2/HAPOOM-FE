@@ -161,7 +161,7 @@ const DetailImageViewBox = ({ data }: any) => {
             height={800}
             loading="eager"
             priority={true}
-            className="single-image"
+            className="sigle-image"
           />
         </MainBannerLayout>
       ) : (
