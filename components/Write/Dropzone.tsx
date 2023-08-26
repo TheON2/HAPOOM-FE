@@ -3,6 +3,8 @@ import NextImage from 'next/image';
 import { useCallback } from 'react';
 import plus from '../../public/addImage.png';
 import styled from 'styled-components';
+import useModal from '@/hooks/useModal';
+import Modal from '../common/Modal';
 interface DropzoneProps {
   images: File[];
   setImages: (images: any) => void;
@@ -46,9 +48,15 @@ const Dropzone: React.FC<DropzoneProps> = ({
   imageURLs,
   setImageURLs,
 }) => {
+  const { isModalOpen, modalMessge, openModal, closeModal } = useModal();
+
   const resizeImage = (imageFile: File, callback: (file: File) => void) => {
     if (imageFile.type !== 'image/jpeg' && imageFile.type !== 'image/png') {
-      alert('Only JPEG and PNG files are allowed.');
+      //alert('Only JPEG and PNG files are allowed.');
+      openModal({
+        actionText: '확인',
+        modalMessge: 'JPEG / PNG 파일만 업로드 가능합니다.',
+      });
       return;
     }
     const reader = new FileReader();
@@ -108,7 +116,10 @@ const Dropzone: React.FC<DropzoneProps> = ({
   const onDrop = useCallback(
     (acceptedFiles: File[]) => {
       if (acceptedFiles.length + images.length > MAX_IMAGES) {
-        alert(`You can only upload ${MAX_IMAGES} images.`);
+        openModal({
+          actionText: '확인',
+          modalMessge: '업로드 이미지는 최대 5장 입니다.',
+        });
         return;
       }
 
@@ -135,31 +146,43 @@ const Dropzone: React.FC<DropzoneProps> = ({
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   return (
-    <DropContainer {...getRootProps()}>
-      <input {...getInputProps()} />
-      {imageURLs[0] ? (
-        <NextImage
-          src={imageURLs[0]}
-          alt={`Upload preview 1`}
-          width={100}
-          height={100}
-          className="upload"
-        />
-      ) : isDragActive ? (
-        <p className="bold">그렇지 이미지를 여기다가 드랍해</p>
-      ) : (
-        <>
-          <NextImage
-            src={plus}
-            alt={`Upload preview 1`}
-            width={50}
-            height={50}
-          />
-          <p className="bold">이미지 업로드</p>
-          <p>jpg,png/5개 까지 업로드됩니다.</p>
-        </>
+    <>
+      {isModalOpen && (
+        <Modal
+          isOpen={isModalOpen}
+          setIsOpen={closeModal}
+          actionText={modalMessge.actionText}
+          onClickEvent={modalMessge.onClickEvent || null}
+        >
+          {modalMessge.modalMessge}
+        </Modal>
       )}
-    </DropContainer>
+      <DropContainer {...getRootProps()}>
+        <input {...getInputProps()} />
+        {imageURLs[0] ? (
+          <NextImage
+            src={imageURLs[0]}
+            alt={`Upload preview 1`}
+            width={100}
+            height={100}
+            className="upload"
+          />
+        ) : isDragActive ? (
+          <p className="bold">그렇지 이미지를 여기다가 드랍해</p>
+        ) : (
+          <>
+            <NextImage
+              src={plus}
+              alt={`Upload preview 1`}
+              width={50}
+              height={50}
+            />
+            <p className="bold">이미지 업로드</p>
+            <p>jpg,png/5개 까지 업로드됩니다.</p>
+          </>
+        )}
+      </DropContainer>
+    </>
   );
 };
 
