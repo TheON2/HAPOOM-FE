@@ -214,7 +214,13 @@ const CommentLayout = ({ data, id, userData }: commentProps) => {
   const onSubmitHandler = (e: React.FormEvent) => {
     e.preventDefault();
     if (comment === '') {
-      return alert('입력된 내용이 없습니다.');
+      setModalMessge({
+        actionText: '확인',
+        modalMessge: '댓글에 내용을 입력해주세요.',
+        onClickEvent: null,
+      });
+      setIsModalOpen(true);
+      return;
     }
     if (commentEdit.action === 'create') {
       setModalMessge({
