@@ -16,17 +16,27 @@ import {
   UserList,
   UserListItemStyled,
   UserProfileImage,
+  UserProfileImageBox,
 } from '@/styles/followTab';
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Modal from '@/components/common/Modal';
-import Link from 'next/link';
+import ProfileImage from '@/components/common/ProfileImage';
+
+export interface User {
+  userId: number;
+  email: string;
+  nickname: string;
+  userImage: string;
+  preset: number;
+}
 
 interface FollowTabUser {
   userId: number;
   email: string | null;
   nickname?: string;
   userImage: string | null;
+  preset: number | null;
 }
 
 interface FollowTabProps {
@@ -44,28 +54,39 @@ const UserListItem: React.FC<
   nickname,
   email,
   showUnfollowButton,
+  preset,
   handleOpenModal,
-}) => (
-  <UserListItemStyled>
-    <UserProfileImage
-      src={userImage || 'DEFAULT_IMAGE_URL_OR_EMPTY_STRING'}
-      alt={nickname || 'Unknown'}
-    />
+}) => {
+  const router = useRouter();
 
-    <UserInfo>
-      <Nickname>{nickname || '알 수 없음'}</Nickname>
-      <Email>{email || '이메일 없음'}</Email>
-    </UserInfo>
+  const handleNicknameClick = () => {
+    router.push(`/User/${userId}`);
+  };
 
-    {showUnfollowButton && (
-      <FollowButtonStyled
-        onClick={() => handleOpenModal && handleOpenModal(userId)}
-      >
-        언팔로우
-      </FollowButtonStyled>
-    )}
-  </UserListItemStyled>
-);
+  return (
+    <UserListItemStyled>
+      <UserProfileImageBox>
+        <ProfileImage
+          onClick={handleNicknameClick}
+          userImage={userImage}
+          preset={preset}
+        />
+      </UserProfileImageBox>
+      <UserInfo>
+        <Nickname onClick={handleNicknameClick}>{nickname}</Nickname>{' '}
+        <Email>{email}</Email>
+      </UserInfo>
+
+      {showUnfollowButton && (
+        <FollowButtonStyled
+          onClick={() => handleOpenModal && handleOpenModal(userId)}
+        >
+          언팔로우
+        </FollowButtonStyled>
+      )}
+    </UserListItemStyled>
+  );
+};
 
 const FollowTab: React.FC<FollowTabProps> = () => {
   const router = useRouter();
