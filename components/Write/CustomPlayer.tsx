@@ -133,6 +133,15 @@ const CustomPlayer = ({
     }
   }, [propsduration]);
 
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.play().catch((error) => {
+        // 자동 재생 정책에 의해 재생이 차단될 수 있으므로 여기에서 오류 처리를 할 수 있습니다.
+        console.error('자동 재생 실패:', error);
+      });
+    }
+  }, [audioUrl]);
+
   return (
     <>
       <CustomPlayerWrapper>
