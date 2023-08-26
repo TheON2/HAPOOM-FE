@@ -10,7 +10,7 @@ import {
 } from '@/styles/user';
 import { UserPost, UserPageData } from './UserUi';
 import { useMutation } from 'react-query';
-import { getPost, likePost } from '@/api/post';
+import { likePost } from '@/api/post';
 import ImageContent from '../Home/ImageContent';
 import { ImageContentsContainer } from '@/styles/imageContainer';
 import { useInfiniteData } from '../../hooks/useInfiniteData';
@@ -64,18 +64,26 @@ const PostLike: React.FC<PostLike> = ({
     data?.likedPosts || []
   );
 
-  const method = 'GET';
   const queryType = selectedTab === 0 ? 'post' : 'like';
-
-  const { data: infiniteData } = useInfiniteData(queryType, method);
+  const { data: infiniteData } = useInfiniteData(queryType);
 
   useEffect(() => {
     if (selectedTab === 0) {
       setDisplayedPosts(infiniteData?.pages.flat() ?? []);
     } else if (selectedTab === 1) {
-      setDisplayedPosts(data?.likedPosts ?? []);
+      setDisplayedPosts(
+        infiniteData?.pages.flat().filter((p) => p.isLiked) ?? []
+      );
     }
-  }, [data, selectedTab, infiniteData]);
+  }, [selectedTab, infiniteData]);
+
+  useEffect(() => {
+    if (selectedTab === 0) {
+      setDisplayedPosts(data?.posts ?? null);
+    } else if (selectedTab === 1) {
+      setDisplayedPosts(data?.likedPosts);
+    }
+  }, [data, selectedTab]);
 
   const handleLikeClick = (postId: number, isLiked: boolean) => {
     if (isLiked) {
@@ -89,14 +97,6 @@ const PostLike: React.FC<PostLike> = ({
       );
     }
   };
-
-  useEffect(() => {
-    if (selectedTab === 0) {
-      setDisplayedPosts(data?.posts ?? null);
-    } else if (selectedTab === 1) {
-      setDisplayedPosts(data?.likedPosts);
-    }
-  }, [data, selectedTab]);
 
   useEffect(() => {
     const updateIndicator = () => {

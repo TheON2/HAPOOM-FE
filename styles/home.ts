@@ -249,7 +249,7 @@ export const SlideButtonBox = styled.div`
 export const HashtagNavBarLayout = styled.nav<hashtagNavbarProps>`
   width: 100%;
   border-radius: 30px 30px 0 0;
-  transform: translateY(-95%);
+  transform: translateY(-80%);
   position: relative;
   z-index: 10;
   font-size: 10px;
@@ -257,7 +257,7 @@ export const HashtagNavBarLayout = styled.nav<hashtagNavbarProps>`
   overflow: hidden;
   .background {
     width: 100%;
-    padding: 0px 24px 20px;
+    padding: 0px 24px 27px;
     background: linear-gradient(
       180deg,
       rgba(255, 255, 255, 0.22) 80%,
@@ -282,13 +282,24 @@ export const HashtagNavBarLayout = styled.nav<hashtagNavbarProps>`
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      position: relative;
+      z-index: -2;
     }
   }
 `;
-
-export const HashtagList = styled.ul`
+export const HashtagListContainer = styled.div`
   max-width: 768px;
   width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+`;
+export const HashtagList = styled.ul`
+  flex: 7;
+  max-width: 768px;
+  width: 100%;
+  padding: 6px 8px 4px;
+  border-radius: 12px;
   display: flex;
   justify-content: flex-start;
   gap: 12px;
@@ -302,28 +313,65 @@ export const HashtagList = styled.ul`
   -ms-overflow-style: none;
   scrollbar-width: none;
 `;
-
+export const HashtagListOther = styled.div`
+  padding: 6px 20px 4px 0px;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  .line {
+    width: 2px;
+    height: 52px;
+    border-radius: 1px;
+    background-color: #deefff90;
+    position: absolute;
+    top: 2px;
+    right: -1px;
+  }
+`;
 export const HashtagItem = styled.li`
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
   font-size: 9px;
   cursor: pointer;
+  /* width: 44px; */
   figure {
     position: relative;
-    width: 100px;
-    height: 100px;
-    margin-bottom: 2px;
+    margin-bottom: 8px;
     overflow: hidden;
-    border-radius: 8px;
+    border-radius: 12px;
     width: 44px;
     height: 44px;
+    /* box-shadow: 0 1px 2px #17417280; */
     img {
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
   }
+  &.active::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 52px;
+    height: 52px;
+    transform: translate(-50%, -70%);
+    border-radius: 16px;
+    border: 5px solid transparent;
+    background-image: linear-gradient(#fff, #fff),
+      linear-gradient(
+        38deg,
+        rgba(253, 253, 253, 1) 0%,
+        rgba(82, 172, 255, 1) 100%
+      );
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+    box-sizing: border-box;
+    z-index: -1;
+  }
+
   @media screen and (min-width: 768px) {
     font-size: 12px;
     font-weight: 500;
@@ -331,6 +379,19 @@ export const HashtagItem = styled.li`
       width: 90px;
       height: 64px;
     }
+    &.active::after {
+      content: '';
+      position: absolute;
+      width: 52px;
+      height: 52px;
+      transform: translate(-50%, -67%);
+      width: 98px;
+      height: 72px;
+      border-radius: 16px;
+    }
+  }
+  &:hover {
+    filter: brightness(0.8);
   }
 `;
 
