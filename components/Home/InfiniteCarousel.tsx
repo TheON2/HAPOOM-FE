@@ -11,18 +11,21 @@ import {
   SliderItem,
   SliderList,
   SlideDotBox,
+  SlideSum,
 } from '@/styles/home';
 import { BannerSliderProps } from '@/types/home';
 import { debounce } from 'lodash';
-
-const DEFAULT_INTERVAL = 5 * 1000;
-const FAST_INTERVAL = 100;
+// import { Images } from '../common/SVG';
+import ZoomImage from '../Detail/ZoomImage';
+const DEFAULT_INTERVAL = 10 * 1000;
+const FAST_INTERVAL = 500;
 
 type Props = {
   data: BannerSliderProps[];
+  zoomImageHandler: (imageUrl: string) => void;
 };
 
-const InfiniteCarousel: React.FC<Props> = ({ data }) => {
+const InfiniteCarousel: React.FC<Props> = ({ data, zoomImageHandler }) => {
   const copiedArr: BannerSliderProps[] = data;
   const SLIDE_NUM = copiedArr.length;
   const beforeSlide = copiedArr[SLIDE_NUM - 1];
@@ -92,60 +95,84 @@ const InfiniteCarousel: React.FC<Props> = ({ data }) => {
   };
 
   return (
-    <MainBannerLayout ref={sliedContainerRef}>
-      <SliderList
-        ref={sliedListRef}
-        $slideindex={slideIndex}
-        $sliedsum={sliedArr.length}
-        width={slideItemWidth && slideItemWidth}
-      >
-        {sliedArr.map((slide, index) => {
-          return (
-            <SliderItem key={index} width={slideItemWidth && slideItemWidth}>
-              <Image
-                src={slide?.url}
-                alt="v13 image"
-                width={768}
-                height={800}
-                loading="eager"
-                priority={true}
-              />
-            </SliderItem>
-          );
-        })}
-      </SliderList>
-      <SlideDotBox>
-        {copiedArr.map((slide, index) => {
-          return (
-            <span
-              onClick={() => onClickSlideDotHandle(index + 1)}
-              className={slideIndex === index + 1 ? `active` : ``}
-              key={index}
-            ></span>
-          );
-        })}
-      </SlideDotBox>
-    </MainBannerLayout>
+    <>
+      <MainBannerLayout ref={sliedContainerRef}>
+        <SliderList
+          ref={sliedListRef}
+          $slideindex={slideIndex}
+          $sliedsum={sliedArr.length}
+          width={slideItemWidth && slideItemWidth}
+        >
+          {sliedArr.map((slide, index) => {
+            return (
+              <SliderItem
+                key={index}
+                width={slideItemWidth && slideItemWidth}
+                onClick={() => zoomImageHandler(slide?.url)}
+              >
+                <Image
+                  src={slide?.url}
+                  alt="v13 image"
+                  width={768}
+                  height={800}
+                  loading="eager"
+                  priority={true}
+                />
+              </SliderItem>
+            );
+          })}
+        </SliderList>
+        <SlideDotBox>
+          {/* <SlideSum>
+          <Images />+{copiedArr.length}
+        </SlideSum> */}
+          {copiedArr.map((slide, index) => {
+            return (
+              <span
+                onClick={() => onClickSlideDotHandle(index + 1)}
+                className={slideIndex === index + 1 ? `active` : ``}
+                key={index}
+              ></span>
+            );
+          })}
+        </SlideDotBox>
+      </MainBannerLayout>
+    </>
   );
 };
 
 const DetailImageViewBox = ({ data }: any) => {
-  if (data.length === 1) {
-    return (
-      <MainBannerLayout>
-        <Image
-          src={data[0]?.url}
-          alt="v13 image"
-          width={768}
-          height={800}
-          loading="eager"
-          priority={true}
-          className="sigle-image"
-        />
-      </MainBannerLayout>
-    );
-  } else {
-    return <InfiniteCarousel data={data} />;
-  }
+  // const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [zoomedImageUrl, setZoomedImageUrl] = useState<string | null>(null);
+  const zoomImageHandler = (imageUrl: string) => {
+    setZoomedImageUrl(imageUrl);
+  };
+  const closeZoomImage = () => {
+    setZoomedImageUrl(null);
+  };
+  return (
+    <>
+      {data.length === 1 ? (
+        <MainBannerLayout onClick={() => zoomImageHandler(data[0]?.url)}>
+          <Image
+            src={data[0]?.url}
+            alt="v13 image"
+            width={768}
+            height={800}
+            loading="eager"
+            priority={true}
+            className="single-image"
+          />
+        </MainBannerLayout>
+      ) : (
+        <InfiniteCarousel data={data} zoomImageHandler={zoomImageHandler} />
+      )}
+
+      {/* 모달 또는 다른 방식으로 이미지 확대 요소를 표시 */}
+      {zoomedImageUrl && (
+        <ZoomImage imageUrl={zoomedImageUrl} closeZoomImage={closeZoomImage} />
+      )}
+    </>
+  );
 };
 export default DetailImageViewBox;

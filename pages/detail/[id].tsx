@@ -17,6 +17,7 @@ import {
   HashtagBox,
   Hashtag,
   CommentForm,
+  DetailContentBox,
 } from '@/styles/detail';
 import { MapComponent } from '@/components/Write/MapComponent';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
@@ -230,51 +231,50 @@ const Detail: NextPage = () => {
         </OtherProfileBox>
         <div className="carousel-box">
           <MainBannerSlider data={images} />
-        </div>
-        <DetialContentSection>
           <HeartIcon postId={parseInt(id)} />
-          <p className="detail-content-text">{content}</p>
-          <HashtagBox>
-            {tags.length !== 0 &&
-              tags.map((tag, index) => (
+        </div>
+
+        {musicChoose === 1 && (
+          <DetialContentSection>
+            <ReadOnlyYoutube videoId={videoId} update={'3'} />
+          </DetialContentSection>
+        )}
+        {musicChoose === 2 && (
+          <DetialContentSection>
+            <CustomPlayer
+              setAudioUrl={setAudioURL}
+              audioUrl={audioURL}
+              title={musicTitle}
+              setMusicChoose={setMusicChoose}
+              setMusicType={setMusicType}
+              update={'3'}
+            />
+          </DetialContentSection>
+        )}
+        {musicChoose === 3 && (
+          <DetialContentSection>
+            <CustomPlayer
+              setAudioUrl={setAudioURL}
+              audioUrl={audioURL}
+              title={musicTitle}
+              setMusicChoose={setMusicChoose}
+              setMusicType={setMusicType}
+              update={'3'}
+            />
+          </DetialContentSection>
+        )}
+        <DetialContentSection className="content-box">
+          {content && <DetailContentBox>{content}</DetailContentBox>}
+          {tags.length !== 0 && (
+            <HashtagBox>
+              {tags.map((tag, index) => (
                 <Hashtag key={index}>#{tag.trim()}</Hashtag>
               ))}
-          </HashtagBox>
-        </DetialContentSection>
-        <DetialContentSection
-          style={{
-            display: `flex`,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          {musicChoose === 1 && (
-            <>
-              <ReadOnlyYoutube videoId={videoId} update={'3'} />
-            </>
-          )}
-          {musicChoose === 2 && (
-            <CustomPlayer
-              setAudioUrl={setAudioURL}
-              audioUrl={audioURL}
-              title={musicTitle}
-              setMusicChoose={setMusicChoose}
-              setMusicType={setMusicType}
-              update={'3'}
-            />
-          )}
-          {musicChoose === 3 && (
-            <CustomPlayer
-              setAudioUrl={setAudioURL}
-              audioUrl={audioURL}
-              title={musicTitle}
-              setMusicChoose={setMusicChoose}
-              setMusicType={setMusicType}
-              update={'3'}
-            />
+            </HashtagBox>
           )}
         </DetialContentSection>
         <DetialContentSection>
+          <h3 style={{ marginBottom: '20px' }}>위치 정보</h3>
           {!(location.x === 0) && <ReadOnlyMap location={location} />}
         </DetialContentSection>
         <DetialContentSection>
