@@ -16,6 +16,9 @@
 /public/ws.js.map
 /public/service-worker.js
 /public/sw-custom.js
+**/public/service-*.js
+**/public/sw-*.js
+**/public/sw.js
 # yarn.lock
 .map
 
