@@ -156,7 +156,7 @@ const PostLike: React.FC<PostLike> = ({
               key={post.postId}
               image={post.image}
               postId={post.postId}
-              showLikeIcon={selectedTab === 1} // 좋아요 탭에서만 아이콘을 표시
+              showLikeIcon={selectedTab === 1}
               handleLikeClick={handleLikeClick}
             />
           );
