@@ -45,9 +45,14 @@ type buttonProps = {
   $addStyle?: any;
 };
 
-const CustomButton = ({ children, $marginTop, ...restProps }: buttonProps) => {
+const CustomButton = ({
+  children,
+  $marginTop,
+  $addStyle,
+  ...restProps
+}: buttonProps) => {
   return (
-    <ButtonStyle {...restProps} $marginTop={$marginTop}>
+    <ButtonStyle {...restProps} $marginTop={$marginTop} $addStyle={$addStyle}>
       {children}
     </ButtonStyle>
   );
