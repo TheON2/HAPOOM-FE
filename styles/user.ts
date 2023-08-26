@@ -156,7 +156,7 @@ export const PostParagraph = styled.p`
   cursor: pointer;
 `;
 export const Line = styled.div`
-  margin: 10px 0;
+  margin: 10px 6px;
   border-bottom: 1px solid black;
 `;
 
