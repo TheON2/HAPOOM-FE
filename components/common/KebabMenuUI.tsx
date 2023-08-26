@@ -32,7 +32,7 @@ export const KebabMenuStyle = styled.div`
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
   background-color: #fff;
   padding: 0 8px;
-  z-index: 30;
+  z-index: 130;
 `;
 
 export const KebabMenuAptionButton = styled.button`

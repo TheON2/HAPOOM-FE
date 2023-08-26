@@ -25,7 +25,7 @@ const OverlayBox = styled.div`
   opacity: 0.4;
   position: fixed;
   top: 0;
-  z-index: 19;
+  z-index: 119;
   cursor: pointer;
 `;
 
