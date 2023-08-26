@@ -91,6 +91,7 @@ export const DetailContentBox = styled.div`
   background-color: #f5faff;
   border: 1px solid #e2f3ff;
   border-radius: 8px;
+  word-break: break-word;
   /* min-height: 120px; */
   /* margin-bottom: 12px; */
   color: #082d42;
@@ -156,7 +157,18 @@ export const CommentForm = styled.form`
     }
   }
 `;
-
+export const TextareaBox = styled.div`
+  position: relative;
+`;
+type limitProps = {
+  $color: boolean;
+};
+export const LimitNumBox = styled.span<limitProps>`
+  position: absolute;
+  bottom: 5px;
+  right: 10px;
+  color: ${(props) => (props.$color ? '#FF5D5D' : '#334765')};
+`;
 // comment components style
 export const CommentsContainer = styled.div`
   width: 100%;
@@ -185,7 +197,7 @@ export const CommentBox = styled.div`
     margin: 4px 0 0 auto;
     color: #737373;
     font-size: 12px;
-    height: 70px;
+    /* height: 70px; */
 
     p {
       padding: 14px 12px 12px;

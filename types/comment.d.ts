@@ -36,6 +36,7 @@ export interface CommentFormProps {
   onChangeCommentHandler: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   editTitle: string;
   editButton: string;
+  maxLength: number;
 }
 
 export type commentProps = {

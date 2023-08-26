@@ -27,7 +27,13 @@ import { useRouter } from 'next/router';
 import { useMutation, useQueryClient } from 'react-query';
 import { userLogOut } from '@/api/user';
 import { LOGOUT_USER, UserState } from '@/redux/reducers/userSlice';
-import { SearchIcon, Bell, EditIcon, Cloud } from '@/components/common/SVG';
+import {
+  SearchIcon,
+  Bell,
+  EditIcon,
+  Cloud,
+  Logo,
+} from '@/components/common/SVG';
 import { setCookie } from 'nookies';
 import ProfileImage from '@/components/common/ProfileImage';
 import { RootState } from '@/redux/config/configStore';
@@ -75,7 +81,7 @@ const Header = ({ $sticky }: any) => {
       setIsAuth(false);
     }
   }, [user.email]);
-  console.log(isAuth);
+
   return (
     <>
       <HeaderLayout $sticky={$sticky}>
@@ -91,8 +97,8 @@ const Header = ({ $sticky }: any) => {
             {!isAuth ? (
               <>
                 <AuthButtonBox>
-                  <Link href={'/feed/Feed'}>피드</Link>|
-                  <Link href={'/'}>트랜드</Link>|
+                  <Link href={'/'}>피드</Link>|
+                  <Link href={'/find'}>트랜드</Link>|
                   <Link href={'/auth/SignIn'}>로그인</Link>|
                   <Link href={'/auth/SignUp'}>회원가입</Link>
                 </AuthButtonBox>
@@ -103,8 +109,8 @@ const Header = ({ $sticky }: any) => {
             ) : (
               <>
                 <AuthButtonBox>
-                  <Link href={'/feed/Feed'}>피드</Link>|
-                  <Link href={'/'}>트랜드</Link>
+                  <Link href={'/'}>피드</Link>|
+                  <Link href={'/find'}>트랜드</Link>
                 </AuthButtonBox>
                 <ProfileButton
                   onClick={onClickShowMenuHandler}
