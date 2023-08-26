@@ -1,14 +1,8 @@
 import {
   MainHeadText,
-  PwdSignUpSettingPageLink,
-  Separator,
-  SignInBtn,
   SignInContainer,
   SignInSection,
   TextErrorParagraph,
-  TextSnsParagraph,
-  TextPwSetParagraph,
-  TextSignUpLinkParagraph,
 } from '@/styles/signIn';
 import React, { FormEvent, useState } from 'react';
 import SocialLogin from './SocialLogIn';
@@ -48,15 +42,21 @@ const SignInUi = () => {
   const [error, setError] = useState<ErrorMessage>({
     message: '',
   });
-
+  const [serverError, setServerError] = useState<string>('');
   const signInMutation = useMutation(userLogin, {
     onSuccess: (data) => {
       dispatch(LOGIN_USER(data));
       router.push('/');
     },
     onError: (error: AxiosError) => {
-      if (error.response && error.response.data) {
-        setError((prev) => ({ ...prev, password: error.response?.data }));
+      const message = error?.response?.data as string;
+      if (message) {
+        setServerError(message);
+      } else {
+        alert(
+          '로그인에 실패하였습니다. 아이디 혹은 비밀번호를 다시 한번 확인해주세요'
+        );
+        console.error('로그인 실패:', error);
       }
     },
   });
@@ -82,7 +82,7 @@ const SignInUi = () => {
 
     if (!validateEmail(signInState.email)) {
       if (!validatePassword(signInState.password)) {
-        errors.message = '아이디와 비밀번호를 다시 확인해주세요 ';
+        errors.message = '아이디와 비밀번호를 다시 확인해주세요';
       }
     }
 
@@ -111,6 +111,8 @@ const SignInUi = () => {
         {error.message && (
           <TextErrorParagraph>{error.message}</TextErrorParagraph>
         )}
+        {serverError && <TextErrorParagraph>{serverError}</TextErrorParagraph>}
+
         <SignInControls signInState={signInState} />
 
         <SocialLogin />
@@ -119,4 +121,4 @@ const SignInUi = () => {
   );
 };
 
-export default SignInUi;
+export default React.memo(SignInUi);

@@ -26,6 +26,7 @@ export const MainHeadText = styled.h1`
   font-size: 40px;
   font-weight: 900;
   cursor: pointer;
+  margin-bottom: 4px;
 `;
 export const StyledInputBox = styled.div`
   max-width: 312px;
