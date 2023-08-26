@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 interface Button {
   $marginTop?: string;
+  $addStyle: any;
 }
 
 const ButtonStyle = styled.button<Button>`
@@ -12,10 +13,10 @@ const ButtonStyle = styled.button<Button>`
   padding: 12px 16px 8px;
   //margin-top: ${({ $marginTop }) => $marginTop};
   margin: 0 auto;
-  border-radius: 3px;
-  color: #fff;
-  border: 1px solid #2797ff;
-  background-color: #2797ff;
+  border-radius: 6px;
+  color: ${(props) => (props.$addStyle ? '#2797ff' : '#fff')};
+  border: 2px solid #2797ff;
+  background-color: ${(props) => (props.$addStyle ? '#fff' : '#2797ff')};
   cursor: pointer;
   &.secondary {
     color: #818181;
@@ -41,6 +42,7 @@ type buttonProps = {
   type?: 'button' | 'submit' | 'reset';
   className?: string;
   onClick?: any;
+  $addStyle?: any;
 };
 
 const CustomButton = ({ children, $marginTop, ...restProps }: buttonProps) => {
