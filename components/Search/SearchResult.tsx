@@ -3,6 +3,7 @@ import ImageContent from '@/components/Home/ImageContent';
 import { ImageContentsContainer } from '@/styles/imageContainer';
 import { NoneSearchResult } from '@/styles/search';
 import UserSearchResult from '@/components/Search/UserSearchResult';
+import Link from 'next/link';
 type searchProps = {
   option: string;
   data: any[] | string;
@@ -27,14 +28,15 @@ const SearchResult = ({ option, data }: searchProps) => {
         <>
           {data.map((user, idx) => {
             return (
-              <UserSearchResult
-                key={idx}
-                userImage={user.userImage}
-                nickname={user.nickname}
-                email={user.email}
-                preset={user.preset}
-                userId={user.userId}
-              />
+              <Link href={`/User/${user.userId}`} key={idx}>
+                <UserSearchResult
+                  userImage={user.userImage}
+                  nickname={user.nickname}
+                  email={user.email}
+                  preset={user.preset}
+                  userId={user.userId}
+                />
+              </Link>
             );
           })}
         </>
