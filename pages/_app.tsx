@@ -12,11 +12,9 @@ import MobileBottomNav from '@/components/common/MobileBottomNav';
 import { useRouter } from 'next/router';
 import Script from 'next/script';
 import { AlarmBar } from '@/components/common/AlarmBar';
+import { Provider } from 'react-redux';
 const queryClient = new QueryClient();
 const ENDPOINT = `${process.env.NEXT_PUBLIC_LOCAL_SERVER}`;
-
-const makeStore: MakeStore<typeof store> = () => store;
-const wrapper = createWrapper(makeStore);
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [notification, setNotification] = useState<string | null>(null);
@@ -30,6 +28,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     '/signUpComplete/SignUpComplete',
   ];
   const isExcludedPage = excludedPages.includes(router.pathname);
+
   useEffect(() => {
     // 로그인 성공 후 Socket.IO 클라이언트를 생성하고 서버에 연결합니다.
     const socket = socketIOClient(ENDPOINT);
@@ -59,9 +58,50 @@ function MyApp({ Component, pageProps }: AppProps) {
       }, 10000);
     });
 
+    socket.on('newPost', (latestPosts) => {
+      setNotification(`새 글이 등록 되었습니다.`);
+    });
+
     // socket.on('latest-posts', (latestPosts) => {
-    //   alert(latestPosts.post.postId);
+
     // });
+
+    // Notification permission 요청
+    function requestNotificationPermission() {
+      Notification.requestPermission().then((permission) => {
+        if (permission === 'granted') {
+          subscribeUserToPush(); // 권한이 허용되면 Push Subscription 생성
+        } else {
+          console.error('Notification permission denied.');
+        }
+      });
+    }
+
+    // Push Subscription 생성
+    async function subscribeUserToPush() {
+      const registration = await navigator.serviceWorker.ready;
+
+      const subscribeOptions = {
+        userVisibleOnly: true,
+        applicationServerKey: process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY,
+      };
+
+      const pushSubscription = await registration.pushManager.subscribe(
+        subscribeOptions
+      );
+
+      // 서버에 Push Subscription 저장
+      await fetch(`${ENDPOINT}/api/util/subscribe`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(pushSubscription),
+      });
+    }
+
+    // 예시로, 앱이 로드될 때 알림 권한 요청
+    requestNotificationPermission();
 
     // 컴포넌트가 언마운트될 때 소켓 연결을 닫습니다.
     return () => {
@@ -71,39 +111,41 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <>
-      {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS && (
-        <>
-          <Script
-            strategy="afterInteractive"
-            src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`}
-          />
-          <Script id="ga-gtag" strategy="afterInteractive">
-            {`
+      <Provider store={store}>
+        {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS && (
+          <>
+            <Script
+              strategy="afterInteractive"
+              src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`}
+            />
+            <Script id="ga-gtag" strategy="afterInteractive">
+              {`
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
               gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}');
             `}
-          </Script>
-        </>
-      )}
-      <QueryClientProvider client={queryClient}>
-        {!isExcludedPage ? (
-          <>
-            {notification && <AlarmBar alarm={notification} />}
-
-            <Layout>
-              <Component {...pageProps} randomPosts={randomPosts} />
-            </Layout>
-            <MobileBottomNav />
+            </Script>
           </>
-        ) : (
-          <Component {...pageProps} />
         )}
-        <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
-      </QueryClientProvider>
+        <QueryClientProvider client={queryClient}>
+          {!isExcludedPage ? (
+            <>
+              {notification && <AlarmBar alarm={notification} />}
+
+              <Layout>
+                <Component {...pageProps} randomPosts={randomPosts} />
+              </Layout>
+              <MobileBottomNav />
+            </>
+          ) : (
+            <Component {...pageProps} />
+          )}
+          <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
+        </QueryClientProvider>
+      </Provider>
     </>
   );
 }
 
-export default wrapper.withRedux(MyApp);
+export default MyApp;

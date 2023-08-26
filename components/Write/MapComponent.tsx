@@ -13,6 +13,7 @@ import { debounce } from 'lodash';
 import Button from '../common/Button';
 import nookies from 'nookies';
 import Modal from '../common/Modal';
+import useModal from '@/hooks/useModal';
 
 const SuggestionsBox = styled.ul`
   list-style-type: none;
@@ -97,6 +98,7 @@ export const MapComponent: React.FC<MapComponentProps> = ({
   update,
   setIsShowMap,
 }) => {
+  const { isModalOpen, modalMessge, openModal, closeModal } = useModal();
   const [mapOpen, setMapOpen] = useState(false);
   const [locationInput, setLocationInput] = useState('');
   const [locationLatLng, setLocationLatLng] = useState({ x: 0, y: 0 });
@@ -104,12 +106,6 @@ export const MapComponent: React.FC<MapComponentProps> = ({
   const mapContainerRef = useRef(null);
   const mapRef = useRef<any>(null);
   const markerRef = useRef<Marker | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [modalMessge, setModalMessge] = useState<any>({
-    actionText: '',
-    modalMessge: '',
-    onClickEvent: '',
-  });
 
   const handleMapClick = useCallback(
     async (event: MapClickEvent) => {
@@ -234,7 +230,11 @@ export const MapComponent: React.FC<MapComponentProps> = ({
     const { currentlocation } = nookies.get();
 
     if (!currentlocation) {
-      alert('브라우저 상단의 위치정보 사용을 허용해주세요.');
+      openModal({
+        actionText: '확인',
+        modalMessge:
+          '위치정보 탐색을 허용하지 않았을경우 브라우저 상단의 위치정보 사용을 허용해주세요.',
+      });
     }
     navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -262,9 +262,11 @@ export const MapComponent: React.FC<MapComponentProps> = ({
       },
       async (error) => {
         if (error.code === error.PERMISSION_DENIED) {
-          alert(
-            '이 기능을 사용하려면 브라우저 설정에서 위치 권한을 허용한후 브라우저를 재부팅 해주세요.'
-          );
+          openModal({
+            actionText: '확인',
+            modalMessge:
+              '이 기능을 사용하려면 브라우저 설정에서 위치 권한을 허용한후 브라우저를 재부팅 해주세요.',
+          });
         } else {
           console.error('지금 위치를 찾을 수 없습니다.', error);
         }
@@ -272,36 +274,18 @@ export const MapComponent: React.FC<MapComponentProps> = ({
     );
   }, [setMapOpen]);
 
-  // const handleDeleteClick = () => {
-  //   setModalMessge({
-  //     actionText: '삭제',
-  //     modalMessge: '정말로 해당 게시글을 삭제하시겠습니까?',
-  //     onClickEvent: () => delete_mutate(id),
-  //   });
-  //   setIsModalOpen(true);
-  // };
-
-  // const { mutate: report } = useMutation(reportPost, {
-  //   onSuccess: (messag) => {
-  //     setModalMessge({
-  //       actionText: '확인',
-  //       modalMessge: messag,
-  //       onClickEvent: null,
-  //     });
-  //     setIsModalOpen(true);
-  //   },
-  // });
-
   return (
     <>
-      <Modal
-        isOpen={isModalOpen}
-        setIsOpen={setIsModalOpen}
-        actionText={modalMessge.actionText}
-        onClickEvent={modalMessge.onClickEvent}
-      >
-        {modalMessge.modalMessge}
-      </Modal>
+      {isModalOpen && (
+        <Modal
+          isOpen={isModalOpen}
+          setIsOpen={closeModal}
+          actionText={modalMessge.actionText}
+          onClickEvent={modalMessge.onClickEvent || null}
+        >
+          {modalMessge.modalMessge}
+        </Modal>
+      )}
       <Script
         strategy="afterInteractive"
         type="text/javascript"

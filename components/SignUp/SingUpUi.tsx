@@ -20,6 +20,7 @@ import SignUpPwd from './SignUpPwd';
 import SignUpNickname from './SignUpNickname';
 import SignUpCheck from './SignUpCheck';
 import SignUpcontrol from './SignUpControl';
+import axios from 'axios';
 
 const validateEmail = (email: string) => {
   const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
@@ -78,16 +79,39 @@ const SignUpUi = () => {
     checkNewsletter: false,
   });
   const [checkboxErrorMessage, setCheckboxErrorMessage] = useState('');
-
+  const [serverError, setServerError] = useState<string>('');
+  const [serverNicknameError, setServerNicknameError] = useState<string>('');
+  const getForgotPwd = async (email: string) => {
+    const response = await axios.get(`http://localhost:3001/api/auth/${email}`);
+    return response.data;
+  };
+  const forgotPwdMutaion = useMutation(getForgotPwd, {
+    onSuccess: () => {
+      console.log('성공');
+    },
+    onError: (error) => {
+      console.log('실패', error);
+    },
+  });
   const addUserMutation = useMutation(addUser, {
     onSuccess: () => {
       router.push('/signUpComplete/SignUpComplete');
     },
-    onError: (error) => {
-      alert(
-        '회원가입에 실패하였습니다. 아이디 혹은 비밀번호를 다시 한번 확인해주세요'
-      );
-      console.error('회원가입 실패:', error);
+    onError: (error: any) => {
+      const message = error?.response?.data.errorMessage;
+      if (message) {
+        setServerError(message);
+      } else {
+        alert(
+          '회원가입에 실패하였습니다. 아이디 혹은 비밀번호를 다시 한번 확인해주세요'
+        );
+        console.error('회원가입 실패:', error);
+      }
+      if (
+        error?.response?.data.errorMessage === '이미 존재하는 닉네임입니다.'
+      ) {
+        setServerNicknameError(error?.response?.data.errorMessage);
+      }
     },
   });
 
@@ -205,6 +229,14 @@ const SignUpUi = () => {
     }
   };
 
+  const handleEmailValidateSubmit = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    event.preventDefault();
+    alert('성실');
+    forgotPwdMutaion.mutate(signUpState.email);
+  };
+
   return (
     <SignUpSection>
       <MainHeadText onClick={moveHomePageHandeler}>HAPOOM</MainHeadText>
@@ -226,17 +258,18 @@ const SignUpUi = () => {
             onChange={handleInputChange}
           />
           {error.email && (
-            <TextErrorParagraph style={{ marginBottom: '-12px' }}>
-              {error.email}
-            </TextErrorParagraph>
+            <TextErrorParagraph>{error.email}</TextErrorParagraph>
+          )}
+          {serverError && (
+            <TextErrorParagraph>{serverError}</TextErrorParagraph>
           )}
           <SignUpBtn
             style={{
-              margin: '12px 0 20px 0',
+              margin: '8px 0 20px 0',
               backgroundColor: signUpState.email ? '#0078FF' : '#B3B3B3',
               borderColor: signUpState.email ? '#0078FF' : '#B3B3B3',
             }}
-            onClick={() => alert('준비 중 입니다.')}
+            onClick={handleEmailValidateSubmit}
             disabled={!signUpState.email}
           >
             이메일 인증하기
@@ -258,6 +291,9 @@ const SignUpUi = () => {
             nickname: error.nickname,
           }}
         />
+        {serverNicknameError && (
+          <TextErrorParagraph>{serverNicknameError}</TextErrorParagraph>
+        )}
         <SignUpCheck
           checkboxErrorMessage={checkboxErrorMessage}
           checkboxes={checkboxes}
