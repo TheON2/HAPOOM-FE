@@ -187,7 +187,7 @@ const SelectBox = styled.div<Props>`
   border-radius: 8px;
   overflow: hidden;
   position: absolute;
-  z-index: 14;
+  z-index: 114;
   transition: all 0.3s ease-in-out;
   border-left: 2px solid #e8eef3;
   border-right: 2px solid #e8eef3;
