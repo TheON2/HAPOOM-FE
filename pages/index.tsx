@@ -1,5 +1,5 @@
 import React from 'react';
-import FeedUi from '../components/Feed/FeedUi';
+import FeedUi from '@/components/Feed/FeedUi';
 import { useDispatch } from 'react-redux';
 import { useQuery } from 'react-query';
 import { getAuthToken } from '@/api/user';
