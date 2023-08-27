@@ -125,7 +125,7 @@ const FeedUi = () => {
         {modalMessge.modalMessge}
       </Modal>
       {data?.pages?.map((page) =>
-        page.feed.map((feed: Feed) => {
+        page.feed?.map((feed: Feed) => {
           const isExpanded = expandedPosts[feed.postId];
           const content = isExpanded
             ? feed.content
