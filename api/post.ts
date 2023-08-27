@@ -22,8 +22,10 @@ const getMain = async () => {
   return response.data;
 };
 
-const getFeed = async () => {
-  const response = await api.get('/api/main/feed');
+const getFeed = async (method: string, page: number) => {
+  const response = await api.get('/api/main/feed',{
+    params: { method, page },
+  });
   return response.data;
 };
 
