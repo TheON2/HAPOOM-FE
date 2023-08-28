@@ -25,26 +25,17 @@ import IconButton from './IconButton';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { useMutation, useQueryClient } from 'react-query';
-import { togglePush, userLogOut } from '@/api/user';
+import { userLogOut } from '@/api/user';
 import { LOGOUT_USER, UserState } from '@/redux/reducers/userSlice';
 import { SearchIcon, Bell, EditIcon, Cloud } from '@/components/common/SVG';
 import { setCookie } from 'nookies';
 import ProfileImage from '@/components/common/ProfileImage';
 import { RootState } from '@/redux/config/configStore';
-
+import Modal from './Modal';
 
 const ENDPOINT = `${process.env.NEXT_PUBLIC_LOCAL_SERVER}`;
 
-import Modal from './Modal';
-
 const Header = ({ $sticky }: any) => {
-  const queryClient = useQueryClient();
-
-  const mutation = useMutation(() => togglePush(), {
-    onSuccess: () => {
-      queryClient.invalidateQueries('push');
-    },
-  });
   const { user }: { user: UserState['user'] } = useSelector(
     (state: RootState) => state.user
   );
@@ -86,7 +77,7 @@ const Header = ({ $sticky }: any) => {
     } else {
       setIsAuth(false);
     }
-  }, []);
+  }, [user.email]);
 
   // Notification permission 요청
   function requestNotificationPermission() {
@@ -127,7 +118,7 @@ const Header = ({ $sticky }: any) => {
 
   // 예시로, 앱이 로드될 때 알림 권한 요청
   useEffect(() => {
-    if (user.email !== '') requestNotificationPermission();
+    if (user.email !== null) requestNotificationPermission();
   }, []);
 
   const clickBell = () => {};
@@ -144,11 +135,11 @@ const Header = ({ $sticky }: any) => {
               <SearchIcon fillColor={$sticky ? '#fff' : '#2797FF'} />
             </Link>
 
-            {!isAuth ? (
+            {user.email === null ? (
               <>
                 <AuthButtonBox>
-                  <Link href={'/feed/Feed'}>피드</Link>|
-                  <Link href={'/'}>트랜드</Link>|
+                  <Link href={'/'}>피드</Link>|
+                  <Link href={'/find'}>트랜드</Link>|
                   <Link href={'/auth/SignIn'}>로그인</Link>|
                   <Link href={'/auth/SignUp'}>회원가입</Link>
                 </AuthButtonBox>
@@ -159,8 +150,8 @@ const Header = ({ $sticky }: any) => {
             ) : (
               <>
                 <AuthButtonBox>
-                  <Link href={'/feed/Feed'}>피드</Link>|
-                  <Link href={'/'}>트랜드</Link>
+                  <Link href={'/'}>피드</Link>|
+                  <Link href={'/find'}>트랜드</Link>
                 </AuthButtonBox>
                 <ProfileButton
                   onClick={onClickShowMenuHandler}
