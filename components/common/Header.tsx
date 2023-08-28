@@ -113,6 +113,7 @@ const Header = ({ $sticky }: any) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(pushSubscription),
+      credentials: 'include',
     });
   }
 
@@ -121,7 +122,15 @@ const Header = ({ $sticky }: any) => {
     if (user.email !== null) requestNotificationPermission();
   }, []);
 
-  const clickBell = () => {};
+  const clickBell = async () => {
+    await fetch(`${ENDPOINT}/api/util/togglepush`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+    });
+  };
 
   return (
     <>
@@ -167,7 +176,7 @@ const Header = ({ $sticky }: any) => {
             )}
           </AccountActionsContainer>
           <MobileBox>
-            <IconButton>
+            <IconButton onClick={clickBell}>
               <Bell fillColor={$sticky ? '#fff' : '#2797FF'} />
             </IconButton>
           </MobileBox>
