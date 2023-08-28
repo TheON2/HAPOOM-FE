@@ -167,7 +167,7 @@ const Header = ({ $sticky }: any) => {
               <>
                 <AuthButtonBox>
                   <Link href={'/'}>피드</Link>|
-                  <Link href={'/find'}>트랜드</Link>|
+                  <Link href={'/find'}>트렌드</Link>|
                   <Link href={'/auth/SignIn'}>로그인</Link>|
                   <Link href={'/auth/SignUp'}>회원가입</Link>
                 </AuthButtonBox>
@@ -185,7 +185,7 @@ const Header = ({ $sticky }: any) => {
                 </IconButton>
                 <AuthButtonBox>
                   <Link href={'/'}>피드</Link>|
-                  <Link href={'/find'}>트랜드</Link>
+                  <Link href={'/find'}>트렌드</Link>
                 </AuthButtonBox>
 
                 <ProfileButton
