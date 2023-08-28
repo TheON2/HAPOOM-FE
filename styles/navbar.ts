@@ -33,10 +33,12 @@ export const BottomNavItem = styled.li`
   display: flex;
   justify-content: center;
   align-items: center;
+  p {
+    line-height: 7px;
+  }
 `;
 
 export const IconBox = styled.button`
-  display: block;
   width: 24px;
   height: 100%;
   display: flex;

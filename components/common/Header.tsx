@@ -27,7 +27,13 @@ import { useRouter } from 'next/router';
 import { useMutation, useQueryClient } from 'react-query';
 import { userLogOut } from '@/api/user';
 import { LOGOUT_USER, UserState } from '@/redux/reducers/userSlice';
-import { SearchIcon, Bell, EditIcon, Cloud } from '@/components/common/SVG';
+import {
+  SearchIcon,
+  Bell,
+  EditIcon,
+  Cloud,
+  Logo,
+} from '@/components/common/SVG';
 import { setCookie } from 'nookies';
 import ProfileImage from '@/components/common/ProfileImage';
 import { RootState } from '@/redux/config/configStore';
@@ -161,7 +167,7 @@ const Header = ({ $sticky }: any) => {
               <>
                 <AuthButtonBox>
                   <Link href={'/'}>피드</Link>|
-                  <Link href={'/find'}>트랜드</Link>|
+                  <Link href={'/find'}>트렌드</Link>|
                   <Link href={'/auth/SignIn'}>로그인</Link>|
                   <Link href={'/auth/SignUp'}>회원가입</Link>
                 </AuthButtonBox>
@@ -171,10 +177,17 @@ const Header = ({ $sticky }: any) => {
               </>
             ) : (
               <>
+                <IconButton onClick={clickBell} $noneEdge={true}>
+                  <Bell
+                    fillColor={$sticky ? '#fff' : '#2797FF'}
+                    $isPush={user?.push}
+                  />
+                </IconButton>
                 <AuthButtonBox>
                   <Link href={'/'}>피드</Link>|
-                  <Link href={'/find'}>트랜드</Link>
+                  <Link href={'/find'}>트렌드</Link>
                 </AuthButtonBox>
+
                 <ProfileButton
                   onClick={onClickShowMenuHandler}
                   $sticky={$sticky}
@@ -190,7 +203,10 @@ const Header = ({ $sticky }: any) => {
           </AccountActionsContainer>
           <MobileBox>
             <IconButton onClick={clickBell}>
-              <Bell fillColor={$sticky ? '#fff' : '#2797FF'} />
+              <Bell
+                fillColor={$sticky ? '#fff' : '#2797FF'}
+                $isPush={user?.push}
+              />
             </IconButton>
           </MobileBox>
         </div>
