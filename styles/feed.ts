@@ -77,13 +77,12 @@ export const MusicBox = styled.div`
   gap: 4px;
   padding: 12px 8px;
 `;
-export const Equalizer = styled.div`
-  position: absolute;
-  right: 0;
-`;
 export const FeedContentBox = styled.div`
   display: flex;
-`
+  @media (max-width: 520px) {
+    flex-direction: column;
+  }
+`;
 export const FeedContent = styled.p`
   margin-top: 15px;
   color: #000;
@@ -97,6 +96,9 @@ export const MoreButton = styled.button`
   border: none;
   color: #000;
   cursor: pointer;
+  @media (max-width: 520px) {
+    text-align: left; 
+}
 `;
 export const LikeIconContainer = styled.div`
   width: 50px;
