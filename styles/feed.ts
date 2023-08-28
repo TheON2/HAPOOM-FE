@@ -30,6 +30,7 @@ export const FeedUserNickName = styled.div`
   color: #232323;
   font-size: 16px;
   font-weight: 600;
+  cursor: pointer;
 `;
 export const FeedTime = styled.div`
   color: #9e9e9e;
