@@ -29,14 +29,18 @@ export type CommentBoxProps = {
 
 export interface CommentFormProps {
   isOpen: boolean;
-  onSubmitHandler: (e: React.FormEvent) => void;
   closeForm: () => void;
   closeComment: () => void;
   comment: string;
-  onChangeCommentHandler: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  setComment: any;
+  onChangeCommentHandler?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   editTitle: string;
   editButton: string;
-  maxLength: number;
+  maxLength?: number;
+  commentEdit: any;
+  id: any;
+  setIsShow: any;
+  setActive: any;
 }
 
 export type commentProps = {
