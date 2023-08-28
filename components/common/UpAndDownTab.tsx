@@ -27,18 +27,18 @@ const UpAndDownTabLayout = styled.div<styleProps>`
     width: 100%;
     padding: 20px 0 16px;
     cursor: pointer;
-  }
-  & > span {
-    display: block;
-    width: 23px;
-    height: 3px;
-    margin: 0 auto;
-    border-radius: 2px;
-    background-color: #ddd;
+    & > span {
+      display: block;
+      width: 23px;
+      height: 3px;
+      margin: 0 auto;
+      border-radius: 2px;
+      background-color: #ddd;
+    }
   }
   @keyframes comment-up {
     0% {
-      transform: translateY(70%);
+      transform: translateY(73%);
     }
     100% {
       transform: translateY(0);
@@ -49,7 +49,7 @@ const UpAndDownTabLayout = styled.div<styleProps>`
       transform: translateY(0);
     }
     100% {
-      transform: translateY(70%);
+      transform: translateY(73%);
     }
   }
 `;

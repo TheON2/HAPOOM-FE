@@ -1,80 +1,19 @@
 import React, { ChangeEvent, useCallback, useState } from 'react';
-import Button from '@/components/common/Button';
-import IconButton from '@/components/common/IconButton';
 import Comment from '@/components/Detail/Comment';
-import {
-  CommentIcon,
-  DeleteComment,
-  EditComment,
-} from '@/components/common/SVG';
+import { CommentIcon } from '@/components/common/SVG';
 import { addComment, deleteComment, updateComment } from '@/api/post';
 import { useMutation, useQueryClient } from 'react-query';
-import UpAndDownTab from '../common/UpAndDownTab';
 import Modal from '../common/Modal';
 import { useRouter } from 'next/router';
+import { CommentButton, NoneComment } from '@/styles/detail';
 import {
-  CommentsContainer,
-  CommentBox,
-  CommentInfomation,
-  CommentButton,
-  DetialContentSection,
-  CommentForm,
-  NoneComment,
-  TextareaBox,
-  LimitNumBox,
-} from '@/styles/detail';
-import {
-  CommentUpdateData,
-  CommentUploadData,
   CommentDelete,
   CommentData,
-  CommentBoxProps,
-  CommentFormProps,
   commentProps,
   commentEditState,
   modalState,
 } from '@/types/comment';
-
-const CommentFormWrapper = ({
-  isOpen,
-  onSubmitHandler,
-  closeForm,
-  closeComment,
-  comment,
-  onChangeCommentHandler,
-  editTitle,
-  editButton,
-  maxLength,
-}: CommentFormProps) => {
-  const isMaxLength = comment.length >= maxLength;
-  return (
-    <UpAndDownTab onClickEvent={closeForm} $isUp={isOpen}>
-      <DetialContentSection>
-        <CommentForm onSubmit={onSubmitHandler}>
-          <h3>{editTitle}</h3>
-          <TextareaBox>
-            <textarea
-              name=""
-              id=""
-              placeholder="댓글을 입력해주세요"
-              value={comment}
-              onChange={onChangeCommentHandler}
-            />
-            <LimitNumBox $color={isMaxLength}>
-              {comment.length}/{maxLength}
-            </LimitNumBox>
-          </TextareaBox>
-          <div className="button-box">
-            <Button onClick={closeComment} className="secondary">
-              닫기
-            </Button>
-            <Button type="submit">{editButton}</Button>
-          </div>
-        </CommentForm>
-      </DetialContentSection>
-    </UpAndDownTab>
-  );
-};
+import CommentFormWrapper from '@/components/Detail/CommentForm';
 
 const LOGIN_MODAL_MESSAGE = {
   actionText: '로그인',
@@ -83,9 +22,7 @@ const LOGIN_MODAL_MESSAGE = {
 
 const CommentLayout = ({ data, id, userData }: commentProps) => {
   const [active, setActive] = useState<number | null>(null);
-  const updateButtonActive = (idx: number) => {
-    setActive(idx);
-  };
+
   const [isShow, setIsShow] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [comment, setComment] = useState<string>('');
@@ -110,6 +47,11 @@ const CommentLayout = ({ data, id, userData }: commentProps) => {
     });
     setIsModalOpen(true);
   };
+  //comment
+  const updateButtonActive = (idx: number) => {
+    setActive(idx);
+  };
+  //comment
   const handleCommentEditHandler = (commentId: number, preComment: string) => {
     if (userData === null || userData === undefined) {
       return requireLogin();
@@ -123,6 +65,19 @@ const CommentLayout = ({ data, id, userData }: commentProps) => {
         commentId: commentId,
       });
       setComment(preComment);
+    }
+  };
+  //comment
+  const onClickDeleteCommentHandler = (commentId: number) => {
+    if (userData === null || userData === undefined) {
+      return requireLogin();
+    } else {
+      setModalMessge({
+        actionText: '삭제',
+        modalMessge: '댓글을 삭제하시겠습니까?',
+        onClickEvent: () => commentDelete({ id, commentId }),
+      });
+      setIsModalOpen(true);
     }
   };
 
@@ -151,36 +106,6 @@ const CommentLayout = ({ data, id, userData }: commentProps) => {
     setComment('');
     setActive(null);
   };
-  const maxLength = 140;
-  const onChangeCommentHandler = useCallback(
-    (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-      if (event.currentTarget.value.length <= maxLength) {
-        setComment(event.currentTarget.value);
-      }
-    },
-    [setComment]
-  );
-  const { mutate: commentCreate } = useMutation<void, Error, CommentUploadData>(
-    (comment) => addComment(comment),
-    {
-      onSuccess: () => {
-        setIsShow(false);
-        setComment('');
-        queryClient.invalidateQueries(['comment', id]);
-      },
-    }
-  );
-  const { mutate: commentUpdate } = useMutation<void, Error, CommentUpdateData>(
-    (comment) => updateComment(comment),
-    {
-      onSuccess: () => {
-        setIsShow(false);
-        setComment('');
-        setActive(null);
-        queryClient.invalidateQueries(['comment', id]);
-      },
-    }
-  );
 
   const { mutate: commentDelete } = useMutation<void, Error, CommentDelete>(
     (comment) => deleteComment(comment),
@@ -196,59 +121,6 @@ const CommentLayout = ({ data, id, userData }: commentProps) => {
       },
     }
   );
-
-  const onClickDeleteCommentHandler = (commentId: number) => {
-    if (userData === null || userData === undefined) {
-      return requireLogin();
-    } else {
-      setModalMessge({
-        actionText: '삭제',
-        modalMessge: '댓글을 삭제하시겠습니까?',
-        onClickEvent: () => commentDelete({ id, commentId }),
-      });
-      setIsModalOpen(true);
-    }
-  };
-
-  const onClickCreateCommentHandler = () => {
-    const formData = new FormData();
-    formData.append('comment', comment);
-    commentCreate({ formData, id });
-  };
-
-  const onClickUpdateCommentHandler = () => {
-    const formData = new FormData();
-    formData.append('comment', comment);
-    const commentId = commentEdit.commentId;
-    commentUpdate({ formData, id, commentId });
-  };
-
-  const onSubmitHandler = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (comment === '') {
-      setModalMessge({
-        actionText: '확인',
-        modalMessge: '댓글에 내용을 입력해주세요.',
-        onClickEvent: null,
-      });
-      setIsModalOpen(true);
-      return;
-    }
-    if (commentEdit.action === 'create') {
-      setModalMessge({
-        actionText: '저장',
-        modalMessge: '댓글을 저장하시겠습니까?',
-        onClickEvent: onClickCreateCommentHandler,
-      });
-    } else if (commentEdit.action === 'edit') {
-      setModalMessge({
-        actionText: '수정',
-        modalMessge: '댓글을 수정하시겠습니까?',
-        onClickEvent: onClickUpdateCommentHandler,
-      });
-    }
-    setIsModalOpen(true);
-  };
 
   return (
     <>
@@ -278,14 +150,16 @@ const CommentLayout = ({ data, id, userData }: commentProps) => {
       {isShow && (
         <CommentFormWrapper
           isOpen={commentEdit.show}
-          onSubmitHandler={onSubmitHandler}
           closeForm={handleCommentShowHandler}
           closeComment={handleCommentExitHandler}
           comment={comment}
-          onChangeCommentHandler={onChangeCommentHandler}
+          setComment={setComment}
+          commentEdit={commentEdit}
+          id={id}
+          setIsShow={setIsShow}
+          setActive={setActive}
           editTitle={commentEdit.uiTitle}
           editButton={commentEdit.buttonText}
-          maxLength={maxLength}
         />
       )}
       <Modal

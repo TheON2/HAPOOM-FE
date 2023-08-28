@@ -38,9 +38,11 @@ export const ProfileBox = styled.div`
     width: calc(100% - 62px);
   }
 `;
-
-export const DetialContentSection = styled.section`
-  margin-top: 36px;
+type DetialContentSectionProps = {
+  $marginTop?: string;
+};
+export const DetialContentSection = styled.section<DetialContentSectionProps>`
+  margin-top: ${(props) => (props.$marginTop ? props.$marginTop : '36px')};
   h3 {
     width: 100%;
     padding-bottom: 8px;
@@ -182,9 +184,9 @@ export const CommentBox = styled.div`
     gap: 12px;
   }
   .comment-image {
-    width: 36px;
-    height: 36px;
-    border-radius: 18px;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
     overflow: hidden;
     img {
       width: 100%;
@@ -193,10 +195,10 @@ export const CommentBox = styled.div`
     }
   }
   .comment {
-    width: calc(100% - 48px);
+    width: calc(100% - 58px);
     margin: 4px 0 0 auto;
     color: #737373;
-    font-size: 12px;
+    font-size: 14px;
     /* height: 70px; */
 
     p {
@@ -219,7 +221,7 @@ export const CommentBox = styled.div`
   }
 `;
 export const CommentInfomation = styled.div`
-  width: calc(100% - 48px);
+  width: calc(100% - 58px);
   display: flex;
   justify-content: space-between;
   .comment-info {
@@ -229,13 +231,13 @@ export const CommentInfomation = styled.div`
     height: 100%;
     p {
       font-weight: 700;
-      font-size: 12px;
+      font-size: 14px;
       line-height: 12px;
       margin-bottom: 6px;
     }
     span {
       color: #b7b4b4;
-      font-size: 8px;
+      font-size: 10px;
       line-height: 8px;
     }
   }
