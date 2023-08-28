@@ -243,6 +243,10 @@ export const FollowBtn = styled.div<ButtonProps>`
     }
   }};
   color: white;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 export const SettingBtn = styled.div`
