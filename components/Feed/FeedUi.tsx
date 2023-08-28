@@ -20,7 +20,7 @@ import KebabMenuUI, {
   KebabMenuStyle,
 } from '../common/KebabMenuUI';
 import { FeedPlayer } from '../common/SVG';
-import { useMutation, useQuery } from 'react-query';
+import { useMutation } from 'react-query';
 import { useRouter } from 'next/router';
 import { getFeed, reportPost } from '@/api/post';
 import Modal from '../common/Modal';
@@ -79,7 +79,7 @@ const FeedUi = () => {
   });
   const [expandedPosts, setExpandedPosts] = useState<ExpandedPosts>({});
 
-  const { data, fetchNextPage } = useInfiniteData('feed');
+  const { data, fetchNextPage, isFetchingNextPage } = useInfiniteData('feed');
   console.log('feeddata', data);
   const { mutate: report } = useMutation(reportPost, {
     onSuccess: (message) => {
@@ -196,6 +196,7 @@ const FeedUi = () => {
           );
         })
       )}
+      <button onClick={() => fetchNextPage()}>Load More</button>
     </FeedSection>
   );
 };
