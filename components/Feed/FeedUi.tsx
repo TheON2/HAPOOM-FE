@@ -26,6 +26,7 @@ interface Feed {
   postId: number;
   preset: number;
   userId: number;
+  tags: string[];
 }
 const FeedUi = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
