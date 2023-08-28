@@ -116,6 +116,15 @@ const getFollowings = async (userId: string): Promise<User[]> => {
   return response.data.following;
 };
 
+const getPush = async () => {
+  const response = await api.get(`/api/util/push`);
+  return response.data;
+};
+
+const togglePush = async () => {
+  const response = await api.post(`/api/util/togglepush`);
+};
+
 export {
   addUser,
   getUser,
@@ -134,4 +143,6 @@ export {
   unFollow,
   getFollowers,
   getFollowings,
+  getPush,
+  togglePush,
 };

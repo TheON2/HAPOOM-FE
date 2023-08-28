@@ -20,13 +20,13 @@ import KebabMenuUI, {
   KebabMenuStyle,
 } from '../common/KebabMenuUI';
 import { FeedPlayer } from '../common/SVG';
-import { useMutation } from 'react-query';
+import { useInfiniteQuery, useMutation, useQuery } from 'react-query';
 import { useRouter } from 'next/router';
-import { getFeed, reportPost } from '@/api/post';
+import { reportPost } from '@/api/post';
 import Modal from '../common/Modal';
 import HeartIcon from '../common/HeartIcon';
 import ProfileImage from '../common/ProfileImage';
-import { useInfiniteData } from '@/hooks/useInfiniteData';
+import { InView, useInView } from 'react-intersection-observer';
 
 const timeSince = (date: string) => {
   const now: Date = new Date();
@@ -78,9 +78,28 @@ const FeedUi = () => {
     onClickEvent: '',
   });
   const [expandedPosts, setExpandedPosts] = useState<ExpandedPosts>({});
+  const [ref, inView] = useInView();
 
-  const { data, fetchNextPage, isFetchingNextPage } = useInfiniteData('feed');
-  console.log('feeddata', data);
+  const getFeed = async ({ pageParam }: { pageParam: number }) => {
+    return fetch(`http://localhost:3001/api/main/feed?page=${pageParam}`).then(
+      (res) => res.json()
+    );
+  };
+
+  const {
+    data,
+    error,
+    fetchNextPage,
+    hasNextPage,
+    isFetching,
+    isFetchingNextPage,
+  } = useInfiniteQuery('feed', ({ pageParam = 1 }) => getFeed({ pageParam }), {
+    getNextPageParam: (lastPage, pages) => {
+      console.log('Inside getNextPageParam', lastPage, pages);
+      return lastPage.nextPage;
+    },
+  });
+
   const { mutate: report } = useMutation(reportPost, {
     onSuccess: (message) => {
       setModalMessge({
@@ -114,6 +133,15 @@ const FeedUi = () => {
       [postId]: !prevState[postId],
     }));
   };
+
+  if (isFetching || isFetchingNextPage) {
+    return <div>로딩 중...</div>;
+  }
+
+  if (error) {
+    return <div>에러가 발생했습니다</div>;
+  }
+
   return (
     <FeedSection>
       <Modal
@@ -124,29 +152,23 @@ const FeedUi = () => {
       >
         {modalMessge.modalMessge}
       </Modal>
-      {data?.pages?.map((page) =>
-        page.feed?.map((feed: Feed) => {
+      {data?.pages
+        .flatMap((page) => page.feed)
+        .map((feed: Feed) => {
           const isExpanded = expandedPosts[feed.postId];
           const content = isExpanded
             ? feed.content
-            : `${feed.content.slice(0, 30)}${
-                feed.content.length > 30 ? '...' : ''
-              }`;
+            : `${feed.content.slice(0, 30)}......`;
           return (
             <FeedContainer key={feed.postId}>
               <FeedHeader>
-                <div
-                  style={{ cursor: 'pointer' }}
-                  onClick={() => moveUserPage(feed.userId)}
-                >
+                <div onClick={() => moveUserPage(feed.userId)}>
                   <ProfileImage
                     userImage={feed.userImage}
                     preset={feed.preset}
                   />
                 </div>
-                <FeedUserNickName onClick={() => moveUserPage(feed.userId)}>
-                  {feed.nickname}
-                </FeedUserNickName>
+                <FeedUserNickName>{feed.nickname}</FeedUserNickName>
                 <FeedTime>{timeSince(feed.updatedAt)}</FeedTime>
                 <FeedIcon>
                   <KebabMenuUI>
@@ -178,7 +200,7 @@ const FeedUi = () => {
               <FeedMusicLikeBox>
                 <MusicBox>
                   <FeedPlayer />
-                  <div>{feed.musicTitle || feed.musicUrl}</div>
+                  <div>{feed.musicTitle}</div>
                 </MusicBox>
                 <LikeIconContainer>
                   <HeartIcon postId={feed.postId} />
@@ -194,9 +216,16 @@ const FeedUi = () => {
               </FeedContentBox>
             </FeedContainer>
           );
-        })
+        })}
+      {hasNextPage && (
+        <InView
+          as="div"
+          onChange={(inView, entry) => {
+            if (inView) fetchNextPage();
+          }}
+          style={{ height: '200px', opacity: 0 }}
+        />
       )}
-      <button onClick={() => fetchNextPage()}>Load More</button>
     </FeedSection>
   );
 };
