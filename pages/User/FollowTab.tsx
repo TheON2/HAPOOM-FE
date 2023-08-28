@@ -51,6 +51,7 @@ const UserListItem: React.FC<
 const FollowTab: React.FC<FollowTabProps> = () => {
   const router = useRouter();
   const userId = router.query.userId as string;
+  const [isLoading, setIsLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<'followers' | 'followings'>(
     'followers'
   );
@@ -83,8 +84,8 @@ const FollowTab: React.FC<FollowTabProps> = () => {
   };
 
   useEffect(() => {
-    console.log('userData:', userData); // userData 콘솔 출력
     const fetchData = async () => {
+      setIsLoading(true); // 로딩 시작
       try {
         const fetchedFollowers = await getFollowers(userId);
         setFollowers(fetchedFollowers);
@@ -94,6 +95,7 @@ const FollowTab: React.FC<FollowTabProps> = () => {
       } catch (error) {
         console.error('Failed to fetch data:', error);
       }
+      setIsLoading(false); // 로딩 완료
     };
 
     fetchData();
@@ -103,35 +105,45 @@ const FollowTab: React.FC<FollowTabProps> = () => {
 
   return (
     <FollowContainer>
-      <TabContainer>
-        <TabButton onClick={() => setActiveTab('followers')}>팔로워</TabButton>
-        <TabButton onClick={() => setActiveTab('followings')}>팔로잉</TabButton>
-        <TabUnderline $activeTab={activeTab} />
-      </TabContainer>
+      {isLoading ? (
+        <div>로딩 중...</div> // 이 부분은 로딩 애니메이션 컴포넌트 등으로 대체할 수 있습니다.
+      ) : (
+        <>
+          <TabContainer>
+            <TabButton onClick={() => setActiveTab('followers')}>
+              팔로워
+            </TabButton>
+            <TabButton onClick={() => setActiveTab('followings')}>
+              팔로잉
+            </TabButton>
+            <TabUnderline $activeTab={activeTab} />
+          </TabContainer>
 
-      <UserList>
-        {Array.isArray(activeData) &&
-          activeData.map((user) => (
-            <UserListItem
-              key={user.userId}
-              {...user}
-              onUnfollow={
-                user.email !== loggedInEmail && activeTab === 'followings'
-                  ? () => handleOpenUnfollowModal(user.userId)
-                  : undefined
-              }
-            />
-          ))}
-      </UserList>
-      {isModalOpen && (
-        <Modal
-          isOpen={isModalOpen}
-          setIsOpen={setIsModalOpen}
-          actionText="예"
-          onClickEvent={handleConfirmUnfollow}
-        >
-          언팔로우 하시겠습니까?
-        </Modal>
+          <UserList>
+            {Array.isArray(activeData) &&
+              activeData.map((user) => (
+                <UserListItem
+                  key={user.userId}
+                  {...user}
+                  onUnfollow={
+                    user.email !== loggedInEmail && activeTab === 'followings'
+                      ? () => handleOpenUnfollowModal(user.userId)
+                      : undefined
+                  }
+                />
+              ))}
+          </UserList>
+          {isModalOpen && (
+            <Modal
+              isOpen={isModalOpen}
+              setIsOpen={setIsModalOpen}
+              actionText="예"
+              onClickEvent={handleConfirmUnfollow}
+            >
+              언팔로우 하시겠습니까?
+            </Modal>
+          )}
+        </>
       )}
     </FollowContainer>
   );
