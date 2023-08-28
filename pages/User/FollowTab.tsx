@@ -4,24 +4,33 @@ import {
   FollowButtonStyled,
   FollowContainer,
   Nickname,
-  TabButton,
-  TabContainer,
-  TabUnderline,
   UserInfo,
   UserList,
   UserListItemStyled,
-  UserProfileImage,
+  UserProfileImageBox,
 } from '@/styles/followTab';
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Modal from '@/components/common/Modal';
+import ProfileImage from '@/components/common/ProfileImage';
+import { useQuery } from 'react-query';
+import Tabs from '@/components/common/Tabs';
 import { useAuth } from '@/hooks/useAuth';
+
+export interface User {
+  userId: number;
+  email: string;
+  nickname: string;
+  userImage: string;
+  preset: number;
+}
 
 interface FollowTabUser {
   userId: number;
   email: string | null;
   nickname?: string;
   userImage: string | null;
+  preset: number | null;
 }
 
 interface FollowTabProps {
@@ -29,24 +38,50 @@ interface FollowTabProps {
 }
 
 const UserListItem: React.FC<
-  FollowTabUser & { onUnfollow?: (userId: number) => void }
-> = ({ userId, userImage, nickname, email, onUnfollow }) => (
-  <UserListItemStyled>
-    <UserProfileImage
-      src={userImage || 'DEFAULT_IMAGE_URL_OR_EMPTY_STRING'}
-      alt={nickname || 'Unknown'}
-    />
-    <UserInfo>
-      <Nickname>{nickname || '알 수 없음'}</Nickname>
-      <Email>{email || '이메일 없음'}</Email>
-    </UserInfo>
-    {onUnfollow && (
-      <FollowButtonStyled onClick={() => onUnfollow(userId)}>
-        언팔로우
-      </FollowButtonStyled>
-    )}
-  </UserListItemStyled>
-);
+  FollowTabUser & {
+    showUnfollowButton?: boolean;
+    handleOpenModal?: (userId: number) => void;
+  }
+> = ({
+  userId,
+  userImage,
+  nickname,
+  email,
+  showUnfollowButton,
+  preset,
+  handleOpenModal,
+}) => {
+  const router = useRouter();
+
+  const handleNicknameClick = (event: React.MouseEvent) => {
+    event.stopPropagation();
+    router.push(`/User/${userId}`);
+  };
+
+  const renderUnfollowButton = () => (
+    <FollowButtonStyled onClick={() => handleOpenModal?.(userId)}>
+      언팔로우
+    </FollowButtonStyled>
+  );
+
+  return (
+    <UserListItemStyled>
+      <UserProfileImageBox>
+        <ProfileImage
+          onClick={handleNicknameClick}
+          userImage={userImage}
+          preset={preset}
+        />
+      </UserProfileImageBox>
+      <UserInfo>
+        <Nickname onClick={handleNicknameClick}>{nickname}</Nickname>
+        <Email>{email}</Email>
+      </UserInfo>
+
+      {showUnfollowButton && renderUnfollowButton()}
+    </UserListItemStyled>
+  );
+};
 
 const FollowTab: React.FC<FollowTabProps> = () => {
   const router = useRouter();
@@ -63,6 +98,13 @@ const FollowTab: React.FC<FollowTabProps> = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [userToUnfollow, setUserToUnfollow] = useState<number | null>(null);
+
+  const { data: followersData } = useQuery(['followers', userId], () =>
+    getFollowers(userId)
+  );
+  const { data: followingsData } = useQuery(['followings', userId], () =>
+    getFollowings(userId)
+  );
 
   const handleOpenUnfollowModal = (targetUserId: number) => {
     setUserToUnfollow(targetUserId);
@@ -84,66 +126,42 @@ const FollowTab: React.FC<FollowTabProps> = () => {
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true); // 로딩 시작
-      try {
-        const fetchedFollowers = await getFollowers(userId);
-        setFollowers(fetchedFollowers);
-
-        const fetchedFollowings = await getFollowings(userId);
-        setFollowings(fetchedFollowings);
-      } catch (error) {
-        console.error('Failed to fetch data:', error);
-      }
-      setIsLoading(false); // 로딩 완료
-    };
-
-    fetchData();
-  }, [userId, userData]);
+    if (followersData) setFollowers(followersData);
+    if (followingsData) setFollowings(followingsData);
+  }, [followersData, followingsData]);
 
   const activeData = activeTab === 'followers' ? followers : followings;
 
   return (
     <FollowContainer>
-      {isLoading ? (
-        <div>로딩 중...</div> // 이 부분은 로딩 애니메이션 컴포넌트 등으로 대체할 수 있습니다.
-      ) : (
-        <>
-          <TabContainer>
-            <TabButton onClick={() => setActiveTab('followers')}>
-              팔로워
-            </TabButton>
-            <TabButton onClick={() => setActiveTab('followings')}>
-              팔로잉
-            </TabButton>
-            <TabUnderline $activeTab={activeTab} />
-          </TabContainer>
+      <Tabs activeTab={activeTab} onTabChange={setActiveTab} />
 
-          <UserList>
-            {Array.isArray(activeData) &&
-              activeData.map((user) => (
-                <UserListItem
-                  key={user.userId}
-                  {...user}
-                  onUnfollow={
-                    user.email !== loggedInEmail && activeTab === 'followings'
-                      ? () => handleOpenUnfollowModal(user.userId)
-                      : undefined
-                  }
-                />
-              ))}
-          </UserList>
-          {isModalOpen && (
-            <Modal
-              isOpen={isModalOpen}
-              setIsOpen={setIsModalOpen}
-              actionText="예"
-              onClickEvent={handleConfirmUnfollow}
-            >
-              언팔로우 하시겠습니까?
-            </Modal>
-          )}
-        </>
+      <UserList>
+        {Array.isArray(activeData) &&
+          activeData.map((user) => (
+            <UserListItem
+              key={user.userId}
+              {...user}
+              showUnfollowButton={
+                user.email !== loggedInEmail && activeTab === 'followings'
+              }
+              handleOpenModal={
+                user.email !== loggedInEmail && activeTab === 'followings'
+                  ? handleOpenUnfollowModal
+                  : undefined
+              }
+            />
+          ))}
+      </UserList>
+      {isModalOpen && (
+        <Modal
+          isOpen={isModalOpen}
+          setIsOpen={setIsModalOpen}
+          actionText="예"
+          onClickEvent={handleConfirmUnfollow}
+        >
+          언팔로우 하시겠습니까?
+        </Modal>
       )}
     </FollowContainer>
   );
