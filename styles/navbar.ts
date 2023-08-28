@@ -10,7 +10,7 @@ export const MobileBottomNavLayout = styled.nav`
   /* justify-content: center; */
   background: #fff;
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
-  z-index: 15;
+  z-index: 115;
   color: #0084ff;
   font-weight: 700;
   text-transform: uppercase;
@@ -57,6 +57,11 @@ export const IconBox = styled.button`
     border-radius: 50%;
     border: 2px solid #777;
     overflow: hidden;
+    svg {
+      width: 90%;
+      height: 90%;
+      object-fit: contain;
+    }
   }
 
   img {
@@ -93,7 +98,7 @@ export const SideNavLayout = styled.nav`
   height: 100vh;
   /* padding: 0 24px 50px; */
   background-color: #fff;
-  z-index: 20;
+  z-index: 120;
   display: flex;
   top: 0;
 

@@ -8,7 +8,8 @@ import {
 import React, { KeyboardEvent, useState, useCallback } from 'react';
 import Tag from './Tag';
 import { styled } from 'styled-components';
-
+import useModal from '@/hooks/useModal';
+import Modal from '@/components/common/Modal';
 interface TagInputProps {
   tags: string[];
   setTags: (tags: string[]) => void;
@@ -18,7 +19,7 @@ const MAX_TAGS = 5;
 
 const TagInput: React.FC<TagInputProps> = ({ tags, setTags }) => {
   const [inputValue, setInputValue] = useState('');
-
+  const { isModalOpen, modalMessge, openModal, closeModal } = useModal();
   const handleDelete = useCallback(
     (tagToDelete: string) => {
       setTags(tags.filter((tag) => tag !== tagToDelete));
@@ -35,17 +36,26 @@ const TagInput: React.FC<TagInputProps> = ({ tags, setTags }) => {
 
         if (newTag && !tags.includes(newTag)) {
           if (newTag.length > 5) {
-            alert('해시태그는 5글자를 넘길 수 없습니다!');
+            openModal({
+              actionText: '확인',
+              modalMessge: '해시태그는 5글자를 넘길 수 없습니다!',
+            });
             return;
           }
 
           if (newTag.length < 2) {
-            alert('해시태그는 최소 2글자 이상이어야 합니다!');
+            openModal({
+              actionText: '확인',
+              modalMessge: '해시태그는 최소 2글자 이상 이어야 합니다!',
+            });
             return;
           }
 
           if (tags.length >= MAX_TAGS) {
-            alert(`You can only have up to ${MAX_TAGS} tags.`);
+            openModal({
+              actionText: '확인',
+              modalMessge: `태그는 최대 ${MAX_TAGS}까지 업로드할 수 있습니다.`,
+            });
             return;
           }
 
@@ -84,6 +94,16 @@ const TagInput: React.FC<TagInputProps> = ({ tags, setTags }) => {
           <Tag key={index} tag={tag} onDelete={handleDelete} />
         ))}
       </TagBox>
+      {isModalOpen && (
+        <Modal
+          isOpen={isModalOpen}
+          setIsOpen={closeModal}
+          actionText={modalMessge.actionText}
+          onClickEvent={modalMessge.onClickEvent || null}
+        >
+          {modalMessge.modalMessge}
+        </Modal>
+      )}
     </>
   );
 };

@@ -12,7 +12,7 @@ type layoutProps = {
 
 const Layout = ({ children }: layoutProps) => {
   const router = useRouter();
-  const isHome = router.pathname === '/';
+  const isHome = router.pathname === '/find';
 
   return (
     <>

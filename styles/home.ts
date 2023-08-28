@@ -140,11 +140,26 @@ export const SliderItem = styled.li<WidthOnly>`
     color: #fff;
   }
 `;
-
+export const SlideSum = styled.div`
+  padding: 4px 8px 2px;
+  border-radius: 12px;
+  background-color: #ffffff99;
+  color: #538cc0;
+  svg {
+    margin-right: 4px;
+    path {
+      fill: #538cc0;
+    }
+  }
+  @media screen and (min-width: 786px) {
+    margin-right: 12px;
+  }
+`;
 export const SlideDotBox = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
+  align-items: center;
   padding: 0 24px;
   gap: 4px;
   position: absolute;
@@ -153,11 +168,21 @@ export const SlideDotBox = styled.div`
     display: block;
     width: 8px;
     height: 8px;
-    background-color: #fff;
-    border-radius: 4px;
+    background-color: #ffffff99;
+    border-radius: 50%;
     cursor: pointer;
     &.active {
-      background-color: #0084ff;
+      background-color: #0084ff99;
+    }
+  }
+  @media screen and (max-width: 786px) {
+    gap: 12px;
+    opacity: 0.8;
+    justify-content: flex-start;
+
+    span {
+      width: 20px;
+      height: 20px;
     }
   }
 `;
@@ -251,7 +276,7 @@ export const HashtagNavBarLayout = styled.nav<hashtagNavbarProps>`
   border-radius: 30px 30px 0 0;
   transform: translateY(-80%);
   position: relative;
-  z-index: 10;
+  z-index: 110;
   font-size: 10px;
   color: #fff;
   overflow: hidden;
