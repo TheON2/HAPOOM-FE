@@ -9,9 +9,6 @@ import {
   FollowButtonStyled,
   FollowContainer,
   Nickname,
-  TabButton,
-  TabContainer,
-  TabUnderline,
   UserInfo,
   UserList,
   UserListItemStyled,
@@ -21,6 +18,9 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Modal from '@/components/common/Modal';
 import ProfileImage from '@/components/common/ProfileImage';
+import { useQuery } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
+import Tabs from '@/components/common/Tabs';
 
 export interface User {
   userId: number;
@@ -56,11 +56,18 @@ const UserListItem: React.FC<
   preset,
   handleOpenModal,
 }) => {
-  const router = useRouter(); // useRouter 훅을 사용하여 router 객체를 가져옵니다.
+  const router = useRouter();
 
-  const handleNicknameClick = () => {
-    router.push(`/User/${userId}`); // 닉네임을 클릭하면 해당 사용자의 프로필 페이지로 이동합니다.
+  const handleNicknameClick = (event: React.MouseEvent) => {
+    event.stopPropagation();
+    router.push(`/User/${userId}`);
   };
+
+  const renderUnfollowButton = () => (
+    <FollowButtonStyled onClick={() => handleOpenModal?.(userId)}>
+      언팔로우
+    </FollowButtonStyled>
+  );
 
   return (
     <UserListItemStyled>
@@ -72,17 +79,11 @@ const UserListItem: React.FC<
         />
       </UserProfileImageBox>
       <UserInfo>
-        <Nickname onClick={handleNicknameClick}>{nickname}</Nickname>{' '}
+        <Nickname onClick={handleNicknameClick}>{nickname}</Nickname>
         <Email>{email}</Email>
       </UserInfo>
 
-      {showUnfollowButton && (
-        <FollowButtonStyled
-          onClick={() => handleOpenModal && handleOpenModal(userId)}
-        >
-          언팔로우
-        </FollowButtonStyled>
-      )}
+      {showUnfollowButton && renderUnfollowButton()}
     </UserListItemStyled>
   );
 };
@@ -90,12 +91,10 @@ const UserListItem: React.FC<
 const FollowTab: React.FC<FollowTabProps> = () => {
   const router = useRouter();
   const userId = router.query.userId as string;
+  const queryClient = useQueryClient();
   const [activeTab, setActiveTab] = useState<'followers' | 'followings'>(
     'followers'
   );
-  const [followers, setFollowers] = useState<FollowTabUser[]>([]);
-  const [followings, setFollowings] = useState<FollowTabUser[]>([]);
-
   const [loggedInUserId, setLoggedInUserId] = useState<number | null>(null);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -107,13 +106,16 @@ const FollowTab: React.FC<FollowTabProps> = () => {
     setIsModalOpen(true);
   };
 
-  const handleConfirmUnfollow = async () => {
+  const unFollowMutation = useMutation(unFollow, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(['followings', userId]);
+    },
+  });
+
+  const handleConfirmUnfollow = () => {
     if (userToUnfollow !== null) {
       try {
-        await unFollow(String(userToUnfollow));
-        setFollowings((prevFollowings) =>
-          prevFollowings.filter((user) => user.userId !== userToUnfollow)
-        );
+        unFollowMutation.mutate(String(userToUnfollow));
         setIsModalOpen(false);
       } catch (error) {
         console.error('Error while sending unfollow request:', error);
@@ -121,21 +123,13 @@ const FollowTab: React.FC<FollowTabProps> = () => {
     }
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const fetchedFollowers = await getFollowers(userId);
-        setFollowers(fetchedFollowers);
+  const { data: followers } = useQuery(['followers', userId], () =>
+    getFollowers(userId)
+  );
 
-        const fetchedFollowings = await getFollowings(userId);
-        setFollowings(fetchedFollowings);
-      } catch (error) {
-        console.error('Failed to fetch data:', error);
-      }
-    };
-
-    fetchData();
-  }, [userId]);
+  const { data: followings } = useQuery(['followings', userId], () =>
+    getFollowings(userId)
+  );
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -154,11 +148,7 @@ const FollowTab: React.FC<FollowTabProps> = () => {
 
   return (
     <FollowContainer>
-      <TabContainer>
-        <TabButton onClick={() => setActiveTab('followers')}>팔로워</TabButton>
-        <TabButton onClick={() => setActiveTab('followings')}>팔로잉</TabButton>
-        <TabUnderline $activeTab={activeTab} />
-      </TabContainer>
+      <Tabs activeTab={activeTab} onTabChange={setActiveTab} />
 
       <UserList>
         {Array.isArray(activeData) &&
