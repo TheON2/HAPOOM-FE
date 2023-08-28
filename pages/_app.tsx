@@ -64,44 +64,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
     // socket.on('latest-posts', (latestPosts) => {
 
-    // });
-
-    // Notification permission 요청
-    function requestNotificationPermission() {
-      Notification.requestPermission().then((permission) => {
-        if (permission === 'granted') {
-          subscribeUserToPush(); // 권한이 허용되면 Push Subscription 생성
-        } else {
-          console.error('Notification permission denied.');
-        }
-      });
-    }
-
-    // Push Subscription 생성
-    async function subscribeUserToPush() {
-      const registration = await navigator.serviceWorker.ready;
-
-      const subscribeOptions = {
-        userVisibleOnly: true,
-        applicationServerKey: process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY,
-      };
-
-      const pushSubscription = await registration.pushManager.subscribe(
-        subscribeOptions
-      );
-
-      // 서버에 Push Subscription 저장
-      await fetch(`${ENDPOINT}/api/util/subscribe`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(pushSubscription),
-      });
-    }
-
-    // 예시로, 앱이 로드될 때 알림 권한 요청
-    requestNotificationPermission();
+    // })
 
     // 컴포넌트가 언마운트될 때 소켓 연결을 닫습니다.
     return () => {
@@ -132,7 +95,6 @@ function MyApp({ Component, pageProps }: AppProps) {
           {!isExcludedPage ? (
             <>
               {notification && <AlarmBar alarm={notification} />}
-
               <Layout>
                 <Component {...pageProps} randomPosts={randomPosts} />
               </Layout>

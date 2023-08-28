@@ -25,13 +25,23 @@ import IconButton from './IconButton';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { useMutation, useQueryClient } from 'react-query';
-import { userLogOut } from '@/api/user';
+import { togglePush, userLogOut } from '@/api/user';
 import { LOGOUT_USER, UserState } from '@/redux/reducers/userSlice';
 import { SearchIcon, Bell, EditIcon } from '@/components/common/SVG';
 import { setCookie } from 'nookies';
 import ProfileImage from '@/components/common/ProfileImage';
 import { RootState } from '@/redux/config/configStore';
+
+const ENDPOINT = `${process.env.NEXT_PUBLIC_LOCAL_SERVER}`;
+
 const Header = ({ $sticky }: any) => {
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation(() => togglePush(), {
+    onSuccess: () => {
+      queryClient.invalidateQueries('push');
+    },
+  });
   const { user }: { user: UserState['user'] } = useSelector(
     (state: RootState) => state.user
   );
@@ -62,6 +72,50 @@ const Header = ({ $sticky }: any) => {
       setIsAuth(false);
     }
   }, []);
+
+  // Notification permission 요청
+  function requestNotificationPermission() {
+    // Check if the window object is defined to ensure running on client side
+    if (typeof window !== 'undefined' && 'Notification' in window) {
+      Notification.requestPermission().then((permission) => {
+        if (permission === 'granted') {
+          subscribeUserToPush(); // 권한이 허용되면 Push Subscription 생성
+        } else {
+          console.error('Notification permission denied.');
+        }
+      });
+    }
+  }
+
+  // Push Subscription 생성
+  async function subscribeUserToPush() {
+    const registration = await navigator.serviceWorker.ready;
+
+    const subscribeOptions = {
+      userVisibleOnly: true,
+      applicationServerKey: process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY,
+    };
+
+    const pushSubscription = await registration.pushManager.subscribe(
+      subscribeOptions
+    );
+
+    // 서버에 Push Subscription 저장
+    await fetch(`${ENDPOINT}/api/util/subscribe`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(pushSubscription),
+    });
+  }
+
+  // 예시로, 앱이 로드될 때 알림 권한 요청
+  useEffect(() => {
+    if (user.email !== '') requestNotificationPermission();
+  }, []);
+
+  const clickBell = () => {};
 
   return (
     <>
