@@ -78,7 +78,7 @@ const FeedUi = () => {
   });
   const [expandedPosts, setExpandedPosts] = useState<ExpandedPosts>({});
 
-  const { data } = useQuery('feed', getFeed);
+  const { data, isLoading, error } = useQuery('feed', getFeed);
   console.log('feeddata', data?.feed);
   const { mutate: report } = useMutation(reportPost, {
     onSuccess: (messag) => {
@@ -113,6 +113,15 @@ const FeedUi = () => {
       [postId]: !prevState[postId],
     }));
   };
+
+  if (isLoading) {
+    return <div>로딩 중...</div>;
+  }
+
+  if (error) {
+    return <div>에러가 발생했습니다</div>;
+  }
+
   return (
     <FeedSection>
       <Modal
