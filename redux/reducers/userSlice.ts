@@ -11,6 +11,7 @@ export interface UserState {
     userImage: string | null;
     preset: number | null;
     likePosts: number[] | null;
+    push: string | null;
   };
 }
 
@@ -20,6 +21,7 @@ export interface UserResponse {
   userImage: string | null;
   preset: number | null;
   likePosts: number[] | null;
+  push: string | null;
 }
 
 const initialState: UserState = {
@@ -29,6 +31,7 @@ const initialState: UserState = {
     userImage: null,
     preset: null,
     likePosts: null,
+    push: 'off',
   },
 };
 
@@ -54,10 +57,17 @@ const userSlice = createSlice({
       state.user.userImage = action.payload.userImage;
       state.user.preset = action.payload.preset;
       state.user.likePosts = action.payload.likePosts;
+      state.user.push = action.payload.push;
+    },
+    TOGGLE_PUSH: (state: UserState) => {
+      state.user.push === 'on'
+        ? (state.user.push = 'off')
+        : (state.user.push = 'on');
     },
   },
 });
 
-export const { LOGIN_USER, LOGOUT_USER, AUTH_USER } = userSlice.actions;
+export const { LOGIN_USER, LOGOUT_USER, AUTH_USER, TOGGLE_PUSH } =
+  userSlice.actions;
 
 export default userSlice.reducer;
