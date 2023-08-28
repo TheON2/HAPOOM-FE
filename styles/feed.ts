@@ -30,6 +30,7 @@ export const FeedUserNickName = styled.div`
   color: #232323;
   font-size: 16px;
   font-weight: 600;
+  cursor: pointer;
 `;
 export const FeedTime = styled.div`
   color: #9e9e9e;
@@ -63,39 +64,50 @@ export const FeedMusicLikeBox = styled.div`
   align-items: center;
   position: relative;
 `;
-export const MusicBox = styled.div`
+// export const MusicBox = styled.div`
+//   width: 100%;
+//   height: 40px;
+//   display: flex;
+//   justify-content: flex-start;
+//   align-items: center;
+//   border-radius: 20px;
+//   border: 1px solid #dfefff;
+//   background: #eff7ff;
+//   position: relative;
+//   gap: 4px;
+//   padding: 12px 8px;
+// `;
+export const TagBox = styled.div`
   width: 100%;
-  height: 40px;
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  border-radius: 20px;
-  border: 1px solid #dfefff;
-  background: #eff7ff;
   position: relative;
-  gap: 4px;
-  padding: 12px 8px;
-`;
-export const Equalizer = styled.div`
-  position: absolute;
-  right: 0;
+  gap: 6px;
+  padding: 4px 0;
 `;
 export const FeedContentBox = styled.div`
   display: flex;
-`
+  @media (max-width: 520px) {
+    flex-direction: column;
+  }
+`;
 export const FeedContent = styled.p`
-  margin-top: 15px;
+  margin-top: 4px;
   color: #000;
   font-size: 20;
   font-weight: 500;
   word-wrap: break-word;
 `;
 export const MoreButton = styled.button`
-  margin-top: 15px;
+  margin-top: 4px;
   background-color: transparent;
   border: none;
   color: #000;
   cursor: pointer;
+  @media (max-width: 520px) {
+    text-align: left; 
+}
 `;
 export const LikeIconContainer = styled.div`
   width: 50px;

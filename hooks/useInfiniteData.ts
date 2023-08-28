@@ -1,14 +1,16 @@
 import { useEffect, useRef } from 'react';
 import { useInfiniteQuery } from 'react-query';
-import { getMyPosts, getMyLikedPosts } from '../api/post';
+import { getMyPosts, getMyLikedPosts, getFeed } from '../api/post';
 
-export const useInfiniteData = (type: 'post' | 'like', enabled = true) => {
+export const useInfiniteData = (type: 'post' | 'like' | 'feed', enabled = true) => {
   const fetchFunction = async ({ pageParam = 1 }) => {
     const method = 'GET';
     if (type === 'post') {
       return await getMyPosts(method, pageParam);
     } else if (type === 'like') {
       return await getMyLikedPosts(method, pageParam);
+    } else if (type === 'feed') {
+      return await getFeed(method, pageParam);
     }
 
     throw new Error('Invalid fetchFunction type');
