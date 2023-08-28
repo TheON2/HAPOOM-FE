@@ -5,7 +5,6 @@ import HashtagContents from '@/components/Home/HashtagContents';
 import Main from '@/components/Home/HomeMain';
 import MainBanner from '@/components/Home/MainBanner';
 import Header from '@/components/common/Header';
-import Footer from '@/components/common/Footer';
 import PopularContentsCarousel from '@/components/Home/PopularContentsCarousel';
 import { sliderImages } from '../../public/data';
 import { GetStaticProps, NextPage, GetServerSideProps } from 'next';
@@ -50,7 +49,7 @@ const Home: NextPage<MainPageProps> = ({
   const onClickBottomNavHandler = () => {
     setIsClick(!isClick);
   };
-
+  console.log(randomPosts);
   const { data: hashtagSearch, isLoading } = useQuery(
     ['hashtag', hashTag],
     () => getSearch({ search: hashTag, option: 'tags' }),
@@ -100,7 +99,6 @@ const Home: NextPage<MainPageProps> = ({
           tagCategory={tagCategory}
         />
         <PopularContentsCarousel data={popularContent} />
-        <Footer />
       </Main>
     </HomePageLayout>
   );
