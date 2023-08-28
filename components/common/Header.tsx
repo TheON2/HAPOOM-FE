@@ -32,6 +32,9 @@ import { setCookie } from 'nookies';
 import ProfileImage from '@/components/common/ProfileImage';
 import { RootState } from '@/redux/config/configStore';
 import Modal from './Modal';
+
+const ENDPOINT = `${process.env.NEXT_PUBLIC_LOCAL_SERVER}`;
+
 const Header = ({ $sticky }: any) => {
   const { user }: { user: UserState['user'] } = useSelector(
     (state: RootState) => state.user
@@ -75,7 +78,60 @@ const Header = ({ $sticky }: any) => {
       setIsAuth(false);
     }
   }, [user.email]);
-  console.log(isAuth);
+
+  // Notification permission 요청
+  function requestNotificationPermission() {
+    // Check if the window object is defined to ensure running on client side
+    if (typeof window !== 'undefined' && 'Notification' in window) {
+      Notification.requestPermission().then((permission) => {
+        if (permission === 'granted') {
+          subscribeUserToPush(); // 권한이 허용되면 Push Subscription 생성
+        } else {
+          console.error('Notification permission denied.');
+        }
+      });
+    }
+  }
+
+  // Push Subscription 생성
+  async function subscribeUserToPush() {
+    const registration = await navigator.serviceWorker.ready;
+
+    const subscribeOptions = {
+      userVisibleOnly: true,
+      applicationServerKey: process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY,
+    };
+
+    const pushSubscription = await registration.pushManager.subscribe(
+      subscribeOptions
+    );
+
+    // 서버에 Push Subscription 저장
+    await fetch(`${ENDPOINT}/api/util/subscribe`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(pushSubscription),
+      credentials: 'include',
+    });
+  }
+
+  // 예시로, 앱이 로드될 때 알림 권한 요청
+  useEffect(() => {
+    if (user.email !== null) requestNotificationPermission();
+  }, []);
+
+  const clickBell = async () => {
+    await fetch(`${ENDPOINT}/api/util/togglepush`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+    });
+  };
+
   return (
     <>
       <HeaderLayout $sticky={$sticky}>
@@ -88,11 +144,11 @@ const Header = ({ $sticky }: any) => {
               <SearchIcon fillColor={$sticky ? '#fff' : '#2797FF'} />
             </Link>
 
-            {!isAuth ? (
+            {user.email === null ? (
               <>
                 <AuthButtonBox>
-                  <Link href={'/feed/Feed'}>피드</Link>|
-                  <Link href={'/'}>트랜드</Link>|
+                  <Link href={'/'}>피드</Link>|
+                  <Link href={'/find'}>트랜드</Link>|
                   <Link href={'/auth/SignIn'}>로그인</Link>|
                   <Link href={'/auth/SignUp'}>회원가입</Link>
                 </AuthButtonBox>
@@ -103,8 +159,8 @@ const Header = ({ $sticky }: any) => {
             ) : (
               <>
                 <AuthButtonBox>
-                  <Link href={'/feed/Feed'}>피드</Link>|
-                  <Link href={'/'}>트랜드</Link>
+                  <Link href={'/'}>피드</Link>|
+                  <Link href={'/find'}>트랜드</Link>
                 </AuthButtonBox>
                 <ProfileButton
                   onClick={onClickShowMenuHandler}
@@ -120,7 +176,7 @@ const Header = ({ $sticky }: any) => {
             )}
           </AccountActionsContainer>
           <MobileBox>
-            <IconButton>
+            <IconButton onClick={clickBell}>
               <Bell fillColor={$sticky ? '#fff' : '#2797FF'} />
             </IconButton>
           </MobileBox>
