@@ -20,7 +20,7 @@ export const useInfiniteData = (type: 'post' | 'like', enabled = true) => {
         if (lastPage && lastPage.length > 0) {
           return allPages.length + 1;
         }
-        return null; // 다음 페이지 없음
+        return null;
       },
       enabled,
     });
@@ -36,7 +36,7 @@ export const useInfiniteData = (type: 'post' | 'like', enabled = true) => {
 
       if (
         window.innerHeight + window.scrollY >=
-        document.body.offsetHeight - 300
+        document.body.offsetHeight - 500
       ) {
         if (hasNextPage && !isFetchingNextPage) {
           fetchNextPage();

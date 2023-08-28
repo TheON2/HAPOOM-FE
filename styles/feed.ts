@@ -1,16 +1,18 @@
 import { styled } from 'styled-components';
 
 export const FeedSection = styled.section`
-  width: 320px;
-  margin: 0 auto;
+  max-width: 768px;
+  width: 100%;
+  margin: 24px auto;
 `;
 export const FeedContainer = styled.div`
+  max-width: 768px;
   width: 100%;
-  border: 1px solid #ff3434;
-  margin: 0 auto;
+  margin: 0 auto 24px auto;
+  padding: 0 24px;
 `;
 export const FeedHeader = styled.div`
-  width: 272px;
+  width: 100%;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -39,15 +41,22 @@ export const FeedIcon = styled.div`
   right: 0;
 `;
 export const MainImageContainer = styled.div`
-  height: 189px;
+  width: 100%;
+  height: 474px;
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
   cursor: pointer;
+  img{
+    width: 100%;  
+  }
+  @media (max-width: 768px) {
+    height: 189px;
+  }
 `;
 export const FeedMusicLikeBox = styled.div`
-  width: 272px;
+  width: 100%;
   margin: 8px auto;
   display: flex;
   justify-content: flex-start;
@@ -55,7 +64,7 @@ export const FeedMusicLikeBox = styled.div`
   position: relative;
 `;
 export const MusicBox = styled.div`
-  width: 220px;
+  width: 100%;
   height: 40px;
   display: flex;
   justify-content: flex-start;
@@ -70,6 +79,23 @@ export const MusicBox = styled.div`
 export const Equalizer = styled.div`
   position: absolute;
   right: 0;
+`;
+export const FeedContentBox = styled.div`
+  display: flex;
+`
+export const FeedContent = styled.p`
+  margin-top: 15px;
+  color: #000;
+  font-size: 20;
+  font-weight: 500;
+  word-wrap: break-word;
+`;
+export const MoreButton = styled.button`
+  margin-top: 15px;
+  background-color: transparent;
+  border: none;
+  color: #000;
+  cursor: pointer;
 `;
 export const LikeIconContainer = styled.div`
   width: 50px;

@@ -2,17 +2,16 @@ import React, { FormEvent, useState } from 'react';
 import useInput from '@/hooks/useInput';
 import { NextPage } from 'next';
 import Input from '@/components/Setting/Input';
-import Button from '@/components/common/Button';
 import { useMutation, useQueryClient } from 'react-query';
 import { updateUserSetting } from '@/api/user';
 import { TextErrorParagraph } from '@/styles/signUp';
+import { SettingButton } from '@/styles/setting';
 
 type SettingProps = {
   nickname?: string;
 };
 
 const UpdateNickName: NextPage<SettingProps> = ({ nickname = '' }) => {
-  // console.log('리렌더링');
   const [nickName, onClickNickName, setNickName] = useInput<string | undefined>(
     nickname
   );
@@ -67,9 +66,9 @@ const UpdateNickName: NextPage<SettingProps> = ({ nickname = '' }) => {
         onChange={onClickNickName}
       />
       {error && <TextErrorParagraph>{error}</TextErrorParagraph>}
-      <Button type="submit" $marginTop={'-12px'}>
+      <SettingButton type="submit" $marginTop={'-12px'}>
         닉네임변경하기
-      </Button>
+      </SettingButton>
     </form>
   );
 };

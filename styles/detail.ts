@@ -21,9 +21,7 @@ export const GlobalStyle = createGlobalStyle`
 export const ProfileBox = styled.div`
   display: flex;
   align-items: center;
-  /* padding: 20px 30px; */
-  gap: 30px;
-  /* height: 10vh; */
+  gap: 16px;
   .image {
     width: 46px;
     height: 46px;
@@ -35,10 +33,14 @@ export const ProfileBox = styled.div`
       object-fit: cover;
     }
   }
+  h2 {
+    font-size: 20px;
+    width: calc(100% - 62px);
+  }
 `;
 
 export const DetialContentSection = styled.section`
-  margin-bottom: 40px;
+  margin-top: 36px;
   h3 {
     width: 100%;
     padding-bottom: 8px;
@@ -54,6 +56,11 @@ export const DetialContentSection = styled.section`
       height: 3px;
       background-color: #0084ff;
     }
+  }
+  &.content-box {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
   }
   .comments-header {
     display: flex;
@@ -78,7 +85,16 @@ export const DetialContentSection = styled.section`
     border: none;
   }
 `;
-
+export const DetailContentBox = styled.div`
+  width: 100%;
+  padding: 20px 24px;
+  background-color: #f5faff;
+  border: 1px solid #e2f3ff;
+  border-radius: 8px;
+  /* min-height: 120px; */
+  /* margin-bottom: 12px; */
+  color: #082d42;
+`;
 export const OtherProfileBox = styled.div`
   width: 100%;
   padding: 12px 0;
@@ -92,20 +108,20 @@ export const ContentsContainer = styled.div`
   padding: 0 24px;
   /* position: relative; */
   .heart {
-    position: static;
-    width: 36px;
-    height: 36px;
-    margin-top: 10px;
-    margin-bottom: 12px;
-  }
-  .detail-content-text {
-    min-height: 120px;
-    margin-bottom: 12px;
+    /* position: static; */
+    top: auto;
+    bottom: 12px;
+    right: 12px;
+    width: 46px;
+    height: 46px;
+    /* margin-top: 10px; */
+    /* margin-bottom: 12px; */
   }
   .carousel-box {
     border-radius: 8px;
     overflow: hidden;
     height: 45vh;
+    position: relative;
   }
 `;
 export const HashtagBox = styled.div`
@@ -237,7 +253,7 @@ export const CommentButton = styled.button`
   background-color: #52acff;
   border: none;
   cursor: pointer;
-  z-index: 15;
+  z-index: 115;
 `;
 
 export const NoneComment = styled.div`

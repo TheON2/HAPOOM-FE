@@ -11,6 +11,9 @@ import {
   MusicBox,
   MainImageContainer,
   LikeIconContainer,
+  FeedContent,
+  MoreButton,
+  FeedContentBox,
 } from '../../styles/feed';
 import KebabMenuUI, {
   KebabMenuAptionButton,
@@ -49,7 +52,11 @@ interface ModalMessage {
   modalMessge: string | undefined;
   onClickEvent: any;
 }
+interface ExpandedPosts {
+  [key: number]: boolean;
+}
 interface Feed {
+  content: string;
   email: string;
   image: string;
   musicTitle: string;
@@ -69,6 +76,7 @@ const FeedUi = () => {
     modalMessge: '',
     onClickEvent: '',
   });
+  const [expandedPosts, setExpandedPosts] = useState<ExpandedPosts>({});
 
   const { data } = useQuery('feed', getFeed);
   console.log('feeddata', data?.feed);
@@ -99,6 +107,12 @@ const FeedUi = () => {
     setIsModalOpen(true);
   };
 
+  const toggleExpanded = (postId: number) => {
+    setExpandedPosts((prevState: ExpandedPosts) => ({
+      ...prevState,
+      [postId]: !prevState[postId],
+    }));
+  };
   return (
     <FeedSection>
       <Modal
@@ -110,6 +124,10 @@ const FeedUi = () => {
         {modalMessge.modalMessge}
       </Modal>
       {data?.feed.map((feed: Feed) => {
+        const isExpanded = expandedPosts[feed.postId];
+        const content = isExpanded
+          ? feed.content
+          : `${feed.content.slice(0, 30)}......`;
         return (
           <FeedContainer key={feed.postId}>
             <FeedHeader>
@@ -154,6 +172,14 @@ const FeedUi = () => {
                 <HeartIcon postId={feed.postId} />
               </LikeIconContainer>
             </FeedMusicLikeBox>
+            <FeedContentBox>
+              <FeedContent>{content}</FeedContent>
+              {feed.content.length > 30 && (
+                <MoreButton onClick={() => toggleExpanded(feed.postId)}>
+                  {isExpanded ? null : '더보기'}
+                </MoreButton>
+              )}
+            </FeedContentBox>
           </FeedContainer>
         );
       })}

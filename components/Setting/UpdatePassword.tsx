@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import Button from '@/components/common/Button';
 import { StyledInput, TextErrorParagraph } from '@/styles/signUp';
 import { useMutation, useQueryClient } from 'react-query';
 import { updateUserSetting } from '@/api/user';
 import { TextParagraph } from '@/styles/signIn';
-import { TextParagraphPwdCheck } from '@/styles/setting';
+import { SettingButton, TextParagraphPwdCheck } from '@/styles/setting';
 
 export interface Signup {
   password: string;
@@ -119,9 +118,9 @@ const UpdatePassword = () => {
             <TextErrorParagraph>{error.passwordConfirm}</TextErrorParagraph>
           )}
         </InputBox>
-        <Button type="submit" $marginTop={'10px'}>
+        <SettingButton type="submit" $marginTop={'10px'}>
           비밀번호 수정
-        </Button>
+        </SettingButton>
       </form>
     </>
   );

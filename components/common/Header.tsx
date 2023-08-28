@@ -27,12 +27,15 @@ import { useRouter } from 'next/router';
 import { useMutation, useQueryClient } from 'react-query';
 import { togglePush, userLogOut } from '@/api/user';
 import { LOGOUT_USER, UserState } from '@/redux/reducers/userSlice';
-import { SearchIcon, Bell, EditIcon } from '@/components/common/SVG';
+import { SearchIcon, Bell, EditIcon, Cloud } from '@/components/common/SVG';
 import { setCookie } from 'nookies';
 import ProfileImage from '@/components/common/ProfileImage';
 import { RootState } from '@/redux/config/configStore';
 
+
 const ENDPOINT = `${process.env.NEXT_PUBLIC_LOCAL_SERVER}`;
+
+import Modal from './Modal';
 
 const Header = ({ $sticky }: any) => {
   const queryClient = useQueryClient();
@@ -50,7 +53,12 @@ const Header = ({ $sticky }: any) => {
   const [isShowMenu, setIsShowMenu] = useState<boolean>(false);
 
   const [isAuth, setIsAuth] = useState<boolean>(false);
-
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [modalMessge, setModalMessge] = useState<any>({
+    actionText: '',
+    modalMessge: '',
+    onClickEvent: '',
+  });
   const onClickShowMenuHandler = () => {
     router.push(`/User/${user.email}`);
   };
@@ -58,7 +66,14 @@ const Header = ({ $sticky }: any) => {
   const handleLogoClick = () => {
     router.push('/');
   };
-
+  const LoginHandler = () => {
+    setModalMessge({
+      actionText: '확인',
+      modalMessge: '로그인이 필요한 서비스입니다. 로그인 하시겠습니까?',
+      onClickEvent: () => router.push('/auth/SignIn'),
+    });
+    setIsOpen(!isOpen);
+  };
   const goToWritePage = () => {
     setCookie(null, 'update', '1', { path: '/' });
     setCookie(null, 'updateId', '0', { path: '/' });
@@ -66,7 +81,7 @@ const Header = ({ $sticky }: any) => {
   };
 
   useEffect(() => {
-    if (user.email !== '') {
+    if (user.email !== null) {
       setIsAuth(true);
     } else {
       setIsAuth(false);
@@ -130,18 +145,35 @@ const Header = ({ $sticky }: any) => {
             </Link>
 
             {!isAuth ? (
-              <AuthButtonBox>
-                <Link href={'/auth/SignIn'}>로그인</Link>|
-                <Link href={'/auth/SignUp'}>회원가입</Link>
-              </AuthButtonBox>
-            ) : null}
-            <ProfileButton onClick={onClickShowMenuHandler}>
-              <ProfileImage
-                preset={user?.preset || 5}
-                userImage={user?.userImage || ''}
-                loading="eager"
-              />
-            </ProfileButton>
+              <>
+                <AuthButtonBox>
+                  <Link href={'/feed/Feed'}>피드</Link>|
+                  <Link href={'/'}>트랜드</Link>|
+                  <Link href={'/auth/SignIn'}>로그인</Link>|
+                  <Link href={'/auth/SignUp'}>회원가입</Link>
+                </AuthButtonBox>
+                <ProfileButton onClick={LoginHandler} $sticky={$sticky}>
+                  <Cloud />
+                </ProfileButton>
+              </>
+            ) : (
+              <>
+                <AuthButtonBox>
+                  <Link href={'/feed/Feed'}>피드</Link>|
+                  <Link href={'/'}>트랜드</Link>
+                </AuthButtonBox>
+                <ProfileButton
+                  onClick={onClickShowMenuHandler}
+                  $sticky={$sticky}
+                >
+                  <ProfileImage
+                    preset={user?.preset || 5}
+                    userImage={user?.userImage || ''}
+                    loading="eager"
+                  />
+                </ProfileButton>
+              </>
+            )}
           </AccountActionsContainer>
           <MobileBox>
             <IconButton>
@@ -156,6 +188,15 @@ const Header = ({ $sticky }: any) => {
       {isShowMenu && (
         <SideNav setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu} />
       )}
+      <Modal
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        actionText={modalMessge.actionText}
+        onClickEvent={modalMessge.onClickEvent}
+      >
+        로그인 후 이용할 수 있는 서비스 입니다.
+        <br /> 로그인 하시겠습니까?
+      </Modal>
     </>
   );
 };

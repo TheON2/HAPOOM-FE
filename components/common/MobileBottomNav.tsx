@@ -9,7 +9,15 @@ import {
   IconBox,
 } from '@/styles/navbar';
 import IconButton from '@/components/common/IconButton';
-import { Home, Search, Upload, MyProfile } from '@/components/common/SVG';
+import {
+  Home,
+  Search,
+  Upload,
+  MyProfile,
+  Cloud,
+  Clouds,
+  Find,
+} from '@/components/common/SVG';
 import { useRouter } from 'next/router';
 import { setCookie, parseCookies } from 'nookies';
 import { useSelector } from 'react-redux';
@@ -24,8 +32,9 @@ type mobileBottomNavProps = {
 
 const BOTTOM_NAV = [
   { icon: Home, text: 'home', route: '/' },
-  { icon: Search, text: 'search', route: '/search' },
+  { icon: Find, text: 'find', route: '/find' },
   { icon: Upload, text: 'upload', route: '/post/Write' },
+  { icon: Search, text: 'search', route: '/search' },
 ];
 
 type onClickProps = {
@@ -33,7 +42,7 @@ type onClickProps = {
 };
 
 const ActiveBar = styled.span<onClickProps>`
-  width: calc((100% - 48px) / 4);
+  width: calc((100% - 48px) / 5);
   height: 5px;
   border-radius: 0 0 4px 4px;
   position: absolute;
@@ -81,7 +90,13 @@ const MobileBottomNav = () => {
 
   useEffect(() => {
     const currentPathname = window.location.pathname;
-    const routes = ['/', '/search', '/post/Write', `/User/${user.email}`];
+    const routes = [
+      '/',
+      '/find',
+      '/post/Write',
+      '/search',
+      `/User/${user.email}`,
+    ];
     const index = routes.indexOf(currentPathname);
     setActive(index === -1 ? 0 : index);
   }, [router.pathname]);
@@ -106,16 +121,27 @@ const MobileBottomNav = () => {
         <BottomNavItem>
           <IconBox
             onClick={() => routerHandler(`/User/${user.email}`, 'my')}
-            className={active === 3 ? 'active' : ''}
+            className={active === 4 ? 'active' : ''}
           >
-            <div className="image-box">
-              <ProfileImage
-                preset={user?.preset || 5}
-                userImage={user?.userImage || ''}
-                loading="eager"
-              />
-            </div>
-            <p>my</p>
+            {user.email !== null ? (
+              <>
+                <div className="image-box">
+                  <ProfileImage
+                    preset={user?.preset || 5}
+                    userImage={user?.userImage || ''}
+                    loading="eager"
+                  />
+                </div>
+                <p>my</p>
+              </>
+            ) : (
+              <>
+                <div className="image-box">
+                  <Cloud />
+                </div>
+                <p>guest</p>
+              </>
+            )}
           </IconBox>
         </BottomNavItem>
       </BottomNavList>
