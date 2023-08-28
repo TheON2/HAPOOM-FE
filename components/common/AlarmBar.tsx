@@ -186,9 +186,10 @@ const AlarmContainer = ({ alarmData }: alarmProps) => {
       dispatch(CLEAR_NOTIFICATION());
     }, 5000);
   };
+
   return (
     <>
-      <button onClick={test}>버튼</button>
+      {/* <button onClick={test}>버튼</button> */}
       <AlarmContainerStyle>
         {alarmArr.map((alarm) => {
           return <AlarmBar alarm={alarm} key={alarm.id} />;

@@ -5,7 +5,8 @@ import Footer from '@/components/common/Footer';
 import AlarmBar from '../AlarmBar';
 import { useRouter } from 'next/router';
 import { createGlobalStyle, styled } from 'styled-components';
-
+import { useDispatch } from 'react-redux';
+import { ADD_NOTIFICATION } from '@/redux/reducers/notificationSlice';
 type layoutProps = {
   children: ReactNode;
 };
@@ -13,10 +14,9 @@ type layoutProps = {
 const Layout = ({ children }: layoutProps) => {
   const router = useRouter();
   const isHome = router.pathname === '/find';
-
   return (
     <>
-      <GlobalStyle />
+      {/* <GlobalStyle /> */}
       <LayoutStyle $isHome={isHome}>
         <Header $sticky={isHome} />
         {isHome ? (
@@ -56,18 +56,3 @@ const LayoutStyle = styled.div<layoutStyleProps>`
     margin: 0 auto;
   }
 `;
-export const GlobalFonts = createGlobalStyle`
-  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
-`;
-
-export const GlobalStyle = createGlobalStyle`
-  body{
-    color: #051619;
-    font-family: "Noto Sans KR","Apple SD Gothic Neo",sans-serif;
-    -webkit-text-size-adjust: 100%;
-    -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
-    letter-spacing: -.0125rem;
-    margin: 0;
-  }
-  `;
