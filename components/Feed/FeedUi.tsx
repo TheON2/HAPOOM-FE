@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   FeedContainer,
   FeedHeader,
@@ -20,12 +20,13 @@ import KebabMenuUI, {
   KebabMenuStyle,
 } from '../common/KebabMenuUI';
 import { FeedPlayer } from '../common/SVG';
-import { useMutation, useQuery } from 'react-query';
+import { useInfiniteQuery, useMutation, useQuery } from 'react-query';
 import { useRouter } from 'next/router';
-import { getFeed, reportPost } from '@/api/post';
+import { reportPost } from '@/api/post';
 import Modal from '../common/Modal';
 import HeartIcon from '../common/HeartIcon';
 import ProfileImage from '../common/ProfileImage';
+import { InView, useInView } from 'react-intersection-observer';
 
 const timeSince = (date: string) => {
   const now: Date = new Date();
@@ -77,9 +78,28 @@ const FeedUi = () => {
     onClickEvent: '',
   });
   const [expandedPosts, setExpandedPosts] = useState<ExpandedPosts>({});
+  const [ref, inView] = useInView();
 
-  const { data, isLoading, error } = useQuery('feed', getFeed);
-  console.log('feeddata', data?.feed);
+  const getFeed = async ({ pageParam }: { pageParam: number }) => {
+    return fetch(
+      `${process.env.NEXT_PUBLIC_LOCAL_SERVER}/api/main/feed?page=${pageParam}`
+    ).then((res) => res.json());
+  };
+
+  const {
+    data,
+    error,
+    fetchNextPage,
+    hasNextPage,
+    isFetching,
+    isFetchingNextPage,
+  } = useInfiniteQuery('feed', ({ pageParam = 1 }) => getFeed({ pageParam }), {
+    getNextPageParam: (lastPage, pages) => {
+      console.log('Inside getNextPageParam', lastPage, pages);
+      return lastPage.nextPage;
+    },
+  });
+
   const { mutate: report } = useMutation(reportPost, {
     onSuccess: (messag) => {
       setModalMessge({
@@ -114,7 +134,7 @@ const FeedUi = () => {
     }));
   };
 
-  if (isLoading) {
+  if (isFetching || isFetchingNextPage) {
     return <div>로딩 중...</div>;
   }
 
@@ -132,66 +152,80 @@ const FeedUi = () => {
       >
         {modalMessge.modalMessge}
       </Modal>
-      {data?.feed.map((feed: Feed) => {
-        const isExpanded = expandedPosts[feed.postId];
-        const content = isExpanded
-          ? feed.content
-          : `${feed.content.slice(0, 30)}......`;
-        return (
-          <FeedContainer key={feed.postId}>
-            <FeedHeader>
-              <div onClick={() => moveUserPage(feed.userId)}>
-                <ProfileImage userImage={feed.userImage} preset={feed.preset} />
-              </div>
-              <FeedUserNickName>{feed.nickname}</FeedUserNickName>
-              <FeedTime>{timeSince(feed.updatedAt)}</FeedTime>
-              <FeedIcon>
-                <KebabMenuUI>
-                  <KebabMenuStyle>
-                    {feed.postId && (
-                      <KebabMenuAptionButton
-                        onClick={() => handleReportClick(feed.postId)}
-                      >
-                        신고하기 <span></span>
-                      </KebabMenuAptionButton>
-                    )}
-                  </KebabMenuStyle>
-                </KebabMenuUI>
-              </FeedIcon>
-            </FeedHeader>
+      {data?.pages
+        .flatMap((page) => page.feed)
+        .map((feed: Feed) => {
+          const isExpanded = expandedPosts[feed.postId];
+          const content = isExpanded
+            ? feed.content
+            : `${feed.content.slice(0, 30)}......`;
+          return (
+            <FeedContainer key={feed.postId}>
+              <FeedHeader>
+                <div onClick={() => moveUserPage(feed.userId)}>
+                  <ProfileImage
+                    userImage={feed.userImage}
+                    preset={feed.preset}
+                  />
+                </div>
+                <FeedUserNickName>{feed.nickname}</FeedUserNickName>
+                <FeedTime>{timeSince(feed.updatedAt)}</FeedTime>
+                <FeedIcon>
+                  <KebabMenuUI>
+                    <KebabMenuStyle>
+                      {feed.postId && (
+                        <KebabMenuAptionButton
+                          onClick={() => handleReportClick(feed.postId)}
+                        >
+                          신고하기 <span></span>
+                        </KebabMenuAptionButton>
+                      )}
+                    </KebabMenuStyle>
+                  </KebabMenuUI>
+                </FeedIcon>
+              </FeedHeader>
 
-            <MainImageContainer>
-              <Image
-                src={feed.image}
-                alt={'Feed Image'}
-                width={272}
-                height={188}
-                quality={100}
-                priority
-                onClick={() => moveDetailPage(feed.postId)}
-              />
-            </MainImageContainer>
+              <MainImageContainer>
+                <Image
+                  src={feed.image}
+                  alt={'Feed Image'}
+                  width={272}
+                  height={188}
+                  quality={100}
+                  priority
+                  onClick={() => moveDetailPage(feed.postId)}
+                />
+              </MainImageContainer>
 
-            <FeedMusicLikeBox>
-              <MusicBox>
-                <FeedPlayer />
-                <div>{feed.musicTitle}</div>
-              </MusicBox>
-              <LikeIconContainer>
-                <HeartIcon postId={feed.postId} />
-              </LikeIconContainer>
-            </FeedMusicLikeBox>
-            <FeedContentBox>
-              <FeedContent>{content}</FeedContent>
-              {feed.content.length > 30 && (
-                <MoreButton onClick={() => toggleExpanded(feed.postId)}>
-                  {isExpanded ? null : '더보기'}
-                </MoreButton>
-              )}
-            </FeedContentBox>
-          </FeedContainer>
-        );
-      })}
+              <FeedMusicLikeBox>
+                <MusicBox>
+                  <FeedPlayer />
+                  <div>{feed.musicTitle}</div>
+                </MusicBox>
+                <LikeIconContainer>
+                  <HeartIcon postId={feed.postId} />
+                </LikeIconContainer>
+              </FeedMusicLikeBox>
+              <FeedContentBox>
+                <FeedContent>{content}</FeedContent>
+                {feed.content.length > 30 && (
+                  <MoreButton onClick={() => toggleExpanded(feed.postId)}>
+                    {isExpanded ? null : '더보기'}
+                  </MoreButton>
+                )}
+              </FeedContentBox>
+            </FeedContainer>
+          );
+        })}
+      {hasNextPage && (
+        <InView
+          as="div"
+          onChange={(inView, entry) => {
+            if (inView) fetchNextPage();
+          }}
+          style={{ height: '200px', opacity: 0 }}
+        />
+      )}
     </FeedSection>
   );
 };
