@@ -64,18 +64,27 @@ export const FeedMusicLikeBox = styled.div`
   align-items: center;
   position: relative;
 `;
-export const MusicBox = styled.div`
+// export const MusicBox = styled.div`
+//   width: 100%;
+//   height: 40px;
+//   display: flex;
+//   justify-content: flex-start;
+//   align-items: center;
+//   border-radius: 20px;
+//   border: 1px solid #dfefff;
+//   background: #eff7ff;
+//   position: relative;
+//   gap: 4px;
+//   padding: 12px 8px;
+// `;
+export const TagBox = styled.div`
   width: 100%;
-  height: 40px;
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  border-radius: 20px;
-  border: 1px solid #dfefff;
-  background: #eff7ff;
   position: relative;
-  gap: 4px;
-  padding: 12px 8px;
+  gap: 6px;
+  padding: 4px 0;
 `;
 export const FeedContentBox = styled.div`
   display: flex;
@@ -84,14 +93,14 @@ export const FeedContentBox = styled.div`
   }
 `;
 export const FeedContent = styled.p`
-  margin-top: 15px;
+  margin-top: 4px;
   color: #000;
   font-size: 20;
   font-weight: 500;
   word-wrap: break-word;
 `;
 export const MoreButton = styled.button`
-  margin-top: 15px;
+  margin-top: 4px;
   background-color: transparent;
   border: none;
   color: #000;
