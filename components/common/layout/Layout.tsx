@@ -5,6 +5,8 @@ import Footer from '@/components/common/Footer';
 import AlarmBar from '../AlarmBar';
 import { useRouter } from 'next/router';
 import { createGlobalStyle, styled } from 'styled-components';
+import { useDispatch } from 'react-redux';
+import { ADD_NOTIFICATION } from '@/redux/reducers/notificationSlice';
 
 type layoutProps = {
   children: ReactNode;
@@ -13,7 +15,6 @@ type layoutProps = {
 const Layout = ({ children }: layoutProps) => {
   const router = useRouter();
   const isHome = router.pathname === '/find';
-
   return (
     <>
       <GlobalStyle />

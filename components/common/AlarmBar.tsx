@@ -142,8 +142,8 @@ export const AlarmBar = ({ alarm }: Props) => {
       <AlarmIconBox>
         <Bell fillColor={'#fff'} />
       </AlarmIconBox>
-      <p>{alarm}</p>
-      {/* <p>{alarm.message}</p> */}
+      {/* <p>{alarm}</p> */}
+      <p>{alarm.message}</p>
     </AlarmBox>
   );
 };
