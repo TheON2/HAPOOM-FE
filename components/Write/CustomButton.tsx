@@ -10,7 +10,7 @@ const ButtonStyle = styled.button<Button>`
   /* height: 36px; */
   max-width: 360px;
   width: 100%;
-  padding: 12px 16px 8px;
+  padding: 12px 16px;
   //margin-top: ${({ $marginTop }) => $marginTop};
   margin: 0 auto;
   border-radius: 6px;
@@ -30,9 +30,11 @@ const ButtonStyle = styled.button<Button>`
   }
   &:hover {
     background-color: #7dc1ff;
+    color: #fff;
   }
   &:active {
     background-color: #2797ff;
+    color: #fff;
   }
 `;
 
