@@ -75,7 +75,7 @@ const Search = () => {
       return (
         <>
           오늘은 어떤
-          <span className="highligth">하늘</span>을 검색해볼까요?
+          <span className="highligth"> 하늘</span>을 검색해볼까요?
         </>
       );
     } else {
