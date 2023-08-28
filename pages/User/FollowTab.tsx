@@ -86,7 +86,6 @@ const UserListItem: React.FC<
 const FollowTab: React.FC<FollowTabProps> = () => {
   const router = useRouter();
   const userId = router.query.userId as string;
-  const [isLoading, setIsLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<'followers' | 'followings'>(
     'followers'
   );
@@ -115,9 +114,7 @@ const FollowTab: React.FC<FollowTabProps> = () => {
     if (userToUnfollow !== null) {
       try {
         await unFollow(String(userToUnfollow));
-        setFollowings((prevFollowings) =>
-          prevFollowings.filter((user) => user.userId !== userToUnfollow)
-        );
+        // You might want to refetch the followers/followings data here or handle it another way
         setIsModalOpen(false);
       } catch (error) {
         console.error('Error while sending unfollow request:', error);
