@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { FeedSection } from '../../styles/feed';
 import { useInfiniteQuery, useMutation } from 'react-query';
@@ -5,6 +6,7 @@ import { reportPost } from '@/api/post';
 import Modal from '../common/Modal';
 import { InView, useInView } from 'react-intersection-observer';
 import FeedPost from './FeedPost';
+
 
 interface ModalMessage {
   actionText: string;
@@ -38,6 +40,7 @@ const FeedUi = () => {
   const [expandedPosts, setExpandedPosts] = useState<ExpandedPosts>({});
   const [ref, inView] = useInView();
 
+
   const getFeed = async ({ pageParam }: { pageParam: number }) => {
     return fetch(
       `${process.env.NEXT_PUBLIC_LOCAL_SERVER}/api/main/feed?page=${pageParam}`
@@ -58,6 +61,7 @@ const FeedUi = () => {
     },
   });
   console.log('feeddata', data);
+
   const { mutate: report } = useMutation(reportPost, {
     onSuccess: (message) => {
       setModalMessge({
@@ -104,6 +108,7 @@ const FeedUi = () => {
       </Modal>
       {data?.pages
         .flatMap((page) => page.feed)
+
         .map((feed: Feed) => (
           <FeedPost
             key={feed.postId}
@@ -113,6 +118,7 @@ const FeedUi = () => {
             isExpanded={expandedPosts[feed.postId]}
           />
         ))}
+
       {hasNextPage && (
         <InView
           as="div"
