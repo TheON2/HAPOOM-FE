@@ -93,6 +93,15 @@ const Header = ({ $sticky }: any) => {
     }
   }
 
+  function checkNotificationPermission() {
+    if (typeof window !== 'undefined' && 'Notification' in window) {
+      if (Notification.permission === 'default') {
+        // 권한 요청이 아직 안된 상태
+        requestNotificationPermission();
+      }
+    }
+  }
+
   // Push Subscription 생성
   async function subscribeUserToPush() {
     const registration = await navigator.serviceWorker.ready;
@@ -121,6 +130,10 @@ const Header = ({ $sticky }: any) => {
   useEffect(() => {
     if (user.email !== null) requestNotificationPermission();
   }, []);
+
+  useEffect(() => {
+    if (user.email !== null) subscribeUserToPush();
+  }, [user.email]);
 
   const clickBell = async () => {
     await fetch(`${ENDPOINT}/api/util/togglepush`, {
