@@ -30,6 +30,7 @@ const Setting = () => {
 
   const onLogOut = useCallback(() => {
     logOut_mutate();
+    
     alert('로그아웃 되었습니다');
   }, [logOut_mutate]);
 
