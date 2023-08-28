@@ -129,17 +129,24 @@ const FeedUi = () => {
           const isExpanded = expandedPosts[feed.postId];
           const content = isExpanded
             ? feed.content
-            : `${feed.content.slice(0, 30)}......`;
+            : `${feed.content.slice(0, 30)}${
+                feed.content.length > 30 ? '...' : ''
+              }`;
           return (
             <FeedContainer key={feed.postId}>
               <FeedHeader>
-                <div onClick={() => moveUserPage(feed.userId)}>
+                <div
+                  style={{ cursor: 'pointer' }}
+                  onClick={() => moveUserPage(feed.userId)}
+                >
                   <ProfileImage
                     userImage={feed.userImage}
                     preset={feed.preset}
                   />
                 </div>
-                <FeedUserNickName>{feed.nickname}</FeedUserNickName>
+                <FeedUserNickName onClick={() => moveUserPage(feed.userId)}>
+                  {feed.nickname}
+                </FeedUserNickName>
                 <FeedTime>{timeSince(feed.updatedAt)}</FeedTime>
                 <FeedIcon>
                   <KebabMenuUI>
