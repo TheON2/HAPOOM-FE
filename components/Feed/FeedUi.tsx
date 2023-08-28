@@ -81,9 +81,9 @@ const FeedUi = () => {
   const [ref, inView] = useInView();
 
   const getFeed = async ({ pageParam }: { pageParam: number }) => {
-    return fetch(`http://localhost:3001/api/main/feed?page=${pageParam}`).then(
-      (res) => res.json()
-    );
+    return fetch(
+      `${process.env.NEXT_PUBLIC_LOCAL_SERVER}/api/main/feed?page=${pageParam}`
+    ).then((res) => res.json());
   };
 
   const {
