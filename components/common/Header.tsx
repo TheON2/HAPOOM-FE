@@ -150,7 +150,7 @@ const Header = ({ $sticky }: any) => {
       credentials: 'include',
     });
   };
-  console.log(user.push);
+
   return (
     <>
       <HeaderLayout $sticky={$sticky}>
@@ -178,7 +178,10 @@ const Header = ({ $sticky }: any) => {
             ) : (
               <>
                 <IconButton onClick={clickBell} $noneEdge={true}>
-                  <Bell fillColor={$sticky ? '#fff' : '#2797FF'} />
+                  <Bell
+                    fillColor={$sticky ? '#fff' : '#2797FF'}
+                    $isPush={user?.push}
+                  />
                 </IconButton>
                 <AuthButtonBox>
                   <Link href={'/'}>피드</Link>|

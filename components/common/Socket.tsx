@@ -22,11 +22,11 @@ function SocketManager({
   const { user }: { user: UserState['user'] } = useSelector(
     (state: RootState) => state.user
   );
-  console.log('소켓 컴포넌트');
+  // console.log('소켓 컴포넌트');
 
   // const dispatch = useDispatch();
   useEffect(() => {
-    console.log('소켓');
+    // console.log('소켓');
 
     if (!user.push) {
       // push가 true인 경우에만 소켓 이벤트를 수신
@@ -41,7 +41,7 @@ function SocketManager({
         setNotification(
           `User ${nickname} with email ${email} logged in successfully.`
         );
-        console.log(nickname);
+        console.log('로그인');
         // dispatch(ADD_NOTIFICATION(`${nickname}님이 로그인 하셨습니다.`));
         setTimeout(() => {
           // dispatch(CLEAR_NOTIFICATION());
@@ -51,7 +51,7 @@ function SocketManager({
 
       socket.on('random-posts', (posts) => {
         setRandomPosts(posts);
-
+        console.log('random messages received');
         setTimeout(() => {
           setRandomPosts(null);
         }, 10000);
