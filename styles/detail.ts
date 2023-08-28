@@ -146,21 +146,25 @@ export const Hashtag = styled.div`
 export const CommentForm = styled.form`
   width: 100%;
   padding: 8px 0;
+`;
+export const TextareaBox = styled.div`
+  position: relative;
+  margin-bottom: 12px;
   textarea {
     width: 100%;
-    height: 141px;
-    padding: 16px 12px;
+    height: 120px;
+    padding: 20px 24px;
+    background-color: #f0efef;
+    border: 2px solid #e8e8e8;
     margin-top: 8px;
     resize: none;
-    border: 1px solid #0084ff;
-    border-radius: 3px;
+    border-radius: 12px;
+    font-size: 15px;
+    outline: none;
     ::placeholder {
       color: #b3b3b3;
     }
   }
-`;
-export const TextareaBox = styled.div`
-  position: relative;
 `;
 type limitProps = {
   $color: boolean;
