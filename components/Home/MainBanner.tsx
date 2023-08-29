@@ -21,14 +21,14 @@ const MainBanner = ({
   onClickBottomNavHandler,
 }: any) => {
   const randomPost = useSelector((state: RootState) => state.notification.post);
-
+  console.log(randomPost);
   return (
     <MainBannerContainer $isClick={$isClick}>
       <RandomContentContainer $isClick={$isClick}>
         <NewContentBox>
           <figure>
             <Image
-              src={randomPost?.images}
+              src={randomPost?.images[0].url}
               alt="random user image"
               width={768}
               height={800}
