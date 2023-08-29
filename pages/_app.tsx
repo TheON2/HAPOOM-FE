@@ -1,7 +1,7 @@
 import '@/styles/globals.css';
 import type { AppProps } from 'next/app';
 import { createWrapper, MakeStore } from 'next-redux-wrapper';
-import store from '../redux/config/configStore';
+import store, { RootState } from '../redux/config/configStore';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import AuthChecker from '@/components/common/AuthChecker';
@@ -12,8 +12,10 @@ import MobileBottomNav from '@/components/common/MobileBottomNav';
 import { useRouter } from 'next/router';
 import Script from 'next/script';
 import AlarmContainer, { AlarmBar } from '@/components/common/AlarmBar';
-import { Provider } from 'react-redux';
+import { Provider, useDispatch, useSelector } from 'react-redux';
 import SocketManager from '@/components/common/Socket';
+import ThemedApp from '@/components/common/ThemedApp';
+import ThemeInitializer from '@/components/common/ThemeInitializer';
 const queryClient = new QueryClient();
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -30,6 +32,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   const isExcludedPage = excludedPages.includes(router.pathname);
   console.log(notification);
   console.log(randomPosts);
+
   return (
     <>
       <Provider store={store}>
@@ -57,13 +60,16 @@ function MyApp({ Component, pageProps }: AppProps) {
           {!isExcludedPage ? (
             <>
               {notification && <div>{notification}</div>}
+              <ThemedApp>
+                <ThemeInitializer />
+                <AlarmContainer />
+                {/* <AlarmBar alarm={notification} /> */}
 
-              <AlarmContainer />
-              {/* <AlarmBar alarm={notification} /> */}
-              <Layout>
-                <Component {...pageProps} randomPosts={randomPosts} />
-              </Layout>
-              <MobileBottomNav />
+                <Layout>
+                  <Component {...pageProps} randomPosts={randomPosts} />
+                </Layout>
+                <MobileBottomNav />
+              </ThemedApp>
             </>
           ) : (
             <Component {...pageProps} />
