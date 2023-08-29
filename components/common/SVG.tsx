@@ -8,6 +8,7 @@ interface Props {
 
 type svgColorProps = {
   fillColor?: string;
+  $isPush?: boolean | null;
 };
 interface RightArrowProps {
   fillColor?: string;
@@ -212,7 +213,7 @@ export const LikeCloud = ({ fillColor = '#8995a7' }) => (
     />
   </svg>
 );
-export const Bell = ({ fillColor }: svgColorProps) => (
+export const Bell = ({ fillColor, $isPush }: svgColorProps) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="17"
@@ -222,7 +223,7 @@ export const Bell = ({ fillColor }: svgColorProps) => (
   >
     <path
       d="M8.46047 18.9182C9.73384 18.9182 10.7667 17.8596 10.7667 16.5534H6.15422C6.15422 17.8596 7.18711 18.9182 8.46047 18.9182ZM16.2258 13.3865C15.5292 12.6194 14.2259 11.4655 14.2259 7.68552C14.2259 4.81454 12.2618 2.51627 9.61342 1.95242V1.18239C9.61342 0.529488 9.09716 0 8.46047 0C7.82379 0 7.30753 0.529488 7.30753 1.18239V1.95242C4.65913 2.51627 2.69501 4.81454 2.69501 7.68552C2.69501 11.4655 1.39173 12.6194 0.6952 13.3865C0.478887 13.6248 0.382988 13.9097 0.384791 14.1887C0.388756 14.7946 0.852748 15.371 1.54206 15.371H15.3789C16.0682 15.371 16.5326 14.7946 16.5362 14.1887C16.538 13.9097 16.4421 13.6244 16.2258 13.3865Z"
-      fill={fillColor}
+      fill={$isPush ? fillColor : 'gray'}
     />
   </svg>
 );
