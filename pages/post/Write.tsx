@@ -62,26 +62,13 @@ interface ModalMessage {
   onClickEvent?: () => void;
 }
 
-// const Box = styled.div`
-//   width: 100%;
-//   display: flex;
-//   flex-direction: column;
-//   justify-content: center;
-//   text-align: start;
-//   margin-bottom: 36px;
-//   label {
-//     margin-bottom: 24px;
-//   }
-//   /* align-items: center; */
-// `;
-
 const WritePageContainer = styled.div`
   min-height: 800px;
   padding: 0 24px;
 `;
 
 const Write: NextPage<Props> = ({ update = '1', updateId }) => {
-  const [isShow, setIsShow] = useState<boolean>(false);
+  const [isShow, setIsShow] = useState<boolean>(false) ;
   const {
     isModalOpen: oneModalOpen,
     modalMessge: oneModalMessage,
