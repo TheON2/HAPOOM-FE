@@ -14,6 +14,8 @@ import Button from '../common/Button';
 import nookies from 'nookies';
 import Modal from '../common/Modal';
 import useModal from '@/hooks/useModal';
+import { Mappin } from '../common/SVG';
+import { InputContainer } from '@/styles/detail';
 
 const SuggestionsBox = styled.ul`
   list-style-type: none;
@@ -292,15 +294,22 @@ export const MapComponent: React.FC<MapComponentProps> = ({
         src={`https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NEXT_PUBLIC_NAVERMAP_API_KEY}`}
         onReady={() => initializeMap()}
       />
-      <h3 style={{ float: 'left', margin: '10px 0' }}>장소</h3>
-      <label></label>
-      <InputBox
-        type="text"
-        placeholder="장소를 입력해주세요"
-        value={locationInput}
-        onChange={(e) => setLocationInput(e.target.value)}
-        onKeyUp={handleKeyUp}
-      />
+      <h3 style={{ margin: '10px 0' }}>장소</h3>
+      <InputContainer>
+        <label>
+          <Mappin />
+        </label>
+        <InputBox
+          type="text"
+          placeholder="장소를 입력해주세요"
+          value={locationInput}
+          onChange={(e) => setLocationInput(e.target.value)}
+          onKeyUp={handleKeyUp}
+          style={{
+            paddingLeft: '32px',
+          }}
+        />
+      </InputContainer>
       <div
         style={{
           position: 'relative',

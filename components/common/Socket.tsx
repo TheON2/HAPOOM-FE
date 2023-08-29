@@ -1,7 +1,11 @@
 import { RootState } from '@/redux/config/configStore';
+import {
+  ADD_NOTIFICATION,
+  CLEAR_NOTIFICATION,
+} from '@/redux/reducers/notificationSlice';
 import { UserState } from '@/redux/reducers/userSlice';
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import socketIOClient from 'socket.io-client';
 
 const ENDPOINT = `${process.env.NEXT_PUBLIC_LOCAL_SERVER}`;
@@ -18,11 +22,14 @@ function SocketManager({
   const { user }: { user: UserState['user'] } = useSelector(
     (state: RootState) => state.user
   );
+  // console.log('소켓 컴포넌트');
 
+  // const dispatch = useDispatch();
   useEffect(() => {
     const socket = socketIOClient(ENDPOINT);
     // push가 true인 경우에만 소켓 이벤트를 수신
     console.log('푸시 설정 ON');
+
 
     socket.on('notify-post', (data) => {
       if (user.push) setNotification(data.message);
@@ -51,6 +58,7 @@ function SocketManager({
     return () => {
       socket.disconnect();
     };
+
   }, [user.push, setNotification, setRandomPosts]); // user.push를 의존성 배열에 추가
 
   return null; // 이 컴포넌트는 UI를 렌더링하지 않습니다.

@@ -38,9 +38,11 @@ export const ProfileBox = styled.div`
     width: calc(100% - 62px);
   }
 `;
-
-export const DetialContentSection = styled.section`
-  margin-top: 36px;
+type DetialContentSectionProps = {
+  $marginTop?: string;
+};
+export const DetialContentSection = styled.section<DetialContentSectionProps>`
+  margin-top: ${(props) => (props.$marginTop ? props.$marginTop : '36px')};
   h3 {
     width: 100%;
     padding-bottom: 8px;
@@ -91,6 +93,7 @@ export const DetailContentBox = styled.div`
   background-color: #f5faff;
   border: 1px solid #e2f3ff;
   border-radius: 8px;
+  word-break: break-word;
   /* min-height: 120px; */
   /* margin-bottom: 12px; */
   color: #082d42;
@@ -143,20 +146,35 @@ export const Hashtag = styled.div`
 export const CommentForm = styled.form`
   width: 100%;
   padding: 8px 0;
+`;
+export const TextareaBox = styled.div`
+  position: relative;
+  margin-bottom: 12px;
   textarea {
     width: 100%;
-    height: 141px;
-    padding: 16px 12px;
+    height: 120px;
+    padding: 20px 24px;
+    background-color: #f0efef;
+    border: 2px solid #e8e8e8;
     margin-top: 8px;
     resize: none;
-    border: 1px solid #0084ff;
-    border-radius: 3px;
+    border-radius: 12px;
+    font-size: 15px;
+    outline: none;
     ::placeholder {
       color: #b3b3b3;
     }
   }
 `;
-
+type limitProps = {
+  $color: boolean;
+};
+export const LimitNumBox = styled.span<limitProps>`
+  position: absolute;
+  bottom: 5px;
+  right: 10px;
+  color: ${(props) => (props.$color ? '#FF5D5D' : '#334765')};
+`;
 // comment components style
 export const CommentsContainer = styled.div`
   width: 100%;
@@ -170,9 +188,9 @@ export const CommentBox = styled.div`
     gap: 12px;
   }
   .comment-image {
-    width: 36px;
-    height: 36px;
-    border-radius: 18px;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
     overflow: hidden;
     img {
       width: 100%;
@@ -181,11 +199,11 @@ export const CommentBox = styled.div`
     }
   }
   .comment {
-    width: calc(100% - 48px);
+    width: calc(100% - 58px);
     margin: 4px 0 0 auto;
     color: #737373;
-    font-size: 12px;
-    height: 70px;
+    font-size: 14px;
+    /* height: 70px; */
 
     p {
       padding: 14px 12px 12px;
@@ -207,7 +225,7 @@ export const CommentBox = styled.div`
   }
 `;
 export const CommentInfomation = styled.div`
-  width: calc(100% - 48px);
+  width: calc(100% - 58px);
   display: flex;
   justify-content: space-between;
   .comment-info {
@@ -217,13 +235,13 @@ export const CommentInfomation = styled.div`
     height: 100%;
     p {
       font-weight: 700;
-      font-size: 12px;
+      font-size: 14px;
       line-height: 12px;
       margin-bottom: 6px;
     }
     span {
       color: #b7b4b4;
-      font-size: 8px;
+      font-size: 10px;
       line-height: 8px;
     }
   }
@@ -262,4 +280,14 @@ export const NoneComment = styled.div`
   text-align: center;
   line-height: 1.8;
   color: #777;
+`;
+
+export const InputContainer = styled.div`
+  width: 100%;
+  position: relative;
+  label {
+    position: absolute;
+    top: calc(50% - 9px);
+    left: 13px;
+  }
 `;
