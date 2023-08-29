@@ -8,7 +8,7 @@ interface TagProps {
 interface TagStyleProps {
   noHover?: boolean;
 }
-export const TagStyle = styled.div<TagStyleProps>`
+
 const TagBox = styled.div`
   position: relative;
   cursor: pointer;
@@ -27,11 +27,12 @@ const TagBox = styled.div`
     }
   }
 `;
-export const TagStyle = styled.div`
+
+export const TagStyle = styled.div<TagStyleProps>`
   color: #0084ff;
   cursor: ${(props) => (props.noHover ? 'default' : 'pointer')};
   display: inline-block;
-  padding: 8px 20px 6px;
+  padding: 8px 20px 8px;
   border-radius: 20px;
   border: 2px solid #0084ff;
   text-align: center;
