@@ -58,8 +58,6 @@ const FeedUi = () => {
     },
   });
 
-  console.log('feeddata', data);
-
   const { mutate: report } = useMutation(reportPost, {
     onSuccess: (message) => {
       setModalMessge({
