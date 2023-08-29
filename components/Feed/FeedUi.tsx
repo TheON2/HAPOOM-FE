@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { FeedSection } from '../../styles/feed';
 import { useInfiniteQuery, useMutation } from 'react-query';
 import { reportPost } from '@/api/post';
@@ -59,6 +59,7 @@ const FeedUi = () => {
   });
 
   console.log('feeddata', data);
+
   const { mutate: report } = useMutation(reportPost, {
     onSuccess: (message) => {
       setModalMessge({
@@ -70,21 +71,34 @@ const FeedUi = () => {
     },
   });
 
-  const handleReportClick = (id: any) => {
-    setModalMessge({
-      actionText: '신고',
-      modalMessge: '해당 사용자를 신고하시겠습니까?',
-      onClickEvent: () => report(id),
-    });
-    setIsModalOpen(true);
-  };
+  const handleReportClick = useCallback(
+    (id: any) => {
+      setModalMessge({
+        actionText: '신고',
+        modalMessge: '해당 사용자를 신고하시겠습니까?',
+        onClickEvent: () => report(id),
+      });
+      setIsModalOpen(true);
+    },
+    [report]
+  );
 
-  const toggleExpanded = (postId: number) => {
+  const toggleExpanded = useCallback((postId: number) => {
     setExpandedPosts((prevState: ExpandedPosts) => ({
       ...prevState,
       [postId]: !prevState[postId],
     }));
-  };
+  }, []);
+
+  const handleFetchMore = useCallback(() => {
+    // 현재 스크롤 위치를 저장
+    const currentScrollY = window.scrollY;
+
+    fetchNextPage().then(() => {
+      // 데이터를 불러온 후 스크롤 위치를 원래대로 되돌림
+      window.scrollTo(0, currentScrollY);
+    });
+  }, [fetchNextPage]);
 
   if (isFetching || isFetchingNextPage) {
     return <div>로딩 중...</div>;
@@ -93,6 +107,7 @@ const FeedUi = () => {
   if (error) {
     return <div>에러가 발생했습니다</div>;
   }
+
   return (
     <FeedSection>
       <Modal
@@ -105,6 +120,7 @@ const FeedUi = () => {
       </Modal>
       {data?.pages
         .flatMap((page) => page.feed)
+
         .map((feed: Feed) => (
           <FeedPost
             key={feed.postId}
@@ -114,11 +130,12 @@ const FeedUi = () => {
             isExpanded={expandedPosts[feed.postId]}
           />
         ))}
+
       {hasNextPage && (
         <InView
           as="div"
           onChange={(inView, entry) => {
-            if (inView) fetchNextPage();
+            if (inView) handleFetchMore();
           }}
           style={{ height: '200px', opacity: 0 }}
         />

@@ -11,6 +11,9 @@ import Image from 'next/image';
 import b1 from '../../public/b1.png';
 import { UserPageData } from './UserUi';
 import Link from 'next/link';
+import { UserState } from '@/redux/reducers/userSlice';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/redux/config/configStore';
 
 interface UserProfileCardProps {
   data: UserPageData | undefined;
@@ -20,7 +23,7 @@ interface UserProfileCardProps {
 interface FollowLinkProps {
   type: 'followers' | 'followings';
   count: number;
-  userId: string;
+  userId: number | null;
 }
 
 const FollowLink: React.FC<FollowLinkProps> = ({ type, count, userId }) => (
@@ -30,6 +33,9 @@ const FollowLink: React.FC<FollowLinkProps> = ({ type, count, userId }) => (
 );
 
 const UserProfileCard: React.FC<UserProfileCardProps> = ({ data, userId }) => {
+  const { user }: { user: UserState['user'] } = useSelector(
+    (state: RootState) => state.user
+  );
   if (!data) {
     return null;
   }
@@ -56,12 +62,16 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({ data, userId }) => {
           <p className="nickName">{data.user.nickname}</p>
         </NicknameBox>
         <FollowBox>
-          <FollowLink type="followers" count={followerCount} userId={userId} />
+          <FollowLink
+            type="followers"
+            count={followerCount}
+            userId={data.user.userId}
+          />
           <span>|</span>
           <FollowLink
             type="followings"
             count={followingCount}
-            userId={userId}
+            userId={data.user.userId}
           />
         </FollowBox>
         <FollowBox>

@@ -9,9 +9,9 @@ const ButtonStyle = styled.button<Button>`
   /* height: 36px; */
   max-width: 360px;
   width: 100%;
-  padding: 10px 16px 8px;
+  padding: 12px 16px;
   margin-top: ${({ $marginTop }) => $marginTop};
-  border-radius: 3px;
+  border-radius: 6px;
   border: none;
   color: #fff;
   background-color: #52acff;
@@ -26,7 +26,7 @@ const ButtonStyle = styled.button<Button>`
     &:active {
       background-color: #d9d9d9;
     }
-  }
+  } 
   &:hover {
     background-color: #7dc1ff;
   }

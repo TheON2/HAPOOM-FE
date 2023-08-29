@@ -62,26 +62,13 @@ interface ModalMessage {
   onClickEvent?: () => void;
 }
 
-// const Box = styled.div`
-//   width: 100%;
-//   display: flex;
-//   flex-direction: column;
-//   justify-content: center;
-//   text-align: start;
-//   margin-bottom: 36px;
-//   label {
-//     margin-bottom: 24px;
-//   }
-//   /* align-items: center; */
-// `;
-
 const WritePageContainer = styled.div`
   min-height: 800px;
   padding: 0 24px;
 `;
 
 const Write: NextPage<Props> = ({ update = '1', updateId }) => {
-  const [isShow, setIsShow] = useState<boolean>(false);
+  const [isShow, setIsShow] = useState<boolean>(false) ;
   const {
     isModalOpen: oneModalOpen,
     modalMessge: oneModalMessage,
@@ -413,6 +400,7 @@ const Write: NextPage<Props> = ({ update = '1', updateId }) => {
                 <CustomButton
                   type="button"
                   onClick={handleCommentCreateHandler}
+                  $addStyle
                   className={musicType !== 0 ? 'secondary' : undefined}
                 >
                   음악 설정하기
@@ -424,7 +412,11 @@ const Write: NextPage<Props> = ({ update = '1', updateId }) => {
                 {location.x !== 0 && location.y !== 0 && (
                   <ReadOnlyMap location={location} />
                 )}
-                <CustomButton type="button" onClick={handleMapCreateHandler}>
+                <CustomButton
+                  type="button"
+                  onClick={handleMapCreateHandler}
+                  $addStyle
+                >
                   위치 설정하기
                 </CustomButton>
               </Box>

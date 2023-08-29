@@ -8,7 +8,7 @@ import React, {
 import axios from 'axios';
 import { debounce } from 'lodash';
 import styled from 'styled-components';
-import { StyledAuthInput } from '@/styles/write';
+import { InputBox, StyledAuthInput } from '@/styles/write';
 import Image from 'next/image';
 
 interface Suggestion {
@@ -19,11 +19,9 @@ interface Suggestion {
 
 interface YouTubeSearchProps {
   setVideoId: React.Dispatch<React.SetStateAction<string>>;
-  selectedTitle: string;
   setSelectedTitle: React.Dispatch<React.SetStateAction<string>>;
   update: string;
   videoId: string;
-  setIsShow: (state: boolean) => void;
 }
 
 const Container = styled.div`
@@ -35,7 +33,7 @@ const Container = styled.div`
 
 const InputContainer = styled.div`
   position: flex;
-  width: 400px;
+  width: 100%;
   align-items: center;
 `;
 
@@ -57,7 +55,7 @@ const SuggestionBox = styled.ul`
   list-style-type: none;
   padding: 0;
   margin: 0;
-  width: 400px;
+  width: 100%;
   box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
   border-radius: 4px;
   overflow: hidden;
@@ -79,11 +77,9 @@ const SuggestionItem = styled.li`
 
 export const YouTubeSearch = ({
   setVideoId,
-  selectedTitle,
   setSelectedTitle,
   update,
   videoId,
-  setIsShow,
 }: YouTubeSearchProps) => {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [searchSuggestions, setSearchSuggestions] = useState<Suggestion[]>([]);
@@ -143,9 +139,8 @@ export const YouTubeSearch = ({
       setVideoId(suggestion.url);
       setSearchSuggestions([]);
       setIsSearchComplete(true);
-      setIsShow(false);
     },
-    [setVideoId, setSelectedTitle, setIsShow]
+    [setVideoId, setSelectedTitle]
   );
 
   const handleClear = useCallback(() => {
@@ -171,25 +166,20 @@ export const YouTubeSearch = ({
   }, [update, videoId, setSelectedTitle]);
 
   return (
-    <Container>
+    <>
       {!isSearchComplete && (
         <InputContainer>
-          <StyledAuthInput
+          <InputBox
             type="text"
-            placeholder="음악 제목"
-            value={isInputActive ? searchTerm : selectedTitle}
+            placeholder="Youtube 검색하기"
+            value={searchTerm}
             onChange={handleChange}
             onKeyUp={isInputActive ? handleKeyUp : undefined}
             style={{
               width: '100%',
-              margin: '5px 0',
-              border: '2px solid #0084ff',
             }}
             disabled={!isInputActive}
           />
-          {selectedTitle && !isInputActive && (
-            <ClearButton onClick={handleClear}>X</ClearButton>
-          )}
         </InputContainer>
       )}
       {isInputActive && (
@@ -211,6 +201,6 @@ export const YouTubeSearch = ({
           ))}
         </SuggestionBox>
       )}
-    </Container>
+    </>
   );
 };
