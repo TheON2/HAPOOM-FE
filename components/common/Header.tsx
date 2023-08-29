@@ -26,7 +26,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { useMutation, useQueryClient } from 'react-query';
 import { userLogOut } from '@/api/user';
-import { LOGOUT_USER, UserState } from '@/redux/reducers/userSlice';
+import {
+  LOGOUT_USER,
+  TOGGLE_PUSH,
+  UserState,
+} from '@/redux/reducers/userSlice';
 import {
   SearchIcon,
   Bell,
@@ -46,6 +50,7 @@ const Header = ({ $sticky }: any) => {
     (state: RootState) => state.user
   );
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const [isShowMenu, setIsShowMenu] = useState<boolean>(false);
 
@@ -149,6 +154,7 @@ const Header = ({ $sticky }: any) => {
       },
       credentials: 'include',
     });
+    dispatch(TOGGLE_PUSH());
   };
 
   return (
