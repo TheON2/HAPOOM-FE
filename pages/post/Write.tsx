@@ -42,6 +42,7 @@ import { styled } from 'styled-components';
 import useModal from '@/hooks/useModal';
 import Modal from '@/components/common/Modal';
 import OneButtonModal from '@/components/common/OneButtonModal';
+import { useTranslation } from 'next-i18next';
 
 const ReadOnlyYoutube = dynamic(
   () => import('@/components/Write/ReadOnlyYoutube'),
@@ -68,7 +69,8 @@ const WritePageContainer = styled.div`
 `;
 
 const Write: NextPage<Props> = ({ update = '1', updateId }) => {
-  const [isShow, setIsShow] = useState<boolean>(false) ;
+  const { t } = useTranslation('common');
+  const [isShow, setIsShow] = useState<boolean>(false);
   const {
     isModalOpen: oneModalOpen,
     modalMessge: oneModalMessage,
@@ -332,9 +334,13 @@ const Write: NextPage<Props> = ({ update = '1', updateId }) => {
           )}
           <WritePageContainer>
             {/* <GlobalStyle /> */}
-            <form onSubmit={handlePostSubmit}>
+            <div>
               <Box>
-                {update === '2' ? <h2>게시글 수정</h2> : <h2>새 게시글</h2>}
+                {update === '2' ? (
+                  <h2>게시글 수정</h2>
+                ) : (
+                  <h2>게시글 작성하기</h2>
+                )}
                 <Dropzone
                   images={images}
                   setImages={setImages}
@@ -421,7 +427,7 @@ const Write: NextPage<Props> = ({ update = '1', updateId }) => {
                 </CustomButton>
               </Box>
               <Box>
-                <CustomButton type="submit">
+                <CustomButton onClick={handlePostSubmit}>
                   {update === '2' ? '사진 수정하기' : '사진 게시하기'}
                 </CustomButton>
               </Box>
@@ -517,7 +523,7 @@ const Write: NextPage<Props> = ({ update = '1', updateId }) => {
                   )}
                 </UpAndDownTab>
               ) : null}
-            </form>
+            </div>
           </WritePageContainer>
         </>
       )}

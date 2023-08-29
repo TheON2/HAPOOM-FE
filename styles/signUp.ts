@@ -115,16 +115,27 @@ export const SignUpBtn = styled.button`
 `;
 export const SignUpCheckBoxLayout = styled.div`
   max-width: 312px;
-  height: 184px;
+  /* height: 184px; */
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   border: 1px solid ${theme.primaryColor};
   border-radius: 4px;
+  margin-top: 12px;
+  position: relative;
 `;
 export const SignUpCheckBox = styled.div`
   display: flex;
   justify-content: flex-start;
+  align-items: center;
   margin-bottom: 11px;
+`;
+export const SignUpCheckBoxAll = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 0 0 12px;
 `;
 export const Checkbox = styled.input`
   display: inline-block;
@@ -170,8 +181,9 @@ export const Line = styled.div<Props>`
   border: 1px solid
     ${(props) => (props.$borderColor ? props.$borderColor : '#0084FF')};
   margin-bottom: 16px;
+  margin-top: ${({$marginTop}) => $marginTop || '0'};
 `;
-export const TextErrorParagraph = styled.p`
+export const TextErrorParagraph = styled.p<Props>`
   max-width: 227px;
   height: 18px;
   color: red;

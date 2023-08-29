@@ -36,7 +36,7 @@ export default class MyDocument extends Document {
 
   render() {
     return (
-      <Html lang="en">
+      <Html lang="ko">
         <Head>
           <meta name="theme-color" content="#0084ff" />
           <meta name="google" content="notranslate"></meta>

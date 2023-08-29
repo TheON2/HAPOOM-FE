@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import {
   FeedContainer,
   FeedHeader,
-  FeedMusicLikeBox,
   FeedTime,
   FeedIcon,
   FeedUserNickName,
@@ -13,6 +12,7 @@ import {
   MoreButton,
   FeedContentBox,
   TagBox,
+  FeedTagLikeBox,
 } from '../../styles/feed';
 import KebabMenuUI, {
   KebabMenuAptionButton,
@@ -104,22 +104,18 @@ const FeedPost = ({
           />
         </MainImageContainer>
 
-        <FeedMusicLikeBox>
+        <FeedTagLikeBox>
           <TagBox>
             {feed.tags.slice(0, 3).map((tag: string[], index: number) => (
-              <TagStyle key={index}>
+              <TagStyle noHover={true} key={index}>
                 <div>{tag}</div>
               </TagStyle>
             ))}
           </TagBox>
-          {/* <MusicBox>
-            <FeedPlayer />
-            <div>{feed.musicTitle}</div>
-          </MusicBox> */}
           <LikeIconContainer>
             <HeartIcon postId={feed.postId} />
           </LikeIconContainer>
-        </FeedMusicLikeBox>
+        </FeedTagLikeBox>
         <FeedContentBox>
           <FeedContent>{content}</FeedContent>
           {feed.content.length > 30 && (
