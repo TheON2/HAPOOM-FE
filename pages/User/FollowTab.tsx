@@ -156,13 +156,12 @@ const FollowTab: React.FC<FollowTabProps> = () => {
   return (
     <FollowContainer>
       <Tabs activeTab={activeTab} onTabChange={setActiveTab} />
-
       <UserList>
         {Array.isArray(activeData) &&
           activeData.map((user) => (
             <UserListItem
               key={user.email}
-              {…user}
+              {...user}
               showUnfollowButton={
                 !isMyProfile &&
                 user.email !== loggedInEmail &&
