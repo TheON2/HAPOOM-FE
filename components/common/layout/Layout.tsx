@@ -18,14 +18,16 @@ const Layout = ({ children }: layoutProps) => {
     <>
       {/* <GlobalStyle /> */}
       <LayoutStyle $isHome={isHome}>
-        <Header $sticky={isHome} />
         {isHome ? (
           <>{children}</>
         ) : (
-          <LayoutWapper>
-            <div className="center">{children}</div>
-            {/* <Footer /> */}
-          </LayoutWapper>
+          <>
+            <Header $sticky={isHome} />
+            <LayoutWapper>
+              <div className="center">{children}</div>
+              {/* <Footer /> */}
+            </LayoutWapper>
+          </>
         )}
       </LayoutStyle>
     </>

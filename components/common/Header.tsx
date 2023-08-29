@@ -39,7 +39,7 @@ import Modal from './Modal';
 
 const ENDPOINT = `${process.env.NEXT_PUBLIC_LOCAL_SERVER}`;
 
-const Header = ({ $sticky }: any) => {
+const Header = ({ $sticky, ...restProps }: any) => {
   const { user }: { user: UserState['user'] } = useSelector(
     (state: RootState) => state.user
   );
@@ -153,7 +153,7 @@ const Header = ({ $sticky }: any) => {
 
   return (
     <>
-      <HeaderLayout $sticky={$sticky}>
+      <HeaderLayout $sticky={$sticky} {...restProps}>
         <div className="center">
           <LogoBox href={'/'} onClick={handleLogoClick} $sticky={$sticky}>
             <h1>HAPOOM</h1>
@@ -178,10 +178,7 @@ const Header = ({ $sticky }: any) => {
             ) : (
               <>
                 <IconButton onClick={clickBell} $noneEdge={true}>
-                  <Bell
-                    fillColor={$sticky ? '#fff' : '#2797FF'}
-                    $isPush={user?.push}
-                  />
+                  <Bell fillColor={'#2797FF'} $isPush={user?.push} />
                 </IconButton>
                 <AuthButtonBox>
                   <Link href={'/'}>피드</Link>|
@@ -203,10 +200,7 @@ const Header = ({ $sticky }: any) => {
           </AccountActionsContainer>
           <MobileBox>
             <IconButton onClick={clickBell}>
-              <Bell
-                fillColor={$sticky ? '#fff' : '#2797FF'}
-                $isPush={user?.push}
-              />
+              <Bell fillColor={'#2797FF'} $isPush={user?.push} />
             </IconButton>
           </MobileBox>
         </div>

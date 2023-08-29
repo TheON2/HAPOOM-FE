@@ -10,27 +10,39 @@ export const HeaderLayout = styled.header<HeaderProps>`
   height: 70px;
   padding: 0 24px;
   /* position: fixed; */
-  position: ${(props) => (props.$sticky ? 'fixed' : 'sticky')};
+  position: sticky;
   z-index: 115;
   top: 0;
-  background: ${(props) => (props.$sticky ? 'none' : 'rgba(255,255,255,0.8)')};
-  backdrop-filter: ${(props) => (props.$sticky ? 'none' : 'blur(1px)')};
-  border-bottom: ${(props) => (props.$sticky ? 'none' : '1px solid #fff')};
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(1px);
+  border-bottom: 1px solid #fff;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 12px;
-  color: ${(props) => (props.$sticky ? '#fff' : '#2797ff')};
+  color: #2797ff;
+  path {
+    fill: #2797ff;
+  }
+  &.trend {
+    position: fixed;
+    background: none;
+    border: none;
+    color: ${(props) => (props.$sticky ? '#2797ff' : '#fff')};
+    path {
+      fill: ${(props) => (props.$sticky ? '#2797ff' : '#fff')};
+    }
+    @media screen and (min-width: 768px) {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(5px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+    }
+  }
   @media screen and (min-width: 768px) {
     background: rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(5px);
-
     border-bottom: 1px solid rgba(255, 255, 255, 0.5);
   }
-  /* @media screen and (max-width: 786px) {
-    position: fixed;
-    background: none;
-  } */
   .center {
     display: flex;
     justify-content: space-between;
@@ -45,6 +57,10 @@ export const HeaderLayout = styled.header<HeaderProps>`
     svg {
       width: 68%;
       height: 68%;
+      path {
+        fill: none;
+        stroke: ${(props) => (props.$sticky ? '#2797ff' : '#fff')};
+      }
     }
     &:hover {
       background-color: #00000020;
@@ -63,7 +79,7 @@ export const LogoBox = styled(Link)<HeaderProps>`
   /* border: 1px solid #000; */
   h1 {
     font-size: 24px;
-    color: ${(props) => (props.$sticky ? '#fff' : '#2797ff')};
+
     font-weight: 900;
   }
   img {
@@ -72,7 +88,7 @@ export const LogoBox = styled(Link)<HeaderProps>`
     object-fit: contain;
   }
   path {
-    fill: ${(props) => (props.$sticky ? '#fff' : '#2797ff')};
+    fill: ${(props) => (props.$sticky ? '#2797ff' : '#2797ff')};
   }
 `;
 

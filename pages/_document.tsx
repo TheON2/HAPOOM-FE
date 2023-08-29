@@ -42,7 +42,7 @@ export default class MyDocument extends Document {
           <meta name="google" content="notranslate"></meta>
           <meta
             name="viewport"
-            content="inital-scale=1, viewport-fit-cover"
+            content="inital-scale=1, viewport-fit-cover, width=device-width"
           ></meta>
           <link rel="manifest" href="/manifest.json" />
         </Head>

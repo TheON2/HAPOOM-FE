@@ -1,4 +1,10 @@
-import styled from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
+
+export const TrendGlobalStyle = createGlobalStyle`
+  body{
+    overflow: hidden;
+  }
+  `;
 
 export const HomePageLayout = styled.div`
   width: 100%;
@@ -45,24 +51,105 @@ type mainBannerProps = {
 
 export const MainBannerContainer = styled.div<mainBannerProps>`
   width: 100%;
-  height: ${(props) => (props.$isClick ? '250px' : 'calc(100vh - 52px)')};
+  height: ${(props) => (props.$isClick ? '230px' : 'calc(100vh - 70px)')};
+  background-color: ${(props) => (props.$isClick ? '#2797FF' : '#fff')};
   transition: all 0.8s ease-in-out;
   position: relative;
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: all 0.8s ease-in-out;
-    opacity: ${(props) => (props.$isClick ? '0' : '1')};
-  }
-
   @media screen and (min-width: 768px) {
     height: ${(props) => (props.$isClick ? '120px' : '100vh')};
     p {
       bottom: ${(props) => (props.$isClick ? '6px' : '12vh')};
       max-width: 768px;
-      font-size: ${(props) => (props.$isClick ? '14px' : '28px')};
+      font-size: ${(props) => (props.$isClick ? '14px' : '16px')};
       line-height: ${(props) => (props.$isClick ? '18px' : '36px')};
+    }
+  }
+`;
+export const RandomContentContainer = styled.div<mainBannerProps>`
+  width: 100%;
+  transition: all 0.3s ease-in-out;
+  opacity: ${(props) => (props.$isClick ? '0' : '1')};
+  animation: ${(props) => (props.$isClick ? 'out' : 'on')} 0.3s ease-in-out
+    forwards;
+  @keyframes off {
+    0% {
+      opacity: 1;
+    }
+    99% {
+      opacity: 0;
+    }
+    100% {
+      display: none;
+    }
+  }
+  @keyframes on {
+    0% {
+      display: none;
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+      display: block;
+    }
+  }
+`;
+export const NewContentBox = styled.div`
+  max-width: 360px;
+  width: 86%;
+  height: 75vh;
+  height: 75dvh;
+  margin: 0 auto;
+  padding: 42px 12px 60px;
+  background-color: #fff;
+  box-shadow: 0 16px 60px #a8b5c890;
+  position: absolute;
+  bottom: 36px;
+  left: 50%;
+  transform: translateX(-50%);
+  figure {
+    width: 100%;
+    height: 86%;
+    /* margin: 0 auto; */
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: all 0.8s ease-in-out;
+    }
+  }
+  @media screen and (min-width: 768px) {
+    padding: 42px 12px 80px;
+    bottom: 50%;
+    transform: translate(-50%, 50%);
+  }
+`;
+export const MainCardInfo = styled.div`
+  padding: 12px 0;
+  margin: 4px 0 0 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  img {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+  }
+  p {
+    font-weight: 400;
+    font-size: 14px;
+    color: #777;
+    .nickname-hightlight {
+      /* color: #333; */
+      font-weight: 700;
+    }
+  }
+  @media screen and (min-width: 768px) {
+    margin: 0;
+    .heart {
+      top: 13px;
+      right: 0;
     }
   }
 `;
@@ -75,38 +162,42 @@ export const MainBannerBox = styled.div<mainBannerProps>`
   gap: 46px;
   align-items: center;
   position: absolute;
-  bottom: 12vh;
-  bottom: 12dvh;
+  bottom: 90px;
   left: 50%;
   transform: translateX(-50%);
   transition: all 0.3s ease-in-out;
   color: #fff;
-  p {
-    display: flex;
-    flex-direction: column;
-    word-wrap: break-word;
-    /* position: absolute; */
-    /* transform: translateX(-50%); */
-    font-size: 20px;
-    font-weight: 700;
-    line-height: 28px;
-    color: #fff;
-    transition: all 0.3s ease-in-out;
-  }
+
   @media screen and (min-width: 768px) {
     padding: 0;
     justify-content: flex-start;
     gap: 16px;
-
     bottom: ${(props) => (props.$isClick ? '12px' : '12vh')};
-    p {
-      max-width: 768px;
-      font-size: ${(props) => (props.$isClick ? '14px' : '28px')};
-      flex-direction: ${(props) => (props.$isClick ? 'row' : 'column')};
-      line-height: ${(props) => (props.$isClick ? '18px' : '36px')};
-    }
   }
 `;
+export const RandomText = styled.p<mainBannerProps>`
+  width: 100%;
+  display: flex;
+  padding: 8px 24px;
+  border-radius: 30px;
+  flex-direction: column;
+  word-wrap: break-word;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 28px;
+  background-color: #52acff;
+  color: #fff;
+  transition: all 0.3s ease-in-out;
+  @media screen and (min-width: 768px) {
+    padding: 0;
+    background: none;
+    max-width: 768px;
+    font-size: ${(props) => (props.$isClick ? '14px' : '28px')};
+    flex-direction: ${(props) => (props.$isClick ? 'row' : 'column')};
+    line-height: ${(props) => (props.$isClick ? '18px' : '36px')};
+  }
+`;
+
 export const ButtonTouchBox = styled.div<mainBannerProps>`
   text-align: center;
   display: none;
@@ -152,14 +243,19 @@ export const ButtonTouchBox = styled.div<mainBannerProps>`
   }
   @media screen and (min-width: 768px) {
     display: flex;
-
     flex-direction: ${(props) => (props.$isClick ? 'row' : 'column')};
+    color: ${(props) => (props.$isClick ? '#fff' : '#52acff')};
     gap: 4px;
     button {
       width: 26px;
       height: 26px;
+      border: ${(props) =>
+        props.$isClick ? '2px solid #fff' : '2px solid #52acff'};
       transform: ${(props) =>
         props.$isClick ? 'rotate(-90deg)' : 'rotate(90deg)'};
+      path {
+        fill: ${(props) => (props.$isClick ? '#fff' : '#52acff')};
+      }
     }
   }
 `;
@@ -359,7 +455,9 @@ export const HashtagNavBarLayout = styled.nav<hashtagNavbarProps>`
   position: relative;
   z-index: 110;
   font-size: 10px;
-  color: #fff;
+  color: #93999f;
+  box-shadow: ${(props) =>
+    props.$isClick ? '0 -5px 16px agba(0,0,0,0.5)' : '0 -5px 16px #d8e1ef80'};
   overflow: hidden;
   .button-wrap {
     max-width: 768px;
@@ -369,13 +467,14 @@ export const HashtagNavBarLayout = styled.nav<hashtagNavbarProps>`
   }
   .background {
     width: 100%;
-    padding: 0px 24px 27px;
+    padding: 0px 24px 16px;
     background: linear-gradient(
       180deg,
-      rgba(255, 255, 255, 0.22) 80%,
+      rgba(255, 255, 255, 0.22) 60%,
+      #fff 70%,
       #fff 90%,
-      #fff 95%,
-      rgba(255, 255, 255, 0.1) 100%
+      rgba(255, 255, 255, 0.1) 95%,
+      rgba(255, 255, 255, 0) 100%
     );
     display: flex;
     flex-direction: column;
@@ -468,6 +567,10 @@ export const HashtagAll = styled.div`
       object-fit: cover;
     }
   }
+  &.active {
+    color: #52acff;
+    font-weight: 700;
+  }
   &.active::after {
     content: '';
     position: absolute;
@@ -496,6 +599,7 @@ export const HashtagAll = styled.div`
     figure {
       width: 90px;
       height: 64px;
+      box-shadow: 0 2px 3px #33476550;
     }
     &.active::after {
       content: '';
@@ -532,6 +636,10 @@ export const HashtagItem = styled.li`
       object-fit: cover;
     }
   }
+  &.active {
+    color: #52acff;
+    font-weight: 700;
+  }
   &.active::after {
     content: '';
     position: absolute;
@@ -560,6 +668,7 @@ export const HashtagItem = styled.li`
     figure {
       width: 90px;
       height: 64px;
+      box-shadow: 0 2px 5px #33476550;
     }
     &.active::after {
       content: '';

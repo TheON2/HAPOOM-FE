@@ -55,16 +55,18 @@ const HashtagNavBar: React.FC<HashtagNavBarProps> = ({
   };
   return (
     <HashtagNavBarLayout $isClick={$isClick}>
-      <div className="button-wrap">
-        <ButtonBox className="hash">
-          <button className="left" onClick={onClickHashSlideLeftHandler}>
-            <ArrowLong />
-          </button>
-          <button onClick={onClickHashSlideRightHandler}>
-            <ArrowLong />
-          </button>
-        </ButtonBox>
-      </div>
+      {$isClick ? (
+        <div className="button-wrap">
+          <ButtonBox className="hash">
+            <button className="left" onClick={onClickHashSlideLeftHandler}>
+              <ArrowLong />
+            </button>
+            <button onClick={onClickHashSlideRightHandler}>
+              <ArrowLong />
+            </button>
+          </ButtonBox>
+        </div>
+      ) : null}
       <div className="background">
         <ScrollBar onClick={onClickEvent}>
           <span></span>

@@ -15,7 +15,7 @@ import { getAuthToken } from '@/api/user';
 import { AUTH_USER, UserResponse } from '@/redux/reducers/userSlice';
 import { useDispatch } from 'react-redux';
 import { setCookie } from 'nookies';
-import { HomePageLayout } from '@/styles/home';
+import { HomePageLayout, TrendGlobalStyle } from '@/styles/home';
 import { MainPageProps } from '@/types/home';
 
 const Home: NextPage<MainPageProps> = ({
@@ -78,34 +78,38 @@ const Home: NextPage<MainPageProps> = ({
   }
 
   return (
-    <HomePageLayout>
-      <MainBanner
-        data={data}
-        $isClick={isClick}
-        randomPosts={randomPosts}
-        onClickBottomNavHandler={onClickBottomNavHandler}
-      />
-      <HashtagNavBar
-        data={tagFilter}
-        $isClick={isClick}
-        onClickEvent={onClickBottomNavHandler}
-        hashTag={hashTag}
-        setHashTag={setHashTag}
-        setTagCategory={setTagCategory}
-        undefindeTagThumbnail={undefindeTagThumbnail}
-        allTagThumbnail={allTagThumbnail}
-      />
-      <Main>
-        <HashtagContents
-          serverPropData={hashContent}
-          tagData={hashtagSearch}
-          undefindeTag={undefindeTag}
-          hashTag={hashTag}
-          tagCategory={tagCategory}
+    <>
+      <TrendGlobalStyle />
+      <Header className={'trend'} $sticky={!isClick} />
+      <HomePageLayout>
+        <MainBanner
+          data={data}
+          $isClick={isClick}
+          randomPosts={randomPosts}
+          onClickBottomNavHandler={onClickBottomNavHandler}
         />
-        <PopularContentsCarousel data={popularContent} />
-      </Main>
-    </HomePageLayout>
+        <HashtagNavBar
+          data={tagFilter}
+          $isClick={isClick}
+          onClickEvent={onClickBottomNavHandler}
+          hashTag={hashTag}
+          setHashTag={setHashTag}
+          setTagCategory={setTagCategory}
+          undefindeTagThumbnail={undefindeTagThumbnail}
+          allTagThumbnail={allTagThumbnail}
+        />
+        <Main>
+          <HashtagContents
+            serverPropData={hashContent}
+            tagData={hashtagSearch}
+            undefindeTag={undefindeTag}
+            hashTag={hashTag}
+            tagCategory={tagCategory}
+          />
+          <PopularContentsCarousel data={popularContent} />
+        </Main>
+      </HomePageLayout>
+    </>
   );
 };
 
