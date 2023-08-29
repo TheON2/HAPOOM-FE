@@ -9,6 +9,7 @@ import Script from 'next/script';
 import React, { FormEvent, useEffect, useRef, useState } from 'react';
 import Button from '../common/Button';
 import { Xmark } from '../common/SVG';
+import { YouTubeSearch } from './YoutubeSearchInput';
 
 interface YoutubePlayerProps {
   videoId: string;
@@ -139,11 +140,16 @@ const YoutubePlayer = ({
     <RecordButtonBox>
       <InputBox
         type="text"
-        placeholder="YouTube URL을 입력하세요"
+        placeholder="YouTube URL로 공유하기"
         value={inputURL}
         onChange={(e) => setInputURL(e.target.value)}
       />
-
+      <YouTubeSearch
+        setVideoId={setVideoId}
+        setSelectedTitle={setSelectedTitle}
+        update={update}
+        videoId={videoId}
+      />
       {!validURL && <div>URL이 유효하지 않습니다.</div>}
       <PlayerWrapper videoId={videoId}>
         {update !== '3' && (
