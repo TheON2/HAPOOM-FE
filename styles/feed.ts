@@ -49,8 +49,8 @@ export const MainImageContainer = styled.div`
   align-items: center;
   overflow: hidden;
   cursor: pointer;
-  img{
-    width: 100%;  
+  img {
+    width: 100%;
   }
   @media (max-width: 768px) {
     height: 189px;
@@ -106,8 +106,9 @@ export const MoreButton = styled.button`
   color: #000;
   cursor: pointer;
   @media (max-width: 520px) {
-    text-align: left; 
-}
+    text-align: left;
+  }
+
 `;
 export const LikeIconContainer = styled.div`
   width: 50px;

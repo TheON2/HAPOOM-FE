@@ -7,7 +7,7 @@ type profileProps = {
   userImage: string | null | undefined;
   preset: number | null | undefined;
   loading?: 'eager' | 'lazy' | undefined;
-  onClick?: () => void;
+  onClick?: (event: React.MouseEvent) => void;
 };
 
 const ProfileImage = ({ userImage, preset, ...restProps }: profileProps) => {
