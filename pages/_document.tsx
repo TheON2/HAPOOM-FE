@@ -40,6 +40,7 @@ export default class MyDocument extends Document {
         <Head>
           <meta name="theme-color" content="#0084ff" />
           <meta name="google" content="notranslate"></meta>
+
           <link rel="manifest" href="/manifest.json" />
         </Head>
         <body>
