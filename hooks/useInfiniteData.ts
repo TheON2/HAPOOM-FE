@@ -2,7 +2,10 @@ import { useEffect, useRef } from 'react';
 import { useInfiniteQuery } from 'react-query';
 import { getMyPosts, getMyLikedPosts, getFeed } from '../api/post';
 
-export const useInfiniteData = (type: 'post' | 'like' | 'feed', enabled = true) => {
+export const useInfiniteData = (
+  type: 'post' | 'like' | 'feed',
+  enabled = true
+) => {
   const fetchFunction = async ({ pageParam = 1 }) => {
     console.log('pageParam:', pageParam);
     const method = 'GET';
@@ -39,7 +42,7 @@ export const useInfiniteData = (type: 'post' | 'like' | 'feed', enabled = true) 
 
       if (
         window.innerHeight + window.scrollY >=
-        document.body.offsetHeight - 500
+        document.body.offsetHeight - 300
       ) {
         if (hasNextPage && !isFetchingNextPage) {
           fetchNextPage();
