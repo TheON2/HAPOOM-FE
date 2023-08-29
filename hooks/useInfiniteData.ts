@@ -6,6 +6,7 @@ export const useInfiniteData = (
   type: 'post' | 'like' | 'feed',
   enabled = true
 ) => {
+
   const fetchFunction = async ({ pageParam = 1 }) => {
     console.log('pageParam:', pageParam);
     const method = 'GET';

@@ -30,6 +30,7 @@ function SocketManager({
     // push가 true인 경우에만 소켓 이벤트를 수신
     console.log('푸시 설정 ON');
 
+
     socket.on('notify-post', (data) => {
       if (user.push) setNotification(data.message);
     });
@@ -57,6 +58,7 @@ function SocketManager({
     return () => {
       socket.disconnect();
     };
+
   }, [user.push, setNotification, setRandomPosts]); // user.push를 의존성 배열에 추가
 
   return null; // 이 컴포넌트는 UI를 렌더링하지 않습니다.

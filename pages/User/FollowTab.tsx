@@ -162,7 +162,7 @@ const FollowTab: React.FC<FollowTabProps> = () => {
           activeData.map((user) => (
             <UserListItem
               key={user.email}
-              {...user}
+              {…user}
               showUnfollowButton={
                 !isMyProfile &&
                 user.email !== loggedInEmail &&

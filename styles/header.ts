@@ -43,8 +43,12 @@ export const HeaderLayout = styled.header<HeaderProps>`
     justify-content: center;
     align-items: center;
     svg {
-      width: 70%;
-      height: 70%;
+      width: 68%;
+      height: 68%;
+    }
+    &:hover {
+      background-color: #00000020;
+      border-radius: 50%;
     }
   }
 `;
@@ -125,7 +129,7 @@ export const AccountActionsContainer = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  gap: 24px;
+  gap: 16px;
   width: 80%;
   @media screen and (max-width: 786px) {
     display: none;
@@ -181,14 +185,17 @@ export const ProfileButton = styled.button<HeaderProps>`
 export const AuthButtonBox = styled.div`
   display: flex;
   align-items: center;
-  gap: 8px;
+  /* gap: 8px; */
   font-weight: 700;
   button {
     border: none;
     background: none;
   }
-  a:hover {
-    color: #1f6cb9;
+  a {
+    padding: 20px 8px;
+    &:hover {
+      color: #1f6cb9;
+    }
   }
 `;
 

@@ -108,6 +108,7 @@ export const MoreButton = styled.button`
   @media (max-width: 520px) {
     text-align: left;
   }
+
 `;
 export const LikeIconContainer = styled.div`
   width: 50px;
