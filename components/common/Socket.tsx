@@ -26,47 +26,39 @@ function SocketManager({
 
   // const dispatch = useDispatch();
   useEffect(() => {
-    // console.log('소켓');
+    const socket = socketIOClient(ENDPOINT);
+    // push가 true인 경우에만 소켓 이벤트를 수신
+    console.log('푸시 설정 ON');
 
-    if (!user.push) {
-      // push가 true인 경우에만 소켓 이벤트를 수신
-      const socket = socketIOClient(ENDPOINT);
 
-      socket.on('notify-post', (data) => {
-        setNotification(data.message);
-      });
+    socket.on('notify-post', (data) => {
+      if (user.push) setNotification(data.message);
+    });
 
-      socket.on('loginSuccess', (data) => {
-        const { email, nickname } = data;
+    socket.on('loginSuccess', (data) => {
+      const { email, nickname } = data;
+      if (user.push)
         setNotification(
           `User ${nickname} with email ${email} logged in successfully.`
         );
-        console.log('로그인');
-        // dispatch(ADD_NOTIFICATION(`${nickname}님이 로그인 하셨습니다.`));
-        setTimeout(() => {
-          // dispatch(CLEAR_NOTIFICATION());
-          setNotification(null);
-        }, 5000);
-      });
 
-      socket.on('random-posts', (posts) => {
-        setRandomPosts(posts);
-        console.log('random messages received');
-        setTimeout(() => {
-          setRandomPosts(null);
-        }, 10000);
-      });
+      setTimeout(() => {
+        setNotification(null);
+      }, 5000);
+    });
 
-      socket.on('newPost', () => {
-        // dispatch(ADD_NOTIFICATION(`새 글이 등록 되었습니다.`));
-        console.log('newpost');
-        setNotification(`새 글이 등록 되었습니다.`);
-      });
+    socket.on('random-posts', (posts) => {
+      if (user.push) setRandomPosts(posts);
+    });
 
-      return () => {
-        socket.disconnect();
-      };
-    }
+    socket.on('newPost', () => {
+      if (user.push) setNotification(`새 글이 등록 되었습니다.`);
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+
   }, [user.push, setNotification, setRandomPosts]); // user.push를 의존성 배열에 추가
 
   return null; // 이 컴포넌트는 UI를 렌더링하지 않습니다.
