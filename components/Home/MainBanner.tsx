@@ -12,21 +12,24 @@ import {
 import { ArrowLong } from '../common/SVG';
 import ProfileImage from '../common/ProfileImage';
 import HeartIcon from '../common/HeartIcon';
-
+import { useSelector } from 'react-redux';
+import { RootState } from '@/redux/config/configStore';
 const MainBanner = ({
   data,
   $isClick,
   randomPosts,
   onClickBottomNavHandler,
 }: any) => {
+  const randomPost = useSelector((state: RootState) => state.notification.post);
+
   return (
     <MainBannerContainer $isClick={$isClick}>
       <RandomContentContainer $isClick={$isClick}>
         <NewContentBox>
           <figure>
             <Image
-              src={data[0]?.src}
-              alt="v13 image"
+              src={randomPost?.images}
+              alt="random user image"
               width={768}
               height={800}
               loading="eager"
@@ -34,12 +37,17 @@ const MainBanner = ({
             />
           </figure>
           <MainCardInfo>
-            <ProfileImage userImage={''} preset={5} />
+            <ProfileImage
+              userImage={randomPost?.user?.userImage}
+              preset={randomPost?.user.preset}
+            />
             <p>
-              <span className="nickname-hightlight">아무개</span>님이 품은
-              하늘입니다
+              <span className="nickname-hightlight">
+                {randomPost?.user.nickname}
+              </span>
+              님이 품은 하늘입니다
             </p>
-            <HeartIcon postId={1} />
+            <HeartIcon postId={randomPost?.post.postId} />
           </MainCardInfo>
         </NewContentBox>
       </RandomContentContainer>
