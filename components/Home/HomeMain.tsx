@@ -14,12 +14,14 @@ const MainLayout = styled.main`
   -ms-overflow-style: none;
   scrollbar-width: none;
   @media screen and (min-width: 768px) {
+    height: calc(100vh - 240px);
+    height: calc(100dvh - 240px);
     transform: translateY(0);
   }
-  @media screen and (min-width: 768px) {
+  /* @media screen and (min-width: 768px) {
     height: auto;
     transform: translateY(0);
-  }
+  } */
   .center {
     margin: 0 auto;
     max-width: 768px;

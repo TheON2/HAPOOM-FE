@@ -29,7 +29,7 @@ const MainBanner = ({
           <span>{randomPosts && randomPosts[0].content2}</span>
         </p>
         <ButtonTouchBox $isClick={$isClick}>
-          touch
+          more
           <button onClick={onClickBottomNavHandler}>
             <ArrowLong />
           </button>

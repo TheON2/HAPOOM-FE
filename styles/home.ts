@@ -4,14 +4,14 @@ export const HomePageLayout = styled.div`
   width: 100%;
   height: 100vh;
   overflow: hidden;
-  @media screen and (min-width: 768px) {
+  /* @media screen and (min-width: 768px) {
     overflow: auto;
     &::-webkit-scrollbar {
       display: none;
     }
     -ms-overflow-style: none;
     scrollbar-width: none;
-  }
+  } */
 `;
 // main comment section styled
 export const SectionTitle = styled.h2`
@@ -157,6 +157,8 @@ export const ButtonTouchBox = styled.div<mainBannerProps>`
     button {
       width: 26px;
       height: 26px;
+      transform: ${(props) =>
+        props.$isClick ? 'rotate(-90deg)' : 'rotate(90deg)'};
     }
   }
 `;
@@ -485,9 +487,7 @@ export const HashtagItem = styled.li`
     &.active::after {
       content: '';
       position: absolute;
-      width: 52px;
-      height: 52px;
-      transform: translate(-50%, -67%);
+      transform: translate(-50%, -66%);
       width: 98px;
       height: 72px;
       border-radius: 16px;
@@ -534,10 +534,10 @@ export const CarouselStyle = styled.div`
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
   }
   @media screen and (min-width: 460px) {
-    --size: 210px;
+    --size: 280px;
   }
   @media screen and (min-width: 768px) {
-    --size: 280px;
+    --size: 320px;
   }
 `;
 export const CarouselHeader = styled.div`
@@ -598,12 +598,12 @@ export const CardContainer = styled.div<CarouselStyleprops>`
     transform: rotateY(calc(0 * 50deg))
       scaleY(calc(1 + var(--abs-offset) * -0.4))
       translateZ(calc(var(--abs-offset) * -30rem))
-      translateX(calc(var(--direction) * -8rem));
+      translateX(calc(var(--direction) * -12rem));
   }
   @media screen and (min-width: 768px) {
     transform: rotateY(calc(0 * 50deg))
       scaleY(calc(1 + var(--abs-offset) * -0.4))
       translateZ(calc(var(--abs-offset) * -30rem))
-      translateX(calc(var(--direction) * -15.3rem));
+      translateX(calc(var(--direction) * -14rem));
   }
 `;
