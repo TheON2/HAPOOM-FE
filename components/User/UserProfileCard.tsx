@@ -65,13 +65,13 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({ data, userId }) => {
           <FollowLink
             type="followers"
             count={followerCount}
-            userId={user.userId}
+            userId={data.user.userId}
           />
           <span>|</span>
           <FollowLink
             type="followings"
             count={followingCount}
-            userId={user.userId}
+            userId={data.user.userId}
           />
         </FollowBox>
         <FollowBox>

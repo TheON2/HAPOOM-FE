@@ -69,21 +69,21 @@ const PostLike: React.FC<PostLike> = ({
   console.log('userdata', infiniteData);
   useEffect(() => {
     if (selectedTab === 0) {
-      setDisplayedPosts(infiniteData?.pages.flat() ?? []);
+      if (data?.posts) {
+        setDisplayedPosts(data.posts);
+      } else {
+        setDisplayedPosts(infiniteData?.pages.flat() ?? []);
+      }
     } else if (selectedTab === 1) {
-      setDisplayedPosts(
-        infiniteData?.pages.flat().filter((p) => p.isLiked) ?? []
-      );
+      if (data?.likedPosts) {
+        setDisplayedPosts(data.likedPosts);
+      } else {
+        setDisplayedPosts(
+          infiniteData?.pages.flat().filter((p) => p.isLiked) ?? []
+        );
+      }
     }
-  }, [selectedTab, infiniteData]);
-
-  useEffect(() => {
-    if (selectedTab === 0) {
-      setDisplayedPosts(data?.posts ?? null);
-    } else if (selectedTab === 1) {
-      setDisplayedPosts(data?.likedPosts);
-    }
-  }, [data, selectedTab]);
+  }, [selectedTab, infiniteData, data]);
 
   const handleLikeClick = (postId: number, isLiked: boolean) => {
     if (isLiked) {
@@ -96,6 +96,7 @@ const PostLike: React.FC<PostLike> = ({
         prevPosts.filter((p) => p.postId !== postId)
       );
     }
+    setSelectedTab(1);
   };
 
   useEffect(() => {

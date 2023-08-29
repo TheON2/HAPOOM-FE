@@ -2,8 +2,13 @@ import { useEffect, useRef } from 'react';
 import { useInfiniteQuery } from 'react-query';
 import { getMyPosts, getMyLikedPosts, getFeed } from '../api/post';
 
-export const useInfiniteData = (type: 'post' | 'like' | 'feed', enabled = true) => {
+export const useInfiniteData = (
+  type: 'post' | 'like' | 'feed',
+  enabled = true
+) => {
+
   const fetchFunction = async ({ pageParam = 1 }) => {
+    console.log('pageParam:', pageParam);
     const method = 'GET';
     if (type === 'post') {
       return await getMyPosts(method, pageParam);

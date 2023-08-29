@@ -70,10 +70,9 @@ const UserUi: React.FC<UserUiProps> = ({ userId, loggedInEmail }) => {
       () =>
         isOwnProfile ? getMyProfile() : getUserProfile({ UserId: userId }),
       {
-        enabled: !!userId, // userId가 유효한 값일 때만 쿼리가 실행되게 함
+        enabled: !!userId,
       }
     );
-  console.log('UserPageData:', data);
 
   if (error) {
     return <div>Error loading user data.</div>;
@@ -82,15 +81,13 @@ const UserUi: React.FC<UserUiProps> = ({ userId, loggedInEmail }) => {
   return (
     <>
       {isSuccess && (
-        <>
-          <UserPageSection>
-            <UserPageContainer>
-              <UserProfileCard data={data} userId={userId} />
-              <FollowButton profileUserId={data?.user?.userId} />
-              <PostLike data={data} />
-            </UserPageContainer>
-          </UserPageSection>
-        </>
+        <UserPageSection>
+          <UserPageContainer>
+            <UserProfileCard data={data} userId={userId} />
+            <FollowButton profileUserId={data?.user?.userId} />
+            <PostLike data={data} />
+          </UserPageContainer>
+        </UserPageSection>
       )}
     </>
   );
