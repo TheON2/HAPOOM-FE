@@ -77,7 +77,7 @@ const TagInput: React.FC<TagInputProps> = ({ tags, setTags }) => {
         <label>태그</label>
         <InputBox
           type="text"
-          placeholder="#태그"
+          placeholder="태그를 입력해주세요."
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
           onKeyUp={handleTagChange}
