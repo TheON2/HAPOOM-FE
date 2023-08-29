@@ -430,6 +430,7 @@ const MAX_VISIBILITY = 3;
 export const HomeMainSection = styled.section`
   background-color: #f0f1f2;
   margin-top: 24px;
+  padding-bottom: 100px;
   @media screen and (min-width: 786px) {
     padding-top: 24px;
   }
@@ -444,7 +445,7 @@ export const PopularContentsContainer = styled.div`
 `;
 
 export const CarouselStyle = styled.div`
-  --size: 180px;
+  --size: 210px;
   position: relative;
   width: var(--size);
   height: var(--size);
@@ -462,6 +463,13 @@ export const CarouselStyle = styled.div`
   }
 `;
 
+export const ButtonBox = styled.div`
+  position: absolute;
+  width: 100%;
+  button {
+    left: 0;
+  }
+`;
 export const CardContainer = styled.div<CarouselStyleprops>`
   position: absolute;
   width: 100%;

@@ -4,6 +4,7 @@ import { childrenProps } from '@/types/common';
 const MainLayout = styled.main`
   width: 100%;
   height: calc(100vh - 252px);
+  height: calc(100dvh - 252px);
   overflow-y: auto;
   transform: translateY(-107px);
   background-color: #fff;

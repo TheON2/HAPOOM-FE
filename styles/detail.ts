@@ -129,6 +129,7 @@ export const ContentsContainer = styled.div`
 `;
 export const HashtagBox = styled.div`
   display: flex;
+  flex-wrap: wrap;
   gap: 8px;
 `;
 

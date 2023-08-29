@@ -145,6 +145,7 @@ export const GoWriteLink = styled(Link)`
   align-items: center;
   position: fixed;
   bottom: 12vh;
+  bottom: 12dvh;
   right: 56px;
   background-color: #fff;
   z-index: 114;
