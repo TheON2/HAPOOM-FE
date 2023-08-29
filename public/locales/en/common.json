@@ -1,0 +1,93 @@
+{
+  "login": {
+    "nicknameLoggedIn": "{{nickname}} has logged in.",
+    "failedLogin": "You failed to login. Please check your id or password.",
+    "loginPrompt": "Available after login. Would you like to sign in?",
+    "googleLogin": "Google Login",
+    "kakaoLogin": "KakaoTalk Login",
+    "naverLogin": "Naver Login",
+    "signUp": "Sign Up",
+    "signIn": "Sign In",
+    "logOutSuccess": "Successfully Logout.",
+    "alreadyInHapoom": "Already in Hapoom? Log In",
+    "goToLogin": "go to log in",
+    "youAreLoggedOut": "You are logged out"
+  },
+  "comments": {
+    "commentPlaceholder": "Please comment....",
+    "noComments": "No Comment",
+    "beFirst": "Be a First one for the comment!",
+    "wouldYouDelete": "Would you delete your comment?",
+    "savePrompt": "Would you like to save your comment?",
+    "editPrompt": "Would you like to edit your comment?"
+  },
+  "post": {
+    "newPostCreated": "New post has been created!",
+    "wouldYouDeletePost": "Would you like to delete this post?",
+    "reportPostPrompt": "Would you like to report this post?",
+    "editPost": "Edit",
+    "deletePrompt": "Would you like to delete this post?"
+  },
+  "general": {
+    "yes": "Yes",
+    "cancel": "Cancel",
+    "update": "Update",
+    "edit": "Edit",
+    "deletedSuccessfully": "Deleted Successfully.",
+    "somethingWentWrong": "Something went wrong...",
+    "unexpectedError": "unexpected error has been occurred.",
+    "pleaseTryAgain": "please try again",
+    "done": "Done",
+    "upload": "Upload",
+    "save": "Save",
+    "location": "location",
+    "close": "close",
+    "find": "find",
+    "comment": "Comment",
+    "post": "Post",
+    "like": "Like",
+    "report": "Report",
+    "tag": "tag",
+    "share": "share"
+  },
+  "search": {
+    "noResults": "your search did not match any results.",
+    "errorSearching": "Something went wrong when searching",
+    "searchPrompt": "What kind of Sky are you searching for today?",
+    "pleaseLookAround": "Please look around broader skies!"
+  },
+  "settings": {
+    "changeNickname": "Change Nickname",
+    "editProfile": "edit profile",
+    "editPassword": "edit password",
+    "logout": "logout",
+    "originalMode": "Original Mode",
+    "midnightMode": "Midnight Mode"
+  },
+  "registration": {
+    "failedRegistration": "You failed to register. Please check your id or password.",
+    "nicknameExists": "Nickname already existed.",
+    "termsPrompt": "Please check the registeration Terms",
+    "invalidEmail": "Invalid email format",
+    "passwordGuidance": "The password must be at least 8 characters long and include both letters and numbers",
+    "confirmPassword": "Please confirm your password.",
+    "enterNickname": "Please enter your nickname.",
+    "registrationComplete": "member registration complete!"
+  },
+  "profile": {
+    "nicknameGuidance": "Nickname should be between 2 and 15 characters.",
+    "passwordMismatch": "It seems it doesn't match with your password.",
+    "passwordChangeSuccess": "Password modification has been completed"
+  },
+  "others": {
+    "follow": "Follow : Following",
+    "wouldYouUnfollow": "Would you like to unfollow?",
+    "reportUserPrompt": "Would you like to report this user?",
+    "hashtagsLength": "Hashtags cannot be longer than 5 characters!",
+    "hashtagsMinimum": "hashtags must be at least 2 characters long!",
+    "maximumTags": "you can upload up to 5 tags",
+    "locationInfo": "location information",
+    "recordInfo": "recording information",
+    "recordingTime": "recording time"
+  }
+}
