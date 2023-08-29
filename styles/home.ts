@@ -80,7 +80,7 @@ export const MainBannerBox = styled.div<mainBannerProps>`
   left: 50%;
   transform: translateX(-50%);
   transition: all 0.3s ease-in-out;
-
+  color: #fff;
   p {
     display: flex;
     flex-direction: column;
@@ -95,8 +95,9 @@ export const MainBannerBox = styled.div<mainBannerProps>`
   }
   @media screen and (min-width: 768px) {
     padding: 0;
-    justify-content: ${(props) =>
-      props.$isClick ? 'space-between' : 'flex-start'};
+    justify-content: flex-start;
+    gap: 16px;
+
     bottom: ${(props) => (props.$isClick ? '12px' : '12vh')};
     p {
       max-width: 768px;
@@ -360,6 +361,12 @@ export const HashtagNavBarLayout = styled.nav<hashtagNavbarProps>`
   font-size: 10px;
   color: #fff;
   overflow: hidden;
+  .button-wrap {
+    max-width: 768px;
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+  }
   .background {
     width: 100%;
     padding: 0px 24px 27px;
@@ -379,6 +386,8 @@ export const HashtagNavBarLayout = styled.nav<hashtagNavbarProps>`
     transform: translateY(0);
     border-radius: 0;
     color: #aaa;
+    overflow: visible;
+
     .background {
       width: 100%;
       padding: 12px 24px 12px;
@@ -412,6 +421,7 @@ export const HashtagList = styled.ul`
   overflow-x: scroll;
   overflow-y: hidden;
   white-space: nowrap;
+  scroll-behavior: smooth;
   &::-webkit-scrollbar {
     display: none;
   }
@@ -431,6 +441,73 @@ export const HashtagListOther = styled.div`
     position: absolute;
     top: 2px;
     right: -1px;
+    @media screen and (min-width: 768px) {
+      height: 72px;
+    }
+  }
+`;
+export const HashtagAll = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  font-size: 9px;
+  cursor: pointer;
+  /* width: 44px; */
+  figure {
+    position: relative;
+    margin-bottom: 8px;
+    overflow: hidden;
+    border-radius: 12px;
+    width: 44px;
+    height: 44px;
+    /* box-shadow: 0 1px 2px #17417280; */
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+  &.active::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 52px;
+    height: 52px;
+    transform: translate(-50%, -69%);
+    border-radius: 16px;
+    border: 5px solid transparent;
+    background-image: linear-gradient(#fff, #fff),
+      linear-gradient(
+        38deg,
+        rgba(253, 253, 253, 1) 0%,
+        rgba(82, 172, 255, 1) 100%
+      );
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+    box-sizing: border-box;
+    z-index: -1;
+  }
+
+  @media screen and (min-width: 768px) {
+    font-size: 12px;
+    font-weight: 500;
+    figure {
+      width: 90px;
+      height: 64px;
+    }
+    &.active::after {
+      content: '';
+      position: absolute;
+      transform: translate(-50%, -66%);
+      width: 98px;
+      height: 72px;
+      border-radius: 16px;
+    }
+  }
+  &:hover {
+    filter: brightness(0.8);
   }
 `;
 export const HashtagItem = styled.li`
@@ -534,7 +611,7 @@ export const CarouselStyle = styled.div`
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
   }
   @media screen and (min-width: 460px) {
-    --size: 280px;
+    --size: 260px;
   }
   @media screen and (min-width: 768px) {
     --size: 320px;
@@ -550,6 +627,7 @@ export const ButtonBox = styled.div`
   display: flex;
   padding: 0 24px;
   gap: 12px;
+
   button {
     display: flex;
     justify-content: center;
@@ -565,6 +643,28 @@ export const ButtonBox = styled.div`
     }
     &:hover {
       path {
+        fill: #2797ff;
+      }
+    }
+  }
+  &.hash {
+    position: absolute;
+    top: -42px;
+    right: 0;
+    padding: 0;
+    z-index: 122;
+    button {
+      width: 32px;
+      height: 32px;
+      background-color: #ffffff30;
+
+      svg {
+        transform: scale(70%);
+      }
+      path {
+        fill: #fff;
+      }
+      &:hover path {
         fill: #2797ff;
       }
     }
@@ -598,7 +698,7 @@ export const CardContainer = styled.div<CarouselStyleprops>`
     transform: rotateY(calc(0 * 50deg))
       scaleY(calc(1 + var(--abs-offset) * -0.4))
       translateZ(calc(var(--abs-offset) * -30rem))
-      translateX(calc(var(--direction) * -12rem));
+      translateX(calc(var(--direction) * -8rem));
   }
   @media screen and (min-width: 768px) {
     transform: rotateY(calc(0 * 50deg))

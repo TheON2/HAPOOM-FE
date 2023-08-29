@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { HashtagNavBarProps } from '@/types/home';
 import {
   HashtagNavBarLayout,
@@ -8,7 +8,10 @@ import {
   ScrollBar,
   HashtagListContainer,
   HashtagListOther,
+  ButtonBox,
+  HashtagAll,
 } from '@/styles/home';
+import { ArrowLong } from '../common/SVG';
 
 const HashtagNavBar: React.FC<HashtagNavBarProps> = ({
   data,
@@ -21,6 +24,7 @@ const HashtagNavBar: React.FC<HashtagNavBarProps> = ({
   allTagThumbnail,
 }) => {
   const [active, setActive] = useState<number>(0);
+  const scrollContainerRef = useRef<HTMLUListElement | null>(null);
   const otherIndex = data.length + 1;
   const onClickAllTagHandler = () => {
     setHashTag('');
@@ -36,16 +40,38 @@ const HashtagNavBar: React.FC<HashtagNavBarProps> = ({
     setTagCategory('기타');
     setActive(otherIndex);
   };
-
+  const onClickHashSlideRightHandler = () => {
+    const scrollContainer = scrollContainerRef.current;
+    if (scrollContainer) {
+      scrollContainer.scrollLeft =
+        scrollContainer.scrollWidth - scrollContainer.clientWidth;
+    }
+  };
+  const onClickHashSlideLeftHandler = () => {
+    const scrollContainer = scrollContainerRef.current;
+    if (scrollContainer) {
+      scrollContainer.scrollLeft = 0; // 왼쪽 끝으로 스크롤
+    }
+  };
   return (
     <HashtagNavBarLayout $isClick={$isClick}>
+      <div className="button-wrap">
+        <ButtonBox className="hash">
+          <button className="left" onClick={onClickHashSlideLeftHandler}>
+            <ArrowLong />
+          </button>
+          <button onClick={onClickHashSlideRightHandler}>
+            <ArrowLong />
+          </button>
+        </ButtonBox>
+      </div>
       <div className="background">
         <ScrollBar onClick={onClickEvent}>
           <span></span>
         </ScrollBar>
         <HashtagListContainer>
           <HashtagListOther>
-            <HashtagItem
+            <HashtagAll
               onClick={onClickAllTagHandler}
               className={active === 0 ? 'active' : ''}
             >
@@ -59,10 +85,10 @@ const HashtagNavBar: React.FC<HashtagNavBarProps> = ({
                 />
               </figure>
               <figcaption>#전체</figcaption>
-            </HashtagItem>
+            </HashtagAll>
             <span className="line"></span>
           </HashtagListOther>
-          <HashtagList>
+          <HashtagList ref={scrollContainerRef}>
             {data?.map((hashtag, index) => {
               return (
                 <HashtagItem

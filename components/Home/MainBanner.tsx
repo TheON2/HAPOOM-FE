@@ -24,16 +24,17 @@ const MainBanner = ({
         priority={true}
       />
       <MainBannerBox $isClick={$isClick}>
-        <p>
-          {randomPosts && randomPosts[0].content1}
-          <span>{randomPosts && randomPosts[0].content2}</span>
-        </p>
         <ButtonTouchBox $isClick={$isClick}>
           more
           <button onClick={onClickBottomNavHandler}>
             <ArrowLong />
           </button>
         </ButtonTouchBox>
+
+        <p>
+          {randomPosts && randomPosts[0].content1}
+          <span>{randomPosts && randomPosts[0].content2}</span>
+        </p>
       </MainBannerBox>
     </MainBannerContainer>
   );
