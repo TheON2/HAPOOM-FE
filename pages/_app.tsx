@@ -1,12 +1,9 @@
 import '@/styles/globals.css';
 import type { AppProps } from 'next/app';
-import { createWrapper, MakeStore } from 'next-redux-wrapper';
 import store from '../redux/config/configStore';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
-import AuthChecker from '@/components/common/AuthChecker';
-import { useEffect, useState } from 'react';
-import socketIOClient from 'socket.io-client';
+import { useState } from 'react';
 import Layout from '@/components/common/layout/Layout';
 import MobileBottomNav from '@/components/common/MobileBottomNav';
 import { useRouter } from 'next/router';
@@ -14,9 +11,10 @@ import Script from 'next/script';
 import AlarmContainer, { AlarmBar } from '@/components/common/AlarmBar';
 import { Provider } from 'react-redux';
 import SocketManager from '@/components/common/Socket';
-const queryClient = new QueryClient();
+import { appWithTranslation } from 'next-i18next';
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const queryClient = new QueryClient();
   const [notification, setNotification] = useState<string | null>(null);
   const [randomPosts, setRandomPosts] = useState<any[] | null>(null);
   const router = useRouter();
@@ -57,7 +55,6 @@ function MyApp({ Component, pageProps }: AppProps) {
           {!isExcludedPage ? (
             <>
               {notification && <div>{notification}</div>}
-
               <AlarmContainer />
               {/* <AlarmBar alarm={notification} /> */}
               <Layout>
@@ -75,4 +72,4 @@ function MyApp({ Component, pageProps }: AppProps) {
   );
 }
 
-export default MyApp;
+export default appWithTranslation(MyApp);
