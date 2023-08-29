@@ -66,7 +66,7 @@ const PostLike: React.FC<PostLike> = ({
 
   const queryType = selectedTab === 0 ? 'post' : 'like';
   const { data: infiniteData } = useInfiniteData(queryType);
-  console.log('userdata', infiniteData);
+
   useEffect(() => {
     if (selectedTab === 0) {
       if (data?.posts) {
