@@ -11,7 +11,7 @@ import Layout from '@/components/common/layout/Layout';
 import MobileBottomNav from '@/components/common/MobileBottomNav';
 import { useRouter } from 'next/router';
 import Script from 'next/script';
-import { AlarmBar } from '@/components/common/AlarmBar';
+import AlarmContainer, { AlarmBar } from '@/components/common/AlarmBar';
 import { Provider } from 'react-redux';
 import SocketManager from '@/components/common/Socket';
 const queryClient = new QueryClient();
@@ -28,7 +28,8 @@ function MyApp({ Component, pageProps }: AppProps) {
     '/signUpComplete/SignUpComplete',
   ];
   const isExcludedPage = excludedPages.includes(router.pathname);
-
+  console.log(notification);
+  console.log(randomPosts);
   return (
     <>
       <Provider store={store}>
@@ -55,7 +56,10 @@ function MyApp({ Component, pageProps }: AppProps) {
         <QueryClientProvider client={queryClient}>
           {!isExcludedPage ? (
             <>
-              {notification && <AlarmBar alarm={notification} />}
+              {notification && <div>{notification}</div>}
+
+              <AlarmContainer />
+              {/* <AlarmBar alarm={notification} /> */}
               <Layout>
                 <Component {...pageProps} randomPosts={randomPosts} />
               </Layout>
