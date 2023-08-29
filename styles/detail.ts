@@ -135,9 +135,8 @@ export const HashtagBox = styled.div`
 
 export const Hashtag = styled.div`
   color: #0084ff;
-  cursor: pointer;
   display: inline-block;
-  padding: 8px 20px 6px;
+  padding: 4px 20px 4px;
   border-radius: 20px;
   border: 2px solid #0084ff;
   text-align: center;
@@ -268,11 +267,18 @@ export const CommentButton = styled.button`
   font-size: 10px;
   position: fixed;
   right: 24px;
-  bottom: 10vh;
+  bottom: 12vh;
+  bottom: 12dvh;
   background-color: #52acff;
   border: none;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   z-index: 115;
+  @media screen and (min-width: 786px) {
+    right: 34px;
+    bottom: 22vh;
+    bottom: 22dvh;
+  }
 `;
 
 export const NoneComment = styled.div`
