@@ -1,170 +1,217 @@
-import { getFollowers, getFollowings, unFollow } from '@/api/user';
+import React, {
+  ReactNode,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
+import styled from 'styled-components';
+import Image from 'next/image';
+import SideNav from './SideNav';
+import Link from 'next/link';
 import {
-  Email,
-  FollowButtonStyled,
-  FollowContainer,
-  Nickname,
-  UserInfo,
-  UserList,
-  UserListItemStyled,
-  UserProfileImageBox,
-} from '@/styles/followTab';
-import React, { useState, useEffect } from 'react';
+  HeaderLayout,
+  LogoBox,
+  SearchInputBox,
+  IconBox,
+  AccountActionsContainer,
+  GoWriteLink,
+  ProfileButton,
+  AuthButtonBox,
+  MobileBox,
+} from '@/styles/header';
+import useInput from '@/hooks/useInput';
+import IconButton from './IconButton';
+import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
-import Modal from '@/components/common/Modal';
+import { useMutation, useQueryClient } from 'react-query';
+import { userLogOut } from '@/api/user';
+import { LOGOUT_USER, UserState } from '@/redux/reducers/userSlice';
+import { SearchIcon, Bell, EditIcon, Cloud } from '@/components/common/SVG';
+import { setCookie } from 'nookies';
 import ProfileImage from '@/components/common/ProfileImage';
-import { useQuery } from 'react-query';
-import Tabs from '@/components/common/Tabs';
-import { useAuth } from '@/hooks/useAuth';
+import { RootState } from '@/redux/config/configStore';
+import Modal from './Modal';
 
-export interface User {
-  userId: number;
-  email: string;
-  nickname: string;
-  userImage: string;
-  preset: number;
-}
+const ENDPOINT = `${process.env.NEXT_PUBLIC_LOCAL_SERVER}`;
 
-interface FollowTabUser {
-  userId: number;
-  email: string | null;
-  nickname?: string;
-  userImage: string | null;
-  preset: number | null;
-}
-
-interface FollowTabProps {
-  userId: string;
-}
-
-const UserListItem: React.FC<
-  FollowTabUser & {
-    showUnfollowButton?: boolean;
-    handleOpenModal?: (userId: number) => void;
-  }
-> = ({
-  userId,
-  userImage,
-  nickname,
-  email,
-  showUnfollowButton,
-  preset,
-  handleOpenModal,
-}) => {
+const Header = ({ $sticky }: any) => {
+  const { user }: { user: UserState['user'] } = useSelector(
+    (state: RootState) => state.user
+  );
   const router = useRouter();
 
-  const handleNicknameClick = (event: React.MouseEvent) => {
-    event.stopPropagation();
-    router.push(`/User/${userId}`);
+  const [isShowMenu, setIsShowMenu] = useState<boolean>(false);
+
+  const [isAuth, setIsAuth] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [modalMessge, setModalMessge] = useState<any>({
+    actionText: '',
+    modalMessge: '',
+    onClickEvent: '',
+  });
+  const onClickShowMenuHandler = () => {
+    router.push(`/User/${user.email}`);
   };
 
-  const renderUnfollowButton = () => (
-    <FollowButtonStyled onClick={() => handleOpenModal?.(userId)}>
-      언팔로우
-    </FollowButtonStyled>
-  );
-
-  return (
-    <UserListItemStyled>
-      <UserProfileImageBox>
-        <ProfileImage
-          onClick={handleNicknameClick}
-          userImage={userImage}
-          preset={preset}
-        />
-      </UserProfileImageBox>
-      <UserInfo>
-        <Nickname onClick={handleNicknameClick}>{nickname}</Nickname>
-        <Email>{email}</Email>
-      </UserInfo>
-
-      {showUnfollowButton && renderUnfollowButton()}
-    </UserListItemStyled>
-  );
-};
-
-const FollowTab: React.FC<FollowTabProps> = () => {
-  const router = useRouter();
-  const userId = router.query.userId as string;
-  const [isLoading, setIsLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<'followers' | 'followings'>(
-    'followers'
-  );
-  const [followers, setFollowers] = useState<FollowTabUser[]>([]);
-  const [followings, setFollowings] = useState<FollowTabUser[]>([]);
-
-  const { userData } = useAuth();
-  const loggedInEmail = userData?.email;
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [userToUnfollow, setUserToUnfollow] = useState<number | null>(null);
-
-  const { data: followersData } = useQuery(['followers', userId], () =>
-    getFollowers(userId)
-  );
-  const { data: followingsData } = useQuery(['followings', userId], () =>
-    getFollowings(userId)
-  );
-
-  const handleOpenUnfollowModal = (targetUserId: number) => {
-    setUserToUnfollow(targetUserId);
-    setIsModalOpen(true);
+  const handleLogoClick = () => {
+    router.push('/');
   };
-
-  const handleConfirmUnfollow = async () => {
-    if (userToUnfollow !== null) {
-      try {
-        await unFollow(String(userToUnfollow));
-        setFollowings((prevFollowings) =>
-          prevFollowings.filter((user) => user.userId !== userToUnfollow)
-        );
-        setIsModalOpen(false);
-      } catch (error) {
-        console.error('Error while sending unfollow request:', error);
-      }
-    }
+  const LoginHandler = () => {
+    setModalMessge({
+      actionText: '확인',
+      modalMessge: '로그인이 필요한 서비스입니다. 로그인 하시겠습니까?',
+      onClickEvent: () => router.push('/auth/SignIn'),
+    });
+    setIsOpen(!isOpen);
+  };
+  const goToWritePage = () => {
+    setCookie(null, 'update', '1', { path: '/' });
+    setCookie(null, 'updateId', '0', { path: '/' });
+    router.push('/post/Write'); // 글쓰기 페이지로 이동
   };
 
   useEffect(() => {
-    if (followersData) setFollowers(followersData);
-    if (followingsData) setFollowings(followingsData);
-  }, [followersData, followingsData]);
+    if (user.email !== null) {
+      setIsAuth(true);
+    } else {
+      setIsAuth(false);
+    }
+  }, [user.email]);
 
-  const activeData = activeTab === 'followers' ? followers : followings;
+  // Notification permission 요청
+  function requestNotificationPermission() {
+    // Check if the window object is defined to ensure running on client side
+    if (typeof window !== 'undefined' && 'Notification' in window) {
+      Notification.requestPermission().then((permission) => {
+        if (permission === 'granted') {
+          subscribeUserToPush(); // 권한이 허용되면 Push Subscription 생성
+        } else {
+          console.error('Notification permission denied.');
+        }
+      });
+    }
+  }
+
+  function checkNotificationPermission() {
+    if (typeof window !== 'undefined' && 'Notification' in window) {
+      if (Notification.permission === 'default') {
+        // 권한 요청이 아직 안된 상태
+        requestNotificationPermission();
+      }
+    }
+  }
+
+  // Push Subscription 생성
+  async function subscribeUserToPush() {
+    const registration = await navigator.serviceWorker.ready;
+
+    const subscribeOptions = {
+      userVisibleOnly: true,
+      applicationServerKey: process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY,
+    };
+
+    const pushSubscription = await registration.pushManager.subscribe(
+      subscribeOptions
+    );
+
+    // 서버에 Push Subscription 저장
+    await fetch(`${ENDPOINT}/api/util/subscribe`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(pushSubscription),
+      credentials: 'include',
+    });
+  }
+
+  // 예시로, 앱이 로드될 때 알림 권한 요청
+  useEffect(() => {
+    if (user.email !== null) requestNotificationPermission();
+  }, []);
+
+  useEffect(() => {
+    if (user.email !== null) subscribeUserToPush();
+  }, [user.email]);
+
+  const clickBell = async () => {
+    await fetch(`${ENDPOINT}/api/util/togglepush`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+    });
+  };
 
   return (
-    <FollowContainer>
-      <Tabs activeTab={activeTab} onTabChange={setActiveTab} />
+    <>
+      <HeaderLayout $sticky={$sticky}>
+        <div className="center">
+          <LogoBox href={'/'} onClick={handleLogoClick} $sticky={$sticky}>
+            <h1>HAPOOM</h1>
+          </LogoBox>
+          <AccountActionsContainer>
+            <Link href={'/search'} className="search-icon">
+              <SearchIcon fillColor={$sticky ? '#fff' : '#2797FF'} />
+            </Link>
 
-      <UserList>
-        {Array.isArray(activeData) &&
-          activeData.map((user) => (
-            <UserListItem
-              key={user.userId}
-              {...user}
-              showUnfollowButton={
-                user.email !== loggedInEmail && activeTab === 'followings'
-              }
-              handleOpenModal={
-                user.email !== loggedInEmail && activeTab === 'followings'
-                  ? handleOpenUnfollowModal
-                  : undefined
-              }
-            />
-          ))}
-      </UserList>
-      {isModalOpen && (
-        <Modal
-          isOpen={isModalOpen}
-          setIsOpen={setIsModalOpen}
-          actionText="예"
-          onClickEvent={handleConfirmUnfollow}
-        >
-          언팔로우 하시겠습니까?
-        </Modal>
+            {user.email === null ? (
+              <>
+                <AuthButtonBox>
+                  <Link href={'/'}>피드</Link>|
+                  <Link href={'/find'}>트랜드</Link>|
+                  <Link href={'/auth/SignIn'}>로그인</Link>|
+                  <Link href={'/auth/SignUp'}>회원가입</Link>
+                </AuthButtonBox>
+                <ProfileButton onClick={LoginHandler} $sticky={$sticky}>
+                  <Cloud />
+                </ProfileButton>
+              </>
+            ) : (
+              <>
+                <AuthButtonBox>
+                  <Link href={'/'}>피드</Link>|
+                  <Link href={'/find'}>트랜드</Link>
+                </AuthButtonBox>
+                <ProfileButton
+                  onClick={onClickShowMenuHandler}
+                  $sticky={$sticky}
+                >
+                  <ProfileImage
+                    preset={user?.preset || 5}
+                    userImage={user?.userImage || ''}
+                    loading="eager"
+                  />
+                </ProfileButton>
+              </>
+            )}
+          </AccountActionsContainer>
+          <MobileBox>
+            <IconButton onClick={clickBell}>
+              <Bell fillColor={$sticky ? '#fff' : '#2797FF'} />
+            </IconButton>
+          </MobileBox>
+        </div>
+      </HeaderLayout>
+      <GoWriteLink onClick={goToWritePage} href={'/post/Write'}>
+        <EditIcon />
+      </GoWriteLink>
+      {isShowMenu && (
+        <SideNav setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu} />
       )}
-    </FollowContainer>
+      <Modal
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        actionText={modalMessge.actionText}
+        onClickEvent={modalMessge.onClickEvent}
+      >
+        로그인 후 이용할 수 있는 서비스 입니다.
+        <br /> 로그인 하시겠습니까?
+      </Modal>
+    </>
   );
 };
 
-export default FollowTab;
+export default Header;

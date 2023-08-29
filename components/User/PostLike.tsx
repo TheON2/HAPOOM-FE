@@ -96,6 +96,7 @@ const PostLike: React.FC<PostLike> = ({
         prevPosts.filter((p) => p.postId !== postId)
       );
     }
+    setSelectedTab(1);
   };
 
   useEffect(() => {
