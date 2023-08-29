@@ -16,7 +16,7 @@ const MainLayout = styled.main`
   @media screen and (min-width: 768px) {
     transform: translateY(0);
   }
-  @media screen and (min-width: 1260px) {
+  @media screen and (min-width: 768px) {
     height: auto;
     transform: translateY(0);
   }

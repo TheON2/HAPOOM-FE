@@ -1,17 +1,20 @@
 import Image from 'next/image';
 import React from 'react';
-import { MainBannerContainer } from '@/styles/home';
+import {
+  ButtonTouchBox,
+  MainBannerBox,
+  MainBannerContainer,
+} from '@/styles/home';
+import { ArrowLong } from '../common/SVG';
 
-const MainBanner = ({ data, $isClick, randomPosts }: any) => {
+const MainBanner = ({
+  data,
+  $isClick,
+  randomPosts,
+  onClickBottomNavHandler,
+}: any) => {
   return (
     <MainBannerContainer $isClick={$isClick}>
-      {randomPosts && (
-        <p>
-          {randomPosts[0].content1}
-          <br />
-          {randomPosts[0].content2}
-        </p>
-      )}
       <Image
         src={data[0]?.src}
         alt="v13 image"
@@ -20,6 +23,18 @@ const MainBanner = ({ data, $isClick, randomPosts }: any) => {
         loading="eager"
         priority={true}
       />
+      <MainBannerBox $isClick={$isClick}>
+        <p>
+          {randomPosts && randomPosts[0].content1}
+          <span>{randomPosts && randomPosts[0].content2}</span>
+        </p>
+        <ButtonTouchBox $isClick={$isClick}>
+          touch
+          <button onClick={onClickBottomNavHandler}>
+            <ArrowLong />
+          </button>
+        </ButtonTouchBox>
+      </MainBannerBox>
     </MainBannerContainer>
   );
 };

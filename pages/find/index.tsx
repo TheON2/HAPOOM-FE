@@ -47,9 +47,9 @@ const Home: NextPage<MainPageProps> = ({
   const [tagCategory, setTagCategory] = useState<string>('전체');
   const [isClick, setIsClick] = useState<boolean>(false);
   const onClickBottomNavHandler = () => {
+    console.log('클릭중');
     setIsClick(!isClick);
   };
-  console.log(randomPosts);
   const { data: hashtagSearch, isLoading } = useQuery(
     ['hashtag', hashTag],
     () => getSearch({ search: hashTag, option: 'tags' }),
@@ -79,7 +79,12 @@ const Home: NextPage<MainPageProps> = ({
 
   return (
     <HomePageLayout>
-      <MainBanner data={data} $isClick={isClick} randomPosts={randomPosts} />
+      <MainBanner
+        data={data}
+        $isClick={isClick}
+        randomPosts={randomPosts}
+        onClickBottomNavHandler={onClickBottomNavHandler}
+      />
       <HashtagNavBar
         data={tagFilter}
         $isClick={isClick}

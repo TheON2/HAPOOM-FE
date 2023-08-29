@@ -4,8 +4,13 @@ export const HomePageLayout = styled.div`
   width: 100%;
   height: 100vh;
   overflow: hidden;
-  @media screen and (min-width: 1260px) {
+  @media screen and (min-width: 768px) {
     overflow: auto;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 `;
 // main comment section styled
@@ -43,18 +48,6 @@ export const MainBannerContainer = styled.div<mainBannerProps>`
   height: ${(props) => (props.$isClick ? '250px' : 'calc(100vh - 52px)')};
   transition: all 0.8s ease-in-out;
   position: relative;
-  p {
-    width: 90%;
-    word-wrap: break-word;
-    position: absolute;
-    bottom: 120px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 20px;
-    font-weight: 700;
-    line-height: 28px;
-    color: #fff;
-  }
   img {
     width: 100%;
     height: 100%;
@@ -62,6 +55,7 @@ export const MainBannerContainer = styled.div<mainBannerProps>`
     transition: all 0.8s ease-in-out;
     opacity: ${(props) => (props.$isClick ? '0' : '1')};
   }
+
   @media screen and (min-width: 768px) {
     height: ${(props) => (props.$isClick ? '120px' : '100vh')};
     p {
@@ -71,17 +65,101 @@ export const MainBannerContainer = styled.div<mainBannerProps>`
       line-height: ${(props) => (props.$isClick ? '18px' : '36px')};
     }
   }
-  @media screen and (min-width: 1260px) {
-    height: ${(props) => (props.$isClick ? '250px' : '100vh')};
+`;
+export const MainBannerBox = styled.div<mainBannerProps>`
+  max-width: 768px;
+  width: 100%;
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  gap: 46px;
+  align-items: center;
+  position: absolute;
+  bottom: 12vh;
+  bottom: 12dvh;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: all 0.3s ease-in-out;
+
+  p {
+    display: flex;
+    flex-direction: column;
+    word-wrap: break-word;
+    /* position: absolute; */
+    /* transform: translateX(-50%); */
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 28px;
+    color: #fff;
+    transition: all 0.3s ease-in-out;
+  }
+  @media screen and (min-width: 768px) {
+    padding: 0;
+    justify-content: ${(props) =>
+      props.$isClick ? 'space-between' : 'flex-start'};
+    bottom: ${(props) => (props.$isClick ? '12px' : '12vh')};
     p {
-      bottom: 50px;
       max-width: 768px;
-      font-size: 28px;
-      line-height: 36px;
+      font-size: ${(props) => (props.$isClick ? '14px' : '28px')};
+      flex-direction: ${(props) => (props.$isClick ? 'row' : 'column')};
+      line-height: ${(props) => (props.$isClick ? '18px' : '36px')};
     }
   }
 `;
+export const ButtonTouchBox = styled.div<mainBannerProps>`
+  text-align: center;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  /* position: absolute; */
+  bottom: 120px;
+  right: 50%;
+  color: #fff;
+  transition: all 0.3s ease-in-out;
 
+  button {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: none;
+    border: 2px solid #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: rotate(90deg);
+    transition: all 0.3s ease-in-out;
+
+    cursor: pointer;
+    svg {
+      animation: bounce 1.2s ease-in-out infinite;
+      /* transform: scale(60%); */
+    }
+    path {
+      fill: #fff;
+    }
+    @keyframes bounce {
+      0% {
+        transform: scale(60%) translateX(10%);
+      }
+      50% {
+        transform: scale(60%) translateX(-10%);
+      }
+      100% {
+        transform: scale(60%) translateX(10%);
+      }
+    }
+  }
+  @media screen and (min-width: 768px) {
+    display: flex;
+
+    flex-direction: ${(props) => (props.$isClick ? 'row' : 'column')};
+    gap: 4px;
+    button {
+      width: 26px;
+      height: 26px;
+    }
+  }
+`;
 // main banner slide style
 interface SliderListProps {
   $slideindex: number;
@@ -191,7 +269,7 @@ export const SlideDotBox = styled.div`
 
 export const HashtagContentsLayout = styled.section`
   width: 100%;
-  @media screen and (max-width: 786px) {
+  @media screen and (min-width: 786px) {
   }
 `;
 
@@ -208,7 +286,7 @@ export const ScrollBar = styled.div`
     border-radius: 2px;
   }
   @media screen and (min-width: 768px) {
-    padding: 20px 0;
+    display: none;
   }
 `;
 
@@ -301,7 +379,7 @@ export const HashtagNavBarLayout = styled.nav<hashtagNavbarProps>`
     color: #aaa;
     .background {
       width: 100%;
-      padding: 0px 24px 12px;
+      padding: 12px 24px 12px;
       background: #fff;
       display: flex;
       flex-direction: column;
@@ -462,12 +540,34 @@ export const CarouselStyle = styled.div`
     --size: 280px;
   }
 `;
-
+export const CarouselHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
 export const ButtonBox = styled.div`
-  position: absolute;
-  width: 100%;
+  /* width: 100%; */
+  display: flex;
+  padding: 0 24px;
+  gap: 12px;
   button {
-    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff80;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    cursor: pointer;
+    &.left {
+      transform: rotate(180deg);
+    }
+    &:hover {
+      path {
+        fill: #2797ff;
+      }
+    }
   }
 `;
 export const CardContainer = styled.div<CarouselStyleprops>`
@@ -477,6 +577,7 @@ export const CardContainer = styled.div<CarouselStyleprops>`
   border-radius: 8px;
   overflow: hidden;
   pointer-events: auto;
+  --max-visibility: 3;
   --active: ${({ $active, $i }) => ($i === $active ? 1 : 0)};
   --offset: ${({ $active, $i }) => ($active - $i) / 3};
   --direction: ${({ $active, $i }) => $active - $i};
