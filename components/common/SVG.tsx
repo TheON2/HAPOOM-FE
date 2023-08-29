@@ -8,7 +8,7 @@ interface Props {
 
 type svgColorProps = {
   fillColor?: string;
-  $isPush?: string | null;
+  $isPush?: boolean | null;
 };
 interface RightArrowProps {
   fillColor?: string;
