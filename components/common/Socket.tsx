@@ -22,14 +22,14 @@ function SocketManager({
   const { user }: { user: UserState['user'] } = useSelector(
     (state: RootState) => state.user
   );
+  const dispatch = useDispatch();
+
   // console.log('소켓 컴포넌트');
 
   // const dispatch = useDispatch();
   useEffect(() => {
     const socket = socketIOClient(ENDPOINT);
     // push가 true인 경우에만 소켓 이벤트를 수신
-    console.log('푸시 설정 ON');
-
 
     socket.on('notify-post', (data) => {
       if (user.push) setNotification(data.message);
@@ -41,8 +41,10 @@ function SocketManager({
         setNotification(
           `User ${nickname} with email ${email} logged in successfully.`
         );
-
+      dispatch(ADD_NOTIFICATION(`${nickname}님이 로그인 하셨습니다.`));
       setTimeout(() => {
+        dispatch(CLEAR_NOTIFICATION());
+
         setNotification(null);
       }, 5000);
     });
@@ -53,12 +55,12 @@ function SocketManager({
 
     socket.on('newPost', () => {
       if (user.push) setNotification(`새 글이 등록 되었습니다.`);
+      dispatch(ADD_NOTIFICATION(`새 글이 등록 되었습니다.`));
     });
 
     return () => {
       socket.disconnect();
     };
-
   }, [user.push, setNotification, setRandomPosts]); // user.push를 의존성 배열에 추가
 
   return null; // 이 컴포넌트는 UI를 렌더링하지 않습니다.
