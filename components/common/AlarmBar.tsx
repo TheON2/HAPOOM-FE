@@ -140,7 +140,7 @@ export const AlarmBar = ({ alarm }: Props) => {
       onTouchEnd={handleTouchEnd}
     >
       <AlarmIconBox>
-        <Bell fillColor={'#fff'} $isPush={'on'} />
+        <Bell fillColor={'#fff'} $isPush={true} />
       </AlarmIconBox>
       <p>{alarm.message}</p>
     </AlarmBox>

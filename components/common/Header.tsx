@@ -31,13 +31,7 @@ import {
   TOGGLE_PUSH,
   UserState,
 } from '@/redux/reducers/userSlice';
-import {
-  SearchIcon,
-  Bell,
-  EditIcon,
-  Cloud,
-  Logo,
-} from '@/components/common/SVG';
+import { SearchIcon, Bell, EditIcon, Cloud } from '@/components/common/SVG';
 import { setCookie } from 'nookies';
 import ProfileImage from '@/components/common/ProfileImage';
 import { RootState } from '@/redux/config/configStore';
