@@ -8,6 +8,7 @@ import {
   Line,
   TextErrorParagraph,
   StyledLabelEssential,
+  SignUpCheckBoxAll,
 } from '@/styles/signUp';
 import { CheckBoxInterface } from './SingUpUi';
 
@@ -27,7 +28,7 @@ const SignUpCheck: React.FC<SignUpCheckProps> = ({
   return (
     <>
       <SignUpCheckBoxLayout>
-        <SignUpCheckBox>
+        <SignUpCheckBoxAll>
           <Checkbox
             id="checkAll"
             type="checkbox"
@@ -38,8 +39,8 @@ const SignUpCheck: React.FC<SignUpCheckProps> = ({
           <label htmlFor="checkAll"></label>
           <StyledLabelAll>전체동의</StyledLabelAll>
           <StyledLabel>선택항목에 대한 동의 포함</StyledLabel>
-        </SignUpCheckBox>
-        <Line></Line>
+        </SignUpCheckBoxAll>
+        <Line $marginTop={'18px'}></Line>
 
         <SignUpCheckBox>
           <Checkbox
