@@ -26,7 +26,7 @@ const ButtonStyle = styled.button<Button>`
     &:active {
       background-color: #d9d9d9;
     }
-  }
+  } 
   &:hover {
     background-color: #7dc1ff;
   }
