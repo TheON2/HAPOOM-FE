@@ -11,6 +11,7 @@ export interface UserState {
     userImage: string | null;
     preset: number | null;
     likePosts: number[] | null;
+    userId: number | null;
     push: string | null;
   };
 }
@@ -21,6 +22,7 @@ export interface UserResponse {
   userImage: string | null;
   preset: number | null;
   likePosts: number[] | null;
+  userId: number | null;
   push: string | null;
 }
 
@@ -31,6 +33,7 @@ const initialState: UserState = {
     userImage: null,
     preset: null,
     likePosts: null,
+    userId: null,
     push: 'off',
   },
 };
@@ -58,6 +61,7 @@ const userSlice = createSlice({
       state.user.preset = action.payload.preset;
       state.user.likePosts = action.payload.likePosts;
       state.user.push = action.payload.push;
+      state.user.userId = action.payload.userId;
     },
     TOGGLE_PUSH: (state: UserState) => {
       state.user.push === 'on'
