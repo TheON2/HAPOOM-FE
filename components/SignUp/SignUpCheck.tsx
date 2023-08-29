@@ -42,45 +42,47 @@ const SignUpCheck: React.FC<SignUpCheckProps> = ({
         </SignUpCheckBoxAll>
         <Line $marginTop={'18px'}></Line>
 
-        <SignUpCheckBox>
-          <Checkbox
-            id="check-terms"
-            type="checkbox"
-            name="checkTerms"
-            checked={checkboxes.checkTerms}
-            onChange={handleCheckboxChange}
-          />
-          <label htmlFor="check-terms"></label>
-          <StyledLabelEssential>이용약관 (필수)</StyledLabelEssential>
-        </SignUpCheckBox>
+        <div style={{ marginTop: '-12px' }}>
+          <SignUpCheckBox>
+            <Checkbox
+              id="check-terms"
+              type="checkbox"
+              name="checkTerms"
+              checked={checkboxes.checkTerms}
+              onChange={handleCheckboxChange}
+            />
+            <label htmlFor="check-terms"></label>
+            <StyledLabelEssential>이용약관 (필수)</StyledLabelEssential>
+          </SignUpCheckBox>
 
-        <SignUpCheckBox>
-          <Checkbox
-            id="check-personalInfo"
-            type="checkbox"
-            name="checkPersonalInfo"
-            checked={checkboxes.checkPersonalInfo}
-            onChange={handleCheckboxChange}
-          />
-          <label htmlFor="check-personalInfo"></label>
-          <StyledLabelEssential>
-            개인정보 수집/이용 동의 (필수)
-          </StyledLabelEssential>
-        </SignUpCheckBox>
+          <SignUpCheckBox>
+            <Checkbox
+              id="check-personalInfo"
+              type="checkbox"
+              name="checkPersonalInfo"
+              checked={checkboxes.checkPersonalInfo}
+              onChange={handleCheckboxChange}
+            />
+            <label htmlFor="check-personalInfo"></label>
+            <StyledLabelEssential>
+              개인정보 수집/이용 동의 (필수)
+            </StyledLabelEssential>
+          </SignUpCheckBox>
 
-        <SignUpCheckBox>
-          <Checkbox
-            id="check-newsletter"
-            type="checkbox"
-            name="checkNewsletter"
-            checked={checkboxes.checkNewsletter}
-            onChange={handleCheckboxChange}
-          />
-          <label htmlFor="check-newsletter"></label>
-          <StyledLabelEssential>
-            개인정보 마케팅 활용 동의 (필수)
-          </StyledLabelEssential>
-        </SignUpCheckBox>
+          <SignUpCheckBox>
+            <Checkbox
+              id="check-newsletter"
+              type="checkbox"
+              name="checkNewsletter"
+              checked={checkboxes.checkNewsletter}
+              onChange={handleCheckboxChange}
+            />
+            <label htmlFor="check-newsletter"></label>
+            <StyledLabelEssential>
+              개인정보 마케팅 활용 동의 (필수)
+            </StyledLabelEssential>
+          </SignUpCheckBox>
+        </div>
       </SignUpCheckBoxLayout>
 
       {checkboxErrorMessage && (
