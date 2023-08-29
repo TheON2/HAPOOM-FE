@@ -57,6 +57,7 @@ const FeedUi = () => {
       return lastPage.nextPage;
     },
   });
+
   console.log('feeddata', data);
 
   const { mutate: report } = useMutation(reportPost, {
