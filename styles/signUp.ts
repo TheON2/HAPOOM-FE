@@ -52,7 +52,7 @@ export const TextParagraphInfo = styled(TextParagraph)<Props>`
   color: ${theme.textColor};
   font-size: 12px;
   font-weight: 700;
-  margin-top:${({ $marginTop }) => $marginTop || '0'};
+  margin-top: ${({ $marginTop }) => $marginTop || '0'};
   margin-bottom: ${({ $marginBottom }) => $marginBottom || '0'};
 `;
 export const TextParagraphSns = styled(TextParagraph)`
@@ -183,7 +183,7 @@ export const Line = styled.div<Props>`
   border: 1px solid
     ${(props) => (props.$borderColor ? props.$borderColor : '#0084FF')};
   margin-bottom: 16px;
-  margin-top: ${({$marginTop}) => $marginTop || '0'};
+  margin-top: ${({ $marginTop }) => $marginTop || '0'};
 `;
 export const TextErrorParagraph = styled.p<Props>`
   max-width: 227px;
