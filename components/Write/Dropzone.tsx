@@ -55,7 +55,9 @@ const Dropzone: React.FC<DropzoneProps> = ({
       imageFile.type !== 'image/jpeg' &&
       imageFile.type !== 'image/png' &&
       imageFile.type !== 'image/JPEG' &&
-      imageFile.type !== 'image/PNG'
+      imageFile.type !== 'image/PNG' &&
+      imageFile.type !== 'image/heic' &&
+      imageFile.type !== 'image/HEIC'
     ) {
       //alert('Only JPEG and PNG files are allowed.');
       openModal({
@@ -173,7 +175,7 @@ const Dropzone: React.FC<DropzoneProps> = ({
             className="upload"
           />
         ) : isDragActive ? (
-          <p className="bold">그렇지 이미지를 여기다가 드랍해</p>
+          <p className="bold">이미지를 드래그앤 드랍 해주세요.</p>
         ) : (
           <>
             <NextImage
