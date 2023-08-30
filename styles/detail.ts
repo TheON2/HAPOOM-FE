@@ -171,7 +171,7 @@ type limitProps = {
 };
 export const LimitNumBox = styled.span<limitProps>`
   position: absolute;
-  bottom: 5px;
+  bottom: 12px;
   right: 10px;
   color: ${(props) => (props.$color ? '#FF5D5D' : '#334765')};
 `;
