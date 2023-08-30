@@ -97,6 +97,7 @@ export const StyledInput = styled.input<Props>`
   padding-left: 28px;
   border: 1px solid ${({ $borderColor }) => $borderColor};
   border-radius: 3px;
+  color: var(--input-pwd-text);
   &::placeholder {
     font-size: 12px;
   }

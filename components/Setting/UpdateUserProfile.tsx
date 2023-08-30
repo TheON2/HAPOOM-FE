@@ -5,6 +5,7 @@ import Button from '@/components/common/Button';
 import { updateUserSetting } from '@/api/user';
 import { ProfilePresetList, ProfileItem, ButtonBox } from '@/styles/setting';
 import { profilePreset } from '@/public/presetData';
+import Modal from '../common/Modal';
 
 type ProfileType = {
   profileImage?: string;
@@ -32,10 +33,8 @@ const UserProfileImageUpdate = ({ profileImage, preset }: ProfileType) => {
     }
   );
 
-  const onChangeProfileUpdate = async (
-    event: ChangeEvent<HTMLInputElement>
-  ) => {
-    const file = event.target.files;
+  const onChangeProfileUpdate = async (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files;
     const imageData = new FormData();
 
     if (file) {
@@ -54,7 +53,6 @@ const UserProfileImageUpdate = ({ profileImage, preset }: ProfileType) => {
     (formData: FormData) => updateUserSetting(formData),
     {
       onSuccess: () => {
-        alert('수정되었습니다.');
         queryClient.invalidateQueries('userSetting');
       },
     }
@@ -78,7 +76,7 @@ const UserProfileImageUpdate = ({ profileImage, preset }: ProfileType) => {
           <ProfileItem onClick={() => onClickProfileHandler(0)}>
             <figure className={selectPreset === 1 ? 'active' : ''}>
               <Image
-                src={userProfile ? userProfile : '/inflearn.jpg'}
+                src={userProfile ? userProfile : '/favicon.png'}
                 alt="preset"
                 width={100}
                 height={100}
