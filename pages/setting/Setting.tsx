@@ -15,6 +15,9 @@ import {
 import { SettingLayout, AccordianContent, LogOutBtn } from '@/styles/setting';
 import Profile from '@/components/Setting/Profile';
 import { NextRouter, useRouter } from 'next/router';
+import ThemedApp from '@/components/common/ThemedApp';
+import ThemeInitializer from '@/components/common/ThemeInitializer';
+import { ThemeGlobalStyle } from '@/styles/theme';
 
 const Setting = () => {
   const dispatch = useDispatch();
@@ -30,7 +33,7 @@ const Setting = () => {
 
   const onLogOut = useCallback(() => {
     logOut_mutate();
-    
+
     alert('로그아웃 되었습니다');
   }, [logOut_mutate]);
 
@@ -51,44 +54,48 @@ const Setting = () => {
   });
   return (
     <>
-      <SettingLayout>
-        <Profile
-          direction="column"
-          email={userSetting?.user.email}
-          userImage={userSetting?.user.userImage}
-          preset={userSetting?.user.preset}
-          nick={userSetting?.user.nickname}
-        />
-        {/*  */}
-        <AccordianMenu tabText="닉네임 수정">
-          <AccordianContent>
-            <UpdateNickName nickname={userSetting?.user.nickname} />
-          </AccordianContent>
-        </AccordianMenu>
+      <ThemedApp>
+        <ThemeInitializer />
+        <ThemeGlobalStyle />
+        <SettingLayout>
+          <Profile
+            direction="column"
+            email={userSetting?.user.email}
+            userImage={userSetting?.user.userImage}
+            preset={userSetting?.user.preset}
+            nick={userSetting?.user.nickname}
+          />
+          {/*  */}
+          <AccordianMenu tabText="닉네임 수정">
+            <AccordianContent>
+              <UpdateNickName nickname={userSetting?.user.nickname} />
+            </AccordianContent>
+          </AccordianMenu>
 
-        {/*  */}
-        <AccordianMenu tabText="프로필 수정">
-          <AccordianContent>
-            <UpdateUserProfile
-              profileImage={userSetting?.user.userImage}
-              preset={userSetting?.user.preset}
-            />
-          </AccordianContent>
-        </AccordianMenu>
+          {/*  */}
+          <AccordianMenu tabText="프로필 수정">
+            <AccordianContent>
+              <UpdateUserProfile
+                profileImage={userSetting?.user.userImage}
+                preset={userSetting?.user.preset}
+              />
+            </AccordianContent>
+          </AccordianMenu>
 
-        {/*  */}
-        <AccordianContent>
-          <Themes />
-        </AccordianContent>
-
-        {/*  */}
-        <AccordianMenu tabText="비밀번호 수정">
+          {/*  */}
           <AccordianContent>
-            <UpdatePassword />
+            <Themes />
           </AccordianContent>
-        </AccordianMenu>
-        <LogOutBtn onClick={onLogOut}>로그아웃</LogOutBtn>
-      </SettingLayout>
+
+          {/*  */}
+          <AccordianMenu tabText="비밀번호 수정">
+            <AccordianContent>
+              <UpdatePassword />
+            </AccordianContent>
+          </AccordianMenu>
+          <LogOutBtn onClick={onLogOut}>로그아웃</LogOutBtn>
+        </SettingLayout>
+      </ThemedApp>
     </>
   );
 };
