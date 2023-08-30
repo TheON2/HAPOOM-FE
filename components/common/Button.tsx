@@ -17,8 +17,8 @@ const ButtonStyle = styled.button<Button>`
   background-color: var(--primary-three-color);
   cursor: pointer;
   &.secondary {
-    color: var(--button-enabled-color);
-    background-color: var(--button-second-color);
+    color: var(--button-enabled-text);
+    background-color: var(--button-enabled-color);
     border: none;
     &:hover {
       background-color: var(--button-second-hover-color);

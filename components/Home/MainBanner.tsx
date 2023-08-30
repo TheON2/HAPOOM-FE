@@ -29,10 +29,10 @@ const MainBanner = ({
     <MainBannerContainer $isClick={$isClick}>
       <RandomContentContainer $isClick={$isClick}>
         <NewContentBox>
-          <Link href={`/detail/${randomPost?.post.postId}`}>
+          <Link href={`/detail/${randomPost?.post?.postId}`}>
             <figure>
               <Image
-                src={randomPost?.images[0].url}
+                src={randomPost?.images[0]?.url}
                 alt="random user image"
                 width={768}
                 height={800}
@@ -42,7 +42,7 @@ const MainBanner = ({
             </figure>
           </Link>
           <MainCardInfo>
-            <ProfileLink href={`/User/${randomPost?.post.userId}`}>
+            <ProfileLink href={`/User/${randomPost?.post?.userId}`}>
               <ProfileImage
                 userImage={randomPost?.user?.userImage}
                 preset={randomPost?.user.preset}
@@ -54,7 +54,7 @@ const MainBanner = ({
                 님이 품은 하늘입니다
               </p>
             </ProfileLink>
-            <HeartIcon postId={randomPost?.post.postId} />
+            <HeartIcon postId={randomPost?.post?.postId} />
           </MainCardInfo>
         </NewContentBox>
       </RandomContentContainer>

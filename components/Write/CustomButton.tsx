@@ -16,7 +16,8 @@ const ButtonStyle = styled.button<Button>`
   border-radius: 6px;
   color: ${(props) => (props.$addStyle ? '#2797ff' : '#fff')};
   border: 2px solid #2797ff;
-  background-color: ${(props) => (props.$addStyle ? '#fff' : '#2797ff')};
+  background-color: ${(props) =>
+    props.$addStyle ? 'var(--button-second-color)' : '#2797ff'};
   cursor: pointer;
   &.secondary {
     color: #818181;
@@ -29,7 +30,7 @@ const ButtonStyle = styled.button<Button>`
     }
   }
   &:hover {
-    background-color: #7dc1ff;
+    background-color: var(--button-second-hover-color);
     color: #fff;
   }
   &:active {
