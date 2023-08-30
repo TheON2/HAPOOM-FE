@@ -29,13 +29,13 @@ export const FeedHeader = styled.div`
   }
 `;
 export const FeedUserNickName = styled.div`
-  color: #232323;
+  color: var(--text-color);
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
 `;
 export const FeedTime = styled.div`
-  color: #9e9e9e;
+  color: var(--text-time-color);
   font-size: 12px;
   font-weight: 400;
 `;
@@ -89,7 +89,7 @@ export const FeedContentBox = styled.div`
 `;
 export const FeedContent = styled.p`
   margin-top: 4px;
-  color: #000;
+  color: var(--text-color);
   font-size: 20;
   font-weight: 500;
   word-wrap: break-word;
@@ -98,7 +98,7 @@ export const MoreButton = styled.button`
   margin-top: 4px;
   background-color: transparent;
   border: none;
-  color: #000;
+  color: var(--text-color);
   cursor: pointer;
   @media (max-width: 520px) {
     text-align: left;

@@ -31,15 +31,14 @@ export const Box = styled.div`
     margin-bottom: 8px;
     text-align: center;
     padding: 12px 36px;
-    background-color: #eff7ff;
+    background-color: var(--blue-bg-color);
     border-radius: 30px;
-    border: 2px solid #dfefff;
-    color: #1f6cb9;
+    border: var(--blue-border);
+    color: var(--text-blue-color);
   }
   label {
     margin-bottom: 16px;
     font-weight: 700;
-    color: #334765;
   }
 `;
 type limitProps = {
@@ -50,7 +49,6 @@ export const InputContainer = styled.div`
   position: relative;
   label {
     font-weight: 700;
-    color: #334765;
   }
   input {
     margin-top: 16px;
@@ -60,7 +58,7 @@ export const LimitNumBox = styled.span<limitProps>`
   position: absolute;
   bottom: 5px;
   right: 10px;
-  color: ${(props) => (props.$color ? '#FF5D5D' : '#334765')};
+  color: ${(props) => (props.$color && '#FF5D5D')};
 `;
 export const InputBox = styled.input`
   display: block;
@@ -68,9 +66,9 @@ export const InputBox = styled.input`
   color: #051619;
   outline: none;
   padding: 12px 24px 10px;
-  border: 2px solid #e8e8e8;
+  border: var(--input-border);
   border-radius: 12px;
-  background-color: #f0efef;
+  background-color: var(--input-bg-color);
   font-size: 0.915rem;
 `;
 export const TagBox = styled.div`

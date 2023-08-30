@@ -73,7 +73,7 @@ const Setting = () => {
           </AccordianMenu>
 
           {/*  */}
-          <AccordianMenu tabText="프로필 수정">
+          <AccordianMenu tabText="프로필 사진 수정">
             <AccordianContent>
               <UpdateUserProfile
                 profileImage={userSetting?.user.userImage}
