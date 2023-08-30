@@ -22,7 +22,7 @@ export const TabButton = styled.button`
   background-color: transparent;
   cursor: pointer;
   transition: color 0.3s;
-
+  color: var(--color);
   &:hover {
     color: #007bff;
   }
@@ -85,7 +85,7 @@ export const Nickname = styled.p`
   font-size: 18px;
   font-weight: 700;
   margin-bottom: 3px;
-  color: #333;
+  /* color: #333; */
 `;
 
 export const Email = styled.p`
