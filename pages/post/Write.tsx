@@ -32,6 +32,7 @@ import { styled } from 'styled-components';
 import useModal from '@/hooks/useModal';
 import Modal from '@/components/common/Modal';
 import OneButtonModal from '@/components/common/OneButtonModal';
+import { useTranslation } from 'next-i18next';
 
 const ReadOnlyYoutube = dynamic(
   () => import('@/components/Write/ReadOnlyYoutube'),
@@ -58,6 +59,7 @@ const WritePageContainer = styled.div`
 `;
 
 const Write: NextPage<Props> = ({ update = '1', updateId }) => {
+  const { t } = useTranslation('common');
   const [isShow, setIsShow] = useState<boolean>(false);
   const {
     isModalOpen: oneModalOpen,
@@ -424,7 +426,6 @@ const Write: NextPage<Props> = ({ update = '1', updateId }) => {
                 <UpAndDownTab
                   onClickEvent={handleCommentShowHandler}
                   $isUp={commentEdit.show}
-                  className="write"
                 >
                   {commentEdit.show && (
                     <>
@@ -501,7 +502,6 @@ const Write: NextPage<Props> = ({ update = '1', updateId }) => {
                 <UpAndDownTab
                   onClickEvent={handleMapShowHandler}
                   $isUp={mapEdit.show}
-                  className="write"
                 >
                   {mapEdit.show && (
                     <MapComponent

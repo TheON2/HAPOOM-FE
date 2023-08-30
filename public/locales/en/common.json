@@ -80,7 +80,8 @@
     "passwordChangeSuccess": "Password modification has been completed"
   },
   "others": {
-    "follow": "Follow : Following",
+    "follower": "follower",
+    "following": "following",
     "wouldYouUnfollow": "Would you like to unfollow?",
     "reportUserPrompt": "Would you like to report this user?",
     "hashtagsLength": "Hashtags cannot be longer than 5 characters!",

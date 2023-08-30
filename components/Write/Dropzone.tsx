@@ -51,7 +51,12 @@ const Dropzone: React.FC<DropzoneProps> = ({
   const { isModalOpen, modalMessge, openModal, closeModal } = useModal();
 
   const resizeImage = (imageFile: File, callback: (file: File) => void) => {
-    if (imageFile.type !== 'image/jpeg' && imageFile.type !== 'image/png') {
+    if (
+      imageFile.type !== 'image/jpeg' &&
+      imageFile.type !== 'image/png' &&
+      imageFile.type !== 'image/JPEG' &&
+      imageFile.type !== 'image/PNG'
+    ) {
       //alert('Only JPEG and PNG files are allowed.');
       openModal({
         actionText: '확인',
