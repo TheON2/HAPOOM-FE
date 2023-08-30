@@ -87,10 +87,10 @@ const SignUpUi = () => {
   };
   const forgotPwdMutaion = useMutation(getForgotPwd, {
     onSuccess: () => {
-      console.log('성공');
+      // console.log('성공');
     },
     onError: (error) => {
-      console.log('실패', error);
+      // console.log('실패', error);
     },
   });
   const addUserMutation = useMutation(addUser, {
