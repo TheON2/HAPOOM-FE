@@ -7,6 +7,7 @@ const MainLayout = styled.main`
   overflow-y: auto;
   transform: translateY(-124px);
   background-color: var(--bg-color);
+  padding: 20px 0 0;
   &::-webkit-scrollbar {
     display: none;
   }
@@ -16,10 +17,6 @@ const MainLayout = styled.main`
     height: calc(100vh - 240px);
     transform: translateY(0);
   }
-  /* @media screen and (min-width: 768px) {
-    height: auto;
-    transform: translateY(0);
-  } */
   .center {
     margin: 0 auto;
     max-width: 768px;

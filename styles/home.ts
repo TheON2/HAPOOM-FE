@@ -97,7 +97,7 @@ export const RandomContentContainer = styled.div<mainBannerProps>`
   }
 `;
 export const NewContentBox = styled.div`
-  max-width: 660px;
+  max-width: 560px;
   width: 86%;
   height: 75vh;
   margin: 0 auto;
