@@ -7,7 +7,7 @@ export const useInfiniteData = (
   enabled = true
 ) => {
   const fetchFunction = async ({ pageParam = 1 }) => {
-    console.log('pageParam:', pageParam);
+    // console.log('pageParam:', pageParam);
     const method = 'GET';
     if (type === 'post') {
       return await getMyPosts(method, pageParam);
@@ -35,7 +35,7 @@ export const useInfiniteData = (
 
   useEffect(() => {
     const handleScroll = () => {
-      console.log('Scroll event triggered');
+      // console.log('Scroll event triggered');
       if (Date.now() - lastFetchedTime.current < 200) {
         return;
       }
