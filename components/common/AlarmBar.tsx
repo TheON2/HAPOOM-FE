@@ -28,9 +28,7 @@ const AlarmBox = styled.div`
   gap: 4px;
   margin-bottom: 12px;
   transition: all 0.3s ease-in-out;
-  animation:
-    fadeIn 1s forwards ease-in-out,
-    fadeOut 1s forwards ease-in-out;
+  animation: fadeIn 1s forwards ease-in-out, fadeOut 1s forwards ease-in-out;
   animation-delay: 0s, 5s;
   &.fade-out {
     /* background-color: red; */
@@ -155,7 +153,7 @@ type alarmProps = {
 
 const AlarmContainer = ({ alarmData }: alarmProps) => {
   const message = useSelector((state: RootState) => state.notification.message);
-  console.log(message);
+  //console.log(message);
   const [alarmArr, setAlarmArr] = useState<any[]>([]);
 
   const addNotification = (message: any) => {
@@ -174,7 +172,7 @@ const AlarmContainer = ({ alarmData }: alarmProps) => {
       prevArr.filter((notification) => notification.id !== id)
     );
   };
-  console.log(alarmArr);
+  //console.log(alarmArr);
   useEffect(() => {
     if (message) {
       addNotification(message);
