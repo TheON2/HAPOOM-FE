@@ -48,7 +48,7 @@ export const SearchForm = styled.form`
   padding: 12px 5px;
   margin: 0 auto 36px;
   /* flex-direction: column; */
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   gap: 4px;
   background-color: var(--search-bg-color);
@@ -59,8 +59,8 @@ export const SearchForm = styled.form`
 `;
 
 export const SearchInput = styled.input`
-  max-width: 500px;
-  width: 60%;
+  /* max-width: 500px; */
+  width: calc(100% - 106px);
   height: 36px;
   padding: 8px 16px;
   border-radius: 22px;
