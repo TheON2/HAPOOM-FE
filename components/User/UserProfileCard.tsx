@@ -14,7 +14,7 @@ import Link from 'next/link';
 import { UserState } from '@/redux/reducers/userSlice';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/config/configStore';
-
+import ProfileImage from '../common/ProfileImage';
 interface UserProfileCardProps {
   data: UserPageData | undefined;
   userId: string;
@@ -49,14 +49,18 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({ data, userId }) => {
 
   return (
     <UserProfileCardBox>
-      <Image
+      <ProfileImage
+        userImage={data?.user?.userImage}
+        preset={data?.user?.preset}
+      />
+      {/* <Image
         src={userImageSrc}
         alt={'프로필사진'}
         width={90}
         height={90}
         quality={100}
         loading="eager"
-      />
+      /> */}
       <ProfileContentsBox>
         <NicknameBox>
           <p className="nickName">{data.user.nickname}</p>
