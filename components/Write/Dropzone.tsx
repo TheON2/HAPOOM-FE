@@ -18,16 +18,16 @@ const DropContainer = styled.div`
   height: 200px;
   width: 100%;
   padding: 12px;
-  border: 2px solid #e8e8e8;
+  border: var(--input-border);
   border-radius: 12px;
-  background-color: #f0efef;
+  background-color: var(--input-bg-color);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   position: relative;
   overflow: hidden;
-  color: #334765;
+  color: var(--color);
   .bold {
     font-size: 20px;
     font-weight: 700;

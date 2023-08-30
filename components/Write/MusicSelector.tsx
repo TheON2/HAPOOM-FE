@@ -152,13 +152,11 @@ const SelectBarButton = styled.button`
 `;
 const SelectList = styled.ul`
   width: ${WIDTH};
-  /* border: 2px solid #e8eef3; */
-  /* border-radius: 0 0 8px 8px; */
 `;
 const SelectItem = styled.li`
   width: 100%;
   /* height: 40px; */
-  padding: 12px 16px;
+  padding: 12.5px 16px;
   /* border-radius: 8px; */
   color: #777;
   font-size: 12px;
@@ -189,9 +187,6 @@ const SelectBox = styled.div<Props>`
   position: absolute;
   z-index: 114;
   transition: all 0.3s ease-in-out;
-  border-left: 2px solid #e8eef3;
-  border-right: 2px solid #e8eef3;
-  border-bottom: 2px solid #e8eef3;
   /* top: 4px; */
   /* left: 12px; */
   /* transform: translateY(-50%); */
