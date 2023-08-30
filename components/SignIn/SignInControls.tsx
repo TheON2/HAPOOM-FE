@@ -40,10 +40,10 @@ const SignInControls: React.FC<SignInControlsProps> = ({ signInState }) => {
         로그인
       </SignInBtn>
       <PwdSignUpSettingPageLink>
-        <TextPwSetParagraph onClick={moveFindPwdBtn}>
+        {/* <TextPwSetParagraph onClick={moveFindPwdBtn}>
           비밀번호 찾기
-        </TextPwSetParagraph>
-        <Separator />
+        </TextPwSetParagraph> */}
+        {/* <Separator /> */}
         <TextSignUpLinkParagraph onClick={moveSignUpBtn}>
           회원가입
         </TextSignUpLinkParagraph>
