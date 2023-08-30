@@ -58,7 +58,7 @@ const ActiveBar = styled.span<onClickProps>`
     height: 5px;
     margin: auto;
     border-radius: 0 0 4px 4px;
-    background-color: #0084ff;
+    background-color: var(--primary-second-color);
   }
 `;
 
