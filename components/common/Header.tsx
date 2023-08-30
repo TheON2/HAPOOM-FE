@@ -126,8 +126,9 @@ const Header = ({ $sticky, ...restProps }: any) => {
       applicationServerKey: process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY,
     };
 
-    const pushSubscription =
-      await registration.pushManager.subscribe(subscribeOptions);
+    const pushSubscription = await registration.pushManager.subscribe(
+      subscribeOptions
+    );
 
     // 서버에 Push Subscription 저장
     await fetch(`${ENDPOINT}/api/util/subscribe`, {
@@ -148,6 +149,12 @@ const Header = ({ $sticky, ...restProps }: any) => {
   useEffect(() => {
     if (user.email !== null) subscribeUserToPush();
   }, [user.email]);
+
+  const [token, setToken] = useState<string | null>(null);
+
+  useEffect(() => {
+    setToken(localStorage.getItem('token'));
+  }, []);
 
   const clickBell = async () => {
     await fetch(`${ENDPOINT}/api/util/togglepush`, {
@@ -175,7 +182,7 @@ const Header = ({ $sticky, ...restProps }: any) => {
               <SearchIcon fillColor={$sticky ? '#fff' : '#9acfff'} />
             </Link>
 
-            {user.email === null ? (
+            {!token ? (
               <>
                 <AuthButtonBox>
                   <Link href={'/'} className={isTrend ? 'active' : ''}>
