@@ -26,6 +26,17 @@ const HashtagNavBar: React.FC<HashtagNavBarProps> = ({
   const [active, setActive] = useState<number>(0);
   const scrollContainerRef = useRef<HTMLUListElement | null>(null);
   const otherIndex = data.length + 1;
+  const getUniqueHashtags = (arr: any[]) => {
+    const seenTags = new Set();
+    return arr.filter((item) => {
+      if (seenTags.has(item.tag)) {
+        return false;
+      }
+      seenTags.add(item.tag);
+      return true;
+    });
+  };
+  const uniqueData = getUniqueHashtags(data);
   const onClickAllTagHandler = () => {
     setHashTag('');
     setTagCategory('전체');
@@ -91,7 +102,7 @@ const HashtagNavBar: React.FC<HashtagNavBarProps> = ({
             <span className="line"></span>
           </HashtagListOther>
           <HashtagList ref={scrollContainerRef}>
-            {data?.map((hashtag, index) => {
+            {uniqueData?.map((hashtag, index) => {
               return (
                 <HashtagItem
                   key={index}
