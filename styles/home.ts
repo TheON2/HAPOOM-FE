@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import styled, { createGlobalStyle } from 'styled-components';
 
 export const TrendGlobalStyle = createGlobalStyle`
@@ -124,6 +125,11 @@ export const NewContentBox = styled.div`
     transform: translate(-50%, 50%);
   }
 `;
+export const ProfileLink = styled(Link)`
+  align-items: center;
+  gap: 8px;
+  display: flex;
+`;
 export const MainCardInfo = styled.div`
   padding: 12px 0;
   margin: 4px 0 0 0;
@@ -131,6 +137,9 @@ export const MainCardInfo = styled.div`
   align-items: center;
   gap: 8px;
   position: relative;
+  a {
+    display: flex;
+  }
   img {
     width: 20px;
     height: 20px;

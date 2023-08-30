@@ -25,7 +25,8 @@ export const HeaderLayout = styled.header<HeaderProps>`
   gap: 12px;
   color: ${NONE_ROUTE_COLOR};
   h1 {
-    color: #2797ff;
+    /* color: #2797ff; */
+    color: var(--header-color);
   }
   .active {
     color: ${ROUTE_ACTION_COLOR};
@@ -81,7 +82,7 @@ export const HeaderLayout = styled.header<HeaderProps>`
     }
     .search-icon {
       svg path {
-        stroke: #c6e2fc;
+        stroke: ${(props) => (props.$sticky ? NONE_ROUTE_COLOR : '#C6E2FC')};
       }
     }
     @media screen and (min-width: 768px) {
@@ -200,7 +201,7 @@ export const ProfileButton = styled.button<HeaderProps>`
   position: relative;
   overflow: hidden;
   border: ${(props) =>
-    props.$sticky ? '2px solid #2797ff' : '2px solid #fff'};
+    props.$sticky ? '2px solid #fff' : '2px solid #2797ff'};
   background-color: ${(props) => (props.$sticky ? '#ffffff70' : '#2797ff70')};
   cursor: pointer;
   img {
