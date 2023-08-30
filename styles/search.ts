@@ -83,7 +83,6 @@ export const SelectBox = styled.div`
 export const NoneSearchResult = styled.div`
   width: 100%;
   height: 60vh;
-  height: 60dvh;
   color: #c4c4c4;
   display: flex;
   flex-direction: column;
@@ -97,5 +96,4 @@ export const NoneSearchResult = styled.div`
 export const SearchResultBox = styled.div`
   width: 100%;
   min-height: 60vh;
-  min-height: 60dvh;
 `;
