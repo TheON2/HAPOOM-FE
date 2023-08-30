@@ -13,19 +13,21 @@ type layoutProps = {
 
 const Layout = ({ children }: layoutProps) => {
   const router = useRouter();
-  const isHome = router.pathname === '/find';
+  const isHome = router.pathname === '/trend';
   return (
     <>
       {/* <GlobalStyle /> */}
       <LayoutStyle $isHome={isHome}>
-        <Header $sticky={isHome} />
         {isHome ? (
           <>{children}</>
         ) : (
-          <LayoutWapper>
-            <div className="center">{children}</div>
-            {/* <Footer /> */}
-          </LayoutWapper>
+          <>
+            <Header $sticky={isHome} />
+            <LayoutWapper>
+              <div className="center">{children}</div>
+              {/* <Footer /> */}
+            </LayoutWapper>
+          </>
         )}
       </LayoutStyle>
     </>

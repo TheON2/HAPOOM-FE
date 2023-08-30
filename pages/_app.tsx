@@ -26,8 +26,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     '/signUpComplete/SignUpComplete',
   ];
   const isExcludedPage = excludedPages.includes(router.pathname);
-  console.log(notification);
-  console.log(randomPosts);
+
   return (
     <>
       <Provider store={store}>
@@ -54,9 +53,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <QueryClientProvider client={queryClient}>
           {!isExcludedPage ? (
             <>
-              {notification && <div>{notification}</div>}
               <AlarmContainer />
-              {/* <AlarmBar alarm={notification} /> */}
               <Layout>
                 <Component {...pageProps} randomPosts={randomPosts} />
               </Layout>

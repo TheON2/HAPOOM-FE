@@ -5,32 +5,37 @@ type HeaderProps = {
   $sticky: string;
 };
 
+const NONE_ROUTE_COLOR = '#7DC1FF';
+const ROUTE_ACTION_COLOR = '#2790F6';
+
 export const HeaderLayout = styled.header<HeaderProps>`
   width: 100%;
   height: 70px;
   padding: 0 24px;
   /* position: fixed; */
-  position: ${(props) => (props.$sticky ? 'fixed' : 'sticky')};
+  position: sticky;
   z-index: 115;
   top: 0;
-  background: ${(props) => (props.$sticky ? 'none' : 'rgba(255,255,255,0.8)')};
-  backdrop-filter: ${(props) => (props.$sticky ? 'none' : 'blur(1px)')};
-  border-bottom: ${(props) => (props.$sticky ? 'none' : '1px solid #fff')};
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(1px);
+  border-bottom: 1px solid #fff;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 12px;
-  color: ${(props) => (props.$sticky ? '#fff' : '#2797ff')};
-  @media screen and (min-width: 768px) {
-    background: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(5px);
+  color: ${NONE_ROUTE_COLOR};
+  h1 {
+    color: #2797ff;
+  }
+  .active {
+    color: ${ROUTE_ACTION_COLOR};
+  }
 
+  @media screen and (min-width: 768px) {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(5px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.5);
   }
-  /* @media screen and (max-width: 786px) {
-    position: fixed;
-    background: none;
-  } */
   .center {
     display: flex;
     justify-content: space-between;
@@ -45,10 +50,44 @@ export const HeaderLayout = styled.header<HeaderProps>`
     svg {
       width: 68%;
       height: 68%;
+      path {
+        fill: none;
+        stroke: ${NONE_ROUTE_COLOR};
+      }
+    }
+    &.active {
+      path {
+        stroke: ${(props) => (props.$sticky ? '#fff' : ROUTE_ACTION_COLOR)};
+      }
     }
     &:hover {
       background-color: #00000020;
       border-radius: 50%;
+    }
+  }
+  &.trend {
+    position: fixed;
+    background: none;
+    border: none;
+    color: ${(props) => (props.$sticky ? NONE_ROUTE_COLOR : '#C6E2FC')};
+    /* path {
+      fill: ${(props) => (props.$sticky ? ROUTE_ACTION_COLOR : '#C6E2FC')};
+    } */
+    h1 {
+      color: ${(props) => (props.$sticky ? '#2797FF' : '#fff')};
+    }
+    .active {
+      color: ${(props) => (props.$sticky ? ROUTE_ACTION_COLOR : '#fff')};
+    }
+    .search-icon {
+      svg path {
+        stroke: #c6e2fc;
+      }
+    }
+    @media screen and (min-width: 768px) {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(5px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.5);
     }
   }
 `;
@@ -63,16 +102,7 @@ export const LogoBox = styled(Link)<HeaderProps>`
   /* border: 1px solid #000; */
   h1 {
     font-size: 24px;
-    color: ${(props) => (props.$sticky ? '#fff' : '#2797ff')};
     font-weight: 900;
-  }
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-  }
-  path {
-    fill: ${(props) => (props.$sticky ? '#fff' : '#2797ff')};
   }
 `;
 
@@ -144,8 +174,9 @@ export const GoWriteLink = styled(Link)`
   justify-content: center;
   align-items: center;
   position: fixed;
-  bottom: 12vh;
-  right: 56px;
+  bottom: 10vh;
+  bottom: 10dvh;
+  right: 24px;
   background-color: #fff;
   z-index: 114;
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
@@ -169,7 +200,7 @@ export const ProfileButton = styled.button<HeaderProps>`
   position: relative;
   overflow: hidden;
   border: ${(props) =>
-    props.$sticky ? '2px solid #fff' : '2px solid #2797ff'};
+    props.$sticky ? '2px solid #2797ff' : '2px solid #fff'};
   background-color: ${(props) => (props.$sticky ? '#ffffff70' : '#2797ff70')};
   cursor: pointer;
   img {
@@ -197,6 +228,9 @@ export const AuthButtonBox = styled.div`
       color: #1f6cb9;
     }
   }
+  /* .active {
+    color: #2797ff;
+  } */
 `;
 
 export const MobileBox = styled.div`
