@@ -14,24 +14,24 @@ const ButtonStyle = styled.button<Button>`
   border-radius: 6px;
   border: none;
   color: #fff;
-  background-color: #52acff;
+  background-color: var(--primary-three-color);
   cursor: pointer;
   &.secondary {
-    color: #818181;
-    background-color: #e1e1e1;
+    color: var(--button-enabled-text);
+    background-color: var(--button-enabled-color);
     border: none;
     &:hover {
-      background-color: #f1f1f1;
+      background-color: var(--button-second-hover-color);
     }
     &:active {
-      background-color: #d9d9d9;
+      background-color: var(--button-second-color);
     }
-  } 
+  }
   &:hover {
-    background-color: #7dc1ff;
+    background-color: var(--button-hover-color);
   }
   &:active {
-    background-color: #2797ff;
+    background-color: var(--primary-color);
   }
 `;
 
