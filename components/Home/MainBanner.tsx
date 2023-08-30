@@ -32,7 +32,7 @@ const MainBanner = ({
           <Link href={`/detail/${randomPost?.post.postId}`}>
             <figure>
               <Image
-                src={randomPost?.images[0].url}
+                src={randomPost?.images[0]?.url}
                 alt="random user image"
                 width={768}
                 height={800}
