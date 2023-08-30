@@ -6,7 +6,6 @@ export const useInfiniteData = (
   type: 'post' | 'like' | 'feed',
   enabled = true
 ) => {
-
   const fetchFunction = async ({ pageParam = 1 }) => {
     console.log('pageParam:', pageParam);
     const method = 'GET';
@@ -15,7 +14,7 @@ export const useInfiniteData = (
     } else if (type === 'like') {
       return await getMyLikedPosts(method, pageParam);
     } else if (type === 'feed') {
-      return await getFeed(method, pageParam);
+      //return await getFeed(method, pageParam);
     }
 
     throw new Error('Invalid fetchFunction type');
