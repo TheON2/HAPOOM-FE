@@ -30,7 +30,7 @@ const darkModeStyles = css`
   --button-text-color: #fff;
   --button-second-color: #52acff20;
   --button-second-hover-color: #52acff50;
-
+  
   /* common color end */
   /* header color start  */
   --header-bg-color: #1b569580;
@@ -53,37 +53,36 @@ const darkModeStyles = css`
     #1b3863 90%,
     #1b386399 95%,
     #1b386300 100%
-  );
-  --hashtag-border-color: #7dc1ff;
-  --hashtag-gray: #93999f;
-  --hashtag-active: linear-gradient(#fff, #fff),
+    );
+    --hashtag-border-color: #7dc1ff;
+    --hashtag-gray: #93999f;
+    --hashtag-active: linear-gradient(#fff, #fff),
     linear-gradient(38deg, rgba(255, 255, 255, 1) 0%, #1f6cb9 100%);
-  --section-gray: #1b3255;
-  --point-bg: #1b3255;
-  --random-text-color: #174172;
-  --slide-button-fill-color: #52acff;
-  /* trend color end */
-  /* write color start */
-  --text-blue-color: #174172;
-  --blue-bg-color: #eff7ff90;
-  --blue-border: 2px solid #1b5695;
-  --input-bg-color: #5a6a81;
-  --input-border: 2px solid #1b5695;
 
-  /* write color end */
-  /* detail color start */
-  --detail-bg-color: #174172;
-  --detail-bg-border: 1px solid #1b5695;
-  --detail-img-bg-color: #174172;
-  /* detail color end */
-  /* search color start */
-  --search-bg-color: #1b5695 /* search color end */;
-  /* user color start */
-  --text-none-active: #83818c;
-  /* setting color start */
-  --text-tab-gray: #8995a7;
-  /* login color start */
-  --text-gray-second: #b1b1b1;
+    --section-gray: #1b3255;
+    --point-bg: #1b3255;
+    --random-text-color: #174172;
+    --slide-button-fill-color: #52acff;
+    /* trend color end */
+    /* write color start */
+    --text-blue-color: #174172;
+    --blue-bg-color: #eff7ff90;
+    --blue-border: 2px solid #1b5695;
+    --input-bg-color: #5a6a81;
+    --input-border: 2px solid #1b5695;
+    
+    /* write color end */
+    /* search color start */
+    --search-bg-color: #1b5695 /* search color end */;
+    /* user color start */
+    --text-none-active: #83818c;
+    /* setting color start */
+    --text-tab-gray: #8995a7;
+    --setting-border: 2px solid #fff;
+    --input-pwd-text: #334765;
+    /* login color start */
+    --text-gray-second: #b1b1b1;
+
   input,
   textarea {
     &::placeholder {
@@ -170,6 +169,8 @@ const lightModeStyles = css`
   --text-none-active: #83818c;
   /* setting color start */
   --text-tab-gray: #8995a7;
+  --setting-border: 2px solid #2790f6;
+  --input-pwd-text: #334765;
   /* login color start */
   --text-gray-second: #b1b1b1;
   input,

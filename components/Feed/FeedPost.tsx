@@ -109,7 +109,7 @@ const FeedPost = ({
           <TagBox>
             {feed.tags.slice(0, 3).map((tag: string[], index: number) => (
               <Hashtag key={index}>
-                <div>{tag}</div>
+                <div>{'#' + tag}</div>
               </Hashtag>
             ))}
           </TagBox>

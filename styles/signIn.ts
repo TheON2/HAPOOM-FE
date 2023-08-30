@@ -67,7 +67,7 @@ export const SignInBtn = styled.button`
   cursor: pointer;
 `;
 export const TextParagraph = styled.p`
-  color: ${theme.textColor};
+  color: var(--text-color);
   font-size: 12px;
   font-weight: 700;
 `;
