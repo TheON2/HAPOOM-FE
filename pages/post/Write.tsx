@@ -1,32 +1,22 @@
 import React, { FormEvent, useEffect, useState } from 'react';
 import {
-  ImageContainer,
-  PreviewContainer,
-  StyledButton,
   Box,
 } from '../../styles/write';
 import Dropzone from '@/components/Write/Dropzone';
 import ImagePreview from '@/components/Write/ImagePreview';
-import { YouTubeSearch } from '@/components/Write/YoutubeSearchInput';
 import { MapComponent } from '@/components/Write/MapComponent';
 import ContentArea from '@/components/Write/ContentArea';
 import TagInput from '@/components/Write/TagInput';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { addPost, getPost, updatePost } from '@/api/post';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '@/redux/config/configStore';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
-import Header from '@/components/common/Header';
-import Footer from '@/components/common/Footer';
 import { getAuthToken } from '@/api/user';
 import { AUTH_USER, UserResponse } from '@/redux/reducers/userSlice';
-import MobileBottomNav from '@/components/common/MobileBottomNav';
-import { parseCookies, setCookie } from 'nookies';
-import { GetServerSidePropsContext, NextPage } from 'next';
+import {NextPage } from 'next';
 import RecordPlayer from '@/components/Write/RecordPlayer';
 import MusicSelector from '@/components/Write/MusicSelector';
-import { Form } from 'react-bootstrap';
 import Accordion from '@/components/Write/Accordion';
 import youtube from '@/public/youtube.png';
 import music from '@/public/musiclibrary.png';
@@ -42,7 +32,6 @@ import { styled } from 'styled-components';
 import useModal from '@/hooks/useModal';
 import Modal from '@/components/common/Modal';
 import OneButtonModal from '@/components/common/OneButtonModal';
-import { useTranslation } from 'next-i18next';
 
 const ReadOnlyYoutube = dynamic(
   () => import('@/components/Write/ReadOnlyYoutube'),
@@ -69,7 +58,6 @@ const WritePageContainer = styled.div`
 `;
 
 const Write: NextPage<Props> = ({ update = '1', updateId }) => {
-  const { t } = useTranslation('common');
   const [isShow, setIsShow] = useState<boolean>(false);
   const {
     isModalOpen: oneModalOpen,
