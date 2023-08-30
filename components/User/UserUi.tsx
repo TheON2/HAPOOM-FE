@@ -21,6 +21,7 @@ interface UserProfile {
   userId: number;
   userImage: string;
   postsCount: number;
+  preset: number;
 }
 
 export interface UserPost {
