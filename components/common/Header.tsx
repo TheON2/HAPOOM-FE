@@ -46,8 +46,8 @@ const Header = ({ $sticky, ...restProps }: any) => {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const isTrend = router.pathname === '/trend';
-  const isFeed = router.pathname === '/';
+  const isTrend = router.pathname === '/';
+  const isFeed = router.pathname === '/feed';
   const isSearch = router.pathname === '/search';
   const [isShowMenu, setIsShowMenu] = useState<boolean>(false);
   const BellColor = () => {
@@ -126,9 +126,8 @@ const Header = ({ $sticky, ...restProps }: any) => {
       applicationServerKey: process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY,
     };
 
-    const pushSubscription = await registration.pushManager.subscribe(
-      subscribeOptions
-    );
+    const pushSubscription =
+      await registration.pushManager.subscribe(subscribeOptions);
 
     // 서버에 Push Subscription 저장
     await fetch(`${ENDPOINT}/api/util/subscribe`, {
@@ -179,12 +178,12 @@ const Header = ({ $sticky, ...restProps }: any) => {
             {user.email === null ? (
               <>
                 <AuthButtonBox>
-                  <Link href={'/'} className={isFeed ? 'active' : ''}>
-                    피드
+                  <Link href={'/'} className={isTrend ? 'active' : ''}>
+                    트렌드
                   </Link>
                   |
-                  <Link href={'/trend'} className={isTrend ? 'active' : ''}>
-                    트렌드
+                  <Link href={'/feed'} className={isFeed ? 'active' : ''}>
+                    피드
                   </Link>
                   |<Link href={'/auth/SignIn'}>로그인</Link>|
                   <Link href={'/auth/SignUp'}>회원가입</Link>
@@ -196,12 +195,12 @@ const Header = ({ $sticky, ...restProps }: any) => {
             ) : (
               <>
                 <AuthButtonBox>
-                  <Link href={'/'} className={isFeed ? 'active' : ''}>
-                    피드
+                  <Link href={'/'} className={isTrend ? 'active' : ''}>
+                    트렌드
                   </Link>
                   |
-                  <Link href={'/trend'} className={isTrend ? 'active' : ''}>
-                    트렌드
+                  <Link href={'/feed'} className={isFeed ? 'active' : ''}>
+                    피드
                   </Link>
                 </AuthButtonBox>
                 <IconButton onClick={clickBell} $noneEdge={true}>

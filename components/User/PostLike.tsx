@@ -131,14 +131,14 @@ const PostLike: React.FC<PostLike> = ({
           <TabButton
             className="tab-button"
             onClick={handleTabClick(0)}
-            style={selectedTab === 0 ? { color: '#000000' } : undefined}
+            style={selectedTab === 0 ? { color: 'var(--color)' } : undefined}
           >
             게시물
           </TabButton>
           <TabButton
             className="tab-button"
             onClick={handleTabClick(1)}
-            style={selectedTab === 1 ? { color: '#000000' } : undefined}
+            style={selectedTab === 1 ? { color: 'var(--color)' } : undefined}
           >
             좋아요
           </TabButton>

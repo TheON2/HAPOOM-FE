@@ -16,7 +16,7 @@ type layoutProps = {
 
 const Layout = ({ children }: layoutProps) => {
   const router = useRouter();
-  const isHome = router.pathname === '/trend';
+  const isHome = router.pathname === '/';
   return (
     <>
       {/* <GlobalStyle /> */}

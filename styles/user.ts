@@ -109,7 +109,7 @@ export const InfoText = styled.div`
 
 export const InfoNumber = styled.div`
   font-size: 16px;
-  color: black;
+  /* color: black; */
   display: flex;
   justify-content: center;
   align-items: center;

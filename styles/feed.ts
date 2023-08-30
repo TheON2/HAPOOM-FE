@@ -10,8 +10,7 @@ export const FeedContainer = styled.div`
   width: 100%;
   margin: 0 auto;
   padding: 12px 24px 36px;
-  border-bottom: 2px solid #efefef ;
-
+  border-bottom: var(--feed-border);
 `;
 export const FeedHeader = styled.div`
   width: 100%;
@@ -103,7 +102,6 @@ export const MoreButton = styled.button`
   @media (max-width: 520px) {
     text-align: left;
   }
-
 `;
 export const LikeIconContainer = styled.div`
   width: 50px;
