@@ -24,7 +24,7 @@ const MainBanner = ({
   onClickBottomNavHandler,
 }: any) => {
   const randomPost = useSelector((state: RootState) => state.notification.post);
-  console.log(randomPost);
+  //console.log(randomPost);
   return (
     <MainBannerContainer $isClick={$isClick}>
       <RandomContentContainer $isClick={$isClick}>
