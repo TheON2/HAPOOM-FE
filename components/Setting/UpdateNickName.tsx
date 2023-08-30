@@ -6,6 +6,8 @@ import { useMutation, useQueryClient } from 'react-query';
 import { updateUserSetting } from '@/api/user';
 import { TextErrorParagraph } from '@/styles/signUp';
 import { SettingButton } from '@/styles/setting';
+import { modalState } from '@/types/comment';
+import Modal from '../common/Modal';
 
 type SettingProps = {
   nickname?: string;
@@ -16,7 +18,12 @@ const UpdateNickName: NextPage<SettingProps> = ({ nickname = '' }) => {
     nickname
   );
   const [error, setError] = useState<string>('');
-
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [modalMessge, setModalMessge] = useState<modalState>({
+    actionText: '',
+    modalMessge: '',
+    onClickEvent: null,
+  });
   const queryClient = useQueryClient();
 
   const mutate = useMutation(
@@ -57,19 +64,37 @@ const UpdateNickName: NextPage<SettingProps> = ({ nickname = '' }) => {
       await mutate.mutateAsync(formData);
     }
   };
-
+  const onSubmitHandler = (e: React.FormEvent) => {
+    e.preventDefault();
+    setModalMessge({
+      actionText: '확인',
+      modalMessge: '닉네임을 수정하시겠습니까?',
+      onClickEvent: () => onSubmitNickNameHandler(e),
+    });
+    setIsModalOpen(true);
+  };
   return (
-    <form onSubmit={onSubmitNickNameHandler}>
-      <Input
-        value={nickName}
-        placeholder="닉네임 2자에서 15자 입력해주세요"
-        onChange={onClickNickName}
-      />
-      {error && <TextErrorParagraph>{error}</TextErrorParagraph>}
-      <SettingButton type="submit" $marginTop={'-12px'}>
-        닉네임 변경하기
-      </SettingButton>
-    </form>
+    <>
+      <Modal
+        isOpen={isModalOpen}
+        setIsOpen={setIsModalOpen}
+        actionText={modalMessge.actionText}
+        onClickEvent={modalMessge.onClickEvent}
+      >
+        {modalMessge.modalMessge}
+      </Modal>
+      <form onSubmit={onSubmitHandler}>
+        <Input
+          value={nickName}
+          placeholder="닉네임 2자에서 15자 입력해주세요"
+          onChange={onClickNickName}
+        />
+        {error && <TextErrorParagraph>{error}</TextErrorParagraph>}
+        <SettingButton type="submit" $marginTop={'-12px'}>
+          닉네임 변경하기
+        </SettingButton>
+      </form>
+    </>
   );
 };
 

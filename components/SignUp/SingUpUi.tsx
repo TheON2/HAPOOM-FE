@@ -243,8 +243,8 @@ const SignUpUi = () => {
       <SubHeadText color="#000" $marginBottom="12px">
         회원가입
       </SubHeadText>
-      <SocialLogin />
-      <TextParagraphSns>SNS계정으로 간편 로그인/회원가입</TextParagraphSns>
+      {/* <SocialLogin /> */}
+      {/* <TextParagraphSns>SNS계정으로 간편 로그인/회원가입</TextParagraphSns> */}
       <SnsLine></SnsLine>
 
       <form name="register" onSubmit={submitUser}>

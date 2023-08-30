@@ -48,7 +48,7 @@ const SignInControls: React.FC<SignInControlsProps> = ({ signInState }) => {
           회원가입
         </TextSignUpLinkParagraph>
       </PwdSignUpSettingPageLink>
-      <TextSnsParagraph>SNS계정으로 간편 로그인/회원가입</TextSnsParagraph>
+      {/* <TextSnsParagraph>SNS계정으로 간편 로그인/회원가입</TextSnsParagraph> */}
     </>
   );
 };
