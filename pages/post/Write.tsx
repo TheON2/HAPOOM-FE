@@ -30,6 +30,7 @@ import { styled } from 'styled-components';
 import useModal from '@/hooks/useModal';
 import Modal from '@/components/common/Modal';
 import OneButtonModal from '@/components/common/OneButtonModal';
+import { useTranslation } from 'next-i18next';
 
 const ReadOnlyYoutube = dynamic(
   () => import('@/components/Write/ReadOnlyYoutube'),
@@ -56,6 +57,7 @@ const WritePageContainer = styled.div`
 `;
 
 const Write: NextPage<Props> = ({ update = '1', updateId }) => {
+  const { t } = useTranslation('common');
   const [isShow, setIsShow] = useState<boolean>(false);
   const {
     isModalOpen: oneModalOpen,
