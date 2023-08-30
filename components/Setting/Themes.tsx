@@ -5,6 +5,8 @@ import { updateUserSetting } from '@/api/user';
 import { ThemesBox } from '@/styles/setting';
 import { useDispatch } from 'react-redux';
 import { setThemeAll } from '@/redux/reducers/themeSlice';
+import { styled } from 'styled-components';
+import { DarkModeButton, LightModeButton } from '@/styles/theme';
 
 type settingProps = {
   theme?: number;
@@ -22,13 +24,6 @@ const Themes = ({ theme }: settingProps) => {
       },
     }
   );
-
-  // const onClickThemesHandler = async (themes: number) => {
-  //   alert('준비되지 않은 기능입니다. 조금만 기다려주세요!');
-  //   const formData = new FormData();
-  //   formData.append('theme', themes.toString());
-  //   await mutate.mutateAsync(formData);
-  // };
   const handleLightModeClick = () => {
     localStorage.setItem('theme', 'light');
     dispatch(setThemeAll('light'));
@@ -42,18 +37,18 @@ const Themes = ({ theme }: settingProps) => {
   return (
     <AccordianMenu tabText="테마 수정">
       <ThemesBox>
-        <button
+        <LightModeButton
           style={{ border: 'var(--setting-border)' }}
           onClick={handleLightModeClick}
         >
           맑은 하늘
-        </button>
-        <button
+        </LightModeButton>
+        <DarkModeButton
           style={{ border: 'var(--setting-border)' }}
           onClick={handleDarkModeClick}
         >
           별무리 하늘
-        </button>
+        </DarkModeButton>
       </ThemesBox>
     </AccordianMenu>
   );

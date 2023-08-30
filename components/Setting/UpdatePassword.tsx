@@ -5,6 +5,8 @@ import { useMutation, useQueryClient } from 'react-query';
 import { updateUserSetting } from '@/api/user';
 import { TextParagraph } from '@/styles/signIn';
 import { SettingButton, TextParagraphPwdCheck } from '@/styles/setting';
+import Modal from '../common/Modal';
+import { modalState } from '@/types/comment';
 
 export interface Signup {
   password: string;
@@ -23,11 +25,16 @@ const UpdatePassword = () => {
     password: '',
     passwordConfirm: '',
   });
-
   const [error, setError] = useState<Signup>({
     password: '',
     passwordConfirm: '',
   });
+  const [modalMessge, setModalMessge] = useState<modalState>({
+    actionText: '',
+    modalMessge: '',
+    onClickEvent: null,
+  });
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement & { name: TextInputType }>
@@ -51,14 +58,13 @@ const UpdatePassword = () => {
     (formData: FormData) => updateUserSetting(formData),
     {
       onSuccess: () => {
-        alert('비밀번호 수정이 완료되었습니다.');
         queryClient.invalidateQueries('userSetting');
       },
     }
   );
 
-  const submitUser = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const submitUser = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     let errors: Signup = {
       password: '',
       passwordConfirm: '',
@@ -84,11 +90,28 @@ const UpdatePassword = () => {
     const formData = new FormData();
     formData.append('password', signUpState.password);
     await mutate.mutateAsync(formData);
+    window.location.reload();
   };
-
+  const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setModalMessge({
+      actionText: '확인',
+      modalMessge: '비밀번호를 수정하시겠습니까?',
+      onClickEvent: () => submitUser(e),
+    });
+    setIsModalOpen(true);
+  };
   return (
     <>
-      <form action="" onSubmit={submitUser}>
+      <Modal
+        isOpen={isModalOpen}
+        setIsOpen={setIsModalOpen}
+        actionText={modalMessge.actionText}
+        onClickEvent={modalMessge.onClickEvent}
+      >
+        {modalMessge.modalMessge}
+      </Modal>
+      <form action="" onSubmit={onSubmitHandler}>
         <InputBox>
           <TextParagraph>비밀번호</TextParagraph>
           <TextParagraphPwdCheck>

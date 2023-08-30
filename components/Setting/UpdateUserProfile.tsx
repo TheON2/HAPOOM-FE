@@ -28,7 +28,7 @@ const UserProfileImageUpdate = ({ profileImage, preset }: ProfileType) => {
     {
       onSuccess: () => {
         alert('업로드되었습니다.');
-        queryClient.invalidateQueries('userSetting'); // 쿼리를 무효화
+        queryClient.invalidateQueries('userSetting');
       },
     }
   );
