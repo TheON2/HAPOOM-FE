@@ -23,20 +23,18 @@ const Themes = ({ theme }: settingProps) => {
     }
   );
 
-  const onClickThemesHandler = async (themes: number) => {
-    alert('준비되지 않은 기능입니다. 조금만 기다려주세요!');
-    const formData = new FormData();
-    formData.append('theme', themes.toString());
-    await mutate.mutateAsync(formData);
-  };
+  // const onClickThemesHandler = async (themes: number) => {
+  //   alert('준비되지 않은 기능입니다. 조금만 기다려주세요!');
+  //   const formData = new FormData();
+  //   formData.append('theme', themes.toString());
+  //   await mutate.mutateAsync(formData);
+  // };
   const handleLightModeClick = () => {
-    alert('준비되지 않은 기능입니다. 조금만 기다려주세요!');
     localStorage.setItem('theme', 'light');
     dispatch(setThemeAll('light'));
   };
 
   const handleDarkModeClick = () => {
-    alert('준비되지 않은 기능입니다. 조금만 기다려주세요!');
     localStorage.setItem('theme', 'dark');
     dispatch(setThemeAll('dark'));
   };
@@ -44,8 +42,18 @@ const Themes = ({ theme }: settingProps) => {
   return (
     <AccordianMenu tabText="테마 수정">
       <ThemesBox>
-        <button onClick={handleLightModeClick}>Original Mode</button>
-        <button onClick={handleDarkModeClick}>Midnight Mode</button>
+        <button
+          style={{ border: 'var(--setting-border)' }}
+          onClick={handleLightModeClick}
+        >
+          맑은 하늘
+        </button>
+        <button
+          style={{ border: 'var(--setting-border)' }}
+          onClick={handleDarkModeClick}
+        >
+          별무리 하늘
+        </button>
       </ThemesBox>
     </AccordianMenu>
   );
