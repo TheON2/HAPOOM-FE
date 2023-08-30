@@ -15,7 +15,8 @@ const AccordianLayout = styled.div`
 export const AccordianTab = styled.button<accordianProps>`
   width: 100%;
   padding: 20px 0 16px;
-  color: ${(props) => (props.$isOpen ? '#000' : '#8995A7')};
+  color: ${(props) =>
+    props.$isOpen ? 'var(--primary-second-color)' : 'var(--text-tab-gray)'};
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -52,13 +53,13 @@ const AccordianMenu = ({ tabText, children }: DroptabProps) => {
       {isOpen ? (
         <Line
           width={'100%'}
-          $borderColor={'#A9A9A9'}
+          $borderColor={'var(--text-tab-gray)'}
           style={{ display: 'none' }}
         ></Line>
       ) : (
         <Line
           width={'100%'}
-          $borderColor={'#A9A9A9'}
+          $borderColor={'var(--text-tab-gray)'}
           style={{ marginTop: '-20px' }}
         ></Line>
       )}

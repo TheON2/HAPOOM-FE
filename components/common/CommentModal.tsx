@@ -39,49 +39,6 @@ const CommentModal = ({
     // console.log('Update comment:', comment);
     setComment('');
   };
-  // const handlePostComment = async () => {
-  //   try {
-  //     const response = await fetch('YOUR_SERVER_API_ENDPOINT', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify({ comment }),
-  //     });
-
-  //     if (!response.ok) {
-  //       throw new Error('Failed to post comment');
-  //     }
-
-  //     // 서버로부터의 응답 처리 (예: 새로운 댓글 목록 가져오기)
-  //     setIsOpen(false);
-  //     setComment('');
-  //   } catch (error) {
-  //     console.error('Error posting comment:', error);
-  //   }
-  // };
-
-  // const handleUpdateComment = async () => {
-  //   try {
-  //     const response = await fetch('YOUR_SERVER_API_ENDPOINT', {
-  //       method: 'PUT',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify({ comment }),
-  //     });
-
-  //     if (!response.ok) {
-  //       throw new Error('Failed to update comment');
-  //     }
-
-  //     // 서버로부터의 응답 처리
-  //     setIsOpen(false);
-  //     setComment('');
-  //   } catch (error) {
-  //     console.error('Error updating comment:', error);
-  //   }
-  // };
 
   return (
     <>
