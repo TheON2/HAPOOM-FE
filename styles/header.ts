@@ -26,7 +26,7 @@ export const HeaderLayout = styled.header<HeaderProps>`
   color: ${NONE_ROUTE_COLOR};
   h1 {
     /* color: #2797ff; */
-    color: var(--header-color);
+    color: var(--primary-color);
   }
   .active {
     color: ${ROUTE_ACTION_COLOR};
