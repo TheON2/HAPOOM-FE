@@ -26,7 +26,7 @@ export const HeaderLayout = styled.header<HeaderProps>`
   color: var(--button-hover-color);
   h1 {
     /* color: #2797ff; */
-    color: var(--header-color);
+    color: var(--primary-color);
   }
   .active {
     color: var(--primary-color);
