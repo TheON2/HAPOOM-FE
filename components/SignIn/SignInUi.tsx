@@ -115,7 +115,7 @@ const SignInUi = () => {
 
         <SignInControls signInState={signInState} />
 
-        <SocialLogin />
+        {/* <SocialLogin /> */}
       </SignInContainer>
     </SignInSection>
   );
