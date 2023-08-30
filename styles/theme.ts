@@ -72,6 +72,11 @@ const darkModeStyles = css`
   --input-border: 2px solid #1b5695;
 
   /* write color end */
+  /* detail color start */
+  --detail-bg-color: #174172;
+  --detail-bg-border: 1px solid #1b5695;
+  --detail-img-bg-color: #174172;
+  /* detail color end */
   /* search color start */
   --search-bg-color: #1b5695 /* search color end */;
   /* user color start */
