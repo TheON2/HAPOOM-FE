@@ -126,9 +126,8 @@ const Header = ({ $sticky, ...restProps }: any) => {
       applicationServerKey: process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY,
     };
 
-    const pushSubscription = await registration.pushManager.subscribe(
-      subscribeOptions
-    );
+    const pushSubscription =
+      await registration.pushManager.subscribe(subscribeOptions);
 
     // 서버에 Push Subscription 저장
     await fetch(`${ENDPOINT}/api/util/subscribe`, {
