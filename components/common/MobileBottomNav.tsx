@@ -32,7 +32,7 @@ type mobileBottomNavProps = {
 
 const BOTTOM_NAV = [
   { icon: Home, text: 'home', route: '/' },
-  { icon: Find, text: 'trend', route: '/trend' },
+  { icon: Find, text: 'feed', route: '/feed' },
   { icon: Upload, text: 'upload', route: '/post/Write' },
   { icon: Search, text: 'search', route: '/search' },
 ];
@@ -92,7 +92,7 @@ const MobileBottomNav = () => {
     const currentPathname = window.location.pathname;
     const routes = [
       '/',
-      '/trend',
+      '/feed',
       '/post/Write',
       '/search',
       `/User/${user.email}`,
