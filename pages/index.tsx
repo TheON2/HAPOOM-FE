@@ -41,7 +41,8 @@ const Home: NextPage<MainPageProps> = ({
   );
   const tagFilter = hashtagData.filter((tag) => tag.tag !== undefined);
   const undefindeTag = hashtagData.filter((tag) => tag.tag === undefined);
-  const undefindeTagThumbnail = undefindeTag[0]?.image;
+  const undefindeTagThumbnail =
+    undefindeTag.length !== 0 ? undefindeTag[0]?.image : '/c1.jpeg';
   const allTagThumbnail = hashContent[0].image;
   const [hashTag, setHashTag] = useState<string>(tagFilter[0].tag);
   const [tagCategory, setTagCategory] = useState<string>('전체');
