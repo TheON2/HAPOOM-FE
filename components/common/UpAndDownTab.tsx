@@ -7,20 +7,25 @@ type styleProps = {
 
 const UpAndDownTabLayout = styled.div<styleProps>`
   width: 100%;
-  /* height: 80vh; */
   padding: 0px 24px 80px;
   position: fixed;
   bottom: 0;
-  left: 0;
+  left: 50%;
   z-index: 115;
   border-radius: 25px 25px 0 0;
   background-color: #fff;
   box-shadow: 0px -5px 10px rgba(0, 0, 0, 0.2);
-  transform: translateX(50%);
+  transform: translateX(-50%);
   &.up {
     animation: comment-up 0.8s forwards;
   }
   &.down {
+    animation: comment-down 0.8s forwards;
+  }
+  &.up.write {
+    animation: comment-up 0.8s forwards;
+  }
+  &.down.write {
     animation: comment-down 0.8s forwards;
   }
   .click-hit-area {
@@ -38,18 +43,63 @@ const UpAndDownTabLayout = styled.div<styleProps>`
   }
   @keyframes comment-up {
     0% {
-      transform: translateY(73%);
+      transform: translateY(73%) translateX(-50%);
     }
     100% {
-      transform: translateY(0);
+      transform: translateY(0) translateX(-50%);
     }
   }
   @keyframes comment-down {
     0% {
-      transform: translateY(0);
+      transform: translateY(0) translateX(-50%);
     }
     100% {
-      transform: translateY(73%);
+      transform: translateY(73%) translateX(-50%);
+    }
+  }
+
+  @media screen and (min-width: 768px) {
+    max-width: 400px;
+    padding: 0px 24px 30px;
+    &.up.write {
+      animation: write-up 0.8s forwards;
+    }
+    &.down.write {
+      animation: write-down 0.8s forwards;
+    }
+    @keyframes comment-up {
+      0% {
+        transform: translateY(87%) translateX(-50%);
+      }
+      100% {
+        transform: translateY(0) translateX(-50%);
+      }
+    }
+    @keyframes comment-down {
+      0% {
+        transform: translateY(0) translateX(-50%);
+      }
+      100% {
+        transform: translateY(87%) translateX(-50%);
+      }
+    }
+    @keyframes write-up {
+      0% {
+        transform: translateY(100%) translateX(-50%);
+        box-shadow: none;
+      }
+      100% {
+        transform: translateY(0) translateX(-50%);
+      }
+    }
+    @keyframes write-down {
+      0% {
+        transform: translateY(0) translateX(-50%);
+      }
+      100% {
+        transform: translateY(100%) translateX(-50%);
+        box-shadow: none;
+      }
     }
   }
 `;
@@ -64,11 +114,18 @@ type Props = {
   children: ReactNode;
   $isUp: boolean;
   onClickEvent: () => void;
+  className?: string;
 };
 
-const UpAndDownTab = ({ children, $isUp, onClickEvent }: Props) => {
+const UpAndDownTab = ({ children, $isUp, onClickEvent, className }: Props) => {
   return (
-    <UpAndDownTabLayout className={$isUp ? `up` : `down`}>
+    <UpAndDownTabLayout
+      className={
+        $isUp
+          ? `up ${className && className}`
+          : `down ${className && className}`
+      }
+    >
       <div className="click-hit-area" onClick={onClickEvent}>
         <span></span>
       </div>
