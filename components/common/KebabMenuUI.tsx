@@ -16,7 +16,7 @@ const KebabMenuButton = styled.button`
     width: 6px;
     height: 6px;
     border-radius: 3px;
-    background-color: #959595;
+    background-color: var(--toggle-color);
   }
 `;
 const KebabMenuContainer = styled.div`
@@ -55,14 +55,14 @@ export const KebabMenuAptionButton = styled.button`
   span {
     width: 12px;
     height: 12px;
-    border: 1px solid #0084ff;
+    border: 1px solid var(--primary-second-color);
     border-radius: 3px;
   }
   &:hover span {
-    background-color: #80c1ff;
+    background-color: var(--primary-three-color);
   }
   &:active span {
-    background-color: #0084ff;
+    background-color: var(--primary-second-color);
   }
 `;
 

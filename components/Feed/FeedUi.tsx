@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { FeedSection } from '../../styles/feed';
 import { useInfiniteQuery, useMutation } from 'react-query';
-import { reportPost } from '@/api/post';
+import { getFeed, reportPost } from '@/api/post';
 import Modal from '../common/Modal';
 import { InView, useInView } from 'react-intersection-observer';
 import FeedPost from './FeedPost';
@@ -38,27 +38,20 @@ const FeedUi = () => {
   const [expandedPosts, setExpandedPosts] = useState<ExpandedPosts>({});
   const [ref, inView] = useInView();
 
-  const getFeed = async ({ pageParam }: { pageParam: number }) => {
-    return fetch(
-      `${process.env.NEXT_PUBLIC_LOCAL_SERVER}/api/main/feed?page=${pageParam}`
-    ).then((res) => res.json());
-  };
-
+  let results: Feed[] = [];
   const {
     data,
-    error,
+    isLoading,
+    isSuccess,
+    isFetchingNextPage,
     fetchNextPage,
     hasNextPage,
-    isFetching,
-    isFetchingNextPage,
-  } = useInfiniteQuery('feed', ({ pageParam = 1 }) => getFeed({ pageParam }), {
-    getNextPageParam: (lastPage, pages) => {
-      console.log('Inside getNextPageParam', lastPage, pages);
-      return lastPage.nextPage;
+  } = useInfiniteQuery('feeds', ({ pageParam = 1 }) => getFeed({ pageParam }), {
+    getNextPageParam: (lastPage, allPages) => {
+      const morePagesExist = allPages.length < lastPage.totalPages;
+      return morePagesExist ? allPages.length + 1 : false;
     },
   });
-
-  console.log('feeddata', data);
 
   const { mutate: report } = useMutation(reportPost, {
     onSuccess: (message) => {
@@ -91,21 +84,11 @@ const FeedUi = () => {
   }, []);
 
   const handleFetchMore = useCallback(() => {
-    // 현재 스크롤 위치를 저장
-    const currentScrollY = window.scrollY;
-
-    fetchNextPage().then(() => {
-      // 데이터를 불러온 후 스크롤 위치를 원래대로 되돌림
-      window.scrollTo(0, currentScrollY);
-    });
+    fetchNextPage();
   }, [fetchNextPage]);
 
-  if (isFetching || isFetchingNextPage) {
-    return <div>로딩 중...</div>;
-  }
-
-  if (error) {
-    return <div>에러가 발생했습니다</div>;
+  if (isSuccess) {
+    data.pages.forEach((page) => results.push(...page.content));
   }
 
   return (
@@ -118,18 +101,15 @@ const FeedUi = () => {
       >
         {modalMessge.modalMessge}
       </Modal>
-      {data?.pages
-        .flatMap((page) => page.feed)
-
-        .map((feed: Feed) => (
-          <FeedPost
-            key={feed.postId}
-            feed={feed}
-            handleReportClick={handleReportClick}
-            toggleExpanded={toggleExpanded}
-            isExpanded={expandedPosts[feed.postId]}
-          />
-        ))}
+      {results?.map((post: Feed) => (
+        <FeedPost
+          key={post.postId}
+          feed={post}
+          handleReportClick={handleReportClick}
+          toggleExpanded={toggleExpanded}
+          isExpanded={expandedPosts[post.postId]}
+        />
+      ))}
 
       {hasNextPage && (
         <InView

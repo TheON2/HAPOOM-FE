@@ -31,13 +31,7 @@ import {
   TOGGLE_PUSH,
   UserState,
 } from '@/redux/reducers/userSlice';
-import {
-  SearchIcon,
-  Bell,
-  EditIcon,
-  Cloud,
-  Logo,
-} from '@/components/common/SVG';
+import { SearchIcon, Bell, EditIcon, Cloud } from '@/components/common/SVG';
 import { setCookie } from 'nookies';
 import ProfileImage from '@/components/common/ProfileImage';
 import { RootState } from '@/redux/config/configStore';
@@ -45,14 +39,24 @@ import Modal from './Modal';
 
 const ENDPOINT = `${process.env.NEXT_PUBLIC_LOCAL_SERVER}`;
 
-const Header = ({ $sticky }: any) => {
+const Header = ({ $sticky, ...restProps }: any) => {
   const { user }: { user: UserState['user'] } = useSelector(
     (state: RootState) => state.user
   );
   const router = useRouter();
   const dispatch = useDispatch();
 
+  const isTrend = router.pathname === '/';
+  const isFeed = router.pathname === '/feed';
+  const isSearch = router.pathname === '/search';
   const [isShowMenu, setIsShowMenu] = useState<boolean>(false);
+  const BellColor = () => {
+    if (isTrend) {
+      return $sticky ? '#2797FF' : '#fff';
+    } else {
+      return '#2797FF';
+    }
+  };
 
   const [isAuth, setIsAuth] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -122,9 +126,8 @@ const Header = ({ $sticky }: any) => {
       applicationServerKey: process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY,
     };
 
-    const pushSubscription = await registration.pushManager.subscribe(
-      subscribeOptions
-    );
+    const pushSubscription =
+      await registration.pushManager.subscribe(subscribeOptions);
 
     // 서버에 Push Subscription 저장
     await fetch(`${ENDPOINT}/api/util/subscribe`, {
@@ -159,22 +162,30 @@ const Header = ({ $sticky }: any) => {
 
   return (
     <>
-      <HeaderLayout $sticky={$sticky}>
+      <HeaderLayout $sticky={$sticky} {...restProps}>
         <div className="center">
           <LogoBox href={'/'} onClick={handleLogoClick} $sticky={$sticky}>
             <h1>HAPOOM</h1>
           </LogoBox>
           <AccountActionsContainer>
-            <Link href={'/search'} className="search-icon">
-              <SearchIcon fillColor={$sticky ? '#fff' : '#2797FF'} />
+            <Link
+              href={'/search'}
+              className={isSearch ? 'active search-icon' : 'search-icon'}
+            >
+              <SearchIcon fillColor={$sticky ? '#fff' : '#9acfff'} />
             </Link>
 
             {user.email === null ? (
               <>
                 <AuthButtonBox>
-                  <Link href={'/'}>피드</Link>|
-                  <Link href={'/find'}>트렌드</Link>|
-                  <Link href={'/auth/SignIn'}>로그인</Link>|
+                  <Link href={'/'} className={isTrend ? 'active' : ''}>
+                    트렌드
+                  </Link>
+                  |
+                  <Link href={'/feed'} className={isFeed ? 'active' : ''}>
+                    피드
+                  </Link>
+                  |<Link href={'/auth/SignIn'}>로그인</Link>|
                   <Link href={'/auth/SignUp'}>회원가입</Link>
                 </AuthButtonBox>
                 <ProfileButton onClick={LoginHandler} $sticky={$sticky}>
@@ -183,17 +194,18 @@ const Header = ({ $sticky }: any) => {
               </>
             ) : (
               <>
-                <IconButton onClick={clickBell} $noneEdge={true}>
-                  <Bell
-                    fillColor={$sticky ? '#fff' : '#2797FF'}
-                    $isPush={user?.push}
-                  />
-                </IconButton>
                 <AuthButtonBox>
-                  <Link href={'/'}>피드</Link>|
-                  <Link href={'/find'}>트렌드</Link>
+                  <Link href={'/'} className={isTrend ? 'active' : ''}>
+                    트렌드
+                  </Link>
+                  |
+                  <Link href={'/feed'} className={isFeed ? 'active' : ''}>
+                    피드
+                  </Link>
                 </AuthButtonBox>
-
+                <IconButton onClick={clickBell} $noneEdge={true}>
+                  <Bell fillColor={BellColor()} $isPush={user?.push} />
+                </IconButton>
                 <ProfileButton
                   onClick={onClickShowMenuHandler}
                   $sticky={$sticky}
@@ -209,10 +221,7 @@ const Header = ({ $sticky }: any) => {
           </AccountActionsContainer>
           <MobileBox>
             <IconButton onClick={clickBell}>
-              <Bell
-                fillColor={$sticky ? '#fff' : '#2797FF'}
-                $isPush={user?.push}
-              />
+              <Bell fillColor={BellColor()} $isPush={user?.push} />
             </IconButton>
           </MobileBox>
         </div>

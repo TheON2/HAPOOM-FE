@@ -9,7 +9,7 @@ import {
   CLEAR_NOTIFICATION,
 } from '@/redux/reducers/notificationSlice';
 const AlarmContainerStyle = styled.div`
-  max-width: 300px;
+  max-width: 320px;
   width: 90%;
   position: fixed;
   top: 30px;
@@ -28,7 +28,9 @@ const AlarmBox = styled.div`
   gap: 4px;
   margin-bottom: 12px;
   transition: all 0.3s ease-in-out;
-  animation: fadeIn 1s forwards ease-in-out, fadeOut 1s forwards ease-in-out;
+  animation:
+    fadeIn 1s forwards ease-in-out,
+    fadeOut 1s forwards ease-in-out;
   animation-delay: 0s, 5s;
   &.fade-out {
     /* background-color: red; */
@@ -91,7 +93,7 @@ const AlarmBox = styled.div`
 const AlarmIconBox = styled.div`
   width: 20px;
   height: 20px;
-  background-color: #2797ff;
+  background-color: var(--primary-color);
   padding: 2px;
   border-radius: 50%;
   display: flex;
@@ -140,9 +142,8 @@ export const AlarmBar = ({ alarm }: Props) => {
       onTouchEnd={handleTouchEnd}
     >
       <AlarmIconBox>
-        <Bell fillColor={'#fff'} />
+        <Bell fillColor={'#fff'} $isPush={true} />
       </AlarmIconBox>
-      {/* <p>{alarm}</p> */}
       <p>{alarm.message}</p>
     </AlarmBox>
   );
@@ -179,17 +180,9 @@ const AlarmContainer = ({ alarmData }: alarmProps) => {
       addNotification(message);
     }
   }, [message]);
-  const dispatch = useDispatch();
-  const test = () => {
-    dispatch(ADD_NOTIFICATION(`아무개님이 로그인 하셨습니다.`));
-    setTimeout(() => {
-      dispatch(CLEAR_NOTIFICATION());
-    }, 5000);
-  };
 
   return (
     <>
-      {/* <button onClick={test}>버튼</button> */}
       <AlarmContainerStyle>
         {alarmArr.map((alarm) => {
           return <AlarmBar alarm={alarm} key={alarm.id} />;

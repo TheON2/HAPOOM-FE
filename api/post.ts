@@ -22,13 +22,6 @@ const getMain = async () => {
   return response.data;
 };
 
-const getFeed = async (method: string, page: number) => {
-  const response = await api.get('/api/main/feed', {
-    params: { method, page },
-  });
-  return response.data;
-};
-
 const addPost = async (postData: UpdateData) => {
   const config = {
     headers: {
@@ -97,6 +90,9 @@ const reportPost = async (postId: string) => {
   } catch (error: any) {
     if (error.response.status === 409) {
       return '이미 신고가 완료되었습니다.';
+    }
+    if (error.response.status === 400) {
+      return '자신의 게시물은 신고할 수 없습니다.';
     }
   }
 };
@@ -172,6 +168,13 @@ const getSearch = async ({
       return 'otherError';
     }
   }
+};
+
+const getFeed = async ({ pageParam }: { pageParam: number }) => {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_LOCAL_SERVER}/api/main/feed?page=${pageParam}`
+  );
+  return response.json();
 };
 
 export {

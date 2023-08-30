@@ -18,7 +18,8 @@ const HeartIconBox = styled.div<iconType>`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${(props) => (props.$isLike ? `#0084FF` : `#538cc080`)};
+  background-color: ${(props) =>
+    props.$isLike ? `var(--primary-second-color)` : `var(--heart-color)`};
   border-radius: 50%;
   position: absolute;
   top: 5px;
@@ -30,7 +31,7 @@ const HeartIconBox = styled.div<iconType>`
     transform: translate(-1px, -1px);
   }
   &:hover {
-    background-color: #0084ff90;
+    background-color: var(--heart-color-hover);
   }
 `;
 

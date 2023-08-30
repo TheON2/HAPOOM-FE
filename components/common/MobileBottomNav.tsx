@@ -32,7 +32,7 @@ type mobileBottomNavProps = {
 
 const BOTTOM_NAV = [
   { icon: Home, text: 'home', route: '/' },
-  { icon: Find, text: 'find', route: '/find' },
+  { icon: Find, text: 'feed', route: '/feed' },
   { icon: Upload, text: 'upload', route: '/post/Write' },
   { icon: Search, text: 'search', route: '/search' },
 ];
@@ -58,7 +58,7 @@ const ActiveBar = styled.span<onClickProps>`
     height: 5px;
     margin: auto;
     border-radius: 0 0 4px 4px;
-    background-color: #0084ff;
+    background-color: var(--primary-second-color);
   }
 `;
 
@@ -92,7 +92,7 @@ const MobileBottomNav = () => {
     const currentPathname = window.location.pathname;
     const routes = [
       '/',
-      '/find',
+      '/feed',
       '/post/Write',
       '/search',
       `/User/${user.email}`,

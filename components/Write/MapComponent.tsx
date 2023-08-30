@@ -15,7 +15,14 @@ import nookies from 'nookies';
 import Modal from '../common/Modal';
 import useModal from '@/hooks/useModal';
 import { Mappin } from '../common/SVG';
-import { InputContainer } from '@/styles/detail';
+import {
+  CustomSelect,
+  DropdownIcon,
+  InputContainer,
+  OptionItem,
+  OptionsContainer,
+  SelectContainer,
+} from '@/styles/detail';
 
 const SuggestionsBox = styled.ul`
   list-style-type: none;
@@ -108,6 +115,9 @@ export const MapComponent: React.FC<MapComponentProps> = ({
   const mapContainerRef = useRef(null);
   const mapRef = useRef<any>(null);
   const markerRef = useRef<Marker | null>(null);
+  const options = ['도로명', '지번'];
+  const [selectedOption, setSelectedOption] = useState(options[0]);
+  const [isOptionsOpen, setIsOptionsOpen] = useState(false);
 
   const handleMapClick = useCallback(
     async (event: MapClickEvent) => {
@@ -127,8 +137,10 @@ export const MapComponent: React.FC<MapComponentProps> = ({
     [update, setLocationLatLng]
   );
 
-  const handleSearch = async (term: string) => {
-    if (term.length >= 4) {
+  const handleSearch = useCallback(
+    async (term: string) => {
+      if (term.length < 1) return;
+
       try {
         const response = await axios.get(
           `${process.env.NEXT_PUBLIC_LOCAL_SERVER}/api/util/map/geocode`,
@@ -138,22 +150,42 @@ export const MapComponent: React.FC<MapComponentProps> = ({
             },
           }
         );
-        console.log(response.data);
-        const suggestions = response.data.addressInfo.map((info: any) => ({
-          address_name: info.road_address_name,
-          x: info.x,
-          y: info.y,
-        }));
 
-        // suggestions를 원하는 대로 사용할 수 있습니다.
+        console.log(response.data);
+
+        const suggestions = response.data.addressInfo.map((info: any) => {
+          let address_name;
+
+          switch (selectedOption) {
+            case '지번':
+              address_name = info.address_name;
+              break;
+            case '도로명':
+              address_name = info.road_address_name;
+              break;
+            default:
+              address_name = info.address_name; // Default to 지번 if anything goes wrong
+          }
+
+          return {
+            address_name,
+            x: info.x,
+            y: info.y,
+          };
+        });
+
         setSuggestions(suggestions);
       } catch (error) {
         console.error('Geocode API 호출 중 오류가 발생했습니다:', error);
       }
-    }
-  };
+    },
+    [selectedOption]
+  );
 
-  const debouncedSearch = useMemo(() => debounce(handleSearch, 10), []);
+  const debouncedSearch = useMemo(
+    () => debounce(handleSearch, 10),
+    [handleSearch]
+  );
 
   const handleKeyUp = useCallback(
     (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -276,6 +308,16 @@ export const MapComponent: React.FC<MapComponentProps> = ({
     );
   }, [setMapOpen]);
 
+  const handleOptionChange = (option: string) => {
+    setSelectedOption(option);
+    setLocationInput(''); // 인풋 값을 초기화합니다.
+    toggleOptions();
+  };
+
+  const toggleOptions = () => {
+    setIsOptionsOpen((prev) => !prev);
+  };
+
   return (
     <>
       {isModalOpen && (
@@ -296,9 +338,9 @@ export const MapComponent: React.FC<MapComponentProps> = ({
       />
       <h3 style={{ margin: '10px 0' }}>장소</h3>
       <InputContainer>
-        <label>
+        {/* <label>
           <Mappin />
-        </label>
+        </label> */}
         <InputBox
           type="text"
           placeholder="장소를 입력해주세요"
@@ -306,9 +348,28 @@ export const MapComponent: React.FC<MapComponentProps> = ({
           onChange={(e) => setLocationInput(e.target.value)}
           onKeyUp={handleKeyUp}
           style={{
-            paddingLeft: '32px',
+            paddingLeft: '100px',
           }}
         />
+        <SelectContainer>
+          <CustomSelect onClick={toggleOptions}>{selectedOption}</CustomSelect>
+          <DropdownIcon onClick={toggleOptions}>▼</DropdownIcon>
+          {isOptionsOpen && (
+            <OptionsContainer>
+              {options.map(
+                (option) =>
+                  option !== selectedOption && ( // 현재 선택된 옵션은 리스트에 나타나지 않게
+                    <OptionItem
+                      key={option}
+                      onClick={() => handleOptionChange(option)}
+                    >
+                      {option}
+                    </OptionItem>
+                  )
+              )}
+            </OptionsContainer>
+          )}
+        </SelectContainer>
       </InputContainer>
       <div
         style={{

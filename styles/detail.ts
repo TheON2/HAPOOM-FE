@@ -129,14 +129,14 @@ export const ContentsContainer = styled.div`
 `;
 export const HashtagBox = styled.div`
   display: flex;
+  flex-wrap: wrap;
   gap: 8px;
 `;
 
 export const Hashtag = styled.div`
   color: #0084ff;
-  cursor: pointer;
   display: inline-block;
-  padding: 8px 20px 6px;
+  padding: 4px 20px 4px;
   border-radius: 20px;
   border: 2px solid #0084ff;
   text-align: center;
@@ -267,11 +267,18 @@ export const CommentButton = styled.button`
   font-size: 10px;
   position: fixed;
   right: 24px;
-  bottom: 10vh;
+  bottom: 12vh;
+  bottom: 12dvh;
   background-color: #52acff;
   border: none;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   z-index: 115;
+  @media screen and (min-width: 786px) {
+    right: 34px;
+    bottom: 22vh;
+    bottom: 22dvh;
+  }
 `;
 
 export const NoneComment = styled.div`
@@ -289,5 +296,63 @@ export const InputContainer = styled.div`
     position: absolute;
     top: calc(50% - 9px);
     left: 13px;
+  }
+`;
+
+export const SelectContainer = styled.div`
+  top: 4px;
+  left: 4px;
+  position: absolute;
+  width: 22%;
+`;
+
+export const CustomSelect = styled.div`
+  padding: 7px 12px 10px;
+  width: 100%;
+  height: 35px;
+  border-radius: 10px;
+  color: #fff;
+  background-color: #5aabf6;
+  position: relative;
+  &:hover {
+    background-color: #0988ff;
+  }
+`;
+
+export const DropdownIcon = styled.span`
+  font-size: 5px;
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  color: #fff;
+  transform: translateY(-50%);
+  cursor: pointer;
+`;
+
+export const OptionsContainer = styled.div`
+  width: 100%;
+  height: 35px;
+  position: absolute;
+  top: 100%; /* 드롭다운 옵션을 아래로 내림 */
+  left: 0;
+  right: 0;
+  background-color: #5aabf6;
+  color: #fff;
+  border-top: none;
+  border-radius: 0 0 4px 4px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+  border-radius: 10px;
+  transition: all 0.3s ease-in-out;
+`;
+
+export const OptionItem = styled.div`
+  padding: 7px 12px 10px;
+  height: 35px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #0988ff;
+    border-radius: 10px;
   }
 `;

@@ -52,7 +52,7 @@ const Search = () => {
     }
   };
   // const
-  const { data: searchData, isLoading } = useQuery(
+  const { data: searchData, isSuccess } = useQuery(
     ['searchResults', option, search],
     () => getSearch({ search, option }),
     {
@@ -122,7 +122,7 @@ const Search = () => {
       <SearchResultBox>
         {searchData ? (
           <SearchResult option={option} data={searchData} />
-        ) : !isLoading ? (
+        ) : !isSuccess ? (
           <NoneSearchResult>
             <Image
               src={'/movecloud.gif'}

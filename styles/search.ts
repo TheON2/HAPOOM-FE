@@ -51,7 +51,7 @@ export const SearchForm = styled.form`
   justify-content: space-between;
   align-items: center;
   gap: 4px;
-  background-color: #fff;
+  background-color: var(--search-bg-color);
   border: 1px solid #5bb0ff;
   border-radius: 30px;
   box-shadow: 0 5px 8px #3a51661f;
@@ -81,7 +81,8 @@ export const SelectBox = styled.div`
 
 export const NoneSearchResult = styled.div`
   width: 100%;
-  height: 70vh;
+  height: 60vh;
+  height: 60dvh;
   color: #c4c4c4;
   display: flex;
   flex-direction: column;
@@ -94,5 +95,6 @@ export const NoneSearchResult = styled.div`
 
 export const SearchResultBox = styled.div`
   width: 100%;
-  min-height: 70vh;
+  min-height: 60vh;
+  min-height: 60dvh;
 `;

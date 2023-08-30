@@ -3,13 +3,14 @@ import { styled } from 'styled-components';
 export const FeedSection = styled.section`
   max-width: 768px;
   width: 100%;
-  margin: 24px auto;
+  margin: 0 auto;
 `;
 export const FeedContainer = styled.div`
   max-width: 768px;
   width: 100%;
-  margin: 0 auto 24px auto;
-  padding: 0 24px;
+  margin: 0 auto;
+  padding: 12px 24px 36px;
+  border-bottom: var(--feed-border);
 `;
 export const FeedHeader = styled.div`
   width: 100%;
@@ -18,22 +19,22 @@ export const FeedHeader = styled.div`
   align-items: center;
   margin: 4px auto;
   position: relative;
-  gap: 4px;
+  gap: 8px;
   div img {
     border-radius: 50%;
-    width: 33px;
-    height: 33px;
+    width: 45px;
+    height: 45px;
     margin: 0 auto;
   }
 `;
 export const FeedUserNickName = styled.div`
-  color: #232323;
+  color: var(--text-color);
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
 `;
 export const FeedTime = styled.div`
-  color: #9e9e9e;
+  color: var(--text-time-color);
   font-size: 12px;
   font-weight: 400;
 `;
@@ -43,14 +44,20 @@ export const FeedIcon = styled.div`
 `;
 export const MainImageContainer = styled.div`
   width: 100%;
-  height: 474px;
+  padding-bottom: 70%;
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
+  position: relative;
   cursor: pointer;
   img {
+    position: absolute;
     width: 100%;
+    height: 100%;
+    object-fit: cover;
+    top: 0;
+    left: 0;
   }
   @media (max-width: 768px) {
     height: 189px;
@@ -81,7 +88,7 @@ export const FeedContentBox = styled.div`
 `;
 export const FeedContent = styled.p`
   margin-top: 4px;
-  color: #000;
+  color: var(--text-color);
   font-size: 20;
   font-weight: 500;
   word-wrap: break-word;
@@ -90,12 +97,11 @@ export const MoreButton = styled.button`
   margin-top: 4px;
   background-color: transparent;
   border: none;
-  color: #000;
+  color: var(--text-color);
   cursor: pointer;
   @media (max-width: 520px) {
     text-align: left;
   }
-
 `;
 export const LikeIconContainer = styled.div`
   width: 50px;

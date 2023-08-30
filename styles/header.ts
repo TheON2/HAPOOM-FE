@@ -5,32 +5,38 @@ type HeaderProps = {
   $sticky: string;
 };
 
+const NONE_ROUTE_COLOR = '#7DC1FF';
+const ROUTE_ACTION_COLOR = '#2790F6';
+
 export const HeaderLayout = styled.header<HeaderProps>`
   width: 100%;
   height: 70px;
   padding: 0 24px;
   /* position: fixed; */
-  position: ${(props) => (props.$sticky ? 'fixed' : 'sticky')};
+  position: sticky;
   z-index: 115;
   top: 0;
-  background: ${(props) => (props.$sticky ? 'none' : 'rgba(255,255,255,0.8)')};
-  backdrop-filter: ${(props) => (props.$sticky ? 'none' : 'blur(1px)')};
-  border-bottom: ${(props) => (props.$sticky ? 'none' : '1px solid #fff')};
+  background: var(--header-bg-color);
+  backdrop-filter: blur(1px);
+  border-bottom: var(--header-border);
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 12px;
-  color: ${(props) => (props.$sticky ? '#fff' : '#2797ff')};
-  @media screen and (min-width: 768px) {
-    background: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(5px);
+  color: var(--button-hover-color);
+  h1 {
+    /* color: #2797ff; */
+    color: var(--primary-color);
+  }
+  .active {
+    color: var(--primary-color);
+  }
 
+  @media screen and (min-width: 768px) {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(5px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.5);
   }
-  /* @media screen and (max-width: 786px) {
-    position: fixed;
-    background: none;
-  } */
   .center {
     display: flex;
     justify-content: space-between;
@@ -45,10 +51,46 @@ export const HeaderLayout = styled.header<HeaderProps>`
     svg {
       width: 68%;
       height: 68%;
+      path {
+        fill: none;
+        stroke: var(--button-hover-color);
+      }
+    }
+    &.active {
+      path {
+        stroke: ${(props) => (props.$sticky ? '#fff' : 'var(--primary-color)')};
+      }
     }
     &:hover {
       background-color: #00000020;
       border-radius: 50%;
+    }
+  }
+  &.trend {
+    position: fixed;
+    background: none;
+    border: none;
+    color: ${(props) =>
+      props.$sticky ? 'var(--button-hover-color)' : '#C6E2FC'};
+    /* path {
+      fill: ${(props) => (props.$sticky ? ROUTE_ACTION_COLOR : '#C6E2FC')};
+    } */
+    h1 {
+      color: ${(props) => (props.$sticky ? 'var(--primary-color)' : '#fff')};
+    }
+    .active {
+      color: ${(props) => (props.$sticky ? 'var(--primary-color)' : '#fff')};
+    }
+    .search-icon {
+      svg path {
+        stroke: ${(props) =>
+          props.$sticky ? 'var(--button-hover-color)' : '#C6E2FC'};
+      }
+    }
+    @media screen and (min-width: 768px) {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(5px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.5);
     }
   }
 `;
@@ -63,16 +105,7 @@ export const LogoBox = styled(Link)<HeaderProps>`
   /* border: 1px solid #000; */
   h1 {
     font-size: 24px;
-    color: ${(props) => (props.$sticky ? '#fff' : '#2797ff')};
     font-weight: 900;
-  }
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-  }
-  path {
-    fill: ${(props) => (props.$sticky ? '#fff' : '#2797ff')};
   }
 `;
 
@@ -144,11 +177,12 @@ export const GoWriteLink = styled(Link)`
   justify-content: center;
   align-items: center;
   position: fixed;
-  bottom: 12vh;
-  right: 56px;
-  background-color: #fff;
+  bottom: 10vh;
+  bottom: 10dvh;
+  right: 24px;
+  background-color: var(--search-bg-color);
   z-index: 114;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.16);
   svg {
     transform: scale(0.8) translate(2px, -1px);
   }
@@ -169,8 +203,9 @@ export const ProfileButton = styled.button<HeaderProps>`
   position: relative;
   overflow: hidden;
   border: ${(props) =>
-    props.$sticky ? '2px solid #fff' : '2px solid #2797ff'};
-  background-color: ${(props) => (props.$sticky ? '#ffffff70' : '#2797ff70')};
+    props.$sticky ? '2px solid #fff' : '2px solid var(--primary-color)'};
+  background-color: ${(props) =>
+    props.$sticky ? '#ffffff70' : 'var(--primary-opcity-color)'};
   cursor: pointer;
   img {
     object-fit: cover;
@@ -194,9 +229,12 @@ export const AuthButtonBox = styled.div`
   a {
     padding: 20px 8px;
     &:hover {
-      color: #1f6cb9;
+      color: var(--primary-hover-color);
     }
   }
+  /* .active {
+    color: #2797ff;
+  } */
 `;
 
 export const MobileBox = styled.div`
