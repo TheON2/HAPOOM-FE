@@ -54,7 +54,7 @@ interface ModalMessage {
 
 const WritePageContainer = styled.div`
   min-height: 800px;
-  padding: 0 24px;
+  padding: 8px 24px 0;
 `;
 
 const Write: NextPage<Props> = ({ update = '1', updateId }) => {

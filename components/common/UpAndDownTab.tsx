@@ -13,7 +13,7 @@ const UpAndDownTabLayout = styled.div<styleProps>`
   left: 50%;
   z-index: 115;
   border-radius: 25px 25px 0 0;
-  background-color: #fff;
+  background-color: var(--bg-color);
   box-shadow: 0px -5px 10px rgba(0, 0, 0, 0.2);
   transform: translateX(-50%);
   &.up {

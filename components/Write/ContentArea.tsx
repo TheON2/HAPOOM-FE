@@ -11,9 +11,9 @@ const TextArea = styled.textarea`
   height: 120px;
   resize: none;
   padding: 20px 24px;
-  border: 2px solid #e8e8e8;
+  border: var(--input-border);
   border-radius: 12px;
-  background-color: #f0efef;
+  background-color: var(--input-bg-color);
   font-size: 15px;
   outline: none;
   line-height: 24px;

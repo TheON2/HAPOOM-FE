@@ -25,10 +25,11 @@ const darkModeStyles = css`
   --toggle-color: #a1afc6;
   --nav-icon-color: #8995a7;
   --button-hover-color: #7dc1ff;
+  --button-enabled-text: #333;
   --button-enabled-color: #5a6a81;
   --button-text-color: #fff;
-  --button-second-color: #e1e1e1;
-  --button-second-hover-color: #f1f1f1;
+  --button-second-color: #52acff20;
+  --button-second-hover-color: #52acff50;
 
   /* common color end */
   /* header color start  */
@@ -42,18 +43,25 @@ const darkModeStyles = css`
   /* feed color end */
   /* trend color start */
   --random-picture-bg-color: #fff;
-  --shadow-color: 0 16px 60px #a8b5c890;
+  --shadow-color: 0 16px 60px #174172;
   --text-hightligth-color: #777;
   --bar-color: #93999f;
+  --hashtag-bg-gradient: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.22) 60%,
+    #1b3863 70%,
+    #1b3863 90%,
+    #1b386399 95%,
+    #1b386300 100%
+  );
   --hashtag-border-color: #7dc1ff;
   --hashtag-gray: #93999f;
   --hashtag-active: linear-gradient(#fff, #fff),
-    linear-gradient(
-      38deg,
-      rgba(253, 253, 253, 1) 0%,
-      rgba(82, 172, 255, 1) 100%
-    );
-  --section-gray: #f0f1f2;
+    linear-gradient(38deg, rgba(255, 255, 255, 1) 0%, #1f6cb9 100%);
+  --section-gray: #1b3255;
+  --point-bg: #1b3255;
+  --random-text-color: #174172;
+  --slide-button-fill-color: #52acff;
   /* trend color end */
   /* write color start */
   --text-blue-color: #174172;
@@ -61,6 +69,7 @@ const darkModeStyles = css`
   --blue-border: 2px solid #1b5695;
   --input-bg-color: #5a6a81;
   --input-border: 2px solid #1b5695;
+
   /* write color end */
   /* search color start */
   --search-bg-color: #1b5695 /* search color end */;
@@ -98,8 +107,8 @@ const lightModeStyles = css`
   --button-hover-color: #7dc1ff;
   --button-enabled-color: #b3b3b3;
   --button-text-color: #fff;
-  --button-second-color: #e1e1e1;
-  --button-second-hover-color: #f1f1f1;
+  --button-second-color: #fff;
+  --button-second-hover-color: #7dc1ff;
 
   /* common color end */
   /* header color start  */
@@ -117,6 +126,14 @@ const lightModeStyles = css`
   --text-hightligth-color: #777;
   --bar-color: #93999f;
   --hashtag-border-color: #deefff90;
+  --hashtag-bg-gradient: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.22) 60%,
+    #fff 70%,
+    #fff 90%,
+    rgba(255, 255, 255, 0.1) 95%,
+    rgba(255, 255, 255, 0) 100%
+  );
   --hashtag-gray: #93999f;
   --hashtag-active: linear-gradient(#fff, #fff),
     linear-gradient(
@@ -125,6 +142,9 @@ const lightModeStyles = css`
       rgba(82, 172, 255, 1) 100%
     );
   --section-gray: #f0f1f2;
+  --point-bg: #2790f6;
+  --random-text-color: #52acff;
+  --slide-button-fill-color: #2797ff;
   /* trend color end */
   /* write color start */
   --text-blue-color: #1f6cb9;

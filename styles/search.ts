@@ -67,9 +67,10 @@ export const SearchInput = styled.input`
   border: none;
   font-size: 12px;
   transition: all 0.3s ease-in-out;
+  background: none;
   &:focus {
     outline: none;
-    background-color: #eef7ff;
+    background-color: #eef7ff20;
   }
 `;
 

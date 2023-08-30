@@ -33,9 +33,7 @@ export const HeaderLayout = styled.header<HeaderProps>`
   }
 
   @media screen and (min-width: 768px) {
-    background: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(5px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
   }
   .center {
     display: flex;
@@ -88,9 +86,9 @@ export const HeaderLayout = styled.header<HeaderProps>`
       }
     }
     @media screen and (min-width: 768px) {
-      background: rgba(255, 255, 255, 0.2);
+      /* background: rgba(255, 255, 255, 0.2); */
       backdrop-filter: blur(5px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+      /* border-bottom: 1px solid rgba(255, 255, 255, 0.5); */
     }
   }
 `;

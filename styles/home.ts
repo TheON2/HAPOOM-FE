@@ -53,7 +53,8 @@ type mainBannerProps = {
 export const MainBannerContainer = styled.div<mainBannerProps>`
   width: 100%;
   height: ${(props) => (props.$isClick ? '230px' : 'calc(100vh - 70px)')};
-  background-color: ${(props) => (props.$isClick ? '#2797FF' : '#fff')};
+  background-color: ${(props) =>
+    props.$isClick ? 'var(--point-bg)' : 'var(--bg-color)'};
   transition: all 0.8s ease-in-out;
   position: relative;
   @media screen and (min-width: 768px) {
@@ -103,7 +104,7 @@ export const NewContentBox = styled.div`
   margin: 0 auto;
   padding: 42px 12px 60px;
   background-color: #fff;
-  box-shadow: 0 16px 60px #a8b5c890;
+  box-shadow: var(--shadow-color);
   position: absolute;
   bottom: 36px;
   left: 50%;
@@ -194,7 +195,7 @@ export const RandomText = styled.p<mainBannerProps>`
   font-size: 14px;
   font-weight: 700;
   line-height: 28px;
-  background-color: #52acff;
+  background-color: var(--random-text-color);
   color: #fff;
   transition: all 0.3s ease-in-out;
   @media screen and (min-width: 768px) {
@@ -466,7 +467,7 @@ export const HashtagNavBarLayout = styled.nav<hashtagNavbarProps>`
   font-size: 10px;
   color: #93999f;
   box-shadow: ${(props) =>
-    props.$isClick ? '0 -5px 16px agba(0,0,0,0.5)' : '0 -5px 16px #d8e1ef80'};
+    props.$isClick ? '0 -5px 16px agba(0,0,0,0.5)' : 'var(--shadow-color)'};
   overflow: hidden;
   .button-wrap {
     max-width: 768px;
@@ -477,14 +478,7 @@ export const HashtagNavBarLayout = styled.nav<hashtagNavbarProps>`
   .background {
     width: 100%;
     padding: 0px 24px 16px;
-    background: linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.22) 60%,
-      #fff 70%,
-      #fff 90%,
-      rgba(255, 255, 255, 0.1) 95%,
-      rgba(255, 255, 255, 0) 100%
-    );
+    background: var(--hashtag-bg-gradient);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -499,7 +493,7 @@ export const HashtagNavBarLayout = styled.nav<hashtagNavbarProps>`
     .background {
       width: 100%;
       padding: 12px 24px 12px;
-      background: #fff;
+      background: var(--bg-color);
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -590,12 +584,7 @@ export const HashtagAll = styled.div`
     transform: translate(-50%, -69%);
     border-radius: 16px;
     border: 5px solid transparent;
-    background-image: linear-gradient(#fff, #fff),
-      linear-gradient(
-        38deg,
-        rgba(253, 253, 253, 1) 0%,
-        rgba(82, 172, 255, 1) 100%
-      );
+    background-image: var(--hashtag-active);
     background-origin: border-box;
     background-clip: content-box, border-box;
     box-sizing: border-box;
@@ -620,7 +609,7 @@ export const HashtagAll = styled.div`
     }
   }
   &:hover {
-    filter: brightness(0.8);
+    /* filter: brightness(0.8); */
   }
 `;
 export const HashtagItem = styled.li`
@@ -659,12 +648,7 @@ export const HashtagItem = styled.li`
     transform: translate(-50%, -69%);
     border-radius: 16px;
     border: 5px solid transparent;
-    background-image: linear-gradient(#fff, #fff),
-      linear-gradient(
-        38deg,
-        rgba(253, 253, 253, 1) 0%,
-        rgba(82, 172, 255, 1) 100%
-      );
+    background-image: var(--hashtag-active);
     background-origin: border-box;
     background-clip: content-box, border-box;
     box-sizing: border-box;
@@ -689,7 +673,7 @@ export const HashtagItem = styled.li`
     }
   }
   &:hover {
-    filter: brightness(0.8);
+    /* filter: brightness(0.8); */
   }
 `;
 
@@ -701,7 +685,7 @@ interface CarouselStyleprops {
 const MAX_VISIBILITY = 3;
 
 export const HomeMainSection = styled.section`
-  background-color: #f0f1f2;
+  background-color: var(--section-gray);
   margin-top: 24px;
   padding-bottom: 100px;
   @media screen and (min-width: 786px) {
@@ -761,7 +745,7 @@ export const ButtonBox = styled.div`
     }
     &:hover {
       path {
-        fill: #2797ff;
+        fill: var(--slide-button-fill-color);
       }
     }
   }
