@@ -22,13 +22,6 @@ const getMain = async () => {
   return response.data;
 };
 
-const getFeed = async (method: string, page: number) => {
-  const response = await api.get('/api/main/feed', {
-    params: { method, page },
-  });
-  return response.data;
-};
-
 const addPost = async (postData: UpdateData) => {
   const config = {
     headers: {
@@ -175,6 +168,13 @@ const getSearch = async ({
       return 'otherError';
     }
   }
+};
+
+const getFeed = async ({ pageParam }: { pageParam: number }) => {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_LOCAL_SERVER}/api/main/feed?page=${pageParam}`
+  );
+  return response.json();
 };
 
 export {

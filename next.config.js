@@ -4,10 +4,7 @@ const withPWA = require('next-pwa')({
   sw: 'service-worker.js',
 });
 
-const { i18n } = require('./next-i18next.config');
-
 module.exports = withPWA({
-  i18n,
   reactStrictMode: false,
   images: {
     domains: [
