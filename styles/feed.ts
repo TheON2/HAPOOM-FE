@@ -3,13 +3,15 @@ import { styled } from 'styled-components';
 export const FeedSection = styled.section`
   max-width: 768px;
   width: 100%;
-  margin: 24px auto;
+  margin: 0 auto;
 `;
 export const FeedContainer = styled.div`
   max-width: 768px;
   width: 100%;
-  margin: 0 auto 24px auto;
-  padding: 0 24px;
+  margin: 0 auto;
+  padding: 12px 24px 36px;
+  border-bottom: 2px solid #efefef ;
+
 `;
 export const FeedHeader = styled.div`
   width: 100%;
@@ -18,11 +20,11 @@ export const FeedHeader = styled.div`
   align-items: center;
   margin: 4px auto;
   position: relative;
-  gap: 4px;
+  gap: 8px;
   div img {
     border-radius: 50%;
-    width: 33px;
-    height: 33px;
+    width: 45px;
+    height: 45px;
     margin: 0 auto;
   }
 `;
@@ -43,14 +45,20 @@ export const FeedIcon = styled.div`
 `;
 export const MainImageContainer = styled.div`
   width: 100%;
-  height: 474px;
+  padding-bottom: 70%;
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
+  position: relative;
   cursor: pointer;
   img {
+    position: absolute;
     width: 100%;
+    height: 100%;
+    object-fit: cover;
+    top: 0;
+    left: 0;
   }
   @media (max-width: 768px) {
     height: 189px;
