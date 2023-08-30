@@ -30,13 +30,13 @@ const Themes = ({ theme }: settingProps) => {
     await mutate.mutateAsync(formData);
   };
   const handleLightModeClick = () => {
-    alert('준비 중입니다.');
+    alert('준비되지 않은 기능입니다. 조금만 기다려주세요!');
     localStorage.setItem('theme', 'light');
     dispatch(setThemeAll('light'));
   };
 
   const handleDarkModeClick = () => {
-    alert('준비 중입니다.');
+    alert('준비되지 않은 기능입니다. 조금만 기다려주세요!');
     localStorage.setItem('theme', 'dark');
     dispatch(setThemeAll('dark'));
   };
