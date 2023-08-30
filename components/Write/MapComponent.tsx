@@ -325,7 +325,7 @@ export const MapComponent: React.FC<MapComponentProps> = ({
           onChange={(e) => setLocationInput(e.target.value)}
           onKeyUp={handleKeyUp}
           style={{
-            paddingLeft: '100px',
+            paddingLeft: '95px',
           }}
         />
         <SelectContainer>
