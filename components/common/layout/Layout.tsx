@@ -20,19 +20,23 @@ const Layout = ({ children }: layoutProps) => {
   return (
     <>
       {/* <GlobalStyle /> */}
-      <LayoutStyle $isHome={isHome}>
-        {isHome ? (
-          <>{children}</>
-        ) : (
-          <>
-            <Header $sticky={isHome} />
-            <LayoutWapper>
-              <div className="center">{children}</div>
-              {/* <Footer /> */}
-            </LayoutWapper>
-          </>
-        )}
-      </LayoutStyle>
+      <ThemedApp>
+        <ThemeInitializer />
+        <ThemeGlobalStyle />
+        <LayoutStyle $isHome={isHome}>
+          {isHome ? (
+            <>{children}</>
+          ) : (
+            <>
+              <Header $sticky={isHome} />
+              <LayoutWapper>
+                <div className="center">{children}</div>
+                {/* <Footer /> */}
+              </LayoutWapper>
+            </>
+          )}
+        </LayoutStyle>
+      </ThemedApp>
     </>
   );
 };
@@ -44,7 +48,7 @@ const LayoutWapper = styled.div`
   padding-bottom: 100px;
   /* height: calc(100vh - 70px); */
   /* border-radius: 25px 25px 0 0; */
-  background-color: #fff;
+  /* background-color: #fff; */
   /* overflow: auto; */
   &::-webkit-scrollbar {
     display: none;
@@ -54,7 +58,7 @@ type layoutStyleProps = {
   $isHome: boolean;
 };
 const LayoutStyle = styled.div<layoutStyleProps>`
-  background-color: ${(props) => (props.$isHome ? '#2797ff' : '#fff')};
+  /* background-color: ${(props) => (props.$isHome ? '#2797ff' : '#fff')}; */
   .center {
     max-width: 768px;
     width: 100%;
