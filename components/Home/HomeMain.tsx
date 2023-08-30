@@ -7,7 +7,10 @@ const MainLayout = styled.main`
   overflow-y: auto;
   transform: translateY(-124px);
   background-color: var(--bg-color);
+<<<<<<< HEAD
   padding: 20px 0 0;
+=======
+>>>>>>> 7d5b716 (Fix : theme dark)
   &::-webkit-scrollbar {
     display: none;
   }
