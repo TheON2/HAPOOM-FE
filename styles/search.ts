@@ -51,7 +51,7 @@ export const SearchForm = styled.form`
   justify-content: space-between;
   align-items: center;
   gap: 4px;
-  background-color: #fff;
+  background-color: var(--search-bg-color);
   border: 1px solid #5bb0ff;
   border-radius: 30px;
   box-shadow: 0 5px 8px #3a51661f;

@@ -177,7 +177,7 @@ export const TabButton = styled.div`
   flex: 1;
   font-size: 16px;
   padding: 40px 0 10px 0px;
-  color: #83818c;
+  color: var(--text-none-active);
   text-decoration: none;
   cursor: pointer;
   transition: 0.3s;
