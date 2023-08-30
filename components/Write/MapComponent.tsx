@@ -115,7 +115,7 @@ export const MapComponent: React.FC<MapComponentProps> = ({
   const mapContainerRef = useRef(null);
   const mapRef = useRef<any>(null);
   const markerRef = useRef<Marker | null>(null);
-  const options = ['주소', '키워드'];
+  const options = ['도로명', '지번'];
   const [selectedOption, setSelectedOption] = useState(options[0]);
   const [isOptionsOpen, setIsOptionsOpen] = useState(false);
 
@@ -137,8 +137,10 @@ export const MapComponent: React.FC<MapComponentProps> = ({
     [update, setLocationLatLng]
   );
 
-  const handleSearch = async (term: string) => {
-    if (term.length >= 1) {
+  const handleSearch = useCallback(
+    async (term: string) => {
+      if (term.length < 1) return;
+
       try {
         const response = await axios.get(
           `${process.env.NEXT_PUBLIC_LOCAL_SERVER}/api/util/map/geocode`,
@@ -148,22 +150,42 @@ export const MapComponent: React.FC<MapComponentProps> = ({
             },
           }
         );
-        console.log(response.data);
-        const suggestions = response.data.addressInfo.map((info: any) => ({
-          address_name: info.address_name,
-          x: info.x,
-          y: info.y,
-        }));
 
-        // suggestions를 원하는 대로 사용할 수 있습니다.
+        console.log(response.data);
+
+        const suggestions = response.data.addressInfo.map((info: any) => {
+          let address_name;
+
+          switch (selectedOption) {
+            case '지번':
+              address_name = info.address_name;
+              break;
+            case '도로명':
+              address_name = info.road_address_name;
+              break;
+            default:
+              address_name = info.address_name; // Default to 지번 if anything goes wrong
+          }
+
+          return {
+            address_name,
+            x: info.x,
+            y: info.y,
+          };
+        });
+
         setSuggestions(suggestions);
       } catch (error) {
         console.error('Geocode API 호출 중 오류가 발생했습니다:', error);
       }
-    }
-  };
+    },
+    [selectedOption]
+  );
 
-  const debouncedSearch = useMemo(() => debounce(handleSearch, 10), []);
+  const debouncedSearch = useMemo(
+    () => debounce(handleSearch, 10),
+    [handleSearch]
+  );
 
   const handleKeyUp = useCallback(
     (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -288,6 +310,7 @@ export const MapComponent: React.FC<MapComponentProps> = ({
 
   const handleOptionChange = (option: string) => {
     setSelectedOption(option);
+    setLocationInput(''); // 인풋 값을 초기화합니다.
     toggleOptions();
   };
 
