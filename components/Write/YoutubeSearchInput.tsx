@@ -64,7 +64,7 @@ const SuggestionBox = styled.ul`
 
 const SuggestionItem = styled.li`
   padding: 10px;
-  background-color: white;
+  background-color: var(--bg-color);
   border-bottom: 1px solid #f1f1f1;
   cursor: pointer;
   &:hover {
