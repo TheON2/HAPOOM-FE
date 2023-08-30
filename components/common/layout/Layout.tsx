@@ -7,6 +7,9 @@ import { useRouter } from 'next/router';
 import { createGlobalStyle, styled } from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { ADD_NOTIFICATION } from '@/redux/reducers/notificationSlice';
+import ThemedApp from '../ThemedApp';
+import ThemeInitializer from '../ThemeInitializer';
+import { ThemeGlobalStyle } from '@/styles/theme';
 type layoutProps = {
   children: ReactNode;
 };
