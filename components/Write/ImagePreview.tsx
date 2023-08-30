@@ -19,11 +19,12 @@ const ImagePreviewItem = styled.div`
   position: relative;
   border: solid 2px #fefefe;
   margin: 10px 0;
+
   cursor: pointer;
   /* transition: all 0.3s ease-in-out; */
   /* overflow: hidden; */
   &:hover {
-    animation: HoverRotateAni 0.6s ease-in infinite;
+    animation: HoverRotateAni 0.4s ease-in-out infinite;
     /* transform: rotate(20deg); */
   }
   img {
@@ -34,6 +35,7 @@ const ImagePreviewItem = styled.div`
     position: absolute;
     top: 0;
     left: 0;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
   }
   .remove {
     width: 20px;
@@ -68,24 +70,6 @@ const ImagePreview: React.FC<ImagePreviewProps> = ({
   imageURLs,
   removeImage,
 }) => {
-  // const [isMouseOver, setIsMouseOver] = useState<{ [key: number]: boolean }>(
-  //   {}
-  // );
-
-  // const handleMouseOver = useCallback(
-  //   (index: number) => {
-  //     setIsMouseOver((prev) => ({ ...prev, [index]: true }));
-  //   },
-  //   [setIsMouseOver]
-  // );
-
-  // const handleMouseOut = useCallback(
-  //   (index: number) => {
-  //     setIsMouseOver((prev) => ({ ...prev, [index]: false }));
-  //   },
-  //   [setIsMouseOver]
-  // );
-
   return (
     <ImagePreviewList>
       {imageURLs.map((image, index) => (

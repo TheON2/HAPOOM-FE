@@ -12,6 +12,7 @@ export const MobileBottomNavLayout = styled.nav`
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
   z-index: 115;
   color: #0084ff;
+  font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
   @media screen and (min-width: 768px) {
