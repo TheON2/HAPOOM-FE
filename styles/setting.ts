@@ -27,13 +27,13 @@ export const ProfileBox = styled.div<FlexProps>`
   padding: 20px 30px;
   gap: 30px;
   h2{
-    color: #000;
+    color: var(--text-color);
     text-align: center;
     font-size: 20px;
     font-weight: 700;
   }
   p {
-    color: rgba(0, 0, 0, 0.40);
+    color: ar(--text-color);
     font-size: 8px;
     font-weight: 400;
     text-align: center;

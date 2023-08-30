@@ -67,7 +67,7 @@ const UpdateNickName: NextPage<SettingProps> = ({ nickname = '' }) => {
       />
       {error && <TextErrorParagraph>{error}</TextErrorParagraph>}
       <SettingButton type="submit" $marginTop={'-12px'}>
-        닉네임변경하기
+        닉네임 변경하기
       </SettingButton>
     </form>
   );
