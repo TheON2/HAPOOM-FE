@@ -100,7 +100,6 @@ export const NewContentBox = styled.div`
   max-width: 660px;
   width: 86%;
   height: 75vh;
-  height: 75dvh;
   margin: 0 auto;
   padding: 42px 12px 60px;
   background-color: #fff;

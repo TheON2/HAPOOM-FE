@@ -4,7 +4,6 @@ import { childrenProps } from '@/types/common';
 const MainLayout = styled.main`
   width: 100%;
   height: calc(100vh - 252px);
-  height: calc(100dvh - 252px);
   overflow-y: auto;
   transform: translateY(-124px);
   background-color: var(--bg-color);
@@ -15,7 +14,6 @@ const MainLayout = styled.main`
   scrollbar-width: none;
   @media screen and (min-width: 768px) {
     height: calc(100vh - 240px);
-    height: calc(100dvh - 240px);
     transform: translateY(0);
   }
   /* @media screen and (min-width: 768px) {
