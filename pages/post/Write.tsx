@@ -426,6 +426,7 @@ const Write: NextPage<Props> = ({ update = '1', updateId }) => {
                 <UpAndDownTab
                   onClickEvent={handleCommentShowHandler}
                   $isUp={commentEdit.show}
+                  className="write"
                 >
                   {commentEdit.show && (
                     <>
@@ -502,6 +503,7 @@ const Write: NextPage<Props> = ({ update = '1', updateId }) => {
                 <UpAndDownTab
                   onClickEvent={handleMapShowHandler}
                   $isUp={mapEdit.show}
+                  className="write"
                 >
                   {mapEdit.show && (
                     <MapComponent
