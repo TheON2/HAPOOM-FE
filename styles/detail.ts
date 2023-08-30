@@ -268,7 +268,6 @@ export const CommentButton = styled.button`
   position: fixed;
   right: 24px;
   bottom: 12vh;
-  bottom: 12dvh;
   background-color: #52acff;
   border: none;
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
@@ -277,7 +276,6 @@ export const CommentButton = styled.button`
   @media screen and (min-width: 786px) {
     right: 34px;
     bottom: 22vh;
-    bottom: 22dvh;
   }
 `;
 

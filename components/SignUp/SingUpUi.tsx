@@ -263,7 +263,7 @@ const SignUpUi = () => {
           {serverError && (
             <TextErrorParagraph>{serverError}</TextErrorParagraph>
           )}
-          <SignUpBtn
+          {/* <SignUpBtn
             style={{
               margin: '8px 0 20px 0',
               backgroundColor: signUpState.email ? '#0078FF' : '#B3B3B3',
@@ -273,7 +273,7 @@ const SignUpUi = () => {
             disabled={!signUpState.email}
           >
             이메일 인증하기
-          </SignUpBtn>
+          </SignUpBtn> */}
         </StyledInputBox>
 
         <SignUpPwd
