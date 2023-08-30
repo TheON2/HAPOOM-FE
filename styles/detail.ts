@@ -208,6 +208,7 @@ export const CommentBox = styled.div`
     p {
       padding: 14px 12px 12px;
       line-height: 20px;
+      word-wrap: break-word;
     }
 
     textarea {

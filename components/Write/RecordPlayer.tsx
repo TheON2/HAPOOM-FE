@@ -127,8 +127,8 @@ const RecordPlayer: React.FC<RecordPlayerProps> = ({
       setInternalRecording(false);
       setAudioSubmit(true);
 
-      console.log('Recorded Blob:', blob); // 녹음된 Blob 객체를 출력
-      console.log('Audio URL:', url); // 오디오 URL을 출력
+      // console.log('Recorded Blob:', blob); // 녹음된 Blob 객체를 출력
+      // console.log('Audio URL:', url); // 오디오 URL을 출력
 
       const audio = new Audio(url);
       audio.onloadedmetadata = () => {
@@ -198,7 +198,7 @@ const RecordPlayer: React.FC<RecordPlayerProps> = ({
       audio.onloadedmetadata = () => {
         setDuration(audio.duration);
         setSelectionEnd(audio.duration);
-        console.log('Audio Duration:', audio.duration); // 여기에서 지속 시간을 콘솔에 출력
+        // console.log('Audio Duration:', audio.duration); // 여기에서 지속 시간을 콘솔에 출력
       };
       audio.ontimeupdate = () => {};
       audio.onended = () => {

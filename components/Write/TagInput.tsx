@@ -43,7 +43,7 @@ const TagInput: React.FC<TagInputProps> = ({ tags, setTags }) => {
           }
 
           if (newTag.length < 2) {
-            console.log('Less than two characters');
+            // console.log('Less than two characters');
             openModal({
               actionText: '확인',
               modalMessge: '해시태그는 최소 2글자 이상 이어야 합니다!',

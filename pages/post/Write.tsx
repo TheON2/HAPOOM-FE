@@ -1,7 +1,5 @@
 import React, { FormEvent, useEffect, useState } from 'react';
-import {
-  Box,
-} from '../../styles/write';
+import { Box } from '../../styles/write';
 import Dropzone from '@/components/Write/Dropzone';
 import ImagePreview from '@/components/Write/ImagePreview';
 import { MapComponent } from '@/components/Write/MapComponent';
@@ -14,7 +12,7 @@ import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { getAuthToken } from '@/api/user';
 import { AUTH_USER, UserResponse } from '@/redux/reducers/userSlice';
-import {NextPage } from 'next';
+import { NextPage } from 'next';
 import RecordPlayer from '@/components/Write/RecordPlayer';
 import MusicSelector from '@/components/Write/MusicSelector';
 import Accordion from '@/components/Write/Accordion';
@@ -240,7 +238,7 @@ const Write: NextPage<Props> = ({ update = '1', updateId }) => {
     formData.append('longitude', String(location.y));
     formData.append('placeName', location.name);
 
-    console.log(images);
+    // console.log(images);
     postMutation({ formData, updateId });
   };
 
