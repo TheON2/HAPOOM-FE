@@ -221,7 +221,7 @@ export const FollowBtn = styled.div<ButtonProps>`
   padding: 10px 0;
   text-align: center;
   border: none;
-  font-weight: 900;
+  font-weight: 700;
   border-radius: 3px;
   box-shadow: 1px 2px 3px 0px rgba(0, 0, 0, 0.3);
   font-size: 20px;
