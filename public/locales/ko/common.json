@@ -22,6 +22,8 @@
     "editPrompt": "댓글을 수정하시겠습니까?"
   },
   "post": {
+    "newPost": "게시글 작성하기",
+    "updatePost": "게시글 수정",
     "newPostCreated": "새로운 게시글이 생성되었습니다!",
     "wouldYouDeletePost": "이 게시글을 삭제하시겠습니까?",
     "reportPostPrompt": "이 게시글을 신고하시겠습니까?",
@@ -80,7 +82,8 @@
     "passwordChangeSuccess": "비밀번호 변경이 완료되었습니다."
   },
   "others": {
-    "follow": "팔로우 : 팔로잉",
+    "follower": "팔로워",
+    "following": "팔로잉",
     "wouldYouUnfollow": "팔로우를 취소하시겠습니까?",
     "reportUserPrompt": "이 사용자를 신고하시겠습니까?",
     "hashtagsLength": "해시태그는 5자를 초과할 수 없습니다!",
