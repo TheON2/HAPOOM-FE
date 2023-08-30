@@ -97,7 +97,7 @@ export const RandomContentContainer = styled.div<mainBannerProps>`
   }
 `;
 export const NewContentBox = styled.div`
-  max-width: 360px;
+  max-width: 660px;
   width: 86%;
   height: 75vh;
   height: 75dvh;
@@ -283,7 +283,7 @@ export const MainBannerLayout = styled.div`
   height: 100%;
   overflow: hidden;
   position: relative;
-  background-color: #efefef;
+  background-color: var(--detail-img-bg-color);
   .sigle-image {
     width: 100%;
     height: 100%;

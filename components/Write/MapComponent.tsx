@@ -29,15 +29,15 @@ const SuggestionsBox = styled.ul`
   padding: 0;
   margin: 0;
   width: 100%;
-  box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
-  border-radius: 4px;
+  box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.2);
+  border-radius: 0 0 4px 4px;
   overflow: hidden;
   text-align: left;
 `;
 
 const SuggestionItem = styled.li`
   padding: 10px;
-  background-color: white;
+  background-color: var(--bg-color);
   border-bottom: 1px solid #f1f1f1;
   cursor: pointer;
   &:hover {

@@ -58,6 +58,7 @@ const darkModeStyles = css`
     --hashtag-gray: #93999f;
     --hashtag-active: linear-gradient(#fff, #fff),
     linear-gradient(38deg, rgba(255, 255, 255, 1) 0%, #1f6cb9 100%);
+
     --section-gray: #1b3255;
     --point-bg: #1b3255;
     --random-text-color: #174172;
@@ -81,6 +82,7 @@ const darkModeStyles = css`
     --input-pwd-text: #334765;
     /* login color start */
     --text-gray-second: #b1b1b1;
+
   input,
   textarea {
     &::placeholder {
@@ -155,6 +157,12 @@ const lightModeStyles = css`
   --input-bg-color: #f0efef;
   --input-border: 2px solid #e8e8e8;
   /* write color end */
+
+  /* detail color start */
+  --detail-bg-color: #f5faff;
+  --detail-bg-border: 1px solid #e2f3ff;
+  --detail-img-bg-color: #efefef;
+  /* detail color end */
   /* search color start */
   --search-bg-color: #fff /* search color end */;
   /* user color start */
