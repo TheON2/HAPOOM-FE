@@ -341,7 +341,7 @@ export const OptionsContainer = styled.div`
   border-top: none;
   border-radius: 0 0 4px 4px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-  z-index: 1;
+  z-index: 120;
   border-radius: 10px;
   transition: all 0.3s ease-in-out;
 `;

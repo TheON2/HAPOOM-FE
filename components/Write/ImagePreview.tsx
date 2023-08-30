@@ -17,7 +17,7 @@ const ImagePreviewItem = styled.div`
   width: 100%;
   padding-bottom: 100%;
   position: relative;
-  border: solid 2px #fefefe;
+  /* border: solid 2px #fefefe; */
   margin: 10px 0;
 
   cursor: pointer;
