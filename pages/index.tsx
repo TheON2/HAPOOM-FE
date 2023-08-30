@@ -47,7 +47,6 @@ const Home: NextPage<MainPageProps> = ({
   const [tagCategory, setTagCategory] = useState<string>('전체');
   const [isClick, setIsClick] = useState<boolean>(false);
   const onClickBottomNavHandler = () => {
-    console.log('클릭중');
     setIsClick(!isClick);
   };
   const { data: hashtagSearch, isLoading } = useQuery(
