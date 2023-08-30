@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import styled from 'styled-components';
-import { SectionTitle } from '@/styles/home';
+import { ButtonBox, CarouselHeader, SectionTitle } from '@/styles/home';
 import ImageContent from './ImageContent';
 import useSwipe from '@/hooks/useSwipe';
 import {
@@ -15,6 +15,7 @@ import {
   CarouselStyle,
   CardContainer,
 } from '@/styles/home';
+import { ArrowLong } from '../common/SVG';
 
 const Carousel: React.FC<CarouselProps> = ({ children, $active }) => {
   return (
@@ -39,7 +40,15 @@ const PopularContentsCarousel: React.FC<populerCarouselProps> = ({ data }) => {
   const rightAction = () => {
     setActive((prevActive) => (prevActive <= 0 ? 0 : prevActive - 1));
   };
-
+  const onClickArrowHandler = (direction: number) => {
+    if (direction === -1 && active <= 0) {
+      return;
+    }
+    if (direction === 1 && active >= data.length - 1) {
+      return;
+    }
+    setActive((prevActive) => prevActive + direction);
+  };
   const {
     handleMouseDown,
     handleMouseUp,
@@ -51,7 +60,17 @@ const PopularContentsCarousel: React.FC<populerCarouselProps> = ({ data }) => {
   return (
     <HomeMainSection>
       <div className="center">
-        <SectionTitle>#오늘의 좋아요</SectionTitle>
+        <CarouselHeader>
+          <SectionTitle>#오늘의 좋아요</SectionTitle>
+          <ButtonBox>
+            <button className="left" onClick={() => onClickArrowHandler(-1)}>
+              <ArrowLong />
+            </button>
+            <button onClick={() => onClickArrowHandler(+1)}>
+              <ArrowLong />
+            </button>
+          </ButtonBox>
+        </CarouselHeader>
         <PopularContentsContainer
           onMouseDown={handleMouseDown}
           onMouseMove={handleMouseMove}

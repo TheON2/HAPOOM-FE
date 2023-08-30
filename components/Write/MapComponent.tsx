@@ -15,7 +15,14 @@ import nookies from 'nookies';
 import Modal from '../common/Modal';
 import useModal from '@/hooks/useModal';
 import { Mappin } from '../common/SVG';
-import { InputContainer } from '@/styles/detail';
+import {
+  CustomSelect,
+  DropdownIcon,
+  InputContainer,
+  OptionItem,
+  OptionsContainer,
+  SelectContainer,
+} from '@/styles/detail';
 
 const SuggestionsBox = styled.ul`
   list-style-type: none;
@@ -108,6 +115,9 @@ export const MapComponent: React.FC<MapComponentProps> = ({
   const mapContainerRef = useRef(null);
   const mapRef = useRef<any>(null);
   const markerRef = useRef<Marker | null>(null);
+  const options = ['주소', '키워드'];
+  const [selectedOption, setSelectedOption] = useState(options[0]);
+  const [isOptionsOpen, setIsOptionsOpen] = useState(false);
 
   const handleMapClick = useCallback(
     async (event: MapClickEvent) => {
@@ -276,6 +286,15 @@ export const MapComponent: React.FC<MapComponentProps> = ({
     );
   }, [setMapOpen]);
 
+  const handleOptionChange = (option: string) => {
+    setSelectedOption(option);
+    toggleOptions();
+  };
+
+  const toggleOptions = () => {
+    setIsOptionsOpen((prev) => !prev);
+  };
+
   return (
     <>
       {isModalOpen && (
@@ -296,9 +315,9 @@ export const MapComponent: React.FC<MapComponentProps> = ({
       />
       <h3 style={{ margin: '10px 0' }}>장소</h3>
       <InputContainer>
-        <label>
+        {/* <label>
           <Mappin />
-        </label>
+        </label> */}
         <InputBox
           type="text"
           placeholder="장소를 입력해주세요"
@@ -306,9 +325,28 @@ export const MapComponent: React.FC<MapComponentProps> = ({
           onChange={(e) => setLocationInput(e.target.value)}
           onKeyUp={handleKeyUp}
           style={{
-            paddingLeft: '32px',
+            paddingLeft: '100px',
           }}
         />
+        <SelectContainer>
+          <CustomSelect onClick={toggleOptions}>{selectedOption}</CustomSelect>
+          <DropdownIcon onClick={toggleOptions}>▼</DropdownIcon>
+          {isOptionsOpen && (
+            <OptionsContainer>
+              {options.map(
+                (option) =>
+                  option !== selectedOption && ( // 현재 선택된 옵션은 리스트에 나타나지 않게
+                    <OptionItem
+                      key={option}
+                      onClick={() => handleOptionChange(option)}
+                    >
+                      {option}
+                    </OptionItem>
+                  )
+              )}
+            </OptionsContainer>
+          )}
+        </SelectContainer>
       </InputContainer>
       <div
         style={{

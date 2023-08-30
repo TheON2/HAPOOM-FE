@@ -3,13 +3,15 @@ import { styled } from 'styled-components';
 export const FeedSection = styled.section`
   max-width: 768px;
   width: 100%;
-  margin: 24px auto;
+  margin: 0 auto;
 `;
 export const FeedContainer = styled.div`
   max-width: 768px;
   width: 100%;
-  margin: 0 auto 24px auto;
-  padding: 0 24px;
+  margin: 0 auto;
+  padding: 12px 24px 36px;
+  border-bottom: 2px solid #efefef ;
+
 `;
 export const FeedHeader = styled.div`
   width: 100%;
@@ -18,11 +20,11 @@ export const FeedHeader = styled.div`
   align-items: center;
   margin: 4px auto;
   position: relative;
-  gap: 4px;
+  gap: 8px;
   div img {
     border-radius: 50%;
-    width: 33px;
-    height: 33px;
+    width: 45px;
+    height: 45px;
     margin: 0 auto;
   }
 `;
@@ -43,20 +45,26 @@ export const FeedIcon = styled.div`
 `;
 export const MainImageContainer = styled.div`
   width: 100%;
-  height: 474px;
+  padding-bottom: 70%;
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
+  position: relative;
   cursor: pointer;
   img {
+    position: absolute;
     width: 100%;
+    height: 100%;
+    object-fit: cover;
+    top: 0;
+    left: 0;
   }
   @media (max-width: 768px) {
     height: 189px;
   }
 `;
-export const FeedMusicLikeBox = styled.div`
+export const FeedTagLikeBox = styled.div`
   width: 100%;
   margin: 8px auto;
   display: flex;
@@ -64,19 +72,6 @@ export const FeedMusicLikeBox = styled.div`
   align-items: center;
   position: relative;
 `;
-// export const MusicBox = styled.div`
-//   width: 100%;
-//   height: 40px;
-//   display: flex;
-//   justify-content: flex-start;
-//   align-items: center;
-//   border-radius: 20px;
-//   border: 1px solid #dfefff;
-//   background: #eff7ff;
-//   position: relative;
-//   gap: 4px;
-//   padding: 12px 8px;
-// `;
 export const TagBox = styled.div`
   width: 100%;
   display: flex;

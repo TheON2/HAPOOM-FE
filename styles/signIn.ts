@@ -23,10 +23,10 @@ export const SignInContainer = styled.form`
 export const MainHeadText = styled.h1`
   color: ${theme.primaryColor};
   text-align: center;
-  font-size: 40px;
+  font-size: 50px;
   font-weight: 900;
   cursor: pointer;
-  margin-bottom: 4px;
+  margin-bottom: 40px;
 `;
 export const StyledInputBox = styled.div`
   max-width: 312px;
