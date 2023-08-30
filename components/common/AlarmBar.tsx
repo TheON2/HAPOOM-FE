@@ -153,7 +153,7 @@ type alarmProps = {
 
 const AlarmContainer = ({ alarmData }: alarmProps) => {
   const message = useSelector((state: RootState) => state.notification.message);
-  console.log(message);
+  //console.log(message);
   const [alarmArr, setAlarmArr] = useState<any[]>([]);
 
   const addNotification = (message: any) => {
@@ -172,7 +172,7 @@ const AlarmContainer = ({ alarmData }: alarmProps) => {
       prevArr.filter((notification) => notification.id !== id)
     );
   };
-  console.log(alarmArr);
+  //console.log(alarmArr);
   useEffect(() => {
     if (message) {
       addNotification(message);
