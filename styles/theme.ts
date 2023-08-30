@@ -71,6 +71,11 @@ const darkModeStyles = css`
   --input-border: 2px solid #1b5695;
 
   /* write color end */
+  /* detail color start */
+  --detail-bg-color: #174172;
+  --detail-bg-border: 1px solid #1b5695;
+  --detail-img-bg-color: #174172;
+  /* detail color end */
   /* search color start */
   --search-bg-color: #1b5695 /* search color end */;
   /* user color start */
@@ -153,6 +158,12 @@ const lightModeStyles = css`
   --input-bg-color: #f0efef;
   --input-border: 2px solid #e8e8e8;
   /* write color end */
+
+  /* detail color start */
+  --detail-bg-color: #f5faff;
+  --detail-bg-border: 1px solid #e2f3ff;
+  --detail-img-bg-color: #efefef;
+  /* detail color end */
   /* search color start */
   --search-bg-color: #fff /* search color end */;
   /* user color start */

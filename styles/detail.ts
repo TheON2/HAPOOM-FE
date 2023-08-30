@@ -90,13 +90,13 @@ export const DetialContentSection = styled.section<DetialContentSectionProps>`
 export const DetailContentBox = styled.div`
   width: 100%;
   padding: 20px 24px;
-  background-color: #f5faff;
-  border: 1px solid #e2f3ff;
+  background-color: var(--detail-bg-color);
+  border: var(--detail-bg-border);
   border-radius: 8px;
   word-break: break-word;
   /* min-height: 120px; */
   /* margin-bottom: 12px; */
-  color: #082d42;
+  /* color: #082d42; */
 `;
 export const OtherProfileBox = styled.div`
   width: 100%;
@@ -154,8 +154,8 @@ export const TextareaBox = styled.div`
     width: 100%;
     height: 120px;
     padding: 20px 24px;
-    background-color: #f0efef;
-    border: 2px solid #e8e8e8;
+    background-color: var(--input-bg-color);
+    border: var(--input-border);
     margin-top: 8px;
     resize: none;
     border-radius: 12px;
@@ -341,7 +341,7 @@ export const OptionsContainer = styled.div`
   border-top: none;
   border-radius: 0 0 4px 4px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-  z-index: 1;
+  z-index: 120;
   border-radius: 10px;
   transition: all 0.3s ease-in-out;
 `;

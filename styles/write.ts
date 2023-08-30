@@ -58,12 +58,12 @@ export const LimitNumBox = styled.span<limitProps>`
   position: absolute;
   bottom: 5px;
   right: 10px;
-  color: ${(props) => (props.$color && '#FF5D5D')};
+  color: ${(props) => props.$color && '#FF5D5D'};
 `;
 export const InputBox = styled.input`
   display: block;
   width: 100%;
-  color: #051619;
+  /* color: #051619; */
   outline: none;
   padding: 12px 24px 10px;
   border: var(--input-border);
