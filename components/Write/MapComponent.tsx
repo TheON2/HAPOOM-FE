@@ -138,7 +138,7 @@ export const MapComponent: React.FC<MapComponentProps> = ({
   );
 
   const handleSearch = async (term: string) => {
-    if (term.length >= 4) {
+    if (term.length >= 1) {
       try {
         const response = await axios.get(
           `${process.env.NEXT_PUBLIC_LOCAL_SERVER}/api/util/map/geocode`,
@@ -150,7 +150,7 @@ export const MapComponent: React.FC<MapComponentProps> = ({
         );
         console.log(response.data);
         const suggestions = response.data.addressInfo.map((info: any) => ({
-          address_name: info.road_address_name,
+          address_name: info.address_name,
           x: info.x,
           y: info.y,
         }));
