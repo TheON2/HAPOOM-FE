@@ -9,7 +9,7 @@ import {
   CLEAR_NOTIFICATION,
 } from '@/redux/reducers/notificationSlice';
 const AlarmContainerStyle = styled.div`
-  max-width: 300px;
+  max-width: 320px;
   width: 90%;
   position: fixed;
   top: 30px;
@@ -140,9 +140,8 @@ export const AlarmBar = ({ alarm }: Props) => {
       onTouchEnd={handleTouchEnd}
     >
       <AlarmIconBox>
-        <Bell fillColor={'#fff'} />
+        <Bell fillColor={'#fff'} $isPush={true} />
       </AlarmIconBox>
-      {/* <p>{alarm}</p> */}
       <p>{alarm.message}</p>
     </AlarmBox>
   );
@@ -179,17 +178,9 @@ const AlarmContainer = ({ alarmData }: alarmProps) => {
       addNotification(message);
     }
   }, [message]);
-  const dispatch = useDispatch();
-  const test = () => {
-    dispatch(ADD_NOTIFICATION(`아무개님이 로그인 하셨습니다.`));
-    setTimeout(() => {
-      dispatch(CLEAR_NOTIFICATION());
-    }, 5000);
-  };
 
   return (
     <>
-      {/* <button onClick={test}>버튼</button> */}
       <AlarmContainerStyle>
         {alarmArr.map((alarm) => {
           return <AlarmBar alarm={alarm} key={alarm.id} />;
