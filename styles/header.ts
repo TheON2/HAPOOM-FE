@@ -25,7 +25,8 @@ export const HeaderLayout = styled.header<HeaderProps>`
   gap: 12px;
   color: ${NONE_ROUTE_COLOR};
   h1 {
-    color: #2797ff;
+    /* color: #2797ff; */
+    color: var(--header-color);
   }
   .active {
     color: ${ROUTE_ACTION_COLOR};
