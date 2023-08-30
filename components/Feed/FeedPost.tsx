@@ -21,7 +21,6 @@ import KebabMenuUI, {
 import HeartIcon from '../common/HeartIcon';
 import ProfileImage from '../common/ProfileImage';
 import { useRouter } from 'next/router';
-import { TagStyle } from '../Write/Tag';
 import { Hashtag } from '@/styles/detail';
 
 interface FeedItemProps {

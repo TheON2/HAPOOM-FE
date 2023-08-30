@@ -151,7 +151,7 @@ export const MapComponent: React.FC<MapComponentProps> = ({
           }
         );
 
-        console.log(response.data);
+        // console.log(response.data);
 
         const suggestions = response.data.addressInfo.map((info: any) => {
           let address_name;
