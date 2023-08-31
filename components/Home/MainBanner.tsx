@@ -2,6 +2,7 @@ import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import {
   ButtonTouchBox,
+  IntroduceText,
   MainBannerBox,
   MainBannerContainer,
   MainCardInfo,
@@ -45,6 +46,7 @@ const MainBanner = ({
     <MainBannerContainer $isClick={$isClick}>
       <RandomContentContainer $isClick={$isClick}>
         <NewContentBox>
+          <IntroduceText>당신이 품은 하늘을 공유해주세요</IntroduceText>
           <Link href={`/detail/${randomPost?.post?.postId}`}>
             <figure>
               <Image
@@ -74,7 +76,6 @@ const MainBanner = ({
           </MainCardInfo>
         </NewContentBox>
       </RandomContentContainer>
-
       <MainBannerBox $isClick={$isClick}>
         <ButtonTouchBox $isClick={$isClick}>
           {$isClick ? 'now' : 'popular'}
