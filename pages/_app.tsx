@@ -12,6 +12,7 @@ import AlarmContainer, { AlarmBar } from '@/components/common/AlarmBar';
 import { Provider, useDispatch, useSelector } from 'react-redux';
 import SocketManager from '@/components/common/Socket';
 import { appWithTranslation } from 'next-i18next';
+import Head from 'next/head';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const queryClient = new QueryClient();
@@ -27,9 +28,11 @@ function MyApp({ Component, pageProps }: AppProps) {
   ];
   const isExcludedPage = excludedPages.includes(router.pathname);
 
-
   return (
     <>
+      <Head>
+        <title>하늘을 품다. 하품</title>
+      </Head>
       <Provider store={store}>
         {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS && (
           <>
