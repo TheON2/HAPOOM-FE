@@ -29,10 +29,26 @@ const TagInput: React.FC<TagInputProps> = ({ tags, setTags }) => {
 
   const handleTagChange = useCallback(
     (e: KeyboardEvent<HTMLInputElement>) => {
-      if (e.key === 'Enter' || e.key === ',') {
+      if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
 
         const newTag = e.currentTarget.value.trim();
+        const hasSpecialCharacters =
+          /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/.test(newTag);
+        if (hasSpecialCharacters) {
+          openModal({
+            actionText: '확인',
+            modalMessge: '해시태그에는 특수문자를 사용할 수 없습니다!',
+          });
+          return;
+        }
+        if (newTag === '전체' || newTag === '기타') {
+          openModal({
+            actionText: '확인',
+            modalMessge: '해시태그에 "전체" 또는 "기타"를 사용할 수 없습니다!',
+          });
+          return;
+        }
         if (newTag && !tags.includes(newTag)) {
           if (newTag.length > 5) {
             openModal({
@@ -43,7 +59,6 @@ const TagInput: React.FC<TagInputProps> = ({ tags, setTags }) => {
           }
 
           if (newTag.length < 2) {
-            // console.log('Less than two characters');
             openModal({
               actionText: '확인',
               modalMessge: '해시태그는 최소 2글자 이상 이어야 합니다!',
@@ -60,7 +75,6 @@ const TagInput: React.FC<TagInputProps> = ({ tags, setTags }) => {
           }
 
           setTags([...tags, newTag]);
-
           setInputValue('');
         }
       }
@@ -77,7 +91,7 @@ const TagInput: React.FC<TagInputProps> = ({ tags, setTags }) => {
         <label>태그</label>
         <InputBox
           type="text"
-          placeholder="태그를 입력해주세요."
+          placeholder="태그 입력후 ENTER or SPACE 를 눌러주세요!"
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
           onKeyUp={handleTagChange}
