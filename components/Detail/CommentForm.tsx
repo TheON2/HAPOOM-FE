@@ -116,11 +116,7 @@ const CommentFormWrapper = ({
       return;
     }
     if (commentEdit.action === 'create') {
-      setModalMessge({
-        actionText: '저장',
-        modalMessge: '댓글을 저장하시겠습니까?',
-        onClickEvent: onClickCreateCommentHandler,
-      });
+      return onClickCreateCommentHandler();
     } else if (commentEdit.action === 'edit') {
       setModalMessge({
         actionText: '수정',
