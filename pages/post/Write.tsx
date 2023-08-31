@@ -252,7 +252,7 @@ const Write: NextPage<Props> = ({ update = '1', updateId }) => {
           actionText: '확인',
           modalMessge: '게시물이 수정되었습니다!',
           onClickEvent: () => {
-            router.push('/');
+            router.push('/feed');
           },
         });
       } else {
@@ -260,7 +260,7 @@ const Write: NextPage<Props> = ({ update = '1', updateId }) => {
           actionText: '확인',
           modalMessge: '게시물이 추가되었습니다!',
           onClickEvent: () => {
-            router.push('/');
+            router.push('/feed');
           },
         });
       }
