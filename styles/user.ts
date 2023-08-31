@@ -226,7 +226,6 @@ export const FollowBtn = styled.div<ButtonProps>`
   box-shadow: 1px 2px 3px 0px rgba(0, 0, 0, 0.3);
   font-size: 20px;
   margin: 0 auto;
-  margin-top: 10px;
 
   background-color: ${({ $status }) => {
     switch ($status) {
@@ -246,6 +245,7 @@ export const FollowBtn = styled.div<ButtonProps>`
 
   &:hover {
     cursor: pointer;
+    filter: brightness(0.8);
   }
 `;
 
@@ -266,5 +266,32 @@ export const SettingBtn = styled.div`
     &:hover {
       cursor: pointer;
     }
+  }
+`;
+
+export const Nothing = styled.div`
+  margin-top: 30px;
+  width: 100%;
+  text-align: center;
+  font-weight: 500;
+  line-height: 1.8;
+
+  span {
+    font-weight: 600;
+    font-size: 20px;
+  }
+`;
+
+export const NothingLike = styled.div`
+  width: 100%;
+  margin-top: 30px;
+  justify-content: flex-end;
+  text-align: center;
+  font-weight: 500;
+  line-height: 1.8;
+
+  span {
+    font-weight: 600;
+    font-size: 20px;
   }
 `;

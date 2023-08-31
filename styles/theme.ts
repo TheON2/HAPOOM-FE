@@ -217,3 +217,4 @@ export const DarkModeButton = styled.button`
   border: var(--setting-border);
   font-weight: ${({ theme }) => (theme.mode === 'dark' ? '900' : '400')};
 `;
+

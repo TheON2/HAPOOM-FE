@@ -87,10 +87,10 @@ const UpdateNickName: React.FC<UpdateNickNameProps> = ({ nickname = '' }) => {
           placeholder="닉네임 2자에서 15자 입력해주세요"
           onChange={onClickNickName}
         />
-        {error && (
-          <TextErrorParagraph $marginTop={'-8px'}>{error}</TextErrorParagraph>
-        )}
-        <SettingButton type="submit" $marginTop={'-4px'}>
+
+        {error && <TextErrorParagraph>{error}</TextErrorParagraph>}
+        <SettingButton type="submit" $marginTop={'-12px'}>
+
           닉네임 변경하기
         </SettingButton>
       </form>

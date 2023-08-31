@@ -108,20 +108,20 @@ const FeedPost = ({
           />
         </MainImageContainer>
 
-        {feed.tags && feed.tags.length > 0 ? (
-          <>
-            <FeedTagLikeBox justifyContent="flex-start">
-              <TagBox>
-                {feed.tags.slice(0, 3).map((tag: string[], index: number) => (
-                  <Hashtag key={index}>
-                    <div>{'#' + tag}</div>
-                  </Hashtag>
-                ))}
-              </TagBox>
-              <LikeIconContainer>
-                <HeartIcon postId={feed.postId} />
-              </LikeIconContainer>
-            </FeedTagLikeBox>
+
+        <FeedTagLikeBox>
+          <TagBox>
+            {feed.tags.slice(0, 3).map((tag: string[], index: number) => (
+              <Hashtag key={index}>
+                <div>{'#' + tag}</div>
+              </Hashtag>
+            ))}
+          </TagBox>
+          <LikeIconContainer>
+            <HeartIcon postId={feed.postId} />
+          </LikeIconContainer>
+        </FeedTagLikeBox>
+
 
             <FeedContentBox>
               <FeedContent>{content}</FeedContent>
