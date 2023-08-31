@@ -82,7 +82,7 @@ export const SelectBox = styled.div`
 
 export const NoneSearchResult = styled.div`
   width: 100%;
-  height: 60vh;
+  height: 60svh;
   color: #c4c4c4;
   display: flex;
   flex-direction: column;
