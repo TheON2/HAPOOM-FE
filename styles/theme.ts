@@ -93,6 +93,11 @@ const darkModeStyles = css`
     }
     color: #fff;
   }
+  button{
+    &:hover {
+      filter: brightness(0.8)
+    }
+  }
 `;
 
 const lightModeStyles = css`
@@ -182,6 +187,11 @@ const lightModeStyles = css`
       color: #929aa7;
     }
     color: #334765;
+  }
+  button{
+    &:hover {
+      filter: brightness(0.8)
+    }
   }
 `;
 
