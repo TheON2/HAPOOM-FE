@@ -24,10 +24,10 @@ export const HomePageLayout = styled.div`
 
 export const MainLayout = styled.main`
   width: 100%;
-  height: calc(100vh - 252px);
-  height: calc(100svh - 252px);
+  height: calc(100vh - 230px);
+  height: calc(100svh - 230px);
   overflow-y: auto;
-  transform: translateY(-124px);
+  transform: translateY(-115px);
   background-color: var(--bg-color);
   padding: 20px 0 0;
   &::-webkit-scrollbar {
@@ -132,6 +132,7 @@ export const IntroduceText = styled.p`
   width: 100%;
   top: -44px;
   left: 0;
+
   /* margin-top: 80px; */
 `;
 export const NewContentBox = styled.div`
@@ -246,7 +247,6 @@ export const RandomText = styled.p<mainBannerProps>`
     padding: 0;
     background: none;
     text-align: start;
-
     max-width: 768px;
     font-size: ${(props) => (props.$isClick ? '14px' : '28px')};
     flex-direction: ${(props) => (props.$isClick ? 'row' : 'column')};

@@ -20,6 +20,8 @@ const MAX_TAGS = 5;
 const TagInput: React.FC<TagInputProps> = ({ tags, setTags }) => {
   const [inputValue, setInputValue] = useState('');
   const { isModalOpen, modalMessge, openModal, closeModal } = useModal();
+  const [isMaxLength, setIsMaxLength] = useState<boolean>(false);
+
   const handleDelete = useCallback(
     (tagToDelete: string) => {
       setTags(tags.filter((tag) => tag !== tagToDelete));
@@ -52,11 +54,14 @@ const TagInput: React.FC<TagInputProps> = ({ tags, setTags }) => {
           }
 
           if (tags.length >= MAX_TAGS) {
+            setIsMaxLength(true);
             openModal({
               actionText: '확인',
               modalMessge: `태그는 최대 ${MAX_TAGS}까지 업로드할 수 있습니다.`,
             });
             return;
+          } else {
+            setIsMaxLength(false);
           }
 
           setTags([...tags, newTag]);
@@ -69,7 +74,6 @@ const TagInput: React.FC<TagInputProps> = ({ tags, setTags }) => {
   );
 
   const isMaxTags = tags.length >= MAX_TAGS;
-  const color = isMaxTags ? 'red' : 'black';
 
   return (
     <>

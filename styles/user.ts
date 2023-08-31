@@ -35,6 +35,7 @@ export const UserProfileCardBox = styled.div`
     height: 90px;
     background-image: url('/nonepreset.png');
     background-size: cover;
+    overflow: hidden;
   }
 `;
 export const UserImage = styled(Image)`

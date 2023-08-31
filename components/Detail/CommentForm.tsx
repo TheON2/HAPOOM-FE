@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useCallback, useState } from 'react';
+import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import Button from '@/components/common/Button';
 import IconButton from '@/components/common/IconButton';
 import Comment from '@/components/Detail/Comment';
@@ -46,8 +46,8 @@ const CommentFormWrapper = ({
 }: CommentFormProps) => {
   const queryClient = useQueryClient();
   const [editComment, setEditComment] = useState(comment ? comment : '');
+  const [isMaxLength, setIsMaxLength] = useState<boolean>(false);
   const maxLength = 140;
-  const isMaxLength = comment.length >= maxLength;
   const onChangeCommentHandler = useCallback(
     (event: React.ChangeEvent<HTMLTextAreaElement>) => {
       if (event.currentTarget.value.length <= maxLength) {
@@ -56,6 +56,13 @@ const CommentFormWrapper = ({
     },
     [setComment]
   );
+  useEffect(() => {
+    if (editComment.length >= maxLength) {
+      setIsMaxLength(true);
+    } else {
+      setIsMaxLength(false);
+    }
+  }, [editComment]);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [modalMessge, setModalMessge] = useState<modalState>({
     actionText: '',
