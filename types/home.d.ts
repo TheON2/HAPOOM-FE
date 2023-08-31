@@ -35,6 +35,7 @@ export type HashtagNavBarProps = {
   data: HashtagDataProps[];
   $isClick?: boolean;
   onClickEvent?: any;
+  HashTagScrollTopHandler: () => void;
   // onClickhashtagHandler: any;
   hashTag: string;
   setTagCategory: any;

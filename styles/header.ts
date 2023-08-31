@@ -67,7 +67,7 @@ export const HeaderLayout = styled.header<HeaderProps>`
   &.trend {
     position: fixed;
     background: none;
-    border: none;
+    border-bottom: var(--header-bg-color);
     color: ${(props) =>
       props.$sticky ? 'var(--button-hover-color)' : '#C6E2FC'};
     /* path {

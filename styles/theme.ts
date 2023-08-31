@@ -375,5 +375,10 @@ export const ThemeGlobalStyle = createGlobalStyle`
     body {
       ${({ theme }) =>
         theme.mode === 'dark' ? darkModeStyles : lightModeStyles}
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    -ms-overflow-style: none;
+    scrollbar-width: none;
     }
 `;

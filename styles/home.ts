@@ -20,6 +20,30 @@ export const HomePageLayout = styled.div`
     scrollbar-width: none;
   } */
 `;
+
+export const MainLayout = styled.main`
+  width: 100%;
+  height: calc(100vh - 252px);
+  overflow-y: auto;
+  transform: translateY(-124px);
+  background-color: var(--bg-color);
+  padding: 20px 0 0;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  @media screen and (min-width: 768px) {
+    height: calc(100vh - 240px);
+    transform: translateY(0);
+  }
+  .center {
+    margin: 0 auto;
+    max-width: 768px;
+    width: 100%;
+  }
+`;
+
 // main comment section styled
 export const SectionTitle = styled.h2`
   max-width: 768px;
@@ -194,12 +218,15 @@ export const RandomText = styled.p<mainBannerProps>`
   font-size: 14px;
   font-weight: 700;
   line-height: 28px;
+  text-align: center;
   background-color: var(--random-text-color);
   color: #fff;
   transition: all 0.3s ease-in-out;
   @media screen and (min-width: 768px) {
     padding: 0;
     background: none;
+    text-align: start;
+
     max-width: 768px;
     font-size: ${(props) => (props.$isClick ? '14px' : '28px')};
     flex-direction: ${(props) => (props.$isClick ? 'row' : 'column')};
@@ -377,6 +404,7 @@ export const SlideDotBox = styled.div`
 
 export const HashtagContentsLayout = styled.section`
   width: 100%;
+  min-height: 30vh;
   @media screen and (min-width: 786px) {
   }
 `;

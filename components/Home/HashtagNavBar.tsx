@@ -16,6 +16,7 @@ import { ArrowLong } from '../common/SVG';
 const HashtagNavBar: React.FC<HashtagNavBarProps> = ({
   data,
   onClickEvent,
+  HashTagScrollTopHandler,
   $isClick,
   hashTag,
   setHashTag,
@@ -39,17 +40,20 @@ const HashtagNavBar: React.FC<HashtagNavBarProps> = ({
   const uniqueData = getUniqueHashtags(data);
   const onClickAllTagHandler = () => {
     setHashTag('');
-    setTagCategory('전체');
+    setTagCategory('모든태그');
     setActive(0);
+    HashTagScrollTopHandler();
   };
   const onClickhashtagHandler = (hashtag: string, index: number) => {
     setHashTag(hashtag);
     setTagCategory('unique');
     setActive(index);
+    HashTagScrollTopHandler();
   };
   const onClickOtherHandler = () => {
     setTagCategory('기타');
     setActive(otherIndex);
+    HashTagScrollTopHandler();
   };
   const onClickHashSlideRightHandler = () => {
     const scrollContainer = scrollContainerRef.current;
@@ -91,13 +95,13 @@ const HashtagNavBar: React.FC<HashtagNavBarProps> = ({
               <figure>
                 <Image
                   src={allTagThumbnail}
-                  alt="v13 image"
+                  alt="hashtag thumbnail image"
                   width={100}
                   height={100}
                   loading="eager"
                 />
               </figure>
-              <figcaption>#전체</figcaption>
+              <figcaption>#모든태그</figcaption>
             </HashtagAll>
             <span className="line"></span>
           </HashtagListOther>
@@ -112,7 +116,7 @@ const HashtagNavBar: React.FC<HashtagNavBarProps> = ({
                   <figure>
                     <Image
                       src={hashtag.image}
-                      alt="v13 image"
+                      alt="hashtag thumbnail imagee"
                       width={100}
                       height={100}
                       loading="eager"
@@ -129,7 +133,7 @@ const HashtagNavBar: React.FC<HashtagNavBarProps> = ({
               <figure>
                 <Image
                   src={undefindeTagThumbnail}
-                  alt="v13 image"
+                  alt="hashtag thumbnail image"
                   width={100}
                   height={100}
                   loading="eager"
