@@ -59,12 +59,6 @@ const Home: NextPage<MainPageProps> = ({
       staleTime: 60 * 1000,
     }
   );
-  const scrollContainer = mainRef.current;
-  console.log(scrollContainer);
-  // if (scrollContainer) {
-  //   scrollContainer.scrollTop =
-  //     scrollContainer.scrollWidth - scrollContainer.clientWidth;
-  // }
   const HashTagScrollTopHandler = () => {
     if (isClick && mainRef.current) {
       mainRef.current.scrollTop = 0;

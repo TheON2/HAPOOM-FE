@@ -114,7 +114,7 @@ const getFollowers = async (userId: string): Promise<User[]> => {
 
 const getFollowings = async (userId: string): Promise<User[]> => {
   const response = await api.get(`/api/user/${userId}/following`);
-  console.log('Followings Response:', response.data); // 이 줄을 추가
+  // console.log('Followings Response:', response.data); // 이 줄을 추가
   return response.data.following;
 };
 

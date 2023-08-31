@@ -22,7 +22,7 @@ const SearchComponent = () => {
 
       setResults(response.data);
     } catch (error) {
-      console.error('검색 에러:', error);
+      // console.error('검색 에러:', error);
       alert('검색 중 에러가 발생했습니다.');
     }
   };

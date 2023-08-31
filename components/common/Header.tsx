@@ -103,7 +103,7 @@ const Header = ({ $sticky, ...restProps }: any) => {
         if (permission === 'granted') {
           subscribeUserToPush(); // 권한이 허용되면 Push Subscription 생성
         } else {
-          console.error('Notification permission denied.');
+          // console.error('Notification permission denied.');
         }
       });
     }
@@ -127,9 +127,8 @@ const Header = ({ $sticky, ...restProps }: any) => {
       applicationServerKey: process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY,
     };
 
-    const pushSubscription = await registration.pushManager.subscribe(
-      subscribeOptions
-    );
+    const pushSubscription =
+      await registration.pushManager.subscribe(subscribeOptions);
 
     // 서버에 Push Subscription 저장
     await fetch(`${ENDPOINT}/api/util/subscribe`, {
