@@ -63,11 +63,14 @@ export const MainImageContainer = styled.div`
     height: 189px;
   }
 `;
-export const FeedTagLikeBox = styled.div`
+type TagProps = {
+  justifyContent: string;
+}
+export const FeedTagLikeBox = styled.div<TagProps>`
   width: 100%;
   margin: 8px auto;
   display: flex;
-  justify-content: flex-start;
+  justify-content: ${(props) => props.justifyContent};
   align-items: center;
   position: relative;
 `;
@@ -82,6 +85,7 @@ export const TagBox = styled.div`
 `;
 export const FeedContentBox = styled.div`
   display: flex;
+  margin-right: 5%;
   @media (max-width: 520px) {
     flex-direction: column;
   }
