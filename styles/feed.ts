@@ -85,7 +85,7 @@ export const TagBox = styled.div`
 `;
 export const FeedContentBox = styled.div`
   display: flex;
-  margin-right: 5%;
+  margin-right: 8%;
   @media (max-width: 520px) {
     flex-direction: column;
   }

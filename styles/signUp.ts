@@ -194,4 +194,5 @@ export const TextErrorParagraph = styled.p<Props>`
   line-height: 1.5;
   margin-left: 4px;
   margin-top: 8px;
+  margin-top: ${({$marginTop}) => $marginTop || '8px'}
 `;

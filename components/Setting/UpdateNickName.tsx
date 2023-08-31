@@ -89,8 +89,10 @@ const UpdateNickName: NextPage<SettingProps> = ({ nickname = '' }) => {
           placeholder="닉네임 2자에서 15자 입력해주세요"
           onChange={onClickNickName}
         />
-        {error && <TextErrorParagraph>{error}</TextErrorParagraph>}
-        <SettingButton type="submit" $marginTop={'-12px'}>
+        {error && (
+          <TextErrorParagraph $marginTop={'-8px'}>{error}</TextErrorParagraph>
+        )}
+        <SettingButton type="submit" $marginTop={'-4px'}>
           닉네임 변경하기
         </SettingButton>
       </form>
