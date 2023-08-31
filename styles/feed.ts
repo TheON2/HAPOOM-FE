@@ -63,12 +63,15 @@ export const MainImageContainer = styled.div`
     height: 189px;
   }
 `;
-export const FeedTagLikeBox = styled.div`
+type TagProps = {
+  justifyContent: string;
+}
+export const FeedTagLikeBox = styled.div<TagProps>`
   width: 100%;
   margin: 8px auto;
   display: flex;
-  justify-content: flex-start;
-  align-items: center;
+  justify-content: ${(props) => props.justifyContent};
+  align-items: flex-start;
   position: relative;
 `;
 export const TagBox = styled.div`
@@ -79,9 +82,11 @@ export const TagBox = styled.div`
   position: relative;
   gap: 6px;
   padding: 4px 0;
+  flex-wrap: wrap;
 `;
 export const FeedContentBox = styled.div`
   display: flex;
+  margin-right: 8%;
   @media (max-width: 520px) {
     flex-direction: column;
   }
@@ -99,7 +104,7 @@ export const MoreButton = styled.button`
   margin-top: 4px;
   background-color: transparent;
   border: none;
-  color: var(--text-color);
+  color: #C4C4C4;
   cursor: pointer;
   @media (max-width: 520px) {
     text-align: left;

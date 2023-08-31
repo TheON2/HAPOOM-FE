@@ -10,7 +10,7 @@ export const TabContainer = styled.div`
   margin-bottom: 20px;
   display: flex;
   position: relative;
-  border-bottom: 1px solid #c2c2c2;
+  border-bottom: var(--input-border);
 `;
 
 export const TabButton = styled.button`
@@ -106,7 +106,6 @@ export const FollowButtonStyled = styled.button`
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s;
-
   &:hover {
     background-color: #0056b3;
   }
@@ -122,10 +121,8 @@ export const TabUnderline = styled.div<TabUnderlineProps>`
   left: 0;
   width: 50%;
   height: 3px;
-  background-color: #2797ff;
-
+  background-color: var(--primary-color);
   transition: transform 0.3s ease-in-out;
-
   transform: ${(props) =>
     props.$activeTab === 'followers' ? 'translateX(0%)' : 'translateX(100%)'};
 `;

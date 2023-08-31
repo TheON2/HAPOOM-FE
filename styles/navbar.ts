@@ -8,10 +8,10 @@ export const MobileBottomNavLayout = styled.nav`
   width: 100%;
   display: flex;
   /* justify-content: center; */
-  background: #fff;
+  background: var(--bg-color);
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
   z-index: 115;
-  color: #0084ff;
+  color: var(--primary-second-color);
   font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
@@ -49,11 +49,11 @@ export const IconBox = styled.button`
   font-size: 10px;
   border: none;
   background: none;
-  color: #777;
+  color: var(--nav-icon-color);
   font-weight: 700;
   cursor: pointer;
   path {
-    stroke: #777;
+    stroke: var(--nav-icon-color);
   }
   .image-box {
     width: 24px;
@@ -75,21 +75,21 @@ export const IconBox = styled.button`
   }
   &:hover {
     filter: brightness(0.7);
-    color: #0084ff;
+    color: var(--primary-second-color);
     path {
-      stroke: #0084ff;
+      stroke: var(--primary-second-color);
     }
     .image-box {
-      border: 2px solid #0084ff;
+      border: 2px solid var(--primary-second-color);
     }
   }
   &.active {
-    color: #0084ff;
+    color: var(--primary-second-color);
     path {
-      stroke: #0084ff;
+      stroke: var(--primary-second-color);
     }
     .image-box {
-      border: 2px solid #0084ff;
+      border: 2px solid var(--primary-second-color);
     }
   }
 `;

@@ -33,7 +33,7 @@ const validatePassword = (password: string) => {
 };
 
 const validateNickname = (nickname: string) => {
-  const nicknamePattern = /^.{2,15}$/;
+  const nicknamePattern = /^.{2,8}$/;
   return nicknamePattern.test(nickname);
 };
 
@@ -195,7 +195,7 @@ const SignUpUi = () => {
     if (!signUpState.nickname) {
       errors.nickname = '닉네임을 입력해주세요.';
     } else if (!validateNickname(signUpState.nickname)) {
-      errors.nickname = '2~15자를 입력해주세요.';
+      errors.nickname = '2~8자를 입력해주세요.';
     }
     if (
       !checkboxes.checkTerms ||
@@ -233,7 +233,6 @@ const SignUpUi = () => {
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.preventDefault();
-    alert('성실');
     forgotPwdMutaion.mutate(signUpState.email);
   };
 

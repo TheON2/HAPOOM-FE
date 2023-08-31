@@ -114,6 +114,9 @@ export const SignUpBtn = styled.button`
   font-size: 16px;
   font-weight: 700;
   cursor: pointer;
+  &:hover {
+      filter: brightness(0.8)
+    }
 `;
 export const SignUpCheckBoxLayout = styled.div`
   max-width: 312px;
@@ -194,4 +197,5 @@ export const TextErrorParagraph = styled.p<Props>`
   line-height: 1.5;
   margin-left: 4px;
   margin-top: 8px;
+  margin-top: ${({$marginTop}) => $marginTop || '8px'}
 `;

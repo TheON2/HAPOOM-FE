@@ -1,6 +1,5 @@
 import React, { FormEvent, useState } from 'react';
 import useInput from '@/hooks/useInput';
-import { NextPage } from 'next';
 import Input from '@/components/Setting/Input';
 import { useMutation, useQueryClient } from 'react-query';
 import { updateUserSetting } from '@/api/user';
@@ -9,14 +8,12 @@ import { SettingButton } from '@/styles/setting';
 import { modalState } from '@/types/comment';
 import Modal from '../common/Modal';
 
-type SettingProps = {
+type UpdateNickNameProps = {
   nickname?: string;
 };
 
-const UpdateNickName: NextPage<SettingProps> = ({ nickname = '' }) => {
-  const [nickName, onClickNickName, setNickName] = useInput<string | undefined>(
-    nickname
-  );
+const UpdateNickName: React.FC<UpdateNickNameProps> = ({ nickname = '' }) => {
+  const [nickName, onClickNickName] = useInput<string | undefined>(nickname);
   const [error, setError] = useState<string>('');
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [modalMessge, setModalMessge] = useState<modalState>({
@@ -36,7 +33,7 @@ const UpdateNickName: NextPage<SettingProps> = ({ nickname = '' }) => {
   );
 
   const validateNickname = (nickname: string): boolean => {
-    const nicknamePattern = /^.{2,15}$/;
+    const nicknamePattern = /^.{2,8}$/;
     return nicknamePattern.test(nickname);
   };
 
@@ -48,7 +45,7 @@ const UpdateNickName: NextPage<SettingProps> = ({ nickname = '' }) => {
     if (!nickName) {
       errors = '닉네임을 입력해주세요.';
     } else if (!validateNickname(nickName)) {
-      errors = '2~15자를 입력해주세요.';
+      errors = '2~8자를 입력해주세요.';
     }
 
     if (errors !== '') {
@@ -73,6 +70,7 @@ const UpdateNickName: NextPage<SettingProps> = ({ nickname = '' }) => {
     });
     setIsModalOpen(true);
   };
+
   return (
     <>
       <Modal
@@ -89,8 +87,10 @@ const UpdateNickName: NextPage<SettingProps> = ({ nickname = '' }) => {
           placeholder="닉네임 2자에서 15자 입력해주세요"
           onChange={onClickNickName}
         />
+
         {error && <TextErrorParagraph>{error}</TextErrorParagraph>}
         <SettingButton type="submit" $marginTop={'-12px'}>
+
           닉네임 변경하기
         </SettingButton>
       </form>
