@@ -82,6 +82,7 @@ export const HeaderLayout = styled.header<HeaderProps>`
   &.trend {
     position: fixed;
     background: none;
+    backdrop-filter: blur(0px);
     border-bottom: var(--header-bg-color);
     color: ${(props) =>
       props.$sticky ? 'var(--button-hover-color)' : '#C6E2FC'};
@@ -107,11 +108,6 @@ export const HeaderLayout = styled.header<HeaderProps>`
             props.$sticky ? 'var(--button-hover-color)' : '#C6E2FC'};
         }
       }
-    }
-    @media screen and (min-width: 768px) {
-      /* background: rgba(255, 255, 255, 0.2); */
-      backdrop-filter: blur(5px);
-      /* border-bottom: 1px solid rgba(255, 255, 255, 0.5); */
     }
   }
 `;

@@ -122,6 +122,18 @@ export const RandomContentContainer = styled.div<mainBannerProps>`
     }
   }
 `;
+export const IntroduceText = styled.p`
+  color: var(--primary-color);
+  font-weight: 500;
+  font-size: 16px;
+  text-align: center;
+  padding: 12px 0;
+  position: absolute;
+  width: 100%;
+  top: -40px;
+  left: 0;
+  /* margin-top: 80px; */
+`;
 export const NewContentBox = styled.div`
   max-width: 560px;
   width: 86%;
@@ -408,6 +420,7 @@ export const HashtagContentsLayout = styled.section`
   width: 100%;
   min-height: 30vh;
   @media screen and (min-width: 786px) {
+    min-height: 40vh;
   }
 `;
 
