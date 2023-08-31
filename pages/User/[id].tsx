@@ -12,7 +12,7 @@ const UserId = () => {
 
   const { userData, tokenSuccess, tokenExists } = useAuth();
   // id와 userData가 확실하게 로드되었는지 확인합니다.
-  if (!id) {
+  if (!id || !userData?.email) {
     return null; // 아무것도 반환하지 않습니다. (또는 로딩 컴포넌트를 반환할 수 있습니다.)
   }
 
