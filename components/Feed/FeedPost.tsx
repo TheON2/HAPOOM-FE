@@ -108,8 +108,9 @@ const FeedPost = ({
           />
         </MainImageContainer>
 
-
-            <FeedTagLikeBox>
+        {feed.tags && feed.tags.length > 0 ? (
+          <>
+            <FeedTagLikeBox justifyContent="flex-start">
               <TagBox>
                 {feed.tags.slice(0, 3).map((tag: string[], index: number) => (
                   <Hashtag key={index}>
@@ -122,7 +123,6 @@ const FeedPost = ({
               </LikeIconContainer>
             </FeedTagLikeBox>
 
-            
             <FeedContentBox>
               <FeedContent>{content}</FeedContent>
               {feed.content.length > 30 && (
