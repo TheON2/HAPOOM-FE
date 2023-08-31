@@ -18,7 +18,7 @@ instance.interceptors.request.use(
     return config;
   },
   (error) => {
-    console.log('인터셉트 실패');
+    // console.log('인터셉트 실패');
     return Promise.reject(error);
   }
 );
@@ -32,7 +32,7 @@ instance.interceptors.response.use(
       error.response &&
       (error.response.status === 501 || error.response.status === 403)
     ) {
-      console.log('토큰이 존재하지 않습니다');
+      // console.log('토큰이 존재하지 않습니다');
       store.dispatch(LOGOUT_USER());
 
       // 아래 라인을 추가하여 로그인 페이지로 리다이렉션합니다.
@@ -56,7 +56,7 @@ instance.interceptors.response.use(
       error.response.status === 502 &&
       !originalRequest._retry
     ) {
-      console.log('액세스토큰이 유효하지 않습니다.');
+      // console.log('액세스토큰이 유효하지 않습니다.');
       originalRequest._retry = true;
       try {
         const { data } = await instance.get(
@@ -68,7 +68,7 @@ instance.interceptors.response.use(
         originalRequest.headers['Authorization'] = 'Bearer ' + data.token;
         return instance(originalRequest);
       } catch (err) {
-        console.log('리프레시토큰이 만료되었습니다.');
+        // console.log('리프레시토큰이 만료되었습니다.');
         store.dispatch(LOGOUT_USER());
         if (typeof window !== 'undefined') {
           window.location.href = '/auth/SignIn';

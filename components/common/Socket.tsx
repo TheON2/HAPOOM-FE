@@ -30,7 +30,7 @@ function SocketManager({
   useEffect(() => {
     const socket = socketIOClient(ENDPOINT);
     // push가 true인 경우에만 소켓 이벤트를 수신
-    console.log('푸시 설정 ON');
+    // console.log('푸시 설정 ON');
 
     socket.on('notify-post', (data) => {
       if (user.push) setNotification(data.message);

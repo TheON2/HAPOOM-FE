@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import MainBannerSlider from '@/components/Home/InfiniteCarousel';
 import HashtagNavBar from '@/components/Home/HashtagNavBar';
 import HashtagContents from '@/components/Home/HashtagContents';
-import Main from '@/components/Home/HomeMain';
+// import Main from '@/components/Home/HomeMain';
 import MainBanner from '@/components/Home/MainBanner';
 import Header from '@/components/common/Header';
 import PopularContentsCarousel from '@/components/Home/PopularContentsCarousel';
@@ -15,7 +15,7 @@ import { getAuthToken } from '@/api/user';
 import { AUTH_USER, UserResponse } from '@/redux/reducers/userSlice';
 import { useDispatch } from 'react-redux';
 import { setCookie } from 'nookies';
-import { HomePageLayout, TrendGlobalStyle } from '@/styles/home';
+import { HomePageLayout, MainLayout, TrendGlobalStyle } from '@/styles/home';
 import { MainPageProps } from '@/types/home';
 
 const Home: NextPage<MainPageProps> = ({
@@ -45,8 +45,9 @@ const Home: NextPage<MainPageProps> = ({
     undefindeTag.length !== 0 ? undefindeTag[0]?.image : '/c1.jpeg';
   const allTagThumbnail = hashContent[0].image;
   const [hashTag, setHashTag] = useState<string>(tagFilter[0].tag);
-  const [tagCategory, setTagCategory] = useState<string>('전체');
+  const [tagCategory, setTagCategory] = useState<string>('모든태그');
   const [isClick, setIsClick] = useState<boolean>(false);
+  const mainRef = useRef<HTMLDivElement | null>(null);
   const onClickBottomNavHandler = () => {
     setIsClick(!isClick);
   };
@@ -58,14 +59,22 @@ const Home: NextPage<MainPageProps> = ({
       staleTime: 60 * 1000,
     }
   );
+  const HashTagScrollTopHandler = () => {
+    if (isClick && mainRef.current) {
+      mainRef.current.scrollTop = 0;
+    }
+  };
+  const handleWheel = (event: WheelEvent) => {
+    if (event.deltaY > 0) {
+      return setIsClick(true);
+    }
+    if (!mainRef.current) return;
+    if (mainRef.current?.scrollTop <= 0 && event.deltaY <= 0) {
+      return setIsClick(false);
+    }
+  };
 
   useEffect(() => {
-    const handleWheel = (event: WheelEvent) => {
-      if (event.deltaY > 0) {
-        setIsClick(true);
-      }
-      window.removeEventListener('wheel', handleWheel);
-    };
     window.addEventListener('wheel', handleWheel);
     return () => {
       window.removeEventListener('wheel', handleWheel);
@@ -92,13 +101,14 @@ const Home: NextPage<MainPageProps> = ({
           data={tagFilter}
           $isClick={isClick}
           onClickEvent={onClickBottomNavHandler}
+          HashTagScrollTopHandler={HashTagScrollTopHandler}
           hashTag={hashTag}
           setHashTag={setHashTag}
           setTagCategory={setTagCategory}
           undefindeTagThumbnail={undefindeTagThumbnail}
           allTagThumbnail={allTagThumbnail}
         />
-        <Main>
+        <MainLayout ref={mainRef}>
           <HashtagContents
             serverPropData={hashContent}
             tagData={hashtagSearch}
@@ -107,7 +117,7 @@ const Home: NextPage<MainPageProps> = ({
             tagCategory={tagCategory}
           />
           <PopularContentsCarousel data={popularContent} />
-        </Main>
+        </MainLayout>
       </HomePageLayout>
     </>
   );

@@ -21,7 +21,7 @@ import Modal from '@/components/common/Modal';
 
 const SELECT_OPTION = [
   { value: 'users', text: '유저' },
-  { value: 'posts', text: '게시글' },
+  { value: 'posts', text: '내용' },
   { value: 'tags', text: '태그' },
 ];
 
@@ -113,6 +113,7 @@ const Search = () => {
             value={search}
             name="search"
             onChange={searchHandler}
+            placeholder="검색 내용을 입력해주세요"
           />
           <IconButton type="submit" className="search-button">
             <Cloud />

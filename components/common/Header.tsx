@@ -49,6 +49,7 @@ const Header = ({ $sticky, ...restProps }: any) => {
   const isTrend = router.pathname === '/';
   const isFeed = router.pathname === '/feed';
   const isSearch = router.pathname === '/search';
+  const isWrite = router.pathname === '/post/Write';
   const [isShowMenu, setIsShowMenu] = useState<boolean>(false);
   const BellColor = () => {
     if (isTrend) {
@@ -102,7 +103,7 @@ const Header = ({ $sticky, ...restProps }: any) => {
         if (permission === 'granted') {
           subscribeUserToPush(); // 권한이 허용되면 Push Subscription 생성
         } else {
-          console.error('Notification permission denied.');
+          // console.error('Notification permission denied.');
         }
       });
     }
@@ -126,9 +127,8 @@ const Header = ({ $sticky, ...restProps }: any) => {
       applicationServerKey: process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY,
     };
 
-    const pushSubscription = await registration.pushManager.subscribe(
-      subscribeOptions
-    );
+    const pushSubscription =
+      await registration.pushManager.subscribe(subscribeOptions);
 
     // 서버에 Push Subscription 저장
     await fetch(`${ENDPOINT}/api/util/subscribe`, {
@@ -177,10 +177,20 @@ const Header = ({ $sticky, ...restProps }: any) => {
           <AccountActionsContainer>
             <Link
               href={'/search'}
-              className={isSearch ? 'active search-icon' : 'search-icon'}
+              className={
+                isSearch ? 'active header-icon search' : 'header-icon search'
+              }
             >
               <SearchIcon fillColor={$sticky ? '#fff' : '#9acfff'} />
             </Link>
+            <button
+              onClick={!token ? LoginHandler : goToWritePage}
+              className={
+                isWrite ? 'active header-icon edit' : 'header-icon edit'
+              }
+            >
+              <EditIcon fillColor={$sticky ? '#fff' : '#9acfff'} />
+            </button>
 
             {!token ? (
               <>
@@ -233,9 +243,9 @@ const Header = ({ $sticky, ...restProps }: any) => {
           </MobileBox>
         </div>
       </HeaderLayout>
-      <GoWriteLink onClick={goToWritePage} href={'/post/Write'}>
+      {/* <GoWriteLink onClick={goToWritePage} href={'/post/Write'}>
         <EditIcon />
-      </GoWriteLink>
+      </GoWriteLink> */}
       {isShowMenu && (
         <SideNav setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu} />
       )}
