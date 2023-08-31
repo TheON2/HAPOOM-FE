@@ -61,11 +61,15 @@ const FeedPost = ({
       ? feed.content
       : `${feed.content.slice(0, 30)}...`;
   const moveDetailPage = (id: number) => {
+    sessionStorage.setItem('scrollPos', window.scrollY.toString());
     router.push(`/detail/${id}`);
   };
+
   const moveUserPage = (userId: number) => {
+    sessionStorage.setItem('scrollPos', window.scrollY.toString());
     router.push(`/User/${userId}`);
   };
+
   return (
     <>
       <FeedContainer key={feed.postId}>
@@ -104,27 +108,47 @@ const FeedPost = ({
           />
         </MainImageContainer>
 
-        <FeedTagLikeBox>
-          <TagBox>
-            {feed.tags.slice(0, 3).map((tag: string[], index: number) => (
-              <Hashtag key={index}>
-                <div>{'#' + tag}</div>
-              </Hashtag>
-            ))}
-          </TagBox>
-          <LikeIconContainer>
-            <HeartIcon postId={feed.postId} />
-          </LikeIconContainer>
-        </FeedTagLikeBox>
+        {feed.tags && feed.tags.length > 0 ? (
+          <>
+            <FeedTagLikeBox justifyContent="flex-start">
+              <TagBox>
+                {feed.tags.slice(0, 3).map((tag: string[], index: number) => (
+                  <Hashtag key={index}>
+                    <div>{'#' + tag}</div>
+                  </Hashtag>
+                ))}
+              </TagBox>
+              <LikeIconContainer>
+                <HeartIcon postId={feed.postId} />
+              </LikeIconContainer>
+            </FeedTagLikeBox>
 
-        <FeedContentBox>
-          <FeedContent>{content}</FeedContent>
-          {feed.content.length > 30 && (
-            <MoreButton onClick={() => toggleExpanded(feed.postId)}>
-              {isExpanded ? null : '더보기'}
-            </MoreButton>
-          )}
-        </FeedContentBox>
+            <FeedContentBox>
+              <FeedContent>{content}</FeedContent>
+              {feed.content.length > 30 && (
+                <MoreButton onClick={() => toggleExpanded(feed.postId)}>
+                  {isExpanded ? null : '더보기'}
+                </MoreButton>
+              )}
+            </FeedContentBox>
+          </>
+        ) : (
+          <>
+            <FeedTagLikeBox justifyContent="space-between">
+              <FeedContentBox>
+                <FeedContent>{content}</FeedContent>
+                {feed.content.length > 30 && (
+                  <MoreButton onClick={() => toggleExpanded(feed.postId)}>
+                    {isExpanded ? null : '더보기'}
+                  </MoreButton>
+                )}
+              </FeedContentBox>
+              <LikeIconContainer>
+                <HeartIcon postId={feed.postId} />
+              </LikeIconContainer>
+            </FeedTagLikeBox>
+          </>
+        )}
       </FeedContainer>
     </>
   );
