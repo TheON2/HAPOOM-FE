@@ -50,7 +50,7 @@ const HashtagCategory = ({
   undefindeTag,
 }: Props) => {
   switch (tagCategory) {
-    case '전체':
+    case '모든태그':
       return (
         <>
           {serverPropData.map((content, index) => {

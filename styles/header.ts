@@ -16,20 +16,20 @@ export const HeaderLayout = styled.header<HeaderProps>`
   position: sticky;
   z-index: 115;
   top: 0;
-  background: rgba(255, 255, 255, 0.8);
+  background: var(--header-bg-color);
   backdrop-filter: blur(1px);
-  border-bottom: 1px solid #fff;
+  border-bottom: var(--header-border);
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 12px;
-  color: ${NONE_ROUTE_COLOR};
+  color: var(--button-hover-color);
   h1 {
     /* color: #2797ff; */
     color: var(--primary-color);
   }
   .active {
-    color: ${ROUTE_ACTION_COLOR};
+    color: var(--primary-color);
   }
 
   @media screen and (min-width: 768px) {
@@ -40,53 +40,74 @@ export const HeaderLayout = styled.header<HeaderProps>`
     justify-content: space-between;
     align-items: center;
   }
-  .search-icon {
+  .header-icon {
     width: 36px;
     height: 36px;
     display: flex;
     justify-content: center;
     align-items: center;
-    svg {
-      width: 68%;
-      height: 68%;
-      path {
-        fill: none;
-        stroke: ${NONE_ROUTE_COLOR};
-      }
-    }
-    &.active {
-      path {
-        stroke: ${(props) => (props.$sticky ? '#fff' : ROUTE_ACTION_COLOR)};
-      }
-    }
     &:hover {
       background-color: #00000020;
       border-radius: 50%;
     }
   }
+  .search {
+    svg {
+      width: 68%;
+      height: 68%;
+      path {
+        stroke: var(--button-hover-color);
+      }
+    }
+    &.active {
+      path {
+        stroke: ${(props) => (props.$sticky ? '#fff' : 'var(--primary-color)')};
+      }
+    }
+  }
+  .edit {
+    svg {
+      width: 68%;
+      height: 68%;
+      path {
+        fill: var(--button-hover-color);
+      }
+    }
+    &.active {
+      path {
+        fill: ${(props) => (props.$sticky ? '#fff' : 'var(--primary-color)')};
+      }
+    }
+  }
   &.trend {
     position: fixed;
     background: none;
-    border: none;
-    color: ${(props) => (props.$sticky ? NONE_ROUTE_COLOR : '#C6E2FC')};
+    backdrop-filter: blur(0px);
+    border-bottom: var(--header-bg-color);
+    color: ${(props) =>
+      props.$sticky ? 'var(--button-hover-color)' : '#C6E2FC'};
     /* path {
       fill: ${(props) => (props.$sticky ? ROUTE_ACTION_COLOR : '#C6E2FC')};
     } */
     h1 {
-      color: ${(props) => (props.$sticky ? '#2797FF' : '#fff')};
+      color: ${(props) => (props.$sticky ? 'var(--primary-color)' : '#fff')};
     }
     .active {
-      color: ${(props) => (props.$sticky ? ROUTE_ACTION_COLOR : '#fff')};
+      color: ${(props) => (props.$sticky ? 'var(--primary-color)' : '#fff')};
     }
-    .search-icon {
-      svg path {
-        stroke: ${(props) => (props.$sticky ? NONE_ROUTE_COLOR : '#C6E2FC')};
+    .header-icon {
+      &.search {
+        svg path {
+          stroke: ${(props) =>
+            props.$sticky ? 'var(--button-hover-color)' : '#C6E2FC'};
+        }
       }
-    }
-    @media screen and (min-width: 768px) {
-      /* background: rgba(255, 255, 255, 0.2); */
-      backdrop-filter: blur(5px);
-      /* border-bottom: 1px solid rgba(255, 255, 255, 0.5); */
+      &.edit {
+        svg path {
+          fill: ${(props) =>
+            props.$sticky ? 'var(--button-hover-color)' : '#C6E2FC'};
+        }
+      }
     }
   }
 `;
@@ -175,9 +196,9 @@ export const GoWriteLink = styled(Link)`
   position: fixed;
   bottom: 10vh;
   right: 24px;
-  background-color: #fff;
+  background-color: var(--search-bg-color);
   z-index: 114;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.16);
   svg {
     transform: scale(0.8) translate(2px, -1px);
   }
@@ -198,8 +219,9 @@ export const ProfileButton = styled.button<HeaderProps>`
   position: relative;
   overflow: hidden;
   border: ${(props) =>
-    props.$sticky ? '2px solid #fff' : '2px solid #2797ff'};
-  background-color: ${(props) => (props.$sticky ? '#ffffff70' : '#2797ff70')};
+    props.$sticky ? '2px solid #fff' : '2px solid var(--primary-color)'};
+  background-color: ${(props) =>
+    props.$sticky ? '#ffffff70' : 'var(--primary-opcity-color)'};
   cursor: pointer;
   img {
     object-fit: cover;
@@ -223,7 +245,7 @@ export const AuthButtonBox = styled.div`
   a {
     padding: 20px 8px;
     &:hover {
-      color: #1f6cb9;
+      color: var(--primary-hover-color);
     }
   }
   /* .active {

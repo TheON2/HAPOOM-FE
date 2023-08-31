@@ -29,7 +29,7 @@ export const BottomNavList = styled.ul`
 `;
 
 export const BottomNavItem = styled.li`
-  width: 36px;
+  width: 20%;
   height: 36px;
   display: flex;
   justify-content: center;
@@ -40,7 +40,7 @@ export const BottomNavItem = styled.li`
 `;
 
 export const IconBox = styled.button`
-  width: 24px;
+  width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -51,6 +51,7 @@ export const IconBox = styled.button`
   background: none;
   color: #777;
   font-weight: 700;
+  cursor: pointer;
   path {
     stroke: #777;
   }

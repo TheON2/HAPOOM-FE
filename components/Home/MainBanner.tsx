@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   ButtonTouchBox,
   MainBannerBox,
@@ -16,7 +16,14 @@ import HeartIcon from '../common/HeartIcon';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/config/configStore';
 import Link from 'next/link';
-
+const sentences = [
+  '힘들고 지칠 땐 하늘을 바라봐요',
+  '당신의 하늘을 공유해주세요',
+  '8월 31일 저녁 7시 30분 슈퍼문이 떠오릅니다.',
+  '#슈퍼문 해시태그 이벤트에 많은 참여 바랍니다.',
+  '#슈퍼문 이벤트 참가자는 가입한 이메일로 당첨 소식을 안내드립니다.',
+  '하늘 사진이 아닌 경우 게시글이 삭제될 수 있습니다.',
+];
 const MainBanner = ({
   data,
   $isClick,
@@ -25,6 +32,15 @@ const MainBanner = ({
 }: any) => {
   const randomPost = useSelector((state: RootState) => state.notification.post);
   //console.log(randomPost);
+  const [currentSentenceIndex, setCurrentSentenceIndex] = useState<number>(0);
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCurrentSentenceIndex(
+        (prevIndex) => (prevIndex + 1) % sentences.length
+      );
+    }, 8000);
+    return () => clearInterval(intervalId);
+  }, []);
   return (
     <MainBannerContainer $isClick={$isClick}>
       <RandomContentContainer $isClick={$isClick}>
@@ -61,7 +77,7 @@ const MainBanner = ({
 
       <MainBannerBox $isClick={$isClick}>
         <ButtonTouchBox $isClick={$isClick}>
-          more
+          {$isClick ? 'now' : 'popular'}
           <button onClick={onClickBottomNavHandler}>
             <ArrowLong />
           </button>
@@ -69,9 +85,9 @@ const MainBanner = ({
         {/* {randomPosts && ( */}
         {$isClick ? (
           <RandomText $isClick={$isClick}>
-            수고했어 오늘도
-            {randomPosts && randomPosts[0].content1}
-            <span>{randomPosts && randomPosts[0].content2}</span>
+            {sentences[currentSentenceIndex]}
+            {/* {randomPosts && randomPosts[0].content1}
+            <span>{randomPosts && randomPosts[0].content2}</span> */}
           </RandomText>
         ) : null}
 
