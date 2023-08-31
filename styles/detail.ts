@@ -206,7 +206,7 @@ export const CommentBox = styled.div`
     /* height: 70px; */
 
     p {
-      padding: 14px 12px 12px;
+      padding: 14px 0 12px;
       line-height: 20px;
       word-wrap: break-word;
     }
@@ -275,8 +275,18 @@ export const CommentButton = styled.button`
   cursor: pointer;
   z-index: 115;
   @media screen and (min-width: 786px) {
-    right: 34px;
-    bottom: 22vh;
+    max-width: 360px;
+    width: 100%;
+    height: auto;
+    padding: 12px 24px;
+    margin: 12px auto;
+    border-radius: 8px;
+    flex-direction: row;
+    gap: 12px;
+    font-size: 16px;
+    right: auto;
+    bottom: auto;
+    position: static;
   }
 `;
 
