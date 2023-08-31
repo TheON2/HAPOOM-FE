@@ -99,7 +99,7 @@ export const MoreButton = styled.button`
   margin-top: 4px;
   background-color: transparent;
   border: none;
-  color: var(--text-color);
+  color: #C4C4C4;
   cursor: pointer;
   @media (max-width: 520px) {
     text-align: left;

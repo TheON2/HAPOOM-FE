@@ -186,10 +186,11 @@ export const TextParagraphPwdCheck = styled.p`
 export const LogOutBtn = styled.button`
   color: ${props => props.theme.mainTextColor};
   text-align: center;
-  font-size: 11px;
+  font-size: 13px;
   background-color: transparent;
   border: none;
   margin: 40px 0;
+  cursor: pointer;
 `;
 
 interface Button {
