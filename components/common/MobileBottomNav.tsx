@@ -46,7 +46,6 @@ const ActiveBar = styled.span<onClickProps>`
   height: 5px;
   border-radius: 0 0 4px 4px;
   position: absolute;
-  /* background-color: #0084ff; */
   top: 0;
   left: 24px;
   transform: ${(props) => `translate( ${props.$active * 100}%,  0)`};
