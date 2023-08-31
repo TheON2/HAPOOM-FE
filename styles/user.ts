@@ -226,7 +226,6 @@ export const FollowBtn = styled.div<ButtonProps>`
   box-shadow: 1px 2px 3px 0px rgba(0, 0, 0, 0.3);
   font-size: 20px;
   margin: 0 auto;
-  margin-top: 10px;
 
   background-color: ${({ $status }) => {
     switch ($status) {

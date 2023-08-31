@@ -23,6 +23,8 @@ interface LocalUserPageData {
   likePosts: UserPost[];
   likedPosts: UserPost[];
   posts: UserPost[];
+  postsCount?: number;
+  likePostsCount?: number;
 }
 
 interface PostProps {
@@ -133,14 +135,14 @@ const PostLike: React.FC<PostLike> = ({
             onClick={handleTabClick(0)}
             style={selectedTab === 0 ? { color: 'var(--color)' } : undefined}
           >
-            게시물
+            게시물 {data.postsCount}
           </TabButton>
           <TabButton
             className="tab-button"
             onClick={handleTabClick(1)}
             style={selectedTab === 1 ? { color: 'var(--color)' } : undefined}
           >
-            좋아요
+            좋아요 {data.likePostsCount}
           </TabButton>
         </TabContainer>
 
