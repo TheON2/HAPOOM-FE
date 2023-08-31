@@ -73,7 +73,7 @@ const SelectBarButton = styled.button`
   align-items: center;
   /* gap: 16px; */
   color: #fff;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
   transition: all 0.3s ease-in-out;
 
@@ -96,7 +96,7 @@ const SelectItem = styled.li`
   padding: 0px 16px;
   border-radius: 20px;
   color: #fff;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
   display: flex;
   align-items: center;

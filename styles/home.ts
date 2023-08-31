@@ -24,10 +24,10 @@ export const HomePageLayout = styled.div`
 
 export const MainLayout = styled.main`
   width: 100%;
-  height: calc(100vh - 252px);
-  height: calc(100svh - 252px);
+  height: calc(100vh - 230px);
+  height: calc(100svh - 230px);
   overflow-y: auto;
-  transform: translateY(-124px);
+  transform: translateY(-115px);
   background-color: var(--bg-color);
   padding: 20px 0 0;
   &::-webkit-scrollbar {
@@ -132,23 +132,25 @@ export const IntroduceText = styled.p`
   width: 100%;
   top: -44px;
   left: 0;
+
   /* margin-top: 80px; */
 `;
 export const NewContentBox = styled.div`
   max-width: 560px;
   width: 86%;
-  height: 75vh;
+  height: 73vh;
+  height: 73svh;
   margin: 0 auto;
   padding: 42px 12px 60px;
   background-color: #fff;
   box-shadow: var(--shadow-color);
   position: absolute;
-  bottom: 36px;
+  bottom: 0px;
   left: 50%;
   transform: translateX(-50%);
   figure {
     width: 100%;
-    height: 86%;
+    height: 75%;
     /* margin: 0 auto; */
     img {
       width: 100%;
@@ -158,9 +160,14 @@ export const NewContentBox = styled.div`
     }
   }
   @media screen and (min-width: 768px) {
+    height: 75vh;
+    height: 75svh;
     padding: 42px 12px 80px;
     bottom: 50%;
     transform: translate(-50%, 50%);
+    figure {
+      height: 86%;
+    }
   }
 `;
 export const ProfileLink = styled(Link)`
@@ -240,7 +247,6 @@ export const RandomText = styled.p<mainBannerProps>`
     padding: 0;
     background: none;
     text-align: start;
-
     max-width: 768px;
     font-size: ${(props) => (props.$isClick ? '14px' : '28px')};
     flex-direction: ${(props) => (props.$isClick ? 'row' : 'column')};
@@ -519,7 +525,7 @@ export const HashtagNavBarLayout = styled.nav<hashtagNavbarProps>`
   }
   .background {
     width: 100%;
-    padding: 0px 24px 16px;
+    padding: 0px 24px 8px;
     background: var(--hashtag-bg-gradient);
     display: flex;
     flex-direction: column;

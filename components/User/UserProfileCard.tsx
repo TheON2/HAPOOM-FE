@@ -46,18 +46,12 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({ data, userId }) => {
 
   return (
     <UserProfileCardBox>
-      <ProfileImage
-        userImage={data?.user?.userImage}
-        preset={data?.user?.preset}
-      />
-      {/* <Image
-        src={userImageSrc}
-        alt={'프로필사진'}
-        width={90}
-        height={90}
-        quality={100}
-        loading="eager"
-      /> */}
+      <div className="img">
+        <ProfileImage
+          userImage={data?.user?.userImage}
+          preset={data?.user?.preset}
+        />
+      </div>
       <ProfileContentsBox>
         <NicknameBox>
           <p className="nickName">{data.user.nickname}</p>

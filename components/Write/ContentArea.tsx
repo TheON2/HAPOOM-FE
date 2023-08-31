@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
 import { Box, LimitNumBox } from '@/styles/write';
 interface ContentAreaProps {
@@ -20,6 +20,8 @@ const TextArea = styled.textarea`
 `;
 
 const ContentArea: React.FC<ContentAreaProps> = ({ content, setContent }) => {
+  const [isMaxLength, setIsMaxLength] = useState<boolean>(false);
+
   const maxLength = 140;
 
   const handleInputChange = useCallback(
@@ -30,10 +32,13 @@ const ContentArea: React.FC<ContentAreaProps> = ({ content, setContent }) => {
     },
     [setContent]
   );
-
-  const isMaxLength = content.length >= maxLength;
-  const color = isMaxLength ? 'red' : 'black';
-
+  useEffect(() => {
+    if (content.length >= maxLength) {
+      setIsMaxLength(true);
+    } else {
+      setIsMaxLength(false);
+    }
+  }, [content]);
   return (
     <>
       <Box>
