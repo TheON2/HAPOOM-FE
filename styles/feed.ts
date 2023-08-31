@@ -92,6 +92,8 @@ export const FeedContent = styled.p`
   font-size: 20;
   font-weight: 500;
   word-wrap: break-word;
+  word-break: break-word;
+  white-space: pre-wrap;
 `;
 export const MoreButton = styled.button`
   margin-top: 4px;
