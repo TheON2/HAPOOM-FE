@@ -27,6 +27,8 @@ export const ProfileBox = styled.div`
     height: 46px;
     border-radius: 50%;
     overflow: hidden;
+    background-image: url('/nonepreset.png');
+    background-size: cover;
     img {
       width: 100%;
       height: 100%;
@@ -86,6 +88,16 @@ export const DetialContentSection = styled.section<DetialContentSectionProps>`
   & > div:last-child {
     border: none;
   }
+`;
+export const HeartConut = styled.span`
+  position: absolute;
+  width: 46px;
+  text-align: center;
+  right: 12px;
+  bottom: 64px;
+  z-index: 110;
+  color: var(--primary-color);
+  font-weight: 700;
 `;
 export const DetailContentBox = styled.div`
   width: 100%;

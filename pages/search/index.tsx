@@ -12,6 +12,8 @@ import {
   SelectBox,
   NoneSearchResult,
   SearchResultBox,
+  RecommendedSearchList,
+  RecommendedSearchItem,
 } from '@/styles/search';
 import SearchComponent from '@/components/Search/SearchComponent';
 import { getSearch } from '@/api/post';
@@ -26,7 +28,18 @@ const SELECT_OPTION = [
   { value: 'posts', text: '내용' },
   { value: 'tags', text: '태그' },
 ];
-
+const RECOMMENDED_SEARCH_KEYWORD = [
+  {
+    viewText: '💨 바람법사H섭',
+    searchText: '바람법사H섭',
+  },
+  { viewText: '⚡️ 번개군주민규', searchText: '번개군주민규' },
+  { viewText: '🌨 우박영웅소채', searchText: '우박영웅소채' },
+  { viewText: '☔️ 비오는왕도원', searchText: '비오는왕도원' },
+  { viewText: '❄️ 폭설대공정백', searchText: '폭설대공정백' },
+  { viewText: '🌤 맑은현자혜경', searchText: '맑은현자혜경' },
+  { viewText: '🌩 천둥의자도영', searchText: '천둥의자도영' },
+];
 const Search = () => {
   const dispatch = useDispatch();
   const [search, searchHandler, setSearch] = useInput('');
@@ -41,7 +54,10 @@ const Search = () => {
       return () => clearTimeout(timer);
     }
   }, [isSearch]);
-
+  const onClickKeywordHanlder = (keyword: string) => {
+    setSearch(keyword);
+    setIsSearch(true);
+  };
   const onSubmitSearchHandler = (e: FormEvent) => {
     e.preventDefault();
     if (search == '코딩은 마치 바람난첫사랑같다.저주하면서 동시에 사랑하니.') {
@@ -85,7 +101,7 @@ const Search = () => {
       return (
         <>
           오늘은 어떤
-          <span className="highligth"> 하늘</span>을 검색해볼까요?
+          <span className="highligth"> 하늘</span>을(를) 검색해볼까요?
         </>
       );
     } else {
@@ -134,15 +150,19 @@ const Search = () => {
         {searchData ? (
           <SearchResult option={option} data={searchData} />
         ) : !isSuccess ? (
-          <NoneSearchResult>
-            <Image
-              src={'/movecloud.gif'}
-              alt="move cloud gif image"
-              width={100}
-              height={100}
-            />
-            검색을 해보세요 <br />더 넓은 하늘을 구경해봐요
-          </NoneSearchResult>
+          <RecommendedSearchList>
+            <p>현재 인기 있는 유저입니다</p>
+            {RECOMMENDED_SEARCH_KEYWORD.map((keyword, idx) => {
+              return (
+                <RecommendedSearchItem
+                  key={idx}
+                  onClick={() => onClickKeywordHanlder(keyword.searchText)}
+                >
+                  {keyword.viewText}
+                </RecommendedSearchItem>
+              );
+            })}
+          </RecommendedSearchList>
         ) : (
           <NoneSearchResult>잠시만 기다려주세요</NoneSearchResult>
         )}
