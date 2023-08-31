@@ -189,7 +189,7 @@ const Write: NextPage<Props> = ({ update = '1', updateId }) => {
       return;
     }
 
-    if (location.x === 0 || location.y === 0) {
+    if (location.x === 0 || location.y === 0 || location.name === '') {
       openModal({
         actionText: '확인',
         modalMessge: '위치를 선택해주세요.',

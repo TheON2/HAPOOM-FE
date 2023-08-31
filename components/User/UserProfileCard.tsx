@@ -1,13 +1,10 @@
 import React from 'react';
 import {
   FollowBox,
-  InfoNumber,
-  InfoText,
   NicknameBox,
   ProfileContentsBox,
   UserProfileCardBox,
 } from '@/styles/user';
-import Image from 'next/image';
 import b1 from '../../public/b1.png';
 import { UserPageData } from './UserUi';
 import Link from 'next/link';
@@ -78,13 +75,13 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({ data, userId }) => {
             userId={data.user.userId}
           />
         </FollowBox>
-        <FollowBox>
+        {/* <FollowBox>
           <InfoText>게시물</InfoText>
           <InfoNumber>{data.postsCount}</InfoNumber>
           <span>|</span>
           <InfoText>좋아요</InfoText>
           <InfoNumber>{data.likePostsCount}</InfoNumber>
-        </FollowBox>
+        </FollowBox> */}
       </ProfileContentsBox>
     </UserProfileCardBox>
   );

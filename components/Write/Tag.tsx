@@ -46,6 +46,9 @@ export const TagStyle = styled.div<TagStyleProps>`
             border-color: #ff5d5d;
           }
         `}
+  @media (max-width: 439px) {
+    font-size: 12px;
+  }
 `;
 
 const Tag: React.FC<TagProps> = ({ tag, onDelete }) => {

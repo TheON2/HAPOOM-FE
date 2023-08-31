@@ -93,6 +93,12 @@ const darkModeStyles = css`
     }
     color: #fff;
   }
+  button{
+    cursor: pointer;
+    &:hover {
+      filter: brightness(0.8)
+    }
+  }
 `;
 
 const lightModeStyles = css`
@@ -183,6 +189,12 @@ const lightModeStyles = css`
     }
     color: #334765;
   }
+  button{
+    cursor: pointer;
+    &:hover {
+      filter: brightness(0.8)
+    }
+  }
 `;
 
 export const ThemeGlobalStyle = createGlobalStyle`
@@ -205,3 +217,4 @@ export const DarkModeButton = styled.button`
   border: var(--setting-border);
   font-weight: ${({ theme }) => (theme.mode === 'dark' ? '900' : '400')};
 `;
+

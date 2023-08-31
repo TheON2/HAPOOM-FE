@@ -6,8 +6,11 @@ import { getAuthToken } from '@/api/user';
 // 훅
 export const useAuth = () => {
   const dispatch = useDispatch();
-  const isClientSide = typeof window !== 'undefined';
-  const tokenExists = isClientSide ? !!localStorage.getItem('token') : false;
+  let tokenExists = false;
+
+  if (typeof window !== 'undefined' && localStorage.getItem('token')) {
+    tokenExists = true;
+  }
 
   const { data: userData, isSuccess: tokenSuccess } = useQuery(
     'user',
@@ -16,7 +19,7 @@ export const useAuth = () => {
       onSuccess: (userData: UserResponse) => {
         dispatch(AUTH_USER(userData));
       },
-      enabled: tokenExists,
+      enabled: tokenExists ? true : false, // 이 값이 확실히 false가 아니면 getAuthToken이 실행됩니다.
       cacheTime: 0,
     }
   );

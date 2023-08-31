@@ -9,6 +9,9 @@ import useModal from '@/hooks/useModal';
 import { useRouter } from 'next/router';
 import Modal from '../common/Modal';
 import OneButtonModal from '../common/OneButtonModal';
+import { UserState } from '@/redux/reducers/userSlice';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/redux/config/configStore';
 
 export type commentProps = {
   data: string;
@@ -19,6 +22,9 @@ export type commentProps = {
 const DetailKebabMenu = ({ data, userData, id }: commentProps) => {
   const router = useRouter();
   const queryClient = useQueryClient();
+  const { user }: { user: UserState['user'] } = useSelector(
+    (state: RootState) => state.user
+  );
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [modalMessge, setModalMessge] = useState<any>({
@@ -97,7 +103,7 @@ const DetailKebabMenu = ({ data, userData, id }: commentProps) => {
       </Modal>
       <KebabMenuUI>
         <KebabMenuStyle>
-          {data === userData ? (
+          {data === userData || user.super ? (
             <>
               <KebabMenuAptionButton onClick={handleDeleteClick}>
                 글 삭제하기 <span></span>
