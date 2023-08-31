@@ -27,6 +27,8 @@ export const ProfileBox = styled.div`
     height: 46px;
     border-radius: 50%;
     overflow: hidden;
+    background-image: url('/nonepreset.png');
+    background-size: cover;
     img {
       width: 100%;
       height: 100%;

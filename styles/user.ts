@@ -31,12 +31,12 @@ export const UserProfileCardBox = styled.div`
   justify-content: center;
   padding: 24px;
 
-  img {
-    margin: auto;
+  .img {
     border-radius: 50%;
     width: 90px;
     height: 90px;
-    margin: 0;
+    background-image: url('/nonepreset.png');
+    background-size: cover;
   }
 `;
 export const UserImage = styled(Image)`
