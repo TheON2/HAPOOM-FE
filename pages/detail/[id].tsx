@@ -124,7 +124,7 @@ const Detail: NextPage = () => {
     }
   );
   if (!isSuccess) return <div>Loading...</div>;
-
+  console.log(data);
   return (
     <>
       <ContentsContainer>

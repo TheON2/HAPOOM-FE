@@ -2,7 +2,8 @@ import styled from 'styled-components';
 
 export const SearchLayout = styled.main`
   width: 100%;
-  padding: 80px 24px 20px;
+  padding: 46px 24px 20px;
+
   .search-button {
     width: 32px;
     height: 32px;
@@ -21,7 +22,7 @@ export const SearchLayout = styled.main`
     }
   }
   .keyword {
-    font-size: 14px;
+    font-size: 16px;
     font-weight: bold;
     text-align: center;
     padding: 0px 0 20px;
@@ -59,13 +60,12 @@ export const SearchForm = styled.form`
 `;
 
 export const SearchInput = styled.input`
-  /* max-width: 500px; */
   width: calc(100% - 106px);
   height: 36px;
   padding: 8px 16px;
   border-radius: 22px;
   border: none;
-  font-size: 12px;
+  font-size: 14px;
   transition: all 0.3s ease-in-out;
   background: none;
   &:focus {
@@ -92,7 +92,31 @@ export const NoneSearchResult = styled.div`
   line-height: 30px;
   gap: 30px;
 `;
-
+export const RecommendedSearchList = styled.ul`
+  max-width: 768px;
+  padding: 0 24px;
+  width: 100%;
+  text-align: center;
+  p {
+    color: var(--primary-color);
+    font-weight: 700;
+    margin-bottom: 20px;
+  }
+`;
+export const RecommendedSearchItem = styled.li`
+  width: 80%;
+  margin: 0 auto;
+  padding: 12px 24px;
+  border-radius: 30px;
+  font-size: 15px;
+  margin-bottom: 12px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  &:hover {
+    background-color: var(--detail-bg-color);
+  }
+`;
 export const SearchResultBox = styled.div`
   width: 100%;
   min-height: 60vh;
