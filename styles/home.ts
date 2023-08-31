@@ -137,18 +137,19 @@ export const IntroduceText = styled.p`
 export const NewContentBox = styled.div`
   max-width: 560px;
   width: 86%;
-  height: 75vh;
+  height: 73vh;
+  height: 73svh;
   margin: 0 auto;
   padding: 42px 12px 60px;
   background-color: #fff;
   box-shadow: var(--shadow-color);
   position: absolute;
-  bottom: 36px;
+  bottom: 0px;
   left: 50%;
   transform: translateX(-50%);
   figure {
     width: 100%;
-    height: 86%;
+    height: 75%;
     /* margin: 0 auto; */
     img {
       width: 100%;
@@ -158,9 +159,14 @@ export const NewContentBox = styled.div`
     }
   }
   @media screen and (min-width: 768px) {
+    height: 75vh;
+    height: 75svh;
     padding: 42px 12px 80px;
     bottom: 50%;
     transform: translate(-50%, 50%);
+    figure {
+      height: 86%;
+    }
   }
 `;
 export const ProfileLink = styled(Link)`
@@ -519,7 +525,7 @@ export const HashtagNavBarLayout = styled.nav<hashtagNavbarProps>`
   }
   .background {
     width: 100%;
-    padding: 0px 24px 16px;
+    padding: 0px 24px 8px;
     background: var(--hashtag-bg-gradient);
     display: flex;
     flex-direction: column;
