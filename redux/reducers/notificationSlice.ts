@@ -15,7 +15,7 @@ const notificationSlice = createSlice({
   initialState,
   reducers: {
     ADD_NOTIFICATION: (state, action: PayloadAction<string>) => {
-      console.log('알람옴');
+      // console.log('알람옴');
       state.message = action.payload;
     },
     LOAD_POST: (state, action: PayloadAction<any>) => {
