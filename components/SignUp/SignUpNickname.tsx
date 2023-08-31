@@ -30,13 +30,13 @@ const SignUpNickname: React.FC<Props> = ({
         닉네임
       </TextParagraphInfo>
       <TextParagrapValidate>
-        다른 유저와 겹치지 않도록 입력해주세요.(2~15자)
+        다른 유저와 겹치지 않도록 입력해주세요.(2~8자)
       </TextParagrapValidate>
       <StyledInput
         type="text"
         name="nickname"
         value={signUpState.nickname}
-        placeholder="닉네임은 2자에서 15자입니다."
+        placeholder="닉네임은 2자에서 8자입니다."
         onChange={handleInputChange}
       />
       {error.nickname && (

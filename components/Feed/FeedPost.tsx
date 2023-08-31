@@ -61,11 +61,15 @@ const FeedPost = ({
       ? feed.content
       : `${feed.content.slice(0, 30)}...`;
   const moveDetailPage = (id: number) => {
+    sessionStorage.setItem('scrollPos', window.scrollY.toString());
     router.push(`/detail/${id}`);
   };
+
   const moveUserPage = (userId: number) => {
+    sessionStorage.setItem('scrollPos', window.scrollY.toString());
     router.push(`/User/${userId}`);
   };
+
   return (
     <>
       <FeedContainer key={feed.postId}>

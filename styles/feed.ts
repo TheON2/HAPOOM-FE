@@ -71,7 +71,7 @@ export const FeedTagLikeBox = styled.div<TagProps>`
   margin: 8px auto;
   display: flex;
   justify-content: ${(props) => props.justifyContent};
-  align-items: center;
+  align-items: flex-start;
   position: relative;
 `;
 export const TagBox = styled.div`
@@ -82,6 +82,7 @@ export const TagBox = styled.div`
   position: relative;
   gap: 6px;
   padding: 4px 0;
+  flex-wrap: wrap;
 `;
 export const FeedContentBox = styled.div`
   display: flex;

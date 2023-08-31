@@ -114,6 +114,9 @@ export const SignUpBtn = styled.button`
   font-size: 16px;
   font-weight: 700;
   cursor: pointer;
+  &:hover {
+      filter: brightness(0.8)
+    }
 `;
 export const SignUpCheckBoxLayout = styled.div`
   max-width: 312px;

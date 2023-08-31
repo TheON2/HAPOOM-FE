@@ -94,6 +94,7 @@ const darkModeStyles = css`
     color: #fff;
   }
   button{
+    cursor: pointer;
     &:hover {
       filter: brightness(0.8)
     }
@@ -189,6 +190,7 @@ const lightModeStyles = css`
     color: #334765;
   }
   button{
+    cursor: pointer;
     &:hover {
       filter: brightness(0.8)
     }

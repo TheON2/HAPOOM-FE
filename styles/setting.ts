@@ -117,6 +117,9 @@ export const ButtonBox = styled.div`
     background-color: #2797FF;
     text-align: center;
     cursor: pointer;
+    &:hover {
+      filter: brightness(0.8)
+    }
   }
   input {
     width: 0;
@@ -184,9 +187,9 @@ export const TextParagraphPwdCheck = styled.p`
   font-weight: 400;
 `;
 export const LogOutBtn = styled.button`
-  color: ${props => props.theme.mainTextColor};
+  color: var( --text-color);
   text-align: center;
-  font-size: 13px;
+  font-size: 14px;
   background-color: transparent;
   border: none;
   margin: 40px 0;

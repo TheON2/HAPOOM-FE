@@ -65,6 +65,9 @@ export const SignInBtn = styled.button`
   font-weight: 400;
   margin-top: 15px;
   cursor: pointer;
+  &:hover {
+      filter: brightness(0.8)
+    }
 `;
 export const TextParagraph = styled.p`
   color: var(--text-color);

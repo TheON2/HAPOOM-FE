@@ -91,6 +91,16 @@ const FeedUi = () => {
     data.pages.forEach((page) => results.push(...page.content));
   }
 
+  useEffect(() => {
+    const scrollPos = sessionStorage.getItem('scrollPos');
+    if (scrollPos) {
+      window.scrollTo(0, parseInt(scrollPos));
+    }
+    window.addEventListener('beforeunload', () => {
+      sessionStorage.removeItem('scrollPos');
+    });
+  }, [data]);
+
   return (
     <FeedSection>
       <Modal
