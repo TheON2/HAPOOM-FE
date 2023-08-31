@@ -49,6 +49,7 @@ const Header = ({ $sticky, ...restProps }: any) => {
   const isTrend = router.pathname === '/';
   const isFeed = router.pathname === '/feed';
   const isSearch = router.pathname === '/search';
+  const isWrite = router.pathname === '/post/Write';
   const [isShowMenu, setIsShowMenu] = useState<boolean>(false);
   const BellColor = () => {
     if (isTrend) {
@@ -176,9 +177,19 @@ const Header = ({ $sticky, ...restProps }: any) => {
           <AccountActionsContainer>
             <Link
               href={'/search'}
-              className={isSearch ? 'active search-icon' : 'search-icon'}
+              className={
+                isSearch ? 'active header-icon search' : 'header-icon search'
+              }
             >
               <SearchIcon fillColor={$sticky ? '#fff' : '#9acfff'} />
+            </Link>
+            <Link
+              href={'/post/Write'}
+              className={
+                isWrite ? 'active header-icon edit' : 'header-icon edit'
+              }
+            >
+              <EditIcon fillColor={$sticky ? '#fff' : '#9acfff'} />
             </Link>
 
             {!token ? (
@@ -232,9 +243,9 @@ const Header = ({ $sticky, ...restProps }: any) => {
           </MobileBox>
         </div>
       </HeaderLayout>
-      <GoWriteLink onClick={goToWritePage} href={'/post/Write'}>
+      {/* <GoWriteLink onClick={goToWritePage} href={'/post/Write'}>
         <EditIcon />
-      </GoWriteLink>
+      </GoWriteLink> */}
       {isShowMenu && (
         <SideNav setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu} />
       )}
