@@ -103,7 +103,7 @@ const FollowTab: React.FC<FollowTabProps> = () => {
     () => getFollowers(userId),
     {
       onSuccess: (data) => {
-        console.log('Followers successfully fetched:', data);
+        // console.log('Followers successfully fetched:', data);
       },
     }
   );
@@ -113,7 +113,7 @@ const FollowTab: React.FC<FollowTabProps> = () => {
     () => getFollowings(userId),
     {
       onSuccess: (data) => {
-        console.log('Followings successfully fetched:', data);
+        // console.log('Followings successfully fetched:', data);
       },
     }
   );

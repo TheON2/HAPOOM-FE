@@ -36,7 +36,7 @@ const SearchComponent = () => {
       />
       <select value={category} onChange={(e) => setCategory(e.target.value)}>
         <option value="users">유저</option>
-        <option value="posts">게시글</option>
+        <option value="posts">내용</option>
         <option value="tags">태그</option>
       </select>
       <button onClick={handleSearch}>검색</button>
