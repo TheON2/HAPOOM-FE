@@ -105,7 +105,7 @@ const SignUpUi = () => {
         alert(
           '회원가입에 실패하였습니다. 아이디 혹은 비밀번호를 다시 한번 확인해주세요'
         );
-        console.error('회원가입 실패:', error);
+        // console.error('회원가입 실패:', error);
       }
       if (
         error?.response?.data.errorMessage === '이미 존재하는 닉네임입니다.'

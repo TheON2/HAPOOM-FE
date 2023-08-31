@@ -22,7 +22,7 @@ const SearchComponent = () => {
 
       setResults(response.data);
     } catch (error) {
-      console.error('검색 에러:', error);
+      // console.error('검색 에러:', error);
       alert('검색 중 에러가 발생했습니다.');
     }
   };
@@ -36,7 +36,7 @@ const SearchComponent = () => {
       />
       <select value={category} onChange={(e) => setCategory(e.target.value)}>
         <option value="users">유저</option>
-        <option value="posts">게시글</option>
+        <option value="posts">내용</option>
         <option value="tags">태그</option>
       </select>
       <button onClick={handleSearch}>검색</button>

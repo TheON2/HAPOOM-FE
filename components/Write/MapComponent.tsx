@@ -176,7 +176,7 @@ export const MapComponent: React.FC<MapComponentProps> = ({
 
         setSuggestions(suggestions);
       } catch (error) {
-        console.error('Geocode API 호출 중 오류가 발생했습니다:', error);
+        // console.error('Geocode API 호출 중 오류가 발생했습니다:', error);
       }
     },
     [selectedOption]
@@ -302,7 +302,7 @@ export const MapComponent: React.FC<MapComponentProps> = ({
               '이 기능을 사용하려면 브라우저 설정에서 위치 권한을 허용한후 브라우저를 재부팅 해주세요.',
           });
         } else {
-          console.error('지금 위치를 찾을 수 없습니다.', error);
+          // console.error('지금 위치를 찾을 수 없습니다.', error);
         }
       }
     );
