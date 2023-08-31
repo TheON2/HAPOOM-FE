@@ -89,6 +89,16 @@ export const DetialContentSection = styled.section<DetialContentSectionProps>`
     border: none;
   }
 `;
+export const HeartConut = styled.span`
+  position: absolute;
+  width: 46px;
+  text-align: center;
+  right: 12px;
+  bottom: 64px;
+  z-index: 110;
+  color: var(--primary-color);
+  font-weight: 700;
+`;
 export const DetailContentBox = styled.div`
   width: 100%;
   padding: 20px 24px;
