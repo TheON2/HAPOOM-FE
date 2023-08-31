@@ -40,17 +40,22 @@ export const HeaderLayout = styled.header<HeaderProps>`
     justify-content: space-between;
     align-items: center;
   }
-  .search-icon {
+  .header-icon {
     width: 36px;
     height: 36px;
     display: flex;
     justify-content: center;
     align-items: center;
+    &:hover {
+      background-color: #00000020;
+      border-radius: 50%;
+    }
+  }
+  .search {
     svg {
       width: 68%;
       height: 68%;
       path {
-        fill: none;
         stroke: var(--button-hover-color);
       }
     }
@@ -59,15 +64,26 @@ export const HeaderLayout = styled.header<HeaderProps>`
         stroke: ${(props) => (props.$sticky ? '#fff' : 'var(--primary-color)')};
       }
     }
-    &:hover {
-      background-color: #00000020;
-      border-radius: 50%;
+  }
+  .edit {
+    svg {
+      width: 68%;
+      height: 68%;
+      path {
+        fill: var(--button-hover-color);
+      }
+    }
+    &.active {
+      path {
+        fill: ${(props) => (props.$sticky ? '#fff' : 'var(--primary-color)')};
+      }
     }
   }
   &.trend {
     position: fixed;
     background: none;
-    border: none;
+    backdrop-filter: blur(0px);
+    border-bottom: var(--header-bg-color);
     color: ${(props) =>
       props.$sticky ? 'var(--button-hover-color)' : '#C6E2FC'};
     /* path {
@@ -79,16 +95,19 @@ export const HeaderLayout = styled.header<HeaderProps>`
     .active {
       color: ${(props) => (props.$sticky ? 'var(--primary-color)' : '#fff')};
     }
-    .search-icon {
-      svg path {
-        stroke: ${(props) =>
-          props.$sticky ? 'var(--button-hover-color)' : '#C6E2FC'};
+    .header-icon {
+      &.search {
+        svg path {
+          stroke: ${(props) =>
+            props.$sticky ? 'var(--button-hover-color)' : '#C6E2FC'};
+        }
       }
-    }
-    @media screen and (min-width: 768px) {
-      /* background: rgba(255, 255, 255, 0.2); */
-      backdrop-filter: blur(5px);
-      /* border-bottom: 1px solid rgba(255, 255, 255, 0.5); */
+      &.edit {
+        svg path {
+          fill: ${(props) =>
+            props.$sticky ? 'var(--button-hover-color)' : '#C6E2FC'};
+        }
+      }
     }
   }
 `;

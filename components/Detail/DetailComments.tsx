@@ -124,10 +124,6 @@ const CommentLayout = ({ data, id, userData }: commentProps) => {
 
   return (
     <>
-      <CommentButton onClick={handleCommentCreateHandler}>
-        <CommentIcon />
-        댓글
-      </CommentButton>
       {data?.length !== 0 ? (
         data?.map((comment: CommentData, idx: number) => (
           <Comment
@@ -146,7 +142,10 @@ const CommentLayout = ({ data, id, userData }: commentProps) => {
           <br /> 첫번째 댓글을 남겨보세요.
         </NoneComment>
       )}
-
+      <CommentButton onClick={handleCommentCreateHandler}>
+        <CommentIcon />
+        댓글
+      </CommentButton>
       {isShow && (
         <CommentFormWrapper
           isOpen={commentEdit.show}

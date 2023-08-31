@@ -56,3 +56,8 @@ select {
   margin: 0;
   resize: none;
 }
+
+button{
+  background: none;
+  border: none;
+}

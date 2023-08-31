@@ -112,7 +112,7 @@ const InfiniteCarousel: React.FC<Props> = ({ data, zoomImageHandler }) => {
               >
                 <Image
                   src={slide?.url}
-                  alt="v13 image"
+                  alt="detail images"
                   width={768}
                   height={800}
                   loading="eager"
@@ -156,7 +156,7 @@ const DetailImageViewBox = ({ data }: any) => {
         <MainBannerLayout onClick={() => zoomImageHandler(data[0]?.url)}>
           <Image
             src={data[0]?.url}
-            alt="v13 image"
+            alt="detail image"
             width={768}
             height={800}
             loading="eager"
