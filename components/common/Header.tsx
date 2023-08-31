@@ -183,14 +183,14 @@ const Header = ({ $sticky, ...restProps }: any) => {
             >
               <SearchIcon fillColor={$sticky ? '#fff' : '#9acfff'} />
             </Link>
-            <Link
-              href={'/post/Write'}
+            <button
+              onClick={!token ? LoginHandler : goToWritePage}
               className={
                 isWrite ? 'active header-icon edit' : 'header-icon edit'
               }
             >
               <EditIcon fillColor={$sticky ? '#fff' : '#9acfff'} />
-            </Link>
+            </button>
 
             {!token ? (
               <>
