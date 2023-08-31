@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import {
   Line,
+  Nothing,
+  NothingLike,
   PostBox,
   PostContentBox,
   TabButton,
@@ -14,6 +16,7 @@ import { likePost } from '@/api/post';
 import ImageContent from '../Home/ImageContent';
 import { ImageContentsContainer } from '@/styles/imageContainer';
 import { useInfiniteData } from '../../hooks/useInfiniteData';
+import Image from 'next/image';
 
 interface PostLike {
   data: LocalUserPageData | undefined;
@@ -23,6 +26,8 @@ interface LocalUserPageData {
   likePosts: UserPost[];
   likedPosts: UserPost[];
   posts: UserPost[];
+  postsCount?: number;
+  likePostsCount?: number;
 }
 
 interface PostProps {
@@ -66,7 +71,6 @@ const PostLike: React.FC<PostLike> = ({
 
   const queryType = selectedTab === 0 ? 'post' : 'like';
   const { data: infiniteData } = useInfiniteData(queryType);
-  // console.log('userdata', infiniteData);
   useEffect(() => {
     if (selectedTab === 0) {
       if (data?.posts) {
@@ -110,6 +114,11 @@ const PostLike: React.FC<PostLike> = ({
       }
     };
     updateIndicator();
+    window.addEventListener('resize', updateIndicator);
+
+    return () => {
+      window.removeEventListener('resize', updateIndicator);
+    };
   }, [selectedTab]);
 
   const handleTabClick =
@@ -124,6 +133,40 @@ const PostLike: React.FC<PostLike> = ({
       }
     };
 
+  const renderEmptyMessage = () => {
+    if (selectedTab === 0) {
+      return (
+        <Nothing>
+          <span>하늘을 품어보세요!</span>
+          <br /> 첫 게시물을 만들어보세요
+          <br />
+          <br />
+          <Image
+            src={'/movecloud.gif'}
+            alt="move cloud gif image"
+            width={150}
+            height={150}
+          />
+        </Nothing>
+      );
+    } else if (selectedTab === 1) {
+      return (
+        <NothingLike>
+          <span>마음에 드는 하늘은 있으셨나요?</span>
+          <br /> 회원님이 좋아요를 누른 사진이 여기에 표시됩니다
+          <br />
+          <br />
+          <Image
+            src={'/movecloud.gif'}
+            alt="move cloud gif image"
+            width={150}
+            height={150}
+          />
+        </NothingLike>
+      );
+    }
+  };
+
   return (
     <PostBox>
       <PostContentBox>
@@ -133,14 +176,14 @@ const PostLike: React.FC<PostLike> = ({
             onClick={handleTabClick(0)}
             style={selectedTab === 0 ? { color: 'var(--color)' } : undefined}
           >
-            게시물
+            게시물 {data.postsCount}
           </TabButton>
           <TabButton
             className="tab-button"
             onClick={handleTabClick(1)}
             style={selectedTab === 1 ? { color: 'var(--color)' } : undefined}
           >
-            좋아요
+            좋아요 {data.likePostsCount}
           </TabButton>
         </TabContainer>
 
@@ -150,9 +193,9 @@ const PostLike: React.FC<PostLike> = ({
         />
       </PostContentBox>
       <Line />
-      <ImageContentsContainer>
-        {displayedPosts?.map((post) => {
-          return (
+      {displayedPosts && displayedPosts.length > 0 ? (
+        <ImageContentsContainer>
+          {displayedPosts.map((post) => (
             <Posts
               key={post.postId}
               image={post.image}
@@ -160,9 +203,11 @@ const PostLike: React.FC<PostLike> = ({
               showLikeIcon={selectedTab === 1}
               handleLikeClick={handleLikeClick}
             />
-          );
-        })}
-      </ImageContentsContainer>
+          ))}
+        </ImageContentsContainer>
+      ) : (
+        renderEmptyMessage()
+      )}
     </PostBox>
   );
 };

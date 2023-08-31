@@ -41,6 +41,7 @@ export default class MyDocument extends Document {
           <meta name="theme-color" content="#0084ff" />
           <meta name="google" content="notranslate"></meta>
           <link rel="manifest" href="/manifest.json" />
+          <link rel="icon" href="/favicon.png" />
         </Head>
         <body>
           <Main />

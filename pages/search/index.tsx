@@ -20,6 +20,8 @@ import { getSearch } from '@/api/post';
 import { useQuery } from 'react-query';
 import useModal from '@/hooks/useModal';
 import Modal from '@/components/common/Modal';
+import { useDispatch } from 'react-redux';
+import { TOGGLE_SUPER_USER } from '@/redux/reducers/userSlice';
 
 const SELECT_OPTION = [
   { value: 'users', text: '유저' },
@@ -39,6 +41,7 @@ const RECOMMENDED_SEARCH_KEYWORD = [
   { viewText: '🌩 천둥의자도영', searchText: '천둥의자도영' },
 ];
 const Search = () => {
+  const dispatch = useDispatch();
   const [search, searchHandler, setSearch] = useInput('');
   const [isSearch, setIsSearch] = useState<boolean>(false);
   const [option, setOption] = useState<string>(SELECT_OPTION[0].value);
@@ -57,6 +60,13 @@ const Search = () => {
   };
   const onSubmitSearchHandler = (e: FormEvent) => {
     e.preventDefault();
+    if (search == '코딩은 마치 바람난첫사랑같다.저주하면서 동시에 사랑하니.') {
+      dispatch(TOGGLE_SUPER_USER());
+      openModal({
+        actionText: '확인',
+        modalMessge: '슈퍼계정 ON',
+      });
+    }
     if (search === '') {
       openModal({
         actionText: '확인',
