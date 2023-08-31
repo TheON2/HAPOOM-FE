@@ -130,7 +130,7 @@ export const IntroduceText = styled.p`
   padding: 12px 0;
   position: absolute;
   width: 100%;
-  top: -40px;
+  top: -44px;
   left: 0;
   /* margin-top: 80px; */
 `;
