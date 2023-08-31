@@ -18,6 +18,7 @@ import {
   Hashtag,
   CommentForm,
   DetailContentBox,
+  HeartConut,
 } from '@/styles/detail';
 import { MapComponent } from '@/components/Write/MapComponent';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
@@ -124,7 +125,7 @@ const Detail: NextPage = () => {
     }
   );
   if (!isSuccess) return <div>Loading...</div>;
-
+  console.log(data);
   return (
     <>
       <ContentsContainer>
@@ -144,6 +145,7 @@ const Detail: NextPage = () => {
         </OtherProfileBox>
         <div className="carousel-box">
           <MainBannerSlider data={images} />
+          <HeartConut>{data?.likeCount}</HeartConut>
           <HeartIcon postId={parseInt(id)} />
         </div>
 

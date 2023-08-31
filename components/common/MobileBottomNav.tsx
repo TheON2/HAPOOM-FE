@@ -46,7 +46,7 @@ const ActiveBar = styled.span<onClickProps>`
   height: 5px;
   border-radius: 0 0 4px 4px;
   position: absolute;
-  /* background-color: #0084ff; */
+
   top: 0;
   left: 24px;
   transform: ${(props) => `translate( ${props.$active * 100}%,  0)`};
@@ -99,7 +99,7 @@ const MobileBottomNav = () => {
     ];
     const index = routes.indexOf(currentPathname);
     setActive(index === -1 ? 0 : index);
-  }, [router.pathname]);
+  }, [router.pathname, user.email]);
 
   return (
     <MobileBottomNavLayout>

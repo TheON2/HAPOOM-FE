@@ -58,7 +58,8 @@ export const UserProfileImageBox = styled.div`
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background-color: black;
+  background-image: url('/nonepreset.png');
+  background-size: cover;
   overflow: hidden;
 `;
 export const UserProfileImage = styled.img`

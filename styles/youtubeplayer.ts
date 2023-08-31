@@ -188,7 +188,7 @@ export const PlayerWrapper = styled.div<PlayerWrapperProps>`
     position: absolute;
     top: 12px;
     right: 12px;
-    z-index: 116;
+    z-index: 114;
   }
   /* margin: 15px 0; */
   iframe {
@@ -227,7 +227,7 @@ export const SeekSliderGroup = styled(ControlGroup)`
 export const VolumeSliderGroup = styled(ControlGroup)`
   flex: 2; // 20%의 공간을 차지
   position: absolute;
-  transform: rotate(-90deg) translate(-50%, 115%);
+  transform: translate(23%, 130%);
   padding: 8px;
   background-color: #fff;
   border: 1px solid #7dc1ff;
