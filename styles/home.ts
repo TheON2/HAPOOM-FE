@@ -10,6 +10,7 @@ export const TrendGlobalStyle = createGlobalStyle`
 export const HomePageLayout = styled.div`
   width: 100%;
   height: 100vh;
+  height: 100svh;
   overflow: hidden;
   /* @media screen and (min-width: 768px) {
     overflow: auto;
@@ -24,6 +25,7 @@ export const HomePageLayout = styled.div`
 export const MainLayout = styled.main`
   width: 100%;
   height: calc(100vh - 252px);
+  height: calc(100svh - 252px);
   overflow-y: auto;
   transform: translateY(-124px);
   background-color: var(--bg-color);
@@ -76,7 +78,7 @@ type mainBannerProps = {
 
 export const MainBannerContainer = styled.div<mainBannerProps>`
   width: 100%;
-  height: ${(props) => (props.$isClick ? '230px' : 'calc(100vh - 70px)')};
+  height: ${(props) => (props.$isClick ? '230px' : 'calc(100svh - 70px)')};
   background-color: ${(props) =>
     props.$isClick ? 'var(--point-bg)' : 'var(--bg-color)'};
   transition: all 0.8s ease-in-out;

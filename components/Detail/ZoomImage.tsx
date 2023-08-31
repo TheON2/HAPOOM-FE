@@ -7,6 +7,7 @@ import styled from 'styled-components';
 const ZoomBackground = styled.div`
   width: 100%;
   height: 100vh;
+  height: 100svh;
   position: fixed;
   top: 0;
   left: 0;
