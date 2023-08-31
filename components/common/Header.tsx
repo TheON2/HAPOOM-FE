@@ -103,7 +103,7 @@ const Header = ({ $sticky, ...restProps }: any) => {
         if (permission === 'granted') {
           subscribeUserToPush(); // 권한이 허용되면 Push Subscription 생성
         } else {
-          console.error('Notification permission denied.');
+          // console.error('Notification permission denied.');
         }
       });
     }

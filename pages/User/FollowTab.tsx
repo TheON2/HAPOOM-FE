@@ -90,7 +90,7 @@ const FollowTab: React.FC<FollowTabProps> = () => {
     'followers'
   );
   const { userData } = useAuth();
-  console.log('FollowTab userData:', userData);
+  // console.log('FollowTab userData:', userData);
   const loggedInEmail = userData?.email;
   const isMyProfile = loggedInEmail === userId;
 
@@ -145,7 +145,7 @@ const FollowTab: React.FC<FollowTabProps> = () => {
 
         queryClient.invalidateQueries(['followings', userId]);
       } catch (error) {
-        console.error('Error while sending unfollow request:', error);
+        // console.error('Error while sending unfollow request:', error);
       }
     }
   };

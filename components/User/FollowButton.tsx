@@ -33,7 +33,7 @@ const FollowButton: React.FC<FollowButtonProps> = ({ profileUserId }) => {
           });
           setProfileUserEmail(profileData.user.email);
         } catch (error) {
-          console.error('Error fetching profile user data:', error);
+          // console.error('Error fetching profile user data:', error);
         }
       }
     };
