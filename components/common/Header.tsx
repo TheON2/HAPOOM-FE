@@ -201,10 +201,10 @@ const Header = ({ $sticky, ...restProps }: any) => {
             |
             {!token ? (
               <>
-                <AuthButtonBox>
-                  |<Link href={'/auth/SignIn'}>로그인</Link>|
-                  <Link href={'/auth/SignUp'}>회원가입</Link>
-                </AuthButtonBox>
+                {/* <AuthButtonBox> */}
+                <Link href={'/auth/SignIn'}>로그인</Link>|
+                <Link href={'/auth/SignUp'}>회원가입</Link>
+                {/* </AuthButtonBox> */}
                 <ProfileButton onClick={LoginHandler} $sticky={$sticky}>
                   <Cloud />
                 </ProfileButton>
