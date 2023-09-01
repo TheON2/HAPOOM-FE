@@ -106,9 +106,9 @@ const lightModeStyles = css`
   /* common color start */
   --color: #334765;
   --bg-color: #fff;
-  --primary-color: #2790f6;
+  --primary-color: #83b1dd;
   --primary-opcity-color: #2790f670;
-  --primary-second-color: #0084ff;
+  --primary-second-color: #70a7dc;
   --primary-three-color: #52acff;
   --primary-hover-color: #1f6cb9;
 
@@ -154,8 +154,8 @@ const lightModeStyles = css`
       rgba(82, 172, 255, 1) 100%
     );
   --section-gray: #f0f1f2;
-  --point-bg: #2790f6;
-  --random-text-color: #52acff;
+  --point-bg: #83b1dd;
+  --random-text-color: #9cc4eb;
   --slide-button-fill-color: #2797ff;
   /* trend color end */
   /* write color start */
