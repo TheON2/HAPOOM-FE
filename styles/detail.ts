@@ -148,9 +148,11 @@ export const HashtagBox = styled.div`
 export const Hashtag = styled.div`
   color: var(--primary-second-color);
   display: inline-block;
-  padding: 4px 20px 4px;
-  border-radius: 20px;
-  border: 2px solid var(--primary-second-color);
+  /* padding: 4px 20px 4px; */
+  /* border-radius: 20px;
+  border: 2px solid #0084ff; */
+  margin: 6px 0 0 12px;
+
   text-align: center;
   font-size: 14px;
 `;

@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
   FeedContainer,
   FeedHeader,
@@ -8,9 +8,6 @@ import {
   FeedUserNickName,
   MainImageContainer,
   LikeIconContainer,
-  FeedContent,
-  MoreButton,
-  FeedContentBox,
   TagBox,
   FeedTagLikeBox,
 } from '../../styles/feed';
@@ -69,7 +66,6 @@ const FeedPost = ({
     sessionStorage.setItem('scrollPos', window.scrollY.toString());
     router.push(`/User/${userId}`);
   };
-  console.log('feed', feed);
 
   return (
     <>
@@ -109,47 +105,18 @@ const FeedPost = ({
           />
         </MainImageContainer>
 
-        {feed.tags && feed.tags.length > 0 ? (
-          <>
-            <FeedTagLikeBox justifyContent="flex-start">
-              <TagBox>
-                {feed.tags.slice(0, 3).map((tag: string[], index: number) => (
-                  <Hashtag key={index}>
-                    <div>{'#' + tag}</div>
-                  </Hashtag>
-                ))}
-              </TagBox>
-              <LikeIconContainer>
-                <HeartIcon postId={feed.postId} />
-              </LikeIconContainer>
-            </FeedTagLikeBox>
-
-            <FeedContentBox>
-              <FeedContent>{content}</FeedContent>
-              {feed.content.length > 30 && (
-                <MoreButton onClick={() => toggleExpanded(feed.postId)}>
-                  {isExpanded ? null : '더보기'}
-                </MoreButton>
-              )}
-            </FeedContentBox>
-          </>
-        ) : (
-          <>
-            <FeedTagLikeBox justifyContent="space-between">
-              <FeedContentBox>
-                <FeedContent>{content}</FeedContent>
-                {feed.content.length > 30 && (
-                  <MoreButton onClick={() => toggleExpanded(feed.postId)}>
-                    {isExpanded ? null : '더보기'}
-                  </MoreButton>
-                )}
-              </FeedContentBox>
-              <LikeIconContainer>
-                <HeartIcon postId={feed.postId} />
-              </LikeIconContainer>
-            </FeedTagLikeBox>
-          </>
-        )}
+        <FeedTagLikeBox justifyContent="flex-start">
+          <LikeIconContainer>
+            <HeartIcon postId={feed.postId} />
+          </LikeIconContainer>
+          <TagBox>
+            {feed.tags.slice(0, 3).map((tag: string[], index: number) => (
+              <Hashtag key={index}>
+                <div>{'#' + tag}</div>
+              </Hashtag>
+            ))}
+          </TagBox>
+        </FeedTagLikeBox>
       </FeedContainer>
     </>
   );
