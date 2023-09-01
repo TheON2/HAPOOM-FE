@@ -166,9 +166,9 @@ const Dropzone: React.FC<DropzoneProps> = ({
 
         // 각 파일의 크기 출력
         results.forEach((result) => {
-          console.log(
-            `File Name: ${result.resizedFile.name}, Size: ${result.size} bytes`
-          );
+          // console.log(
+          //   `File Name: ${result.resizedFile.name}, Size: ${result.size} bytes`
+          // );
         });
       });
     },

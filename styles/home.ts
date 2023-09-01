@@ -323,6 +323,7 @@ export const MainBannerLayout = styled.div`
   width: 100%;
   height: 100%;
   overflow: hidden;
+  border-radius: 12px;
   position: relative;
   background-color: var(--detail-img-bg-color);
   .sigle-image {
@@ -388,30 +389,38 @@ export const SlideDotBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0 24px;
+  padding: 12px 24px;
   gap: 4px;
-  position: absolute;
-  bottom: 12px;
+  /* position: absolute; */
+  /* bottom: -100%; */
   span {
     display: block;
     width: 8px;
     height: 8px;
-    background-color: #ffffff99;
+    background-color: #8e8e8e;
     border-radius: 50%;
     cursor: pointer;
     &.active {
       background-color: #0084ff99;
     }
   }
-  @media screen and (max-width: 786px) {
+  /* @media screen and (max-width: 786px) {
     gap: 12px;
-    opacity: 0.8;
-    justify-content: flex-start;
-
     span {
       width: 20px;
       height: 20px;
     }
+  } */
+`;
+export const SlideArrowBox = styled.div`
+  width: 110%;
+  position: absolute;
+  top: calc(50% - 20px);
+  left: -20px;
+  display: flex;
+  justify-content: space-between;
+  .right {
+    transform: rotate(180deg);
   }
 `;
 

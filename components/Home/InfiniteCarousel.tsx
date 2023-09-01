@@ -12,11 +12,13 @@ import {
   SliderList,
   SlideDotBox,
   SlideSum,
+  SlideArrowBox,
 } from '@/styles/home';
 import { BannerSliderProps } from '@/types/home';
 import { debounce } from 'lodash';
 import useSwipe from '@/hooks/useSwipe';
 import ZoomImage from '../Detail/ZoomImage';
+import { ArrowLong, SlideArrow } from '../common/SVG';
 const DEFAULT_INTERVAL = 10 * 1000;
 const FAST_INTERVAL = 500;
 
@@ -158,21 +160,29 @@ const InfiniteCarousel: React.FC<Props> = ({ data, zoomImageHandler }) => {
             );
           })}
         </SliderList>
-        <SlideDotBox>
-          {/* <SlideSum>
+      </MainBannerLayout>
+      <SlideArrowBox>
+        <button>
+          <SlideArrow />
+        </button>
+        <button className="right">
+          <SlideArrow />
+        </button>
+      </SlideArrowBox>
+      <SlideDotBox>
+        {/* <SlideSum>
           <Images />+{copiedArr.length}
         </SlideSum> */}
-          {copiedArr.map((slide, index) => {
-            return (
-              <span
-                onClick={() => onClickSlideDotHandle(index + 1)}
-                className={slideIndex === index + 1 ? `active` : ``}
-                key={index}
-              ></span>
-            );
-          })}
-        </SlideDotBox>
-      </MainBannerLayout>
+        {copiedArr.map((slide, index) => {
+          return (
+            <span
+              onClick={() => onClickSlideDotHandle(index + 1)}
+              className={slideIndex === index + 1 ? `active` : ``}
+              key={index}
+            ></span>
+          );
+        })}
+      </SlideDotBox>
     </>
   );
 };
