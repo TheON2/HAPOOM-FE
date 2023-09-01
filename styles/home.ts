@@ -816,19 +816,25 @@ export const ButtonBox = styled.div`
       width: 100%;
       position: absolute;
       right: 0;
-      top: calc(50% - 26px);
+      top: 0;
       padding: 0 4px;
       padding-bottom: 22px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      z-index: 114;
+      /* z-index: -1; */
       button {
         width: 32px;
         height: 32px;
         background-color: #fff;
         border: none;
         box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        position: absolute;
+        top: 100%;
+        z-index: 114;
+        &.right {
+          right: 0;
+        }
         svg {
           transform: scale(70%);
         }
