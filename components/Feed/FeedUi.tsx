@@ -54,7 +54,7 @@ const FeedUi = () => {
       return morePagesExist ? allPages.length + 1 : false;
     },
   });
-
+  console.log('feed', data);
   const { mutate: report } = useMutation(reportPost, {
     onSuccess: (message) => {
       setModalMessge({
