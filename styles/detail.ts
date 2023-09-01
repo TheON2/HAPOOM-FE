@@ -148,9 +148,10 @@ export const HashtagBox = styled.div`
 export const Hashtag = styled.div`
   color: #0084ff;
   display: inline-block;
-  padding: 4px 20px 4px;
-  border-radius: 20px;
-  border: 2px solid #0084ff;
+  /* padding: 4px 20px 4px; */
+  /* border-radius: 20px;
+  border: 2px solid #0084ff; */
+  margin: 6px 0 0 12px;
   text-align: center;
   font-size: 14px;
 `;
