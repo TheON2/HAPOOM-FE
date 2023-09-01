@@ -50,7 +50,10 @@ const Dropzone: React.FC<DropzoneProps> = ({
 }) => {
   const { isModalOpen, modalMessge, openModal, closeModal } = useModal();
 
-  const resizeImage = (imageFile: File, callback: (file: File) => void) => {
+  const resizeImage = (
+    imageFile: File,
+    callback: (file: File, size: number) => void
+  ) => {
     // if (
     //   imageFile.type !== 'image/jpeg' &&
     //   imageFile.type !== 'image/png' &&
@@ -100,10 +103,14 @@ const Dropzone: React.FC<DropzoneProps> = ({
 
         canvas.width = width;
         canvas.height = height;
-        ctx?.drawImage(img, 0, 0, width, height);
+        if (ctx) {
+          ctx.fillStyle = 'white';
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+          ctx.drawImage(img, 0, 0, width, height);
+        }
 
         // JPEG 형식으로 base64 문자열로 변환, 품질은 0.8로 설정
-        const dataUrl = canvas.toDataURL(imageFile.type, 1.0);
+        const dataUrl = canvas.toDataURL('image/jpeg', 0.8);
 
         // data URL을 Blob으로 변환
         const byteString = atob(dataUrl.split(',')[1]);
@@ -114,8 +121,14 @@ const Dropzone: React.FC<DropzoneProps> = ({
           ia[i] = byteString.charCodeAt(i);
         }
         const blob = new Blob([ab], { type: mimeString });
+        const size = blob.size;
 
-        callback(new File([blob], imageFile.name, { type: imageFile.type }));
+        const newFileName = `${imageFile.name
+          .split('.')
+          .slice(0, -1)
+          .join('.')}.jpg`;
+
+        callback(new File([blob], newFileName, { type: 'image/jpg' }), size);
       };
     };
   };
@@ -133,19 +146,26 @@ const Dropzone: React.FC<DropzoneProps> = ({
       // 이미지 리사이징
       Promise.all(
         acceptedFiles.map((file) => {
-          return new Promise<File>((resolve) => {
-            resizeImage(file, (resizedFile) => {
-              resolve(resizedFile);
+          return new Promise<{ resizedFile: File; size: number }>((resolve) => {
+            resizeImage(file, (resizedFile, size) => {
+              resolve({ resizedFile, size });
             });
           });
         })
-      ).then((resizedFiles) => {
+      ).then((results) => {
         // 리사이징된 파일을 images와 imageURLs 상태에 추가
-        setImages([...images, ...resizedFiles]);
-        const newImageURLs = resizedFiles.map((file) =>
-          URL.createObjectURL(file)
+        setImages([...images, ...results.map((result) => result.resizedFile)]);
+        const newImageURLs = results.map((result) =>
+          URL.createObjectURL(result.resizedFile)
         );
         setImageURLs([...imageURLs, ...newImageURLs]);
+
+        // 각 파일의 크기 출력
+        results.forEach((result) => {
+          console.log(
+            `File Name: ${result.resizedFile.name}, Size: ${result.size} bytes`
+          );
+        });
       });
     },
     [images, imageURLs, setImages, setImageURLs]
