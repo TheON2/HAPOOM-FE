@@ -100,6 +100,7 @@ const Home: NextPage<MainPageProps> = ({
         <HashtagNavBar
           data={tagFilter}
           $isClick={isClick}
+          setIsClick={setIsClick}
           onClickEvent={onClickBottomNavHandler}
           HashTagScrollTopHandler={HashTagScrollTopHandler}
           hashTag={hashTag}

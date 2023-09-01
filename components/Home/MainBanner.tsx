@@ -33,7 +33,6 @@ const MainBanner = ({
   onClickBottomNavHandler,
 }: any) => {
   const randomPost = useSelector((state: RootState) => state.notification.post);
-  //console.log(randomPost);
   const [currentSentenceIndex, setCurrentSentenceIndex] = useState<number>(0);
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -43,6 +42,7 @@ const MainBanner = ({
     }, 8000);
     return () => clearInterval(intervalId);
   }, []);
+
   return (
     <MainBannerContainer $isClick={$isClick}>
       <RandomContentContainer $isClick={$isClick}>
@@ -84,16 +84,11 @@ const MainBanner = ({
             <ArrowLong />
           </button>
         </ButtonTouchBox>
-        {/* {randomPosts && ( */}
         {$isClick ? (
           <RandomText $isClick={$isClick}>
             {sentences[currentSentenceIndex]}
-            {/* {randomPosts && randomPosts[0].content1}
-            <span>{randomPosts && randomPosts[0].content2}</span> */}
           </RandomText>
         ) : null}
-
-        {/* )} */}
       </MainBannerBox>
     </MainBannerContainer>
   );

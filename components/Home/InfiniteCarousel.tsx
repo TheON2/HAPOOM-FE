@@ -15,7 +15,7 @@ import {
 } from '@/styles/home';
 import { BannerSliderProps } from '@/types/home';
 import { debounce } from 'lodash';
-// import { Images } from '../common/SVG';
+import useSwipe from '@/hooks/useSwipe';
 import ZoomImage from '../Detail/ZoomImage';
 const DEFAULT_INTERVAL = 10 * 1000;
 const FAST_INTERVAL = 500;
@@ -40,7 +40,33 @@ const InfiniteCarousel: React.FC<Props> = ({ data, zoomImageHandler }) => {
     () => [beforeSlide, ...copiedArr, afterSlide],
     [beforeSlide, copiedArr, afterSlide]
   );
+  const [slideUrl, setSlideUrl] = useState<string>();
+  const onClickSaveImageUrlHandler = (url: string) => {
+    setSlideUrl(url);
+  };
+  const leftAction = () => {
+    setSlideIndex((prevActive) =>
+      prevActive >= sliedArr.length - 1 ? sliedArr.length - 1 : prevActive + 1
+    );
+  };
 
+  const rightAction = () => {
+    setSlideIndex((prevActive) => (prevActive <= 0 ? 0 : prevActive - 1));
+  };
+  const onClickEventAction = () => {
+    if (slideUrl) {
+      zoomImageHandler(slideUrl);
+    }
+  };
+  const {
+    handleMouseDown,
+    handleMouseUp,
+    handleMouseMove,
+    handleTouchStart,
+    handleTouchMove,
+    handleTouchEnd,
+    handleWheel,
+  } = useSwipe(leftAction, rightAction, onClickEventAction);
   // 무한 로드 슬라이드
   useEffect(() => {
     const interval = setInterval(
@@ -96,7 +122,16 @@ const InfiniteCarousel: React.FC<Props> = ({ data, zoomImageHandler }) => {
 
   return (
     <>
-      <MainBannerLayout ref={sliedContainerRef}>
+      <MainBannerLayout
+        ref={sliedContainerRef}
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        onWheel={handleWheel}
+      >
         <SliderList
           ref={sliedListRef}
           $slideindex={slideIndex}
@@ -108,7 +143,7 @@ const InfiniteCarousel: React.FC<Props> = ({ data, zoomImageHandler }) => {
               <SliderItem
                 key={index}
                 width={slideItemWidth && slideItemWidth}
-                onClick={() => zoomImageHandler(slide?.url)}
+                onClick={() => onClickSaveImageUrlHandler(slide?.url)}
               >
                 <Image
                   src={slide?.url}
@@ -117,6 +152,7 @@ const InfiniteCarousel: React.FC<Props> = ({ data, zoomImageHandler }) => {
                   height={800}
                   loading="eager"
                   priority={true}
+                  draggable="false"
                 />
               </SliderItem>
             );

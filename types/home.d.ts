@@ -36,14 +36,12 @@ export type HashtagNavBarProps = {
   $isClick?: boolean;
   onClickEvent?: any;
   HashTagScrollTopHandler: () => void;
-  // onClickhashtagHandler: any;
   hashTag: string;
   setTagCategory: any;
   setHashTag: any;
-  // onClickAllTagHandler: () => void;
-  // onClickOtherHandler: () => void;
   undefindeTagThumbnail: string;
   allTagThumbnail: string;
+  setIsClick: any;
 };
 
 export type ImageContentProps = Pick<MainPageDataProps, 'postId' | 'image'>;
