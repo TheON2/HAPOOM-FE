@@ -64,7 +64,6 @@ export const HeaderLayout = styled.header<HeaderProps>`
     }
     &.active {
       color: var(--primary-color);
-
       path {
         stroke: ${(props) => (props.$sticky ? '#fff' : 'var(--primary-color)')};
       }
@@ -103,19 +102,14 @@ export const HeaderLayout = styled.header<HeaderProps>`
     .active {
       color: ${(props) => (props.$sticky ? 'var(--primary-color)' : '#fff')};
     }
-    .header-icon {
-      &.search {
-        svg path {
-          stroke: ${(props) =>
-            props.$sticky ? 'var(--button-hover-color)' : '#C6E2FC'};
-        }
-      }
-      &.edit {
-        svg path {
-          fill: ${(props) =>
-            props.$sticky ? 'var(--button-hover-color)' : '#C6E2FC'};
-        }
-      }
+
+    .search {
+      color: ${(props) =>
+        props.$sticky ? 'var(--button-hover-color)' : '#C6E2FC'};
+    }
+    .edit {
+      color: ${(props) =>
+        props.$sticky ? 'var(--button-hover-color)' : '#C6E2FC'};
     }
   }
 `;
