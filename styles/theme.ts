@@ -25,7 +25,7 @@ const darkModeStyles = css`
   --toggle-color: #a1afc6;
   --nav-icon-color: #8995a7;
   --button-hover-color: #7dc1ff;
-  --button-enabled-text: #333;
+  --button-enabled-text: #efefef;
   --button-enabled-color: #5a6a81;
   --button-text-color: #fff;
   --button-second-color: #52acff20;
@@ -48,10 +48,9 @@ const darkModeStyles = css`
   --bar-color: #93999f;
   --hashtag-bg-gradient: linear-gradient(
     180deg,
-    rgba(0, 0, 0, 0.22) 60%,
-    #1b3863 70%,
-    #1b3863 90%,
-    #1b386399 95%,
+    rgba(0, 0, 0, 0.22) 86%,
+    #1b3863 95%,
+    #1b386399 98%,
     #1b386300 100%
   );
   --hashtag-border-color: #7dc1ff;
@@ -93,10 +92,10 @@ const darkModeStyles = css`
     }
     color: #fff;
   }
-  button{
+  button {
     cursor: pointer;
     &:hover {
-      filter: brightness(0.8)
+      filter: brightness(0.8);
     }
   }
 `;
@@ -118,7 +117,7 @@ const lightModeStyles = css`
   --toggle-color: #959595;
   --nav-icon-color: #777;
   --button-hover-color: #7dc1ff;
-  --button-enabled-color: #b3b3b3;
+  --button-enabled-color: #eeeeee;
   --button-text-color: #fff;
   --button-second-color: #fff;
   --button-second-hover-color: #7dc1ff;
@@ -141,10 +140,10 @@ const lightModeStyles = css`
   --hashtag-border-color: #deefff90;
   --hashtag-bg-gradient: linear-gradient(
     180deg,
-    rgba(255, 255, 255, 0.22) 60%,
-    #fff 70%,
-    #fff 90%,
-    rgba(255, 255, 255, 0.1) 95%,
+    rgba(255, 255, 255, 0.22) 86%,
+
+    #fff 95%,
+    rgba(255, 255, 255, 0.1) 98%,
     rgba(255, 255, 255, 0) 100%
   );
   --hashtag-gray: #93999f;
@@ -189,10 +188,10 @@ const lightModeStyles = css`
     }
     color: #334765;
   }
-  button{
+  button {
     cursor: pointer;
     &:hover {
-      filter: brightness(0.8)
+      filter: brightness(0.8);
     }
   }
 `;
@@ -217,4 +216,3 @@ export const DarkModeButton = styled.button`
   border: var(--setting-border);
   font-weight: ${({ theme }) => (theme.mode === 'dark' ? '900' : '400')};
 `;
-

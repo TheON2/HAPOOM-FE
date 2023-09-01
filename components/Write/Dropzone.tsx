@@ -5,6 +5,7 @@ import plus from '../../public/addImage.png';
 import styled from 'styled-components';
 import useModal from '@/hooks/useModal';
 import Modal from '../common/Modal';
+import { DropzoneIcon } from '../common/SVG';
 interface DropzoneProps {
   images: File[];
   setImages: (images: any) => void;
@@ -18,9 +19,10 @@ const DropContainer = styled.div`
   height: 200px;
   width: 100%;
   padding: 12px;
-  border: var(--input-border);
-  border-radius: 12px;
-  background-color: var(--input-bg-color);
+  border: 2px dashed var(--primary-color);
+  /* border-radius: 12px; */
+  /* background-color: var(--input-bg-color); */
+  border-radius: 4px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -28,8 +30,10 @@ const DropContainer = styled.div`
   position: relative;
   overflow: hidden;
   color: var(--color);
+  text-align: center;
+  font-size: 8px;
   .bold {
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 700;
     margin: 12px 0 8px;
   }
@@ -162,9 +166,9 @@ const Dropzone: React.FC<DropzoneProps> = ({
 
         // 각 파일의 크기 출력
         results.forEach((result) => {
-          console.log(
-            `File Name: ${result.resizedFile.name}, Size: ${result.size} bytes`
-          );
+          // console.log(
+          //   `File Name: ${result.resizedFile.name}, Size: ${result.size} bytes`
+          // );
         });
       });
     },
@@ -186,26 +190,36 @@ const Dropzone: React.FC<DropzoneProps> = ({
       )}
       <DropContainer {...getRootProps()}>
         <input {...getInputProps()} />
-        {imageURLs[0] ? (
-          <NextImage
-            src={imageURLs[0]}
-            alt={`Upload preview 1`}
-            width={100}
-            height={100}
-            className="upload"
-          />
-        ) : isDragActive ? (
-          <p className="bold">이미지를 드래그앤 드랍 해주세요.</p>
-        ) : (
+        {imageURLs[4] ? (
           <>
             <NextImage
-              src={plus}
+              src={imageURLs[0]}
               alt={`Upload preview 1`}
-              width={50}
-              height={50}
+              width={100}
+              height={100}
+              className="upload"
             />
+          </>
+        ) : isDragActive ? (
+          <>
+            <DropzoneIcon />
+            <p className="bold">이미지를 드래그앤 드랍 해주세요.</p>
+          </>
+        ) : imageURLs[0] ? (
+          <>
+            <DropzoneIcon />
+            <p className="bold">이미지를 추가로 등록할 수 있습니다.</p>
+            <p>
+              jpg,png 형식의 파일로 <br /> 5개까지 업로드 하실 수 있습니다.
+            </p>
+          </>
+        ) : (
+          <>
+            <DropzoneIcon />
             <p className="bold">이미지 업로드</p>
-            <p>jpg,png/5개 까지 업로드됩니다.</p>
+            <p>
+              jpg,png 형식의 파일로 <br /> 5개까지 업로드 하실 수 있습니다.
+            </p>
           </>
         )}
       </DropContainer>

@@ -20,16 +20,16 @@ const ButtonStyle = styled.button<Button>`
     color: var(--button-enabled-text);
     background-color: var(--button-enabled-color);
     border: none;
-    &:hover {
+    /* &:hover {
       background-color: var(--button-second-hover-color);
-    }
+    } */
     &:active {
       background-color: var(--button-second-color);
     }
   }
-  &:hover {
+  /* &:hover {
     background-color: var(--button-hover-color);
-  }
+  } */
   &:active {
     background-color: var(--primary-color);
   }
