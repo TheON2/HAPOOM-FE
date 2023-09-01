@@ -531,15 +531,7 @@ export const HashtagNavBarLayout = styled.nav<hashtagNavbarProps>`
   .background {
     width: 100%;
     padding: 0px 24px 8px;
-    /* background: var(--hashtag-bg-gradient); */
-    background: linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.22) 86%,
-
-      #fff 95%,
-      rgba(255, 255, 255, 0.1) 98%,
-      rgba(255, 255, 255, 0) 100%
-    );
+    background: var(--hashtag-bg-gradient);
     display: flex;
     flex-direction: column;
     justify-content: center;
