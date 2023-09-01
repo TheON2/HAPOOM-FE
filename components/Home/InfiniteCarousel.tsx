@@ -161,14 +161,14 @@ const InfiniteCarousel: React.FC<Props> = ({ data, zoomImageHandler }) => {
           })}
         </SliderList>
       </MainBannerLayout>
-      <SlideArrowBox>
-        <button>
+      {/* <SlideArrowBox>
+        <span>
           <SlideArrow />
-        </button>
-        <button className="right">
+        </span>
+        <span className="right">
           <SlideArrow />
-        </button>
-      </SlideArrowBox>
+        </span>
+      </SlideArrowBox> */}
       <SlideDotBox>
         {/* <SlideSum>
           <Images />+{copiedArr.length}
@@ -213,8 +213,6 @@ const DetailImageViewBox = ({ data }: any) => {
       ) : (
         <InfiniteCarousel data={data} zoomImageHandler={zoomImageHandler} />
       )}
-
-      {/* 모달 또는 다른 방식으로 이미지 확대 요소를 표시 */}
       {zoomedImageUrl && (
         <ZoomImage imageUrl={zoomedImageUrl} closeZoomImage={closeZoomImage} />
       )}

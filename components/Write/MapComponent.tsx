@@ -410,15 +410,15 @@ export const MapComponent: React.FC<MapComponentProps> = ({
         >
           닫기
         </Button> */}
-        <Button type="button" onClick={setToCurrentLocation}>
-          간편 찾기
-        </Button>
         <Button
           onClick={submitLocation}
           type="button"
           className={!mapOpen ? 'secondary' : undefined}
         >
           확인
+        </Button>
+        <Button type="button" onClick={setToCurrentLocation}>
+          간편 찾기
         </Button>
       </div>
     </>

@@ -25,7 +25,7 @@ const darkModeStyles = css`
   --toggle-color: #a1afc6;
   --nav-icon-color: #8995a7;
   --button-hover-color: #7dc1ff;
-  --button-enabled-text: #333;
+  --button-enabled-text: #efefef;
   --button-enabled-color: #5a6a81;
   --button-text-color: #fff;
   --button-second-color: #52acff20;
@@ -117,7 +117,7 @@ const lightModeStyles = css`
   --toggle-color: #959595;
   --nav-icon-color: #777;
   --button-hover-color: #7dc1ff;
-  --button-enabled-color: #b3b3b3;
+  --button-enabled-color: #eeeeee;
   --button-text-color: #fff;
   --button-second-color: #fff;
   --button-second-hover-color: #7dc1ff;
