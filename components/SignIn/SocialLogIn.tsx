@@ -13,9 +13,9 @@ const SocialLogin = () => {
   return (
     <SignUpSocialSignUpBox>
       <Link
-        onClick={temporaryClick}
-        // href={`${process.env.NEXT_PUBLIC_LOCAL_SERVER}/api/auth/google`}
-        href={`https://hapoom.life/auth/SignIn`}
+        //onClick={temporaryClick}
+        href={`${process.env.NEXT_PUBLIC_LOCAL_SERVER}/api/auth/google`}
+        //href={`https://hapoom.life/auth/SignIn`}
       >
         <Image
           width={64}
@@ -27,9 +27,8 @@ const SocialLogin = () => {
         />
       </Link>
       <Link
-        onClick={temporaryClick}
-        // href={`${process.env.NEXT_PUBLIC_LOCAL_SERVER}/api/auth/kakao`}
-        href={`https://hapoom.life/auth/SignIn`}
+        href={`${process.env.NEXT_PUBLIC_LOCAL_SERVER}/api/auth/kakao`}
+        //href={`https://hapoom.life/auth/SignIn`}
       >
         <Image
           width={64}
