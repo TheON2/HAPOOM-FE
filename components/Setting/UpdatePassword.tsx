@@ -89,8 +89,11 @@ const UpdatePassword = () => {
 
     const formData = new FormData();
     formData.append('password', signUpState.password);
+    if (error) {
+      setSignUpState({ password: '', passwordConfirm: '' });
+      return;
+    }
     await mutate.mutateAsync(formData);
-    window.location.reload();
   };
   const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

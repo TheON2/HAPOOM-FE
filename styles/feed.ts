@@ -1,5 +1,9 @@
 import { styled } from 'styled-components';
 
+type TagProps = {
+  justifyContent: string;
+}
+
 export const FeedSection = styled.section`
   max-width: 768px;
   width: 100%;
@@ -41,6 +45,7 @@ export const FeedTime = styled.div`
 export const FeedIcon = styled.div`
   position: absolute;
   right: 0;
+  top: 20px;
 `;
 export const MainImageContainer = styled.div`
   width: 100%;
@@ -65,15 +70,10 @@ export const MainImageContainer = styled.div`
     height: 189px;
   }
 `;
-type TagProps = {
-  justifyContent: string;
-}
 export const FeedTagLikeBox = styled.div<TagProps>`
   width: 100%;
   margin: 8px auto;
-  display: flex;
   justify-content: ${(props) => props.justifyContent};
-  align-items: flex-start;
   position: relative;
 `;
 export const TagBox = styled.div`
@@ -85,32 +85,6 @@ export const TagBox = styled.div`
   gap: 6px;
   padding: 4px 0;
   flex-wrap: wrap;
-`;
-export const FeedContentBox = styled.div`
-  display: flex;
-  margin-right: 8%;
-  @media (max-width: 520px) {
-    flex-direction: column;
-  }
-`;
-export const FeedContent = styled.p`
-  margin: 4px 0 0 12px;
-  color: var(--text-color);
-  font-size: 20;
-  font-weight: 500;
-  word-wrap: break-word;
-  word-break: break-word;
-  white-space: pre-wrap;
-`;
-export const MoreButton = styled.button`
-  margin-top: 4px;
-  background-color: transparent;
-  border: none;
-  color: #C4C4C4;
-  cursor: pointer;
-  @media (max-width: 520px) {
-    text-align: left;
-  }
 `;
 export const LikeIconContainer = styled.div`
   width: 50px;
