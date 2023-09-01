@@ -55,7 +55,7 @@ const FeedUi = () => {
     },
     refetchOnWindowFocus: false,
   });
-  console.log('feed', data);
+
   const { mutate: report } = useMutation(reportPost, {
     onSuccess: (message) => {
       setModalMessge({
