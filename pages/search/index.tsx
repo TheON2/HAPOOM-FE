@@ -151,7 +151,7 @@ const Search = () => {
       (category) => category.category === option
     )[0].data;
     setRecommended(beforeSearchKeyword);
-    console.log(recommended);
+    // console.log(recommended);
   }, [option]);
   return (
     <>

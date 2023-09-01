@@ -14,7 +14,7 @@ export const HeaderLayout = styled.header<HeaderProps>`
   padding: 0 24px;
   /* position: fixed; */
   position: sticky;
-  z-index: 115;
+  z-index: 150;
   top: 0;
   background: var(--header-bg-color);
   backdrop-filter: blur(1px);
