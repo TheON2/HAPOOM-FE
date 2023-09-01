@@ -416,9 +416,10 @@ export const SlideArrowBox = styled.div`
   width: 110%;
   position: absolute;
   top: calc(50% - 20px);
-  left: -20px;
+  left: calc(50%);
   display: flex;
   justify-content: space-between;
+  transform: translateX(-50%);
   .right {
     transform: rotate(180deg);
   }
