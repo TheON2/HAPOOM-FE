@@ -63,14 +63,14 @@ const PopularContentsCarousel: React.FC<populerCarouselProps> = ({ data }) => {
       <div className="center">
         <CarouselHeader>
           <SectionTitle>#오늘의 좋아요</SectionTitle>
-          <ButtonBox>
+          {/* <ButtonBox>
             <button className="left" onClick={() => onClickArrowHandler(-1)}>
               <ArrowLong />
             </button>
             <button onClick={() => onClickArrowHandler(+1)}>
               <ArrowLong />
             </button>
-          </ButtonBox>
+          </ButtonBox> */}
         </CarouselHeader>
         <PopularContentsContainer
           onMouseDown={handleMouseDown}

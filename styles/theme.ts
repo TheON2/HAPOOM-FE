@@ -93,10 +93,10 @@ const darkModeStyles = css`
     }
     color: #fff;
   }
-  button{
+  button {
     cursor: pointer;
     &:hover {
-      filter: brightness(0.8)
+      filter: brightness(0.8);
     }
   }
 `;
@@ -141,10 +141,10 @@ const lightModeStyles = css`
   --hashtag-border-color: #deefff90;
   --hashtag-bg-gradient: linear-gradient(
     180deg,
-    rgba(255, 255, 255, 0.22) 60%,
-    #fff 70%,
+    rgba(255, 255, 255, 0.22) 80%,
     #fff 90%,
-    rgba(255, 255, 255, 0.1) 95%,
+    #fff 95%,
+    rgba(255, 255, 255, 0.1) 98%,
     rgba(255, 255, 255, 0) 100%
   );
   --hashtag-gray: #93999f;
@@ -189,10 +189,10 @@ const lightModeStyles = css`
     }
     color: #334765;
   }
-  button{
+  button {
     cursor: pointer;
     &:hover {
-      filter: brightness(0.8)
+      filter: brightness(0.8);
     }
   }
 `;
@@ -217,4 +217,3 @@ export const DarkModeButton = styled.button`
   border: var(--setting-border);
   font-weight: ${({ theme }) => (theme.mode === 'dark' ? '900' : '400')};
 `;
-
