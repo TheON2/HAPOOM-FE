@@ -424,6 +424,7 @@ const Write: NextPage<Props> = ({ update = '1', updateId }) => {
                 <UpAndDownTab
                   onClickEvent={handleCommentShowHandler}
                   $isUp={commentEdit.show}
+                  className="write"
                 >
                   {commentEdit.show && (
                     <>
@@ -477,13 +478,13 @@ const Write: NextPage<Props> = ({ update = '1', updateId }) => {
                         />
                       </Accordion>
                       <div style={{ display: 'flex', gap: '20px' }}>
-                        <Button
+                        {/* <Button
                           type="button"
                           className="secondary"
                           onClick={handleCommentShowHandler}
                         >
                           닫기
-                        </Button>
+                        </Button> */}
                         <Button
                           onClick={submitMusic}
                           type="button"
@@ -500,6 +501,7 @@ const Write: NextPage<Props> = ({ update = '1', updateId }) => {
                 <UpAndDownTab
                   onClickEvent={handleMapShowHandler}
                   $isUp={mapEdit.show}
+                  className="write"
                 >
                   {mapEdit.show && (
                     <MapComponent

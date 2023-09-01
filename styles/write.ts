@@ -28,13 +28,14 @@ export const Box = styled.div`
   position: relative;
   h2 {
     font-size: 20px;
+    font-weight: 900;
     margin-bottom: 8px;
-    text-align: center;
-    padding: 12px 36px;
-    background-color: var(--blue-bg-color);
+    /* text-align: center; */
+    padding: 12px 0;
+    /* background-color: var(--blue-bg-color); */
     border-radius: 30px;
-    border: var(--blue-border);
-    color: var(--text-blue-color);
+    /* border: var(--blue-border); */
+    /* color: var(--text-blue-color); */
   }
   label {
     margin-bottom: 16px;
@@ -56,8 +57,9 @@ export const InputContainer = styled.div`
 `;
 export const LimitNumBox = styled.span<limitProps>`
   position: absolute;
-  bottom: 5px;
-  right: 10px;
+  bottom: 15px;
+  right: 24px;
+  line-height: 14px;
   color: ${(props) => props.$color && '#FF5D5D'};
 `;
 export const InputBox = styled.input`
@@ -65,17 +67,17 @@ export const InputBox = styled.input`
   width: 100%;
   /* color: #051619; */
   outline: none;
-  padding: 12px 24px 10px;
-  border: var(--input-border);
-  border-radius: 12px;
+  padding: 16px 24px;
+  border: none;
+  border-radius: 4px;
   background-color: var(--input-bg-color);
   font-size: 0.915rem;
 `;
 export const TagBox = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
-  margin-top: 20px;
+  gap: 20px;
+  margin-top: 12px;
 `;
 export const RecordButtonBox = styled.div`
   width: 100%;

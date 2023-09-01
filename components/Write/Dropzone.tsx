@@ -5,6 +5,7 @@ import plus from '../../public/addImage.png';
 import styled from 'styled-components';
 import useModal from '@/hooks/useModal';
 import Modal from '../common/Modal';
+import { DropzoneIcon } from '../common/SVG';
 interface DropzoneProps {
   images: File[];
   setImages: (images: any) => void;
@@ -18,9 +19,10 @@ const DropContainer = styled.div`
   height: 200px;
   width: 100%;
   padding: 12px;
-  border: var(--input-border);
-  border-radius: 12px;
-  background-color: var(--input-bg-color);
+  border: 2px dashed var(--primary-color);
+  /* border-radius: 12px; */
+  /* background-color: var(--input-bg-color); */
+  border-radius: 4px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -28,8 +30,10 @@ const DropContainer = styled.div`
   position: relative;
   overflow: hidden;
   color: var(--color);
+  text-align: center;
+  font-size: 8px;
   .bold {
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 700;
     margin: 12px 0 8px;
   }
@@ -50,22 +54,25 @@ const Dropzone: React.FC<DropzoneProps> = ({
 }) => {
   const { isModalOpen, modalMessge, openModal, closeModal } = useModal();
 
-  const resizeImage = (imageFile: File, callback: (file: File) => void) => {
-    if (
-      imageFile.type !== 'image/jpeg' &&
-      imageFile.type !== 'image/png' &&
-      imageFile.type !== 'image/JPEG' &&
-      imageFile.type !== 'image/PNG' &&
-      imageFile.type !== 'image/heic' &&
-      imageFile.type !== 'image/HEIC'
-    ) {
-      //alert('Only JPEG and PNG files are allowed.');
-      openModal({
-        actionText: '확인',
-        modalMessge: 'JPEG / PNG 파일만 업로드 가능합니다.',
-      });
-      return;
-    }
+  const resizeImage = (
+    imageFile: File,
+    callback: (file: File, size: number) => void
+  ) => {
+    // if (
+    //   imageFile.type !== 'image/jpeg' &&
+    //   imageFile.type !== 'image/png' &&
+    //   imageFile.type !== 'image/JPEG' &&
+    //   imageFile.type !== 'image/PNG' &&
+    //   imageFile.type !== 'image/heic' &&
+    //   imageFile.type !== 'image/HEIC'
+    // ) {
+    //   //alert('Only JPEG and PNG files are allowed.');
+    //   openModal({
+    //     actionText: '확인',
+    //     modalMessge: 'JPEG / PNG 파일만 업로드 가능합니다.',
+    //   });
+    //   return;
+    // }
     const reader = new FileReader();
     reader.readAsDataURL(imageFile);
     reader.onload = (event) => {
@@ -100,10 +107,14 @@ const Dropzone: React.FC<DropzoneProps> = ({
 
         canvas.width = width;
         canvas.height = height;
-        ctx?.drawImage(img, 0, 0, width, height);
+        if (ctx) {
+          ctx.fillStyle = 'white';
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+          ctx.drawImage(img, 0, 0, width, height);
+        }
 
         // JPEG 형식으로 base64 문자열로 변환, 품질은 0.8로 설정
-        const dataUrl = canvas.toDataURL(imageFile.type, 0.8);
+        const dataUrl = canvas.toDataURL('image/jpeg', 0.8);
 
         // data URL을 Blob으로 변환
         const byteString = atob(dataUrl.split(',')[1]);
@@ -114,8 +125,14 @@ const Dropzone: React.FC<DropzoneProps> = ({
           ia[i] = byteString.charCodeAt(i);
         }
         const blob = new Blob([ab], { type: mimeString });
+        const size = blob.size;
 
-        callback(new File([blob], imageFile.name, { type: imageFile.type }));
+        const newFileName = `${imageFile.name
+          .split('.')
+          .slice(0, -1)
+          .join('.')}.jpg`;
+
+        callback(new File([blob], newFileName, { type: 'image/jpg' }), size);
       };
     };
   };
@@ -133,19 +150,26 @@ const Dropzone: React.FC<DropzoneProps> = ({
       // 이미지 리사이징
       Promise.all(
         acceptedFiles.map((file) => {
-          return new Promise<File>((resolve) => {
-            resizeImage(file, (resizedFile) => {
-              resolve(resizedFile);
+          return new Promise<{ resizedFile: File; size: number }>((resolve) => {
+            resizeImage(file, (resizedFile, size) => {
+              resolve({ resizedFile, size });
             });
           });
         })
-      ).then((resizedFiles) => {
+      ).then((results) => {
         // 리사이징된 파일을 images와 imageURLs 상태에 추가
-        setImages([...images, ...resizedFiles]);
-        const newImageURLs = resizedFiles.map((file) =>
-          URL.createObjectURL(file)
+        setImages([...images, ...results.map((result) => result.resizedFile)]);
+        const newImageURLs = results.map((result) =>
+          URL.createObjectURL(result.resizedFile)
         );
         setImageURLs([...imageURLs, ...newImageURLs]);
+
+        // 각 파일의 크기 출력
+        results.forEach((result) => {
+          // console.log(
+          //   `File Name: ${result.resizedFile.name}, Size: ${result.size} bytes`
+          // );
+        });
       });
     },
     [images, imageURLs, setImages, setImageURLs]
@@ -166,26 +190,36 @@ const Dropzone: React.FC<DropzoneProps> = ({
       )}
       <DropContainer {...getRootProps()}>
         <input {...getInputProps()} />
-        {imageURLs[0] ? (
-          <NextImage
-            src={imageURLs[0]}
-            alt={`Upload preview 1`}
-            width={100}
-            height={100}
-            className="upload"
-          />
-        ) : isDragActive ? (
-          <p className="bold">이미지를 드래그앤 드랍 해주세요.</p>
-        ) : (
+        {imageURLs[4] ? (
           <>
             <NextImage
-              src={plus}
+              src={imageURLs[0]}
               alt={`Upload preview 1`}
-              width={50}
-              height={50}
+              width={100}
+              height={100}
+              className="upload"
             />
+          </>
+        ) : isDragActive ? (
+          <>
+            <DropzoneIcon />
+            <p className="bold">이미지를 드래그앤 드랍 해주세요.</p>
+          </>
+        ) : imageURLs[0] ? (
+          <>
+            <DropzoneIcon />
+            <p className="bold">이미지를 추가로 등록할 수 있습니다.</p>
+            <p>
+              jpg,png 형식의 파일로 <br /> 5개까지 업로드 하실 수 있습니다.
+            </p>
+          </>
+        ) : (
+          <>
+            <DropzoneIcon />
             <p className="bold">이미지 업로드</p>
-            <p>jpg,png/5개 까지 업로드됩니다.</p>
+            <p>
+              jpg,png 형식의 파일로 <br /> 5개까지 업로드 하실 수 있습니다.
+            </p>
           </>
         )}
       </DropContainer>
