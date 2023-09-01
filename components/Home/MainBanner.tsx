@@ -71,7 +71,7 @@ const MainBanner = ({
                 <span className="nickname-hightlight">
                   {randomPost?.user.nickname}
                 </span>
-                님이 품은 하늘입니다
+                님이 방금 품은 하늘입니다
               </p>
             </ProfileLink>
             <HeartIcon postId={randomPost?.post?.postId} />
