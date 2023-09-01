@@ -53,7 +53,7 @@ const Header = ({ $sticky, ...restProps }: any) => {
   const [isShowMenu, setIsShowMenu] = useState<boolean>(false);
   const BellColor = () => {
     if (isTrend) {
-      return $sticky ? '#2797FF' : '#fff';
+      return $sticky ? 'var(--primary-color)' : '#fff';
     } else {
       return '#2797FF';
     }

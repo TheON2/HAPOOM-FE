@@ -50,7 +50,7 @@ export const MainLayout = styled.main`
 export const SectionTitle = styled.h2`
   max-width: 768px;
   padding: 26px 36px 24px;
-  color: #0084ff;
+  color: var(--primary-color);
   position: relative;
   &::after {
     content: '';
@@ -61,7 +61,7 @@ export const SectionTitle = styled.h2`
     top: 50%;
     left: 24px;
     transform: translateY(-50%);
-    background-color: #0084ff;
+    background-color: var(--primary-color);
   }
   @media screen and (min-width: 786px) {
     padding: 26px 16px 24px;
