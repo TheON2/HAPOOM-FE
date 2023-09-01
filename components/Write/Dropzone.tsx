@@ -54,25 +54,8 @@ const Dropzone: React.FC<DropzoneProps> = ({
 }) => {
   const { isModalOpen, modalMessge, openModal, closeModal } = useModal();
 
-  const resizeImage = (
-    imageFile: File,
-    callback: (file: File, size: number) => void
-  ) => {
-    // if (
-    //   imageFile.type !== 'image/jpeg' &&
-    //   imageFile.type !== 'image/png' &&
-    //   imageFile.type !== 'image/JPEG' &&
-    //   imageFile.type !== 'image/PNG' &&
-    //   imageFile.type !== 'image/heic' &&
-    //   imageFile.type !== 'image/HEIC'
-    // ) {
-    //   //alert('Only JPEG and PNG files are allowed.');
-    //   openModal({
-    //     actionText: '확인',
-    //     modalMessge: 'JPEG / PNG 파일만 업로드 가능합니다.',
-    //   });
-    //   return;
-    // }
+  const resizeImage = (imageFile: File, callback: (file: File) => void) => {
+    const MAX_SIZE = 5 * 1024 * 1024; // 5MB
     const reader = new FileReader();
     reader.readAsDataURL(imageFile);
     reader.onload = (event) => {
@@ -83,56 +66,43 @@ const Dropzone: React.FC<DropzoneProps> = ({
       img.onload = () => {
         const canvas = document.createElement('canvas');
         const ctx = canvas.getContext('2d');
-
-        // 최대 너비와 높이 설정
-        const maxWidth = 1920;
-        const maxHeight = 1080;
-        let width = img.width;
-        let height = img.height;
-
-        // 원본 비율 계산
-        const originalRatio = width / height;
-
-        // 최대 너비와 비율에 맞게 높이 조정
-        if (width > maxWidth) {
-          width = maxWidth;
-          height = width / originalRatio;
-        }
-
-        // 최대 높이와 비율에 맞게 너비 조정
-        if (height > maxHeight) {
-          height = maxHeight;
-          width = height * originalRatio;
-        }
-
-        canvas.width = width;
-        canvas.height = height;
+        canvas.width = img.width;
+        canvas.height = img.height;
         if (ctx) {
-          ctx.fillStyle = 'white';
-          ctx.fillRect(0, 0, canvas.width, canvas.height);
-          ctx.drawImage(img, 0, 0, width, height);
+          ctx.drawImage(img, 0, 0);
         }
 
-        // JPEG 형식으로 base64 문자열로 변환, 품질은 0.8로 설정
-        const dataUrl = canvas.toDataURL('image/jpeg', 0.8);
+        let quality = 0.8; // start with 0.8
+        let dataUrl;
 
-        // data URL을 Blob으로 변환
+        // Keep reducing quality until the size is below 5MB or quality goes too low
+        do {
+          dataUrl = canvas.toDataURL('image/jpeg', quality);
+          quality -= 0.1;
+        } while (dataUrl.length * 0.75 > MAX_SIZE && quality > 0.2);
+
+        if (dataUrl.length * 0.75 > MAX_SIZE) {
+          // If the size is still above 5MB after all reductions, return an error or handle as you wish
+          openModal({
+            actionText: '확인',
+            modalMessge: '이미지 크기를 5MB 미만으로 줄일 수 없습니다.',
+          });
+          return;
+        }
+
         const byteString = atob(dataUrl.split(',')[1]);
-        const mimeString = dataUrl.split(',')[0].split(':')[1].split(';')[0];
         const ab = new ArrayBuffer(byteString.length);
         const ia = new Uint8Array(ab);
         for (let i = 0; i < byteString.length; i++) {
           ia[i] = byteString.charCodeAt(i);
         }
-        const blob = new Blob([ab], { type: mimeString });
-        const size = blob.size;
+        const blob = new Blob([ab], { type: 'image/jpeg' });
 
         const newFileName = `${imageFile.name
           .split('.')
           .slice(0, -1)
           .join('.')}.jpg`;
-
-        callback(new File([blob], newFileName, { type: 'image/jpg' }), size);
+        callback(new File([blob], newFileName, { type: 'image/jpg' }));
       };
     };
   };
@@ -150,9 +120,9 @@ const Dropzone: React.FC<DropzoneProps> = ({
       // 이미지 리사이징
       Promise.all(
         acceptedFiles.map((file) => {
-          return new Promise<{ resizedFile: File; size: number }>((resolve) => {
-            resizeImage(file, (resizedFile, size) => {
-              resolve({ resizedFile, size });
+          return new Promise<{ resizedFile: File }>((resolve) => {
+            resizeImage(file, (resizedFile) => {
+              resolve({ resizedFile });
             });
           });
         })
@@ -166,9 +136,7 @@ const Dropzone: React.FC<DropzoneProps> = ({
 
         // 각 파일의 크기 출력
         results.forEach((result) => {
-          console.log(
-            `File Name: ${result.resizedFile.name}, Size: ${result.size} bytes`
-          );
+          console.log(`File Name: ${result.resizedFile.name}`);
         });
       });
     },
