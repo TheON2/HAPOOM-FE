@@ -4,7 +4,7 @@ import {
   SignInSection,
   TextErrorParagraph,
 } from '@/styles/signIn';
-import React, { FormEvent, useState } from 'react';
+import React, { FormEvent, useEffect, useState } from 'react';
 import SocialLogin from './SocialLogIn';
 import SignInInput from './SignInInput';
 import { useRouter } from 'next/router';
@@ -30,6 +30,12 @@ const validateEmail = (email: string): boolean => {
 const validatePassword = (password: string): boolean => {
   const passwordPattern = /^(?=.*\d)(?=.*[a-zA-Z]).{8,}$/;
   return passwordPattern.test(password);
+};
+const isWindowsOrAndroid = () => {
+  if (typeof window !== 'undefined' && window.navigator) {
+    return /Windows|Android/.test(window.navigator.userAgent);
+  }
+  return false;
 };
 
 const SignInUi = () => {
@@ -99,6 +105,12 @@ const SignInUi = () => {
     signInMutation.mutate(sendData);
   };
 
+  const [shouldShowSocialLogin, setShouldShowSocialLogin] = useState(false);
+
+  useEffect(() => {
+    setShouldShowSocialLogin(isWindowsOrAndroid());
+  }, []);
+
   return (
     <SignInSection>
       <SignInContainer onSubmit={handleLogin}>
@@ -115,7 +127,7 @@ const SignInUi = () => {
 
         <SignInControls signInState={signInState} />
 
-        {/* <SocialLogin /> */}
+        {shouldShowSocialLogin && <SocialLogin />}
       </SignInContainer>
     </SignInSection>
   );
