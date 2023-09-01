@@ -403,13 +403,13 @@ export const MapComponent: React.FC<MapComponentProps> = ({
         />
       </div>
       <div style={{ display: 'flex', gap: '20px' }}>
-        <Button
+        {/* <Button
           type="button"
           className="secondary"
           onClick={onClickCloseHandler}
         >
           닫기
-        </Button>
+        </Button> */}
         <Button type="button" onClick={setToCurrentLocation}>
           간편 찾기
         </Button>
