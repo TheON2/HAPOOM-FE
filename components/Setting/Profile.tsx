@@ -52,7 +52,7 @@ const Profile = ({
       <div>
         <h2>{nickname}</h2>
         <span></span>
-        <p>{email}</p>
+        <p style={{ fontSize: '12px' }}>{email}</p>
       </div>
     </ProfileBox>
   );
