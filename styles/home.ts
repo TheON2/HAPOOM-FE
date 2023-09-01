@@ -833,7 +833,7 @@ export const ButtonBox = styled.div`
         top: 100%;
         z-index: 114;
         &.right {
-          right: 0;
+          right: 4px;
         }
         svg {
           transform: scale(70%);
