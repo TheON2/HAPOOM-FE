@@ -152,7 +152,7 @@ const HashtagNavBar: React.FC<HashtagNavBarProps> = ({
               <button className="left" onClick={onClickHashSlideLeftHandler}>
                 <ArrowLong />
               </button>
-              <button onClick={onClickHashSlideRightHandler}>
+              <button className="right" onClick={onClickHashSlideRightHandler}>
                 <ArrowLong />
               </button>
             </ButtonBox>
