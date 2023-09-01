@@ -11,6 +11,7 @@ const ImagePreviewList = styled.div`
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 8px;
+  margin: 16px 0 0;
   /* justify-content: space-between; */
 `;
 const ImagePreviewItem = styled.div`
@@ -18,7 +19,6 @@ const ImagePreviewItem = styled.div`
   padding-bottom: 100%;
   position: relative;
   /* border: solid 2px #fefefe; */
-  margin: 10px 0;
 
   cursor: pointer;
   /* transition: all 0.3s ease-in-out; */
@@ -31,7 +31,7 @@ const ImagePreviewItem = styled.div`
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 8px;
+    border-radius: 4px;
     position: absolute;
     top: 0;
     left: 0;

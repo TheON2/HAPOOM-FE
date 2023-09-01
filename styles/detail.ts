@@ -58,7 +58,7 @@ export const DetialContentSection = styled.section<DetialContentSectionProps>`
       bottom: -10px;
       width: 60px;
       height: 3px;
-      background-color: #0084ff;
+      background-color: var(--primary-second-color);
     }
   }
   &.content-box {
@@ -133,9 +133,9 @@ export const ContentsContainer = styled.div`
     /* margin-bottom: 12px; */
   }
   .carousel-box {
-    border-radius: 8px;
-    overflow: hidden;
     height: 45vh;
+    width: 100%;
+    margin: 0 auto;
     position: relative;
   }
 `;
@@ -146,11 +146,13 @@ export const HashtagBox = styled.div`
 `;
 
 export const Hashtag = styled.div`
-  color: #0084ff;
+  color: var(--primary-second-color);
   display: inline-block;
-  padding: 4px 20px 4px;
-  border-radius: 20px;
-  border: 2px solid #0084ff;
+  /* padding: 4px 20px 4px; */
+  /* border-radius: 20px;
+  border: 2px solid #0084ff; */
+  margin: 6px 0 0 12px;
+
   text-align: center;
   font-size: 14px;
 `;

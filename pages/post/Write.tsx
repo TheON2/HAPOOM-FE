@@ -478,13 +478,13 @@ const Write: NextPage<Props> = ({ update = '1', updateId }) => {
                         />
                       </Accordion>
                       <div style={{ display: 'flex', gap: '20px' }}>
-                        <Button
+                        {/* <Button
                           type="button"
                           className="secondary"
                           onClick={handleCommentShowHandler}
                         >
                           닫기
-                        </Button>
+                        </Button> */}
                         <Button
                           onClick={submitMusic}
                           type="button"

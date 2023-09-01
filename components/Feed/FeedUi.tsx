@@ -53,8 +53,9 @@ const FeedUi = () => {
       const morePagesExist = allPages.length < lastPage.totalPages;
       return morePagesExist ? allPages.length + 1 : false;
     },
+    refetchOnWindowFocus: false,
   });
-  console.log('feed', data);
+
   const { mutate: report } = useMutation(reportPost, {
     onSuccess: (message) => {
       setModalMessge({
