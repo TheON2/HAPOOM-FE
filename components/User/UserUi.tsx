@@ -60,6 +60,9 @@ export interface ParsedCookies {
 
 const UserUi: React.FC<UserUiProps> = ({ userId, loggedInEmail }) => {
   const isOwnProfile = userId === loggedInEmail;
+  if (loggedInEmail === null) {
+    isOwnProfile === false;
+  }
 
   const {
     data,
@@ -70,10 +73,7 @@ const UserUi: React.FC<UserUiProps> = ({ userId, loggedInEmail }) => {
       ['users', userId], // 쿼리 키를 배열로 설정하여 userId를 포함시킵니다.
       () =>
         isOwnProfile ? getMyProfile() : getUserProfile({ UserId: userId }),
-      {
-        enabled: !!userId,
-        refetchOnWindowFocus: false, // 창 포커스 변경 시 쿼리를 다시 실행하지 않습니다.
-      }
+      {}
     );
 
   if (error) {

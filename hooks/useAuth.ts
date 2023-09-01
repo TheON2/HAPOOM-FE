@@ -21,5 +21,5 @@ export const useAuth = () => {
     }
   );
 
-  return { userData, tokenSuccess };
+  return { userData, tokenSuccess, tokenExists }; // tokenExists 추가
 };
