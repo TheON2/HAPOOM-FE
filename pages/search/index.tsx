@@ -4,7 +4,6 @@ import useInput from '@/hooks/useInput';
 import IconButton from '@/components/common/IconButton';
 import { Cloud } from '@/components/common/SVG';
 import SearchResult from '@/components/Search/SearchResult';
-import Image from 'next/image';
 import {
   SearchLayout,
   SearchForm,
@@ -15,7 +14,6 @@ import {
   RecommendedSearchList,
   RecommendedSearchItem,
 } from '@/styles/search';
-import SearchComponent from '@/components/Search/SearchComponent';
 import { getSearch } from '@/api/post';
 import { useQuery } from 'react-query';
 import useModal from '@/hooks/useModal';
@@ -28,7 +26,7 @@ const SELECT_OPTION = [
   { value: 'posts', text: '내용' },
   { value: 'tags', text: '태그' },
 ];
-const RECOMMENDED_SEARCH_KEYWORD = [
+const RECOMMENDED_KEYWORD_USER = [
   {
     viewText: '💨 바람법사H섭',
     searchText: '바람법사H섭',
@@ -40,11 +38,46 @@ const RECOMMENDED_SEARCH_KEYWORD = [
   { viewText: '🌤 맑은현자혜경', searchText: '맑은현자혜경' },
   { viewText: '🌩 천둥의자도영', searchText: '천둥의자도영' },
 ];
+const RECOMMENDED_KEYWORD_CONTENT = [
+  {
+    viewText: '🏞 하늘',
+    searchText: '하늘',
+  },
+  { viewText: '🌕 슈퍼문', searchText: '슈퍼문' },
+  { viewText: '🌅 노을', searchText: '노을' },
+  { viewText: '🌉 밤하늘', searchText: '밤하늘' },
+];
+const RECOMMENDED_KEYWORD_TAG = [
+  {
+    viewText: '#하늘',
+    searchText: '하늘',
+  },
+  { viewText: '#슈퍼문', searchText: '슈퍼문' },
+  { viewText: '#노을', searchText: '노을' },
+  { viewText: '#밤하늘', searchText: '밤하늘' },
+];
+const RECOMMENDED = [
+  {
+    category: 'users',
+    data: RECOMMENDED_KEYWORD_USER,
+  },
+  {
+    category: 'posts',
+    data: RECOMMENDED_KEYWORD_CONTENT,
+  },
+  {
+    category: 'tags',
+    data: RECOMMENDED_KEYWORD_TAG,
+  },
+];
 const Search = () => {
   const dispatch = useDispatch();
   const [search, searchHandler, setSearch] = useInput('');
   const [isSearch, setIsSearch] = useState<boolean>(false);
   const [option, setOption] = useState<string>(SELECT_OPTION[0].value);
+  const [recommended, setRecommended] = useState<any[]>(
+    RECOMMENDED_KEYWORD_USER
+  );
   const { isModalOpen, modalMessge, openModal, closeModal } = useModal();
   useEffect(() => {
     if (isSearch) {
@@ -58,6 +91,7 @@ const Search = () => {
     setSearch(keyword);
     setIsSearch(true);
   };
+
   const onSubmitSearchHandler = (e: FormEvent) => {
     e.preventDefault();
     if (search == '코딩은 마치 바람난첫사랑같다.저주하면서 동시에 사랑하니.') {
@@ -112,6 +146,13 @@ const Search = () => {
       );
     }
   };
+  useEffect(() => {
+    const beforeSearchKeyword = RECOMMENDED.filter(
+      (category) => category.category === option
+    )[0].data;
+    setRecommended(beforeSearchKeyword);
+    console.log(recommended);
+  }, [option]);
   return (
     <>
       {isModalOpen && (
@@ -151,8 +192,8 @@ const Search = () => {
           <SearchResult option={option} data={searchData} />
         ) : !isSuccess ? (
           <RecommendedSearchList>
-            <p>현재 인기 있는 유저입니다</p>
-            {RECOMMENDED_SEARCH_KEYWORD.map((keyword, idx) => {
+            <p>현재 인기 있는 검색어입니다</p>
+            {recommended.map((keyword, idx) => {
               return (
                 <RecommendedSearchItem
                   key={idx}
