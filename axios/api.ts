@@ -28,18 +28,28 @@ instance.interceptors.response.use(
     return response;
   },
   (error) => {
-    if (
-      error.response &&
-      (error.response.status === 501 || error.response.status === 403)
-    ) {
-      // console.log('토큰이 존재하지 않습니다');
-      store.dispatch(LOGOUT_USER());
+    if (error.response) {
+      // IP 차단 알림 처리
+      if (
+        error.response.status === 403 &&
+        error.response.data === 'Your IP is temporarily blocked. Please wait.'
+      ) {
+        alert(
+          '당신의 IP는 비정상적인 요청횟수로 인해 일시적으로 차단되었습니다. 잠시 후 다시 시도해주세요.'
+        );
+        return Promise.reject(error);
+      }
 
-      // // 아래 라인을 추가하여 로그인 페이지로 리다이렉션합니다.
-      // if (typeof window !== 'undefined') {
-      //   window.location.href = '/auth/SignIn';
-      // }
-      return Promise.reject(error);
+      // 토큰 관련 에러 처리 및 로그아웃
+      if (error.response.status === 501 || error.response.status === 403) {
+        // console.log('토큰이 존재하지 않습니다');
+        store.dispatch(LOGOUT_USER());
+        // 아래 라인을 추가하여 로그인 페이지로 리다이렉션합니다.
+        // if (typeof window !== 'undefined') {
+        //   window.location.href = '/auth/SignIn';
+        // }
+        return Promise.reject(error);
+      }
     }
     return Promise.reject(error);
   }
