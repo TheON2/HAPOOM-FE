@@ -69,6 +69,7 @@ const FeedPost = ({
     sessionStorage.setItem('scrollPos', window.scrollY.toString());
     router.push(`/User/${userId}`);
   };
+  console.log('feed', feed);
 
   return (
     <>
