@@ -24,6 +24,7 @@ export const HeaderLayout = styled.header<HeaderProps>`
   align-items: center;
   gap: 12px;
   color: var(--button-hover-color);
+  font-weight: 700;
   h1 {
     /* color: #2797ff; */
     color: var(--primary-color);
@@ -52,6 +53,8 @@ export const HeaderLayout = styled.header<HeaderProps>`
     }
   }
   .search {
+    color: var(--button-hover-color);
+
     svg {
       width: 68%;
       height: 68%;
@@ -60,12 +63,16 @@ export const HeaderLayout = styled.header<HeaderProps>`
       }
     }
     &.active {
+      color: var(--primary-color);
+
       path {
         stroke: ${(props) => (props.$sticky ? '#fff' : 'var(--primary-color)')};
       }
     }
   }
   .edit {
+    color: var(--button-hover-color);
+    font-weight: 700;
     svg {
       width: 68%;
       height: 68%;
@@ -74,6 +81,7 @@ export const HeaderLayout = styled.header<HeaderProps>`
       }
     }
     &.active {
+      color: var(--primary-color);
       path {
         fill: ${(props) => (props.$sticky ? '#fff' : 'var(--primary-color)')};
       }
@@ -118,7 +126,7 @@ export const LogoBox = styled(Link)<HeaderProps>`
   display: flex;
   justify-content: center;
   align-items: center;
-  font-weight: 700;
+
   /* border: 1px solid #000; */
   h1 {
     font-size: 25px;
@@ -213,8 +221,8 @@ export const GoWriteLink = styled(Link)`
   }
 `;
 export const ProfileButton = styled.button<HeaderProps>`
-  width: 50px;
-  height: 50px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   position: relative;
   overflow: hidden;

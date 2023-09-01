@@ -509,7 +509,7 @@ export const HashtagNavBarLayout = styled.nav<hashtagNavbarProps>`
   z-index: 110;
   font-size: 10px;
   font-weight: 700;
-  color: #fff;
+  color: ${(props) => (props.$isClick ? '#fff' : 'var(--primary-color)')};
   box-shadow: ${(props) =>
     props.$isClick ? '0 -5px 16px agba(0,0,0,0.5)' : 'var(--shadow-color)'};
   overflow: hidden;
