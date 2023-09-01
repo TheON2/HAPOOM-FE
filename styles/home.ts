@@ -318,10 +318,13 @@ interface SliderListProps {
 }
 
 type WidthOnly = Pick<SliderListProps, 'width'>;
-
-export const MainBannerLayout = styled.div`
-  width: 100%;
+type infiniteCarouselProps = {
+  $width?: string;
+};
+export const MainBannerLayout = styled.div<infiniteCarouselProps>`
+  width: ${(props) => (props.$width ? props.$width : '100%')};
   height: 100%;
+  margin: 0 auto;
   overflow: hidden;
   border-radius: 12px;
   position: relative;
@@ -413,11 +416,12 @@ export const SlideDotBox = styled.div`
   } */
 `;
 export const SlideArrowBox = styled.div`
-  width: 110%;
+  width: 106%;
   position: absolute;
   top: calc(50% - 20px);
   left: calc(50%);
   display: flex;
+  align-items: center;
   justify-content: space-between;
   transform: translateX(-50%);
   .right {

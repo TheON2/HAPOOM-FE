@@ -134,7 +134,7 @@ export const ContentsContainer = styled.div`
   }
   .carousel-box {
     height: 45vh;
-    width: 90%;
+    width: 100%;
     margin: 0 auto;
     position: relative;
   }
