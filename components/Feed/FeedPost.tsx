@@ -115,6 +115,8 @@ const FeedPost = ({
               <TagBox>
                 {feed.tags.slice(0, 3).map((tag: string[], index: number) => (
                   <Hashtag key={index}>
+                    {' '}
+                    {/*나중에 프랍 수정*/}
                     <div>{'#' + tag}</div>
                   </Hashtag>
                 ))}

@@ -17,7 +17,7 @@ export const FeedHeader = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  margin: 4px auto;
+  margin: 4px auto 8px auto;
   position: relative;
   gap: 8px;
   div img {
@@ -50,6 +50,7 @@ export const MainImageContainer = styled.div`
   align-items: center;
   overflow: hidden;
   position: relative;
+  border-radius: 20px;
   cursor: pointer;
   img {
     position: absolute;
@@ -58,6 +59,7 @@ export const MainImageContainer = styled.div`
     object-fit: cover;
     top: 0;
     left: 0;
+    margin-bottom: 8px;
   }
   @media (max-width: 768px) {
     height: 189px;
@@ -92,7 +94,7 @@ export const FeedContentBox = styled.div`
   }
 `;
 export const FeedContent = styled.p`
-  margin-top: 4px;
+  margin: 4px 0 0 12px;
   color: var(--text-color);
   font-size: 20;
   font-weight: 500;
