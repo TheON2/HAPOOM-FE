@@ -121,7 +121,7 @@ export const LogoBox = styled(Link)<HeaderProps>`
   font-weight: 700;
   /* border: 1px solid #000; */
   h1 {
-    font-size: 24px;
+    font-size: 25px;
     font-weight: 900;
   }
 `;
