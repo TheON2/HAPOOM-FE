@@ -211,15 +211,6 @@ const Header = ({ $sticky, ...restProps }: any) => {
               </>
             ) : (
               <>
-                {/* <AuthButtonBox>
-                  <Link href={'/'} className={isTrend ? 'active' : ''}>
-                    트렌드
-                  </Link>
-                  |
-                  <Link href={'/feed'} className={isFeed ? 'active' : ''}>
-                    피드
-                  </Link>
-                </AuthButtonBox> */}
                 <IconButton onClick={clickBell} $noneEdge={true}>
                   <Bell fillColor={BellColor()} $isPush={user?.push} />
                 </IconButton>

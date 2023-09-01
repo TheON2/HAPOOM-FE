@@ -48,10 +48,9 @@ const darkModeStyles = css`
   --bar-color: #93999f;
   --hashtag-bg-gradient: linear-gradient(
     180deg,
-    rgba(0, 0, 0, 0.22) 60%,
-    #1b3863 70%,
-    #1b3863 90%,
-    #1b386399 95%,
+    rgba(0, 0, 0, 0.22) 86%,
+    #1b3863 95%,
+    #1b386399 98%,
     #1b386300 100%
   );
   --hashtag-border-color: #7dc1ff;
@@ -107,9 +106,9 @@ const lightModeStyles = css`
   /* common color start */
   --color: #334765;
   --bg-color: #fff;
-  --primary-color: #83b1dd;
+  --primary-color: #2790f6;
   --primary-opcity-color: #2790f670;
-  --primary-second-color: #70a7dc;
+  --primary-second-color: #0084ff;
   --primary-three-color: #52acff;
   --primary-hover-color: #1f6cb9;
 
@@ -141,8 +140,8 @@ const lightModeStyles = css`
   --hashtag-border-color: #deefff90;
   --hashtag-bg-gradient: linear-gradient(
     180deg,
-    rgba(255, 255, 255, 0.22) 80%,
-    #fff 90%,
+    rgba(255, 255, 255, 0.22) 86%,
+
     #fff 95%,
     rgba(255, 255, 255, 0.1) 98%,
     rgba(255, 255, 255, 0) 100%
@@ -155,8 +154,8 @@ const lightModeStyles = css`
       rgba(82, 172, 255, 1) 100%
     );
   --section-gray: #f0f1f2;
-  --point-bg: #83b1dd;
-  --random-text-color: #9cc4eb;
+  --point-bg: #2790f6;
+  --random-text-color: #52acff;
   --slide-button-fill-color: #2797ff;
   /* trend color end */
   /* write color start */
