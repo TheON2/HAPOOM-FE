@@ -14,7 +14,7 @@ export const HeaderLayout = styled.header<HeaderProps>`
   padding: 0 24px;
   /* position: fixed; */
   position: sticky;
-  z-index: 115;
+  z-index: 150;
   top: 0;
   background: var(--header-bg-color);
   backdrop-filter: blur(1px);
@@ -24,6 +24,7 @@ export const HeaderLayout = styled.header<HeaderProps>`
   align-items: center;
   gap: 12px;
   color: var(--button-hover-color);
+  font-weight: 700;
   h1 {
     /* color: #2797ff; */
     color: var(--primary-color);
@@ -52,6 +53,8 @@ export const HeaderLayout = styled.header<HeaderProps>`
     }
   }
   .search {
+    color: var(--button-hover-color);
+
     svg {
       width: 68%;
       height: 68%;
@@ -60,12 +63,15 @@ export const HeaderLayout = styled.header<HeaderProps>`
       }
     }
     &.active {
+      color: var(--primary-color);
       path {
         stroke: ${(props) => (props.$sticky ? '#fff' : 'var(--primary-color)')};
       }
     }
   }
   .edit {
+    color: var(--button-hover-color);
+    font-weight: 700;
     svg {
       width: 68%;
       height: 68%;
@@ -74,6 +80,7 @@ export const HeaderLayout = styled.header<HeaderProps>`
       }
     }
     &.active {
+      color: var(--primary-color);
       path {
         fill: ${(props) => (props.$sticky ? '#fff' : 'var(--primary-color)')};
       }
@@ -95,19 +102,14 @@ export const HeaderLayout = styled.header<HeaderProps>`
     .active {
       color: ${(props) => (props.$sticky ? 'var(--primary-color)' : '#fff')};
     }
-    .header-icon {
-      &.search {
-        svg path {
-          stroke: ${(props) =>
-            props.$sticky ? 'var(--button-hover-color)' : '#C6E2FC'};
-        }
-      }
-      &.edit {
-        svg path {
-          fill: ${(props) =>
-            props.$sticky ? 'var(--button-hover-color)' : '#C6E2FC'};
-        }
-      }
+
+    .search {
+      color: ${(props) =>
+        props.$sticky ? 'var(--button-hover-color)' : '#C6E2FC'};
+    }
+    .edit {
+      color: ${(props) =>
+        props.$sticky ? 'var(--button-hover-color)' : '#C6E2FC'};
     }
   }
 `;
@@ -118,10 +120,10 @@ export const LogoBox = styled(Link)<HeaderProps>`
   display: flex;
   justify-content: center;
   align-items: center;
-  font-weight: 700;
+
   /* border: 1px solid #000; */
   h1 {
-    font-size: 24px;
+    font-size: 25px;
     font-weight: 900;
   }
 `;
@@ -213,15 +215,15 @@ export const GoWriteLink = styled(Link)`
   }
 `;
 export const ProfileButton = styled.button<HeaderProps>`
-  width: 50px;
-  height: 50px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   position: relative;
   overflow: hidden;
   border: ${(props) =>
-    props.$sticky ? '2px solid #fff' : '2px solid var(--primary-color)'};
+    props.$sticky ? '2px solid var(--primary-color)' : '2px solid #C0D8EF'};
   background-color: ${(props) =>
-    props.$sticky ? '#ffffff70' : 'var(--primary-opcity-color)'};
+    props.$sticky ? 'var(--primary-opcity-color)' : '#C0D8EF70'};
   cursor: pointer;
   img {
     object-fit: cover;

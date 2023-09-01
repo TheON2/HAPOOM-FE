@@ -21,8 +21,18 @@ const ImageContent = ({ src, alt, postId }: ImageProps) => {
   };
   return (
     <ImageContentLayout>
-      <ImageBox href={`/detail/${postId}`} onClick={handleImageBoxClick}>
-        <Image src={src} alt={alt} fill sizes="(max-width: 1440px) 288px" />
+      <ImageBox
+        href={`/detail/${postId}`}
+        onClick={handleImageBoxClick}
+        draggable="false"
+      >
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          sizes="(max-width: 1440px) 288px"
+          draggable="false"
+        />
       </ImageBox>
       <HeartIcon postId={postId} />
     </ImageContentLayout>

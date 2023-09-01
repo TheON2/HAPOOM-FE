@@ -5,6 +5,7 @@ import { getFeed, reportPost } from '@/api/post';
 import Modal from '../common/Modal';
 import { InView, useInView } from 'react-intersection-observer';
 import FeedPost from './FeedPost';
+import { useRouter } from 'next/router';
 
 interface ModalMessage {
   actionText: string;
@@ -37,6 +38,7 @@ const FeedUi = () => {
   });
   const [expandedPosts, setExpandedPosts] = useState<ExpandedPosts>({});
   const [ref, inView] = useInView();
+  const route = useRouter();
 
   let results: Feed[] = [];
   const {
@@ -51,6 +53,7 @@ const FeedUi = () => {
       const morePagesExist = allPages.length < lastPage.totalPages;
       return morePagesExist ? allPages.length + 1 : false;
     },
+    refetchOnWindowFocus: false,
   });
 
   const { mutate: report } = useMutation(reportPost, {
@@ -66,11 +69,20 @@ const FeedUi = () => {
 
   const handleReportClick = useCallback(
     (id: any) => {
-      setModalMessge({
-        actionText: '신고',
-        modalMessge: '해당 사용자를 신고하시겠습니까?',
-        onClickEvent: () => report(id),
-      });
+      const token = localStorage.getItem('token');
+      if (token) {
+        setModalMessge({
+          actionText: '신고',
+          modalMessge: '해당 사용자를 신고하시겠습니까?',
+          onClickEvent: () => report(id),
+        });
+      } else {
+        setModalMessge({
+          actionText: '확인',
+          modalMessge: '로그인이 필요한 서비스입니다.',
+          onClickEvent: () => route.push('/auth/SignIn'),
+        });
+      }
       setIsModalOpen(true);
     },
     [report]

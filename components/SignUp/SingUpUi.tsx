@@ -229,12 +229,12 @@ const SignUpUi = () => {
     }
   };
 
-  const handleEmailValidateSubmit = (
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
-    event.preventDefault();
-    forgotPwdMutaion.mutate(signUpState.email);
-  };
+  // const handleEmailValidateSubmit = (
+  //   event: React.MouseEvent<HTMLButtonElement>
+  // ) => {
+  //   event.preventDefault();
+  //   forgotPwdMutaion.mutate(signUpState.email);
+  // };
 
   return (
     <SignUpSection>

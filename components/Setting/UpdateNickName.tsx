@@ -14,7 +14,9 @@ type UpdateNickNameProps = {
 
 const UpdateNickName: React.FC<UpdateNickNameProps> = ({ nickname = '' }) => {
   const [nickName, onClickNickName] = useInput<string | undefined>(nickname);
-  const [error, setError] = useState<string>('');
+  const [serverError, setServerError] = useState<string>('');
+  const [ServerNicknameError, setServerNicknameError] = useState<string>('');
+  const [error, setError] = useState<any>('');
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [modalMessge, setModalMessge] = useState<modalState>({
     actionText: '',
@@ -28,6 +30,17 @@ const UpdateNickName: React.FC<UpdateNickNameProps> = ({ nickname = '' }) => {
     {
       onSuccess: () => {
         queryClient.invalidateQueries('userSetting');
+      },
+      onError: (error: any) => {
+        const message = error?.response?.data.errorMessage;
+        if (message) {
+          setServerError(message);
+        }
+        if (
+          error?.response?.data.errorMessage === '이미 사용 중인 닉네임입니다.'
+        ) {
+          setServerNicknameError(error?.response?.data.errorMessage);
+        }
       },
     }
   );
@@ -89,8 +102,8 @@ const UpdateNickName: React.FC<UpdateNickNameProps> = ({ nickname = '' }) => {
         />
 
         {error && <TextErrorParagraph>{error}</TextErrorParagraph>}
+        {serverError && <TextErrorParagraph>{serverError}</TextErrorParagraph>}
         <SettingButton type="submit" $marginTop={'-12px'}>
-
           닉네임 변경하기
         </SettingButton>
       </form>

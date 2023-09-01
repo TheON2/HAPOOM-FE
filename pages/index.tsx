@@ -68,6 +68,9 @@ const Home: NextPage<MainPageProps> = ({
     if (event.deltaY > 0) {
       return setIsClick(true);
     }
+    if (event.deltaX !== 0) {
+      return;
+    }
     if (!mainRef.current) return;
     if (mainRef.current?.scrollTop <= 0 && event.deltaY <= 0) {
       return setIsClick(false);
@@ -100,6 +103,7 @@ const Home: NextPage<MainPageProps> = ({
         <HashtagNavBar
           data={tagFilter}
           $isClick={isClick}
+          setIsClick={setIsClick}
           onClickEvent={onClickBottomNavHandler}
           HashTagScrollTopHandler={HashTagScrollTopHandler}
           hashTag={hashTag}

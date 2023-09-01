@@ -18,6 +18,7 @@ import {
   Hashtag,
   CommentForm,
   DetailContentBox,
+  HeartConut,
 } from '@/styles/detail';
 import { MapComponent } from '@/components/Write/MapComponent';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
@@ -97,6 +98,7 @@ const Detail: NextPage = () => {
     () => getPost(id),
     {
       enabled: id !== '',
+      refetchOnWindowFocus: false,
       onSuccess: async (data) => {
         setMusicChoose(data.post.musicType);
         setImages(data.images);
@@ -115,16 +117,15 @@ const Detail: NextPage = () => {
       },
     }
   );
-
   const { data: commentsData } = useQuery(
     ['comment', id],
     () => getComment(id),
     {
       enabled: id !== '',
+      refetchOnWindowFocus: false,
     }
   );
   if (!isSuccess) return <div>Loading...</div>;
-
   return (
     <>
       <ContentsContainer>
@@ -144,6 +145,7 @@ const Detail: NextPage = () => {
         </OtherProfileBox>
         <div className="carousel-box">
           <MainBannerSlider data={images} />
+          <HeartConut>{data?.likeCount}</HeartConut>
           <HeartIcon postId={parseInt(id)} />
         </div>
 

@@ -18,6 +18,7 @@ const HashtagNavBar: React.FC<HashtagNavBarProps> = ({
   onClickEvent,
   HashTagScrollTopHandler,
   $isClick,
+  setIsClick,
   hashTag,
   setHashTag,
   setTagCategory,
@@ -43,17 +44,20 @@ const HashtagNavBar: React.FC<HashtagNavBarProps> = ({
     setTagCategory('모든태그');
     setActive(0);
     HashTagScrollTopHandler();
+    setIsClick(true);
   };
   const onClickhashtagHandler = (hashtag: string, index: number) => {
     setHashTag(hashtag);
     setTagCategory('unique');
     setActive(index);
     HashTagScrollTopHandler();
+    setIsClick(true);
   };
   const onClickOtherHandler = () => {
     setTagCategory('기타');
     setActive(otherIndex);
     HashTagScrollTopHandler();
+    setIsClick(true);
   };
   const onClickHashSlideRightHandler = () => {
     const scrollContainer = scrollContainerRef.current;
@@ -70,7 +74,7 @@ const HashtagNavBar: React.FC<HashtagNavBarProps> = ({
   };
   return (
     <HashtagNavBarLayout $isClick={$isClick}>
-      {$isClick ? (
+      {/* {$isClick ? (
         <div className="button-wrap">
           <ButtonBox className="hash">
             <button className="left" onClick={onClickHashSlideLeftHandler}>
@@ -81,7 +85,7 @@ const HashtagNavBar: React.FC<HashtagNavBarProps> = ({
             </button>
           </ButtonBox>
         </div>
-      ) : null}
+      ) : null} */}
       <div className="background">
         <ScrollBar onClick={onClickEvent}>
           <span></span>
@@ -142,6 +146,18 @@ const HashtagNavBar: React.FC<HashtagNavBarProps> = ({
               <figcaption>#기타</figcaption>
             </HashtagItem>
           </HashtagList>
+          {$isClick ? (
+            // <div className="button-wrap">
+            <ButtonBox className="hash">
+              <button className="left" onClick={onClickHashSlideLeftHandler}>
+                <ArrowLong />
+              </button>
+              <button className="right" onClick={onClickHashSlideRightHandler}>
+                <ArrowLong />
+              </button>
+            </ButtonBox>
+          ) : // </div>
+          null}
         </HashtagListContainer>
       </div>
     </HashtagNavBarLayout>

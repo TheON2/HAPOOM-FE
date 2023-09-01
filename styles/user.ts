@@ -29,10 +29,13 @@ export const UserProfileCardBox = styled.div`
   justify-content: center;
   padding: 24px;
 
-  img {
+  .img {
     border-radius: 50%;
     width: 90px;
     height: 90px;
+    background-image: url('/nonepreset.png');
+    background-size: cover;
+    overflow: hidden;
   }
 `;
 export const UserImage = styled(Image)`

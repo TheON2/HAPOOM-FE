@@ -56,20 +56,21 @@ const PopularContentsCarousel: React.FC<populerCarouselProps> = ({ data }) => {
     handleTouchStart,
     handleTouchMove,
     handleTouchEnd,
+    handleWheel,
   } = useSwipe(leftAction, rightAction);
   return (
     <HomeMainSection>
       <div className="center">
         <CarouselHeader>
           <SectionTitle>#오늘의 좋아요</SectionTitle>
-          <ButtonBox>
+          {/* <ButtonBox>
             <button className="left" onClick={() => onClickArrowHandler(-1)}>
               <ArrowLong />
             </button>
             <button onClick={() => onClickArrowHandler(+1)}>
               <ArrowLong />
             </button>
-          </ButtonBox>
+          </ButtonBox> */}
         </CarouselHeader>
         <PopularContentsContainer
           onMouseDown={handleMouseDown}
@@ -78,6 +79,7 @@ const PopularContentsCarousel: React.FC<populerCarouselProps> = ({ data }) => {
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
+          onWheel={handleWheel}
         >
           <Carousel $active={active}>
             {data.map((item: ImageContentProps, idx: number) => (
