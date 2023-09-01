@@ -75,13 +75,6 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({ data, userId }) => {
             userId={data.user.userId}
           />
         </FollowBox>
-        {/* <FollowBox>
-          <InfoText>게시물</InfoText>
-          <InfoNumber>{data.postsCount}</InfoNumber>
-          <span>|</span>
-          <InfoText>좋아요</InfoText>
-          <InfoNumber>{data.likePostsCount}</InfoNumber>
-        </FollowBox> */}
       </ProfileContentsBox>
     </UserProfileCardBox>
   );
