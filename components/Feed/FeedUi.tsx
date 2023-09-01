@@ -55,7 +55,7 @@ const FeedUi = () => {
     },
     refetchOnWindowFocus: false,
   });
-
+  console.log('feed', data);
   const { mutate: report } = useMutation(reportPost, {
     onSuccess: (message) => {
       setModalMessge({
@@ -67,6 +67,17 @@ const FeedUi = () => {
     },
   });
 
+  // const handleReportClick = useCallback(
+  //   (id: any) => {
+  //     setModalMessge({
+  //       actionText: '신고',
+  //       modalMessge: '해당 사용자를 신고하시겠습니까?',
+  //       onClickEvent: () => report(id),
+  //     });
+  //     setIsModalOpen(true);
+  //   },
+  //   [report]
+  // );
   const handleReportClick = useCallback(
     (id: any) => {
       const token = localStorage.getItem('token');
