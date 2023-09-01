@@ -74,7 +74,7 @@ const HashtagNavBar: React.FC<HashtagNavBarProps> = ({
   };
   return (
     <HashtagNavBarLayout $isClick={$isClick}>
-      {$isClick ? (
+      {/* {$isClick ? (
         <div className="button-wrap">
           <ButtonBox className="hash">
             <button className="left" onClick={onClickHashSlideLeftHandler}>
@@ -85,7 +85,7 @@ const HashtagNavBar: React.FC<HashtagNavBarProps> = ({
             </button>
           </ButtonBox>
         </div>
-      ) : null}
+      ) : null} */}
       <div className="background">
         <ScrollBar onClick={onClickEvent}>
           <span></span>
@@ -146,6 +146,18 @@ const HashtagNavBar: React.FC<HashtagNavBarProps> = ({
               <figcaption>#기타</figcaption>
             </HashtagItem>
           </HashtagList>
+          {$isClick ? (
+            // <div className="button-wrap">
+            <ButtonBox className="hash">
+              <button className="left" onClick={onClickHashSlideLeftHandler}>
+                <ArrowLong />
+              </button>
+              <button onClick={onClickHashSlideRightHandler}>
+                <ArrowLong />
+              </button>
+            </ButtonBox>
+          ) : // </div>
+          null}
         </HashtagListContainer>
       </div>
     </HashtagNavBarLayout>

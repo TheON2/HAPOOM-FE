@@ -27,9 +27,9 @@ export const MainLayout = styled.main`
   height: calc(100vh - 230px);
   height: calc(100svh - 230px);
   overflow-y: auto;
-  transform: translateY(-115px);
+  transform: translateY(-103px);
   background-color: var(--bg-color);
-  padding: 20px 0 0;
+  padding: 0;
   &::-webkit-scrollbar {
     display: none;
   }
@@ -78,7 +78,7 @@ type mainBannerProps = {
 
 export const MainBannerContainer = styled.div<mainBannerProps>`
   width: 100%;
-  height: ${(props) => (props.$isClick ? '230px' : 'calc(100svh - 70px)')};
+  height: ${(props) => (props.$isClick ? '230px' : 'calc(100svh - 58px)')};
   background-color: ${(props) =>
     props.$isClick ? 'var(--point-bg)' : 'var(--bg-color)'};
   transition: all 0.8s ease-in-out;
@@ -128,12 +128,7 @@ export const IntroduceText = styled.p`
   font-size: 16px;
   text-align: center;
   padding: 12px 0;
-  position: absolute;
   width: 100%;
-  top: -44px;
-  left: 0;
-
-  /* margin-top: 80px; */
 `;
 export const NewContentBox = styled.div`
   max-width: 560px;
@@ -141,11 +136,11 @@ export const NewContentBox = styled.div`
   height: 73vh;
   height: 73svh;
   margin: 0 auto;
-  padding: 42px 12px 60px;
+  padding: 0 12px 60px;
   background-color: #fff;
   box-shadow: var(--shadow-color);
   position: absolute;
-  bottom: 0px;
+  bottom: 30px;
   left: 50%;
   transform: translateX(-50%);
   figure {
@@ -162,7 +157,7 @@ export const NewContentBox = styled.div`
   @media screen and (min-width: 768px) {
     height: 75vh;
     height: 75svh;
-    padding: 42px 12px 80px;
+    padding: 0 12px 80px;
     bottom: 50%;
     transform: translate(-50%, 50%);
     figure {
@@ -509,11 +504,12 @@ export const SlideButtonBox = styled.div`
 export const HashtagNavBarLayout = styled.nav<hashtagNavbarProps>`
   width: 100%;
   border-radius: 30px 30px 0 0;
-  transform: translateY(-80%);
+  transform: translateY(-93%);
   position: relative;
   z-index: 110;
   font-size: 10px;
-  color: #93999f;
+  font-weight: 700;
+  color: #fff;
   box-shadow: ${(props) =>
     props.$isClick ? '0 -5px 16px agba(0,0,0,0.5)' : 'var(--shadow-color)'};
   overflow: hidden;
@@ -526,7 +522,15 @@ export const HashtagNavBarLayout = styled.nav<hashtagNavbarProps>`
   .background {
     width: 100%;
     padding: 0px 24px 8px;
-    background: var(--hashtag-bg-gradient);
+    /* background: var(--hashtag-bg-gradient); */
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.22) 86%,
+
+      #fff 95%,
+      rgba(255, 255, 255, 0.1) 98%,
+      rgba(255, 255, 255, 0) 100%
+    );
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -556,6 +560,7 @@ export const HashtagListContainer = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
+  position: relative;
   gap: 8px;
 `;
 export const HashtagList = styled.ul`
@@ -619,7 +624,7 @@ export const HashtagAll = styled.div`
     }
   }
   &.active {
-    color: #52acff;
+    /* color: #52acff; */
     font-weight: 700;
   }
   &.active::after {
@@ -683,7 +688,7 @@ export const HashtagItem = styled.li`
     }
   }
   &.active {
-    color: #52acff;
+    /* color: #52acff; */
     font-weight: 700;
   }
   &.active::after {
@@ -735,9 +740,10 @@ const MAX_VISIBILITY = 3;
 export const HomeMainSection = styled.section`
   background-color: var(--section-gray);
   margin-top: 24px;
-  padding-bottom: 100px;
+  padding-bottom: 36px;
   @media screen and (min-width: 786px) {
     padding-top: 24px;
+    padding-bottom: 60px;
   }
 `;
 
@@ -798,24 +804,34 @@ export const ButtonBox = styled.div`
     }
   }
   &.hash {
-    position: absolute;
-    top: -42px;
-    right: 0;
-    padding: 0;
-    z-index: 122;
-    button {
-      width: 32px;
-      height: 32px;
-      background-color: #ffffff30;
-
-      svg {
-        transform: scale(70%);
-      }
-      path {
-        fill: #fff;
-      }
-      &:hover path {
-        fill: #2797ff;
+    display: none;
+    @media screen and (min-width: 768px) {
+      max-width: calc(100% - 110px);
+      width: 100%;
+      position: absolute;
+      right: 0;
+      top: calc(50% - 26px);
+      padding: 0 4px;
+      padding-bottom: 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 114;
+      button {
+        width: 32px;
+        height: 32px;
+        background-color: #fff;
+        border: none;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        svg {
+          transform: scale(70%);
+        }
+        path {
+          fill: var(--primary-color);
+        }
+        &:hover path {
+          fill: #2797ff;
+        }
       }
     }
   }
