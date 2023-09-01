@@ -177,31 +177,31 @@ const Header = ({ $sticky, ...restProps }: any) => {
           <AccountActionsContainer>
             <Link
               href={'/search'}
-              className={
-                isSearch ? 'active header-icon search' : 'header-icon search'
-              }
+              className={isSearch ? 'active search' : ' search'}
             >
-              <SearchIcon fillColor={$sticky ? '#fff' : '#9acfff'} />
+              {/* <SearchIcon fillColor={$sticky ? '#fff' : '#9acfff'} /> */}
+              검색
             </Link>
+            |
             <button
               onClick={!token ? LoginHandler : goToWritePage}
-              className={
-                isWrite ? 'active header-icon edit' : 'header-icon edit'
-              }
+              className={isWrite ? 'active edit' : ' edit'}
             >
-              <EditIcon fillColor={$sticky ? '#fff' : '#9acfff'} />
+              글쓰기
+              {/* <EditIcon fillColor={$sticky ? '#fff' : '#9acfff'} /> */}
             </button>
-
+            |
+            <Link href={'/'} className={isTrend ? 'active' : ''}>
+              트렌드
+            </Link>
+            |
+            <Link href={'/feed'} className={isFeed ? 'active' : ''}>
+              피드
+            </Link>
+            |
             {!token ? (
               <>
                 <AuthButtonBox>
-                  <Link href={'/'} className={isTrend ? 'active' : ''}>
-                    트렌드
-                  </Link>
-                  |
-                  <Link href={'/feed'} className={isFeed ? 'active' : ''}>
-                    피드
-                  </Link>
                   |<Link href={'/auth/SignIn'}>로그인</Link>|
                   <Link href={'/auth/SignUp'}>회원가입</Link>
                 </AuthButtonBox>
@@ -211,7 +211,7 @@ const Header = ({ $sticky, ...restProps }: any) => {
               </>
             ) : (
               <>
-                <AuthButtonBox>
+                {/* <AuthButtonBox>
                   <Link href={'/'} className={isTrend ? 'active' : ''}>
                     트렌드
                   </Link>
@@ -219,7 +219,7 @@ const Header = ({ $sticky, ...restProps }: any) => {
                   <Link href={'/feed'} className={isFeed ? 'active' : ''}>
                     피드
                   </Link>
-                </AuthButtonBox>
+                </AuthButtonBox> */}
                 <IconButton onClick={clickBell} $noneEdge={true}>
                   <Bell fillColor={BellColor()} $isPush={user?.push} />
                 </IconButton>
