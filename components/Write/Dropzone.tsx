@@ -147,13 +147,30 @@ const Dropzone: React.FC<DropzoneProps> = ({
         return;
       }
 
-      // 리사이징을 하지 않고, 바로 파일 및 파일 URL을 상태에 추가
-      setImages([...images, ...acceptedFiles]);
-      const newImageURLs = acceptedFiles.map((file) =>
-        URL.createObjectURL(file)
-      );
-      setImageURLs([...imageURLs, ...newImageURLs]);
+      // 이미지 리사이징
+      Promise.all(
+        acceptedFiles.map((file) => {
+          return new Promise<{ resizedFile: File; size: number }>((resolve) => {
+            resizeImage(file, (resizedFile, size) => {
+              resolve({ resizedFile, size });
+            });
+          });
+        })
+      ).then((results) => {
+        // 리사이징된 파일을 images와 imageURLs 상태에 추가
+        setImages([...images, ...results.map((result) => result.resizedFile)]);
+        const newImageURLs = results.map((result) =>
+          URL.createObjectURL(result.resizedFile)
+        );
+        setImageURLs([...imageURLs, ...newImageURLs]);
 
+        // 각 파일의 크기 출력
+        results.forEach((result) => {
+          console.log(
+            `File Name: ${result.resizedFile.name}, Size: ${result.size} bytes`
+          );
+        });
+      });
     },
     [images, imageURLs, setImages, setImageURLs]
   );
