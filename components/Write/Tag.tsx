@@ -19,8 +19,8 @@ const TagBox = styled.div`
     background-color: #f0efef;
     border: 2px solid #e8e8e8;
     position: absolute;
-    top: -6px;
-    right: -6px;
+    top: 0px;
+    right: -5px;
     overflow: hidden;
     svg {
       transform: translate(-2px, -2px);
@@ -32,9 +32,8 @@ export const TagStyle = styled.div<TagStyleProps>`
   color: #0084ff;
   cursor: ${(props) => (props.noHover ? 'default' : 'pointer')};
   display: inline-block;
-  padding: 8px 20px 8px;
+  padding: 2px 20px 2px 0;
   border-radius: 20px;
-  border: 2px solid #0084ff;
   text-align: center;
 
   ${(props) =>

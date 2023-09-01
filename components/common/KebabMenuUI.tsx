@@ -6,10 +6,11 @@ const KebabMenuButton = styled.button`
   border: none;
   width: 36px;
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
+  /* justify-content: flex-end; */
   align-items: center;
   gap: 4px;
-  transform: translateX(43%);
+  /* transform: translateX(43%); */
   cursor: pointer;
   span {
     display: block;

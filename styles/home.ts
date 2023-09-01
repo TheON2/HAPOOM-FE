@@ -24,12 +24,12 @@ export const HomePageLayout = styled.div`
 
 export const MainLayout = styled.main`
   width: 100%;
-  height: calc(100vh - 252px);
-  height: calc(100svh - 252px);
+  height: calc(100vh - 230px);
+  height: calc(100svh - 230px);
   overflow-y: auto;
-  transform: translateY(-124px);
+  transform: translateY(-103px);
   background-color: var(--bg-color);
-  padding: 20px 0 0;
+  padding: 0;
   &::-webkit-scrollbar {
     display: none;
   }
@@ -50,7 +50,7 @@ export const MainLayout = styled.main`
 export const SectionTitle = styled.h2`
   max-width: 768px;
   padding: 26px 36px 24px;
-  color: #0084ff;
+  color: var(--primary-color);
   position: relative;
   &::after {
     content: '';
@@ -61,7 +61,7 @@ export const SectionTitle = styled.h2`
     top: 50%;
     left: 24px;
     transform: translateY(-50%);
-    background-color: #0084ff;
+    background-color: var(--primary-color);
   }
   @media screen and (min-width: 786px) {
     padding: 26px 16px 24px;
@@ -78,7 +78,7 @@ type mainBannerProps = {
 
 export const MainBannerContainer = styled.div<mainBannerProps>`
   width: 100%;
-  height: ${(props) => (props.$isClick ? '230px' : 'calc(100svh - 70px)')};
+  height: ${(props) => (props.$isClick ? '230px' : 'calc(100svh - 58px)')};
   background-color: ${(props) =>
     props.$isClick ? 'var(--point-bg)' : 'var(--bg-color)'};
   transition: all 0.8s ease-in-out;
@@ -128,27 +128,24 @@ export const IntroduceText = styled.p`
   font-size: 16px;
   text-align: center;
   padding: 12px 0;
-  position: absolute;
   width: 100%;
-  top: -44px;
-  left: 0;
-  /* margin-top: 80px; */
 `;
 export const NewContentBox = styled.div`
   max-width: 560px;
   width: 86%;
-  height: 75vh;
+  height: 73vh;
+  height: 73svh;
   margin: 0 auto;
-  padding: 42px 12px 60px;
+  padding: 0 12px 60px;
   background-color: #fff;
   box-shadow: var(--shadow-color);
   position: absolute;
-  bottom: 36px;
+  bottom: 30px;
   left: 50%;
   transform: translateX(-50%);
   figure {
     width: 100%;
-    height: 86%;
+    height: 75%;
     /* margin: 0 auto; */
     img {
       width: 100%;
@@ -158,9 +155,14 @@ export const NewContentBox = styled.div`
     }
   }
   @media screen and (min-width: 768px) {
-    padding: 42px 12px 80px;
+    height: 75vh;
+    height: 75svh;
+    padding: 0 12px 80px;
     bottom: 50%;
     transform: translate(-50%, 50%);
+    figure {
+      height: 86%;
+    }
   }
 `;
 export const ProfileLink = styled(Link)`
@@ -240,7 +242,6 @@ export const RandomText = styled.p<mainBannerProps>`
     padding: 0;
     background: none;
     text-align: start;
-
     max-width: 768px;
     font-size: ${(props) => (props.$isClick ? '14px' : '28px')};
     flex-direction: ${(props) => (props.$isClick ? 'row' : 'column')};
@@ -317,11 +318,15 @@ interface SliderListProps {
 }
 
 type WidthOnly = Pick<SliderListProps, 'width'>;
-
-export const MainBannerLayout = styled.div`
-  width: 100%;
+type infiniteCarouselProps = {
+  $width?: string;
+};
+export const MainBannerLayout = styled.div<infiniteCarouselProps>`
+  width: ${(props) => (props.$width ? props.$width : '100%')};
   height: 100%;
+  margin: 0 auto;
   overflow: hidden;
+  border-radius: 12px;
   position: relative;
   background-color: var(--detail-img-bg-color);
   .sigle-image {
@@ -387,30 +392,40 @@ export const SlideDotBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0 24px;
+  padding: 12px 24px;
   gap: 4px;
-  position: absolute;
-  bottom: 12px;
+  /* position: absolute; */
+  /* bottom: -100%; */
   span {
     display: block;
     width: 8px;
     height: 8px;
-    background-color: #ffffff99;
+    background-color: #8e8e8e;
     border-radius: 50%;
     cursor: pointer;
     &.active {
       background-color: #0084ff99;
     }
   }
-  @media screen and (max-width: 786px) {
+  /* @media screen and (max-width: 786px) {
     gap: 12px;
-    opacity: 0.8;
-    justify-content: flex-start;
-
     span {
       width: 20px;
       height: 20px;
     }
+  } */
+`;
+export const SlideArrowBox = styled.div`
+  width: 106%;
+  position: absolute;
+  top: calc(50% - 20px);
+  left: calc(50%);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transform: translateX(-50%);
+  .right {
+    transform: rotate(180deg);
   }
 `;
 
@@ -503,11 +518,12 @@ export const SlideButtonBox = styled.div`
 export const HashtagNavBarLayout = styled.nav<hashtagNavbarProps>`
   width: 100%;
   border-radius: 30px 30px 0 0;
-  transform: translateY(-80%);
+  transform: translateY(-93%);
   position: relative;
   z-index: 110;
   font-size: 10px;
-  color: #93999f;
+  font-weight: 700;
+  color: ${(props) => (props.$isClick ? '#fff' : 'var(--primary-color)')};
   box-shadow: ${(props) =>
     props.$isClick ? '0 -5px 16px agba(0,0,0,0.5)' : 'var(--shadow-color)'};
   overflow: hidden;
@@ -519,7 +535,7 @@ export const HashtagNavBarLayout = styled.nav<hashtagNavbarProps>`
   }
   .background {
     width: 100%;
-    padding: 0px 24px 16px;
+    padding: 0px 24px 8px;
     background: var(--hashtag-bg-gradient);
     display: flex;
     flex-direction: column;
@@ -550,6 +566,7 @@ export const HashtagListContainer = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
+  position: relative;
   gap: 8px;
 `;
 export const HashtagList = styled.ul`
@@ -613,7 +630,7 @@ export const HashtagAll = styled.div`
     }
   }
   &.active {
-    color: #52acff;
+    /* color: #52acff; */
     font-weight: 700;
   }
   &.active::after {
@@ -677,7 +694,7 @@ export const HashtagItem = styled.li`
     }
   }
   &.active {
-    color: #52acff;
+    /* color: #52acff; */
     font-weight: 700;
   }
   &.active::after {
@@ -729,9 +746,10 @@ const MAX_VISIBILITY = 3;
 export const HomeMainSection = styled.section`
   background-color: var(--section-gray);
   margin-top: 24px;
-  padding-bottom: 100px;
+  padding-bottom: 36px;
   @media screen and (min-width: 786px) {
     padding-top: 24px;
+    padding-bottom: 60px;
   }
 `;
 
@@ -792,24 +810,40 @@ export const ButtonBox = styled.div`
     }
   }
   &.hash {
-    position: absolute;
-    top: -42px;
-    right: 0;
-    padding: 0;
-    z-index: 122;
-    button {
-      width: 32px;
-      height: 32px;
-      background-color: #ffffff30;
-
-      svg {
-        transform: scale(70%);
-      }
-      path {
-        fill: #fff;
-      }
-      &:hover path {
-        fill: #2797ff;
+    display: none;
+    @media screen and (min-width: 768px) {
+      max-width: calc(100% - 110px);
+      width: 100%;
+      position: absolute;
+      right: 0;
+      top: 0;
+      padding: 0 4px;
+      padding-bottom: 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      /* z-index: -1; */
+      button {
+        width: 32px;
+        height: 32px;
+        background-color: #fff;
+        border: none;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        position: absolute;
+        top: 100%;
+        z-index: 114;
+        &.right {
+          right: 4px;
+        }
+        svg {
+          transform: scale(70%);
+        }
+        path {
+          fill: var(--primary-color);
+        }
+        &:hover path {
+          fill: #2797ff;
+        }
       }
     }
   }

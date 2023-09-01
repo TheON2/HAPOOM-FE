@@ -31,7 +31,7 @@ export const ImageBox = styled(Link)`
   padding-bottom: 100%;
   img {
     object-fit: cover;
-    -webkit-user-drag: none;
+    /* -webkit-user-drag: none;
     -khtml-user-drag: none;
     -moz-user-drag: none;
     -o-user-drag: none;
@@ -40,6 +40,6 @@ export const ImageBox = styled(Link)`
     -khtml-user-select: none;
     -moz-user-select: none;
     -o-user-select: none;
-    user-select: none;
+    user-select: none; */
   }
 `;

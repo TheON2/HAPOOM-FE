@@ -21,17 +21,16 @@ const AccordionButton = styled.button`
   background-color: #ccc;
 
   &:hover,
-  &.active {
-    &.youtube {
-      background-color: #ed1f23;
-    }
-    &.music {
-      background-color: #2797ff;
-    }
-    &.record {
-      background-color: #52acff;
-    }
+  &.youtube {
+    background-color: #ed1f23;
   }
+  &.music {
+    background-color: #2797ff;
+  }
+  &.record {
+    background-color: #52acff;
+  }
+
   img {
     width: 30%;
     object-fit: contain;
@@ -47,7 +46,6 @@ const Panel = styled.div<PanelProps>`
   height: ${(props) => (props.open ? '260px' : '0')};
   overflow-y: auto;
   position: relative;
-  /* background-color: #f9f9f9; */
   transition: height 0.4s;
   &::-webkit-scrollbar {
     display: none;
