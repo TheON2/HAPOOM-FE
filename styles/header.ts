@@ -221,9 +221,9 @@ export const ProfileButton = styled.button<HeaderProps>`
   position: relative;
   overflow: hidden;
   border: ${(props) =>
-    props.$sticky ? '2px solid var(--primary-color)' : '2px solid #fff'};
+    props.$sticky ? '2px solid var(--primary-color)' : '2px solid #C0D8EF'};
   background-color: ${(props) =>
-    props.$sticky ? 'var(--primary-opcity-color)' : '#ffffff70'};
+    props.$sticky ? 'var(--primary-opcity-color)' : '#C0D8EF70'};
   cursor: pointer;
   img {
     object-fit: cover;
