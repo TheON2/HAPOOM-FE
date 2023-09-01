@@ -56,6 +56,7 @@ const PopularContentsCarousel: React.FC<populerCarouselProps> = ({ data }) => {
     handleTouchStart,
     handleTouchMove,
     handleTouchEnd,
+    handleWheel,
   } = useSwipe(leftAction, rightAction);
   return (
     <HomeMainSection>
@@ -78,6 +79,7 @@ const PopularContentsCarousel: React.FC<populerCarouselProps> = ({ data }) => {
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
+          onWheel={handleWheel}
         >
           <Carousel $active={active}>
             {data.map((item: ImageContentProps, idx: number) => (

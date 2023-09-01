@@ -18,6 +18,7 @@ const HashtagNavBar: React.FC<HashtagNavBarProps> = ({
   onClickEvent,
   HashTagScrollTopHandler,
   $isClick,
+  setIsClick,
   hashTag,
   setHashTag,
   setTagCategory,
@@ -43,17 +44,20 @@ const HashtagNavBar: React.FC<HashtagNavBarProps> = ({
     setTagCategory('모든태그');
     setActive(0);
     HashTagScrollTopHandler();
+    setIsClick(true);
   };
   const onClickhashtagHandler = (hashtag: string, index: number) => {
     setHashTag(hashtag);
     setTagCategory('unique');
     setActive(index);
     HashTagScrollTopHandler();
+    setIsClick(true);
   };
   const onClickOtherHandler = () => {
     setTagCategory('기타');
     setActive(otherIndex);
     HashTagScrollTopHandler();
+    setIsClick(true);
   };
   const onClickHashSlideRightHandler = () => {
     const scrollContainer = scrollContainerRef.current;
