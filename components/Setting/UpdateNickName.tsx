@@ -14,7 +14,6 @@ type UpdateNickNameProps = {
 
 const UpdateNickName: React.FC<UpdateNickNameProps> = ({ nickname = '' }) => {
   const [nickName, onClickNickName] = useInput<string | undefined>(nickname);
-  const [serverError, setServerError] = useState<string>('');
   const [ServerNicknameError, setServerNicknameError] = useState<string>('');
   const [error, setError] = useState<any>('');
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -34,12 +33,8 @@ const UpdateNickName: React.FC<UpdateNickNameProps> = ({ nickname = '' }) => {
       onError: (error: any) => {
         const message = error?.response?.data.errorMessage;
         if (message) {
-          setServerError(message);
-        }
-        if (
-          error?.response?.data.errorMessage === '이미 사용 중인 닉네임입니다.'
-        ) {
-          setServerNicknameError(error?.response?.data.errorMessage);
+          setServerNicknameError(message);
+          return;
         }
       },
     }
@@ -101,8 +96,16 @@ const UpdateNickName: React.FC<UpdateNickNameProps> = ({ nickname = '' }) => {
           onChange={onClickNickName}
         />
 
-        {error && <TextErrorParagraph>{error}</TextErrorParagraph>}
-        {serverError && <TextErrorParagraph>{serverError}</TextErrorParagraph>}
+        {error && (
+          <TextErrorParagraph $marginTop={'-12px'} $marginBottom={'20px'}>
+            {error}
+          </TextErrorParagraph>
+        )}
+        {ServerNicknameError && (
+          <TextErrorParagraph $marginTop={'-12px'} $marginBottom={'20px'}>
+            {ServerNicknameError}
+          </TextErrorParagraph>
+        )}
         <SettingButton type="submit" $marginTop={'-12px'}>
           닉네임 변경하기
         </SettingButton>
