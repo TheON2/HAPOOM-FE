@@ -43,7 +43,9 @@ export const Box = styled.div`
   }
   .small {
     font-size: 14px;
+    line-height: 1.4;
     padding: 4px 0;
+    color: #929aa7;
   }
 `;
 type limitProps = {
