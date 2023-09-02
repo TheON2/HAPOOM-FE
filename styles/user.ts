@@ -3,11 +3,13 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 export const UserPageSection = styled.section`
+  padding-top: 15px;
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
   margin: 0 auto;
 `;
 export const UserPageContainer = styled.div`
@@ -23,7 +25,7 @@ export const UserPageContainer = styled.div`
 `;
 export const UserProfileCardBox = styled.div`
   margin: auto;
-  width: 100%;
+  width: 300px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -47,8 +49,7 @@ export const ProfileContentsBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start; /* 왼쪽 정렬 */
-  width: 200px;
-  padding-left: 17px; /* 왼쪽 여백 추가 */
+  width: 150px;
   gap: 12px;
 
   @media screen and (max-width: 500px) {
@@ -60,6 +61,7 @@ export const NicknameBox = styled.div`
   display: flex;
   align-items: center; /* 세로 중앙 정렬 */
   justify-content: center; /* 내부 내용 중앙 정렬 */
+  margin: auto;
 
   .nickName {
     font-size: 24px;
@@ -70,6 +72,7 @@ export const FollowBox = styled.div`
   display: flex;
   gap: 6px;
   align-items: center;
+  margin: auto;
 
   p {
     font-size: 16px;
@@ -132,6 +135,7 @@ export const ImageBox = styled.div`
 `;
 
 export const PostBox = styled.div`
+  padding-top: 12px;
   text-align: center;
   margin: auto;
 `;
@@ -179,7 +183,7 @@ export const TabContainer = styled.div`
 export const TabButton = styled.div`
   flex: 1;
   font-size: 16px;
-  padding: 40px 0 10px 0px;
+  padding: 30px 0 15px 0px;
   color: var(--text-none-active);
   text-decoration: none;
   cursor: pointer;
@@ -273,8 +277,8 @@ export const SettingBtn = styled.div`
 `;
 
 export const Nothing = styled.div`
-  margin-top: 30px;
   width: 100%;
+  padding-top: 220px;
   text-align: center;
   font-weight: 500;
   line-height: 1.8;
@@ -287,7 +291,7 @@ export const Nothing = styled.div`
 
 export const NothingLike = styled.div`
   width: 100%;
-  margin-top: 30px;
+  padding-top: 220px;
   justify-content: flex-end;
   text-align: center;
   font-weight: 500;
