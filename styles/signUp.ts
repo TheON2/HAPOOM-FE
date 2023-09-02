@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import styled from 'styled-components';
 
 const inputBtnBoxWidth = '100%';
@@ -165,13 +166,14 @@ export const StyledLabel = styled.div`
   height: 9px;
   margin: 11px 0 0 -46px;
 `;
-export const StyledLabelEssential = styled.div`
+export const StyledLabelAtag = styled.a`
   color: #000;
   font-size: 12px;
   font-weight: 700;
   width: 180px;
   height: 9px;
   margin: 8px 0 0 -4px;
+  cursor: pointer;
 `;
 export const SnsLine = styled.div`
   stroke-width: 1px;
@@ -197,5 +199,6 @@ export const TextErrorParagraph = styled.p<Props>`
   line-height: 1.5;
   margin-left: 4px;
   /* margin-top: 8px; */
-  margin-top: ${({$marginTop}) => $marginTop || '8px'}
+  margin-top: ${({$marginTop}) => $marginTop || '8px'};
+  margin-bottom: ${({$marginBottom}) => $marginBottom};
 `;

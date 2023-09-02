@@ -13,7 +13,7 @@ const ButtonStyle = styled.button<Button>`
   margin-top: ${({ $marginTop }) => $marginTop};
   border-radius: 6px;
   border: none;
-  color: #fff;
+  color: var(--text-color);
   background-color: var(--primary-three-color);
   cursor: pointer;
   &.secondary {
