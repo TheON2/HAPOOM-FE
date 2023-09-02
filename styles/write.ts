@@ -41,6 +41,10 @@ export const Box = styled.div`
     margin-bottom: 16px;
     font-weight: 700;
   }
+  .small {
+    font-size: 14px;
+    padding: 4px 0;
+  }
 `;
 type limitProps = {
   $color: boolean;

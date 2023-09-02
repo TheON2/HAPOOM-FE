@@ -50,6 +50,8 @@ const Posts: React.FC<PostProps> = ({
     const newIsLike = !isLike;
     setIsLike(newIsLike);
     handleLikeClick(postId, newIsLike);
+
+    mutation.mutate(postId.toString());
   };
 
   return (
@@ -71,6 +73,7 @@ const PostLike: React.FC<PostLike> = ({
 
   const queryType = selectedTab === 0 ? 'post' : 'like';
   const { data: infiniteData } = useInfiniteData(queryType);
+
   useEffect(() => {
     if (selectedTab === 0) {
       if (data?.posts) {
@@ -121,17 +124,26 @@ const PostLike: React.FC<PostLike> = ({
     };
   }, [selectedTab]);
 
-  const handleTabClick =
-    (index: number) => (e: React.MouseEvent<HTMLDivElement>) => {
-      const { offsetWidth, offsetLeft } = e.currentTarget;
+  const handleTabClick = React.useCallback(
+    (index: number) => {
+      if (selectedTab === index) return; // 이미 선택된 탭이면 리턴
       setSelectedTab(index);
-      setIndicatorStyle({ width: offsetWidth, left: offsetLeft });
+      const element = document.querySelectorAll('.tab-button')[
+        index
+      ] as HTMLDivElement;
+      if (element) {
+        const { offsetWidth, offsetLeft } = element;
+        setIndicatorStyle({ width: offsetWidth, left: offsetLeft });
+      }
+
       if (index === 0) {
-        setDisplayedPosts(data?.posts ?? null);
+        setDisplayedPosts(data?.posts ?? []);
       } else if (index === 1) {
         setDisplayedPosts(likedPosts);
       }
-    };
+    },
+    [data, likedPosts, selectedTab]
+  );
 
   const renderEmptyMessage = () => {
     if (selectedTab === 0) {
@@ -173,14 +185,14 @@ const PostLike: React.FC<PostLike> = ({
         <TabContainer>
           <TabButton
             className="tab-button"
-            onClick={handleTabClick(0)}
+            onClick={() => handleTabClick(0)}
             style={selectedTab === 0 ? { color: 'var(--color)' } : undefined}
           >
             게시물 {data.postsCount}
           </TabButton>
           <TabButton
             className="tab-button"
-            onClick={handleTabClick(1)}
+            onClick={() => handleTabClick(1)}
             style={selectedTab === 1 ? { color: 'var(--color)' } : undefined}
           >
             좋아요 {data.likePostsCount}

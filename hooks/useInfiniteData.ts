@@ -7,7 +7,6 @@ export const useInfiniteData = (
   enabled = true
 ) => {
   const fetchFunction = async ({ pageParam = 1 }) => {
-    // console.log('pageParam:', pageParam);
     const method = 'GET';
     if (type === 'post') {
       return await getMyPosts(method, pageParam);
@@ -22,9 +21,10 @@ export const useInfiniteData = (
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, ...rest } =
     useInfiniteQuery([type], fetchFunction, {
-      getNextPageParam: (lastPage, allPages) => {
-        if (lastPage && lastPage.length > 0) {
-          return allPages.length + 1;
+      getNextPageParam: (lastPage) => {
+        // Check if nextPage is present in the last page's data and return it
+        if (lastPage.hasNextPage) {
+          return lastPage.nextPage || lastPage.nextLikedPage;
         }
         return null;
       },
@@ -35,7 +35,6 @@ export const useInfiniteData = (
 
   useEffect(() => {
     const handleScroll = () => {
-      // console.log('Scroll event triggered');
       if (Date.now() - lastFetchedTime.current < 200) {
         return;
       }
