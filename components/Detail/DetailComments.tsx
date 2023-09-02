@@ -90,7 +90,7 @@ const CommentLayout = ({ data, id, userData }: commentProps) => {
         show: true,
         action: 'create',
         uiTitle: '댓글 생성',
-        buttonText: '업로드',
+        buttonText: '댓글 등록',
         commentId: 0,
       });
     }

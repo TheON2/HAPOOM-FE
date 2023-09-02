@@ -133,8 +133,8 @@ export const IntroduceText = styled.p`
 export const NewContentBox = styled.div`
   max-width: 560px;
   width: 86%;
-  height: 73vh;
-  height: 73svh;
+  height: 75vh;
+  height: 75svh;
   margin: 0 auto;
   padding: 0 12px 60px;
   background-color: #fff;
@@ -155,8 +155,6 @@ export const NewContentBox = styled.div`
     }
   }
   @media screen and (min-width: 768px) {
-    height: 75vh;
-    height: 75svh;
     padding: 0 12px 80px;
     bottom: 50%;
     transform: translate(-50%, 50%);

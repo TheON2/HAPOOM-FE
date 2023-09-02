@@ -212,7 +212,11 @@ const Header = ({ $sticky, ...restProps }: any) => {
               </>
             ) : (
               <>
-                <IconButton onClick={clickBell} $noneEdge={true}>
+                <IconButton
+                  onClick={clickBell}
+                  $noneEdge={true}
+                  aria-label="alarm on off"
+                >
                   <Bell fillColor={BellColor()} $isPush={user?.push} />
                 </IconButton>
                 <ProfileButton
@@ -229,7 +233,7 @@ const Header = ({ $sticky, ...restProps }: any) => {
             )}
           </AccountActionsContainer>
           <MobileBox>
-            <IconButton onClick={clickBell}>
+            <IconButton onClick={clickBell} aria-label="alarm on off">
               <Bell fillColor={BellColor()} $isPush={user?.push} />
             </IconButton>
           </MobileBox>
