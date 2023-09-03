@@ -122,7 +122,6 @@ const Detail: NextPage = () => {
     () => getComment(id),
     {
       enabled: id !== '',
-      refetchOnWindowFocus: false,
     }
   );
   if (!isSuccess) return <div>Loading...</div>;
