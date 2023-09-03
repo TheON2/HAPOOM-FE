@@ -7,7 +7,7 @@ import naver from '../../public/naver.png';
 import { SignUpSocialSignUpBox } from '@/styles/signIn';
 import { signIn, useSession } from 'next-auth/react';
 import { useMutation } from 'react-query';
-import { addSocialUser } from '@/api/user';
+import { addSocialUser } from '@/apis/user';
 import { useRouter } from 'next/router';
 
 const SocialLogin = () => {

@@ -1,6 +1,6 @@
-import { useCallback, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { Xmark } from '../common/SVG';
+
 interface TagProps {
   tag: string;
   onDelete: (tag: string) => void;

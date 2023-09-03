@@ -1,7 +1,7 @@
 import { useQuery } from 'react-query';
 import { useDispatch } from 'react-redux';
 import { AUTH_USER, UserResponse } from '@/redux/reducers/userSlice';
-import { getAuthToken } from '@/api/user';
+import { getAuthToken } from '@/apis/user';
 
 // 훅
 export const useAuth = () => {

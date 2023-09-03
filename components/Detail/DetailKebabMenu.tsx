@@ -4,7 +4,7 @@ import KebabMenuUI, {
   KebabMenuStyle,
 } from '../common/KebabMenuUI';
 import { useMutation, useQueryClient } from 'react-query';
-import { deletePost, reportPost } from '@/api/post';
+import { deletePost, reportPost } from '@/apis/post';
 import useModal from '@/hooks/useModal';
 import { useRouter } from 'next/router';
 import Modal from '../common/Modal';

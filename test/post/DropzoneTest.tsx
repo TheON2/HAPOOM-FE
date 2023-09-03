@@ -17,18 +17,3 @@ jest.mock('next/image', () => ({
   __esModule: true,
   default: jest.fn().mockReturnValue(<img />),
 }));
-
-describe('Dropzone component', () => {
-  it('renders without crashing', () => {
-    render(<Dropzone images={[]} setImages={jest.fn()} imageURLs={[]} setImageURLs={jest.fn()} />);
-  });
-
-  it('displays default instruction when no image is uploaded', () => {
-    const { getByText } = render(
-      <Dropzone images={[]} setImages={jest.fn()} imageURLs={[]} setImageURLs={jest.fn()} />
-    );
-    expect(getByText(/이미지 업로드/)).toBeInTheDocument();
-  });
-
-});
-

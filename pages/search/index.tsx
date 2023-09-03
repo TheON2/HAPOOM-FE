@@ -14,7 +14,7 @@ import {
   RecommendedSearchList,
   RecommendedSearchItem,
 } from '@/styles/search';
-import { getSearch } from '@/api/post';
+import { getSearch } from '@/apis/post';
 import { useQuery } from 'react-query';
 import useModal from '@/hooks/useModal';
 import Modal from '@/components/common/Modal';

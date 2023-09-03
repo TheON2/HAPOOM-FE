@@ -1,9 +1,4 @@
-import {
-  StyledAuthInput,
-  InputBox,
-  Box,
-  RecordButtonBox,
-} from '@/styles/write';
+import { InputBox, RecordButtonBox } from '@/styles/write';
 import { CloseButton, PlayerWrapper } from '@/styles/youtubeplayer';
 import Script from 'next/script';
 import React, { FormEvent, useEffect, useRef, useState } from 'react';
