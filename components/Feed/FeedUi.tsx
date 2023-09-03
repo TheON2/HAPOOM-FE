@@ -53,6 +53,7 @@ const FeedUi = () => {
       const morePagesExist = allPages.length < lastPage.totalPages;
       return morePagesExist ? allPages.length + 1 : false;
     },
+    // refetchOnWindowFocus: false,
   });
 
   const { mutate: report } = useMutation(reportPost, {

@@ -1,4 +1,4 @@
-import api from '../axios/api';
+import api from '@/axios/api';
 
 interface PostData {
   images: string[];
