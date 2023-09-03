@@ -75,7 +75,7 @@ const CommentFormWrapper = ({
       onSuccess: () => {
         setIsShow(false);
         setComment('');
-        queryClient.invalidateQueries(['comment', id]);
+        queryClient.invalidateQueries(['comment']);
       },
     }
   );
@@ -86,7 +86,7 @@ const CommentFormWrapper = ({
         setIsShow(false);
         setComment('');
         setActive(null);
-        queryClient.invalidateQueries(['comment', id]);
+        queryClient.invalidateQueries(['comment']);
       },
     }
   );

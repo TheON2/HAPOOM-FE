@@ -105,6 +105,7 @@ const FollowTab: React.FC<FollowTabProps> = () => {
       onSuccess: (data) => {
         // console.log('Followers successfully fetched:', data);
       },
+      // refetchOnWindowFocus: false,
     }
   );
 
@@ -115,6 +116,7 @@ const FollowTab: React.FC<FollowTabProps> = () => {
       onSuccess: (data) => {
         // console.log('Followings successfully fetched:', data);
       },
+      // refetchOnWindowFocus: false,
     }
   );
 

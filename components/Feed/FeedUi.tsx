@@ -53,7 +53,7 @@ const FeedUi = () => {
       const morePagesExist = allPages.length < lastPage.totalPages;
       return morePagesExist ? allPages.length + 1 : false;
     },
-    refetchOnWindowFocus: false,
+    // refetchOnWindowFocus: false,
   });
 
   const { mutate: report } = useMutation(reportPost, {
@@ -67,6 +67,17 @@ const FeedUi = () => {
     },
   });
 
+  // const handleReportClick = useCallback(
+  //   (id: any) => {
+  //     setModalMessge({
+  //       actionText: '신고',
+  //       modalMessge: '해당 사용자를 신고하시겠습니까?',
+  //       onClickEvent: () => report(id),
+  //     });
+  //     setIsModalOpen(true);
+  //   },
+  //   [report]
+  // );
   const handleReportClick = useCallback(
     (id: any) => {
       const token = localStorage.getItem('token');
