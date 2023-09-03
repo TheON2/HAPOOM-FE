@@ -19,7 +19,7 @@ export const UserPageContainer = styled.div`
     font-family: Inter;
     font-size: 16px;
     font-weight: 700;
-    text-align: left;
+    text-align: center;
     /* margin-top: 20px; */
   }
 `;

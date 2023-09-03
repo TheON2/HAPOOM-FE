@@ -2,7 +2,7 @@ import { styled } from 'styled-components';
 
 type TagProps = {
   justifyContent: string;
-}
+};
 
 export const FeedSection = styled.section`
   max-width: 768px;
