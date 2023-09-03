@@ -16,7 +16,7 @@ export const UserPageContainer = styled.div`
   width: 100%;
 
   p {
-    font-family: Inter;
+    font-family: 'Pretendard', 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif;
     font-size: 16px;
     font-weight: 700;
     text-align: center;
