@@ -64,6 +64,11 @@ const ActiveBar = styled.span<onClickProps>`
 
 const MobileBottomNav = () => {
   const [active, setActive] = useState<number>(0);
+  const [token, setToken] = useState<string | null>(null);
+
+  useEffect(() => {
+    setToken(localStorage.getItem('token'));
+  }, []);
   const [pathIndex, setPathIndex] = useState<string>('');
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [modalMessge, setModalMessge] = useState<any>({
@@ -123,7 +128,7 @@ const MobileBottomNav = () => {
             onClick={() => routerHandler(`/User/${user.email}`, 'my')}
             className={active === 4 ? 'active' : ''}
           >
-            {user.email !== null ? (
+            {token ? (
               <>
                 <div className="image-box">
                   <ProfileImage
