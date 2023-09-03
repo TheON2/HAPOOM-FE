@@ -85,14 +85,14 @@ const SignUpUi = () => {
     const response = await axios.get(`${process.env.NEXT_PUBLIC_LOCAL_SERVER}/api/auth/${email}`);
     return response.data;
   };
-  const forgotPwdMutaion = useMutation(getForgotPwd, {
-    onSuccess: () => {
-      // console.log('성공');
-    },
-    onError: (error) => {
-      // console.log('실패', error);
-    },
-  });
+  // const forgotPwdMutaion = useMutation(getForgotPwd, {
+  //   onSuccess: () => {
+  //     // console.log('성공');
+  //   },
+  //   onError: (error) => {
+  //     // console.log('실패', error);
+  //   },
+  // });
   const addUserMutation = useMutation(addUser, {
     onSuccess: () => {
       router.push('/signUpComplete/SignUpComplete');
@@ -105,7 +105,6 @@ const SignUpUi = () => {
         alert(
           '회원가입에 실패하였습니다. 아이디 혹은 비밀번호를 다시 한번 확인해주세요'
         );
-        // console.error('회원가입 실패:', error);
       }
       if (
         error?.response?.data.errorMessage === '이미 존재하는 닉네임입니다.'
@@ -148,7 +147,7 @@ const SignUpUi = () => {
         if (name === 'checkAll') {
           newState.checkTerms = checked;
           newState.checkPersonalInfo = checked;
-          newState.checkNewsletter = checked;
+          newState.checkNewsletter = false;
         } else {
           newState.checkAll =
             newState.checkTerms &&
@@ -197,11 +196,7 @@ const SignUpUi = () => {
     } else if (!validateNickname(signUpState.nickname)) {
       errors.nickname = '2~8자를 입력해주세요.';
     }
-    if (
-      !checkboxes.checkTerms ||
-      !checkboxes.checkPersonalInfo ||
-      !checkboxes.checkNewsletter
-    ) {
+    if (!checkboxes.checkTerms || !checkboxes.checkPersonalInfo) {
       setCheckboxErrorMessage('필수 동의사항에 체크해주세요.');
       return;
     }

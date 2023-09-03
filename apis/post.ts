@@ -91,7 +91,7 @@ const reportPost = async (postId: string) => {
     if (error.response.status === 409) {
       return '이미 신고가 완료되었습니다.';
     }
-    if (error.response.status === 400) {
+    if (error.response.status === 401) {
       return '자신의 게시물은 신고할 수 없습니다.';
     }
   }
