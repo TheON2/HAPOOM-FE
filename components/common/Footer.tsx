@@ -1,11 +1,5 @@
-import Image from 'next/image';
 import React from 'react';
-import {
-  FooterLayout,
-  FooterBox,
-  LogoBox,
-  FooterContent,
-} from '@/styles/footer';
+import { FooterBox, FooterContent, FooterLayout, LogoBox } from '@/styles/footer';
 
 const Footer = () => {
   return (

@@ -3,18 +3,15 @@ import React from 'react';
 import {
   FeedContainer,
   FeedHeader,
-  FeedTime,
   FeedIcon,
-  FeedUserNickName,
-  MainImageContainer,
-  LikeIconContainer,
-  TagBox,
   FeedTagLikeBox,
+  FeedTime,
+  FeedUserNickName,
+  LikeIconContainer,
+  MainImageContainer,
+  TagBox,
 } from '../../styles/feed';
-import KebabMenuUI, {
-  KebabMenuAptionButton,
-  KebabMenuStyle,
-} from '../common/KebabMenuUI';
+import KebabMenuUI, { KebabMenuAptionButton, KebabMenuStyle } from '../common/KebabMenuUI';
 import HeartIcon from '../common/HeartIcon';
 import ProfileImage from '../common/ProfileImage';
 import { useRouter } from 'next/router';

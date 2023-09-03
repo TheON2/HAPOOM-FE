@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useInfiniteQuery } from 'react-query';
-import { getMyPosts, getMyLikedPosts, getFeed } from '../api/post';
+import { getMyPosts, getMyLikedPosts, getFeed } from '../apis/post';
 
 export const useInfiniteData = (
   type: 'post' | 'like' | 'feed',

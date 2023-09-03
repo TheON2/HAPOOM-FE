@@ -7,7 +7,7 @@ import {
   DeleteComment,
   EditComment,
 } from '@/components/common/SVG';
-import { addComment, deleteComment, updateComment } from '@/api/post';
+import { addComment, deleteComment, updateComment } from '@/apis/post';
 import { useMutation, useQueryClient } from 'react-query';
 import UpAndDownTab from '../common/UpAndDownTab';
 import Modal from '../common/Modal';

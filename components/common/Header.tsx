@@ -1,37 +1,12 @@
-import React, {
-  ReactNode,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
-import styled from 'styled-components';
-import Image from 'next/image';
+import React, { useEffect, useState } from 'react';
 import SideNav from './SideNav';
 import Link from 'next/link';
-import {
-  HeaderLayout,
-  LogoBox,
-  SearchInputBox,
-  IconBox,
-  AccountActionsContainer,
-  GoWriteLink,
-  ProfileButton,
-  AuthButtonBox,
-  MobileBox,
-} from '@/styles/header';
-import useInput from '@/hooks/useInput';
+import { AccountActionsContainer, HeaderLayout, LogoBox, MobileBox, ProfileButton } from '@/styles/header';
 import IconButton from './IconButton';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
-import { useMutation, useQueryClient } from 'react-query';
-import { userLogOut } from '@/api/user';
-import {
-  LOGOUT_USER,
-  TOGGLE_PUSH,
-  UserState,
-} from '@/redux/reducers/userSlice';
-import { SearchIcon, Bell, EditIcon, Cloud } from '@/components/common/SVG';
+import { TOGGLE_PUSH, UserState } from '@/redux/reducers/userSlice';
+import { Bell, Cloud } from '@/components/common/SVG';
 import { setCookie } from 'nookies';
 import ProfileImage from '@/components/common/ProfileImage';
 import { RootState } from '@/redux/config/configStore';

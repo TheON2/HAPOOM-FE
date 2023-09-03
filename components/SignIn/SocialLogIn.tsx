@@ -7,7 +7,7 @@ import naver from '../../public/naver.png';
 import { SignUpSocialSignUpBox } from '@/styles/signIn';
 import { signIn, useSession } from 'next-auth/react';
 import { useMutation } from 'react-query';
-import { addSocialUser } from '@/api/user';
+import { addSocialUser } from '@/apis/user';
 import { useRouter } from 'next/router';
 
 const SocialLogin = () => {
@@ -67,7 +67,7 @@ const SocialButton = ({ provider, image, onClick }: any) => (
       alt={`${provider}로그인`}
       quality={80}
       style={{ borderRadius: '50%', cursor: 'pointer' }}
-      onClick={() => onClick(provider)}
+      onClick={(e) => onClick(provider, e)}
     />
   </Link>
 );

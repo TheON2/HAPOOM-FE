@@ -4,14 +4,12 @@ import { SideNavLayout, SideNavMenuBox } from '@/styles/navbar';
 import IconButton from './IconButton';
 import Themes from '@/components/Setting/Themes';
 import Profile from '@/components/Setting/Profile';
-import { useSelector } from 'react-redux';
-import { UserState } from '@/redux/reducers/userSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { LOGOUT_USER, UserState } from '@/redux/reducers/userSlice';
 import { RootState } from '@/redux/config/configStore';
-import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import { useMutation, useQueryClient } from 'react-query';
-import { userLogOut } from '@/api/user';
-import { LOGOUT_USER } from '@/redux/reducers/userSlice';
+import { userLogOut } from '@/apis/user';
 import NavbarTab from '@/components/common/TabBarLinkButton';
 import { Bell, Logout } from '@/components/common/SVG';
 
