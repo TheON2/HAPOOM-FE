@@ -15,7 +15,8 @@ const SocialLogin = () => {
   const [prevSession, setPrevSession] = useState(session); // 초기값을 현재 세션으로 설정
   const router = useRouter();
 
-  const handleSignIn = (provider: string) => {
+  const handleSignIn = (provider: string, e: any) => {
+    e.preventDefault();
     localStorage.setItem('loginMethod', provider);
     signIn(provider);
   };
