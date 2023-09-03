@@ -5,17 +5,26 @@ import google from '../../public/google.png';
 import kakao from '../../public/kakao.png';
 import naver from '../../public/naver.png';
 import { SignUpSocialSignUpBox } from '@/styles/signIn';
+import axios from 'axios';
+import instance from '@/axios/api';
 
 const SocialLogin = () => {
   const temporaryClick = () => {
     alert('준비중입니다. 불편을 끼쳐드려 죄송합니다.');
   };
+
+  const handleLogin = (loginUrl: string) => {
+    if (typeof window !== 'undefined') {
+      window.location.href = loginUrl; // 사용자를 해당 로그인 URL로 리다이렉트
+    }
+  };
+
   return (
     <SignUpSocialSignUpBox>
-      <Link
-        //onClick={temporaryClick}
-        href={`${process.env.NEXT_PUBLIC_LOCAL_SERVER}/api/auth/google`}
-        //href={`https://hapoom.life/auth/SignIn`}
+      <div
+        onClick={() =>
+          handleLogin(`${process.env.NEXT_PUBLIC_LOCAL_SERVER}/api/auth/google`)
+        }
       >
         <Image
           width={64}
@@ -25,10 +34,11 @@ const SocialLogin = () => {
           quality={80}
           style={{ borderRadius: '50%', cursor: 'pointer' }}
         />
-      </Link>
-      <Link
-        href={`${process.env.NEXT_PUBLIC_LOCAL_SERVER}/api/auth/kakao`}
-        //href={`https://hapoom.life/auth/SignIn`}
+      </div>
+      <div
+        onClick={() =>
+          handleLogin(`${process.env.NEXT_PUBLIC_LOCAL_SERVER}/api/auth/kakao`)
+        }
       >
         <Image
           width={64}
@@ -38,8 +48,12 @@ const SocialLogin = () => {
           quality={80}
           style={{ borderRadius: '50%', cursor: 'pointer' }}
         />
-      </Link>
-      <Link href={`${process.env.NEXT_PUBLIC_LOCAL_SERVER}/api/auth/naver`}>
+      </div>
+      <div
+        onClick={() =>
+          handleLogin(`${process.env.NEXT_PUBLIC_LOCAL_SERVER}/api/auth/naver`)
+        }
+      >
         <Image
           width={64}
           height={64}
@@ -48,7 +62,7 @@ const SocialLogin = () => {
           quality={80}
           style={{ borderRadius: '50%', cursor: 'pointer' }}
         />
-      </Link>
+      </div>
     </SignUpSocialSignUpBox>
   );
 };
