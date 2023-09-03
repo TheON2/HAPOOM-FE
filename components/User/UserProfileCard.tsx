@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  FollowBox,
-  NicknameBox,
-  ProfileContentsBox,
-  UserProfileCardBox,
-} from '@/styles/user';
+import { FollowBox, NicknameBox, ProfileContentsBox, UserProfileCardBox } from '@/styles/user';
 import b1 from '../../public/b1.png';
 import { UserPageData } from './UserUi';
 import Link from 'next/link';
@@ -12,6 +7,7 @@ import { UserState } from '@/redux/reducers/userSlice';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/config/configStore';
 import ProfileImage from '../common/ProfileImage';
+
 interface UserProfileCardProps {
   data: UserPageData | undefined;
   userId: string;

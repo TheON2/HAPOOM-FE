@@ -2,7 +2,7 @@ import React, { ChangeEvent, FormEvent, useCallback, useState } from 'react';
 import Image from 'next/image';
 import { useMutation, useQueryClient } from 'react-query';
 import Button from '@/components/common/Button';
-import { updateUserSetting } from '@/api/user';
+import { updateUserSetting } from '@/apis/user';
 import { ProfilePresetList, ProfileItem, ButtonBox } from '@/styles/setting';
 import { profilePreset } from '@/public/presetData';
 import Modal from '../common/Modal';

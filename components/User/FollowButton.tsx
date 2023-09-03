@@ -1,9 +1,9 @@
 import { FollowBtn } from '@/styles/user';
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Modal from '../common/Modal';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/config/configStore';
-import { getUserProfile } from '@/api/user';
+import { getUserProfile } from '@/apis/user';
 import Link from 'next/link';
 import { useFollow } from '@/hooks/useFollow';
 

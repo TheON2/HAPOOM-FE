@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { StyledInput, TextErrorParagraph } from '@/styles/signUp';
 import { useMutation, useQueryClient } from 'react-query';
-import { updateUserSetting } from '@/api/user';
+import { updateUserSetting } from '@/apis/user';
 import { TextParagraph } from '@/styles/signIn';
 import { SettingButton, TextParagraphPwdCheck } from '@/styles/setting';
 import Modal from '../common/Modal';

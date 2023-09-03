@@ -4,7 +4,7 @@ import UpdateUserProfile from '@/components/Setting/UpdateUserProfile';
 import UpdatePassword from '@/components/Setting/UpdatePassword';
 import AccordianMenu from '@/components/common/AccordianMenu';
 import Themes from '@/components/Setting/Themes';
-import { getAuthToken, getUserSetting, userLogOut } from '@/api/user';
+import { getAuthToken, getUserSetting, userLogOut } from '@/apis/user';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useDispatch } from 'react-redux';
 import {

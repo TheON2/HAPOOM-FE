@@ -1,4 +1,4 @@
-import { getAuthToken } from '@/api/user';
+import { getAuthToken } from '@/apis/user';
 import { AUTH_USER, UserResponse } from '@/redux/reducers/userSlice';
 import { useRouter } from 'next/router';
 import React from 'react';

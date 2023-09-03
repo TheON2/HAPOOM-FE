@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useCallback, useState } from 'react';
 import Comment from '@/components/Detail/Comment';
 import { CommentIcon } from '@/components/common/SVG';
-import { addComment, deleteComment, updateComment } from '@/api/post';
+import { addComment, deleteComment, updateComment } from '@/apis/post';
 import { useMutation, useQueryClient } from 'react-query';
 import Modal from '../common/Modal';
 import { useRouter } from 'next/router';

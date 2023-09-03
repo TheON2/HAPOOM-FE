@@ -12,7 +12,7 @@ import {
   TextParagraphInfo,
 } from '@/styles/signUp';
 import { useMutation } from 'react-query';
-import { addUser } from '@/api/user';
+import { addUser } from '@/apis/user';
 import { NextRouter, useRouter } from 'next/router';
 import MobileBottomNav from '../common/MobileBottomNav';
 import SocialLogin from '../SignIn/SocialLogIn';

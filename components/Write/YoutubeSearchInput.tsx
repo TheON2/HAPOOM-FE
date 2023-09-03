@@ -1,14 +1,8 @@
-import React, {
-  useState,
-  useEffect,
-  useRef,
-  useCallback,
-  useMemo,
-} from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import axios from 'axios';
 import { debounce } from 'lodash';
 import styled from 'styled-components';
-import { InputBox, StyledAuthInput } from '@/styles/write';
+import { InputBox } from '@/styles/write';
 import Image from 'next/image';
 
 interface Suggestion {
