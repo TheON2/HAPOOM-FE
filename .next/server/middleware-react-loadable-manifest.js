@@ -1,0 +1,1 @@
+self.__REACT_LOADABLE_MANIFEST="{\"detail\\\\[id].tsx -> @/components/Write/YoutubePlayer\":{\"id\":\"detail\\\\[id].tsx -> @/components/Write/YoutubePlayer\",\"files\":[\"static/chunks/components_Write_YoutubePlayer_tsx.js\"]}}"
