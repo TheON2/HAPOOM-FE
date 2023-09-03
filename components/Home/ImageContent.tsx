@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
+import styled from 'styled-components';
+import { NextPage } from 'next';
+import { likePost } from '@/api/post';
+import { useMutation } from 'react-query';
 import HeartIcon from '@/components/common/HeartIcon';
 import { useRouter } from 'next/router';
 import { setCookie } from 'nookies';
 import { ImageProps } from '@/types/home';
-import { ImageBox, ImageContentLayout } from '@/styles/imageContainer';
+import { ImageContentLayout, ImageBox } from '@/styles/imageContainer';
 
 const ImageContent = ({ src, alt, postId }: ImageProps) => {
   const router = useRouter();

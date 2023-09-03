@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
 import ImageContent from '@/components/Home/ImageContent';
-import { HashtagContentsLayout, SectionTitle } from '@/styles/home';
+import { SectionTitle, HashtagContentsLayout } from '@/styles/home';
 import { ImageContentsContainer } from '@/styles/imageContainer';
+import { MainPageDataProps } from '@/types/home';
+import { useQuery } from 'react-query';
+import { getSearch } from '@/api/post';
 
 type Props = {
   serverPropData: any[];

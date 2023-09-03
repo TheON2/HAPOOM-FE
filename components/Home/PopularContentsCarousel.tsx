@@ -1,15 +1,21 @@
-import React, { useState } from 'react';
-import {
-  CardContainer,
-  CarouselHeader,
-  CarouselStyle,
-  HomeMainSection,
-  PopularContentsContainer,
-  SectionTitle,
-} from '@/styles/home';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
+import styled from 'styled-components';
+import { ButtonBox, CarouselHeader, SectionTitle } from '@/styles/home';
 import ImageContent from './ImageContent';
 import useSwipe from '@/hooks/useSwipe';
-import { CarouselProps, ImageContentProps, populerCarouselProps } from '@/types/home';
+import {
+  CarouselProps,
+  ImageContentProps,
+  populerCarouselProps,
+} from '@/types/home';
+import {
+  HomeMainSection,
+  PopularContentsContainer,
+  CarouselStyle,
+  CardContainer,
+} from '@/styles/home';
+import { ArrowLong } from '../common/SVG';
 
 const Carousel: React.FC<CarouselProps> = ({ children, $active }) => {
   return (

@@ -1,11 +1,24 @@
 import Image from 'next/image';
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { MainBannerLayout, SlideDotBox, SliderItem, SliderList } from '@/styles/home';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
+import {
+  MainBannerLayout,
+  SliderItem,
+  SliderList,
+  SlideDotBox,
+  SlideSum,
+  SlideArrowBox,
+} from '@/styles/home';
 import { BannerSliderProps } from '@/types/home';
 import { debounce } from 'lodash';
 import useSwipe from '@/hooks/useSwipe';
 import ZoomImage from '../Detail/ZoomImage';
-
+import { ArrowLong, SlideArrow } from '../common/SVG';
 const DEFAULT_INTERVAL = 10 * 1000;
 const FAST_INTERVAL = 500;
 

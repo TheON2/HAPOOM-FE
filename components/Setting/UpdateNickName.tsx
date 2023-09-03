@@ -2,7 +2,7 @@ import React, { FormEvent, useState } from 'react';
 import useInput from '@/hooks/useInput';
 import Input from '@/components/Setting/Input';
 import { useMutation, useQueryClient } from 'react-query';
-import { updateUserSetting } from '@/apis/user';
+import { updateUserSetting } from '@/api/user';
 import { TextErrorParagraph } from '@/styles/signUp';
 import { SettingButton } from '@/styles/setting';
 import { modalState } from '@/types/comment';

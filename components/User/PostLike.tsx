@@ -10,9 +10,9 @@ import {
   TabIndicator,
   UserImageContainer,
 } from '@/styles/user';
-import { UserPost } from './UserUi';
+import { UserPost, UserPageData } from './UserUi';
 import { useMutation } from 'react-query';
-import { likePost } from '@/apis/post';
+import { likePost } from '@/api/post';
 import ImageContent from '../Home/ImageContent';
 import { ImageContentsContainer } from '@/styles/imageContainer';
 import { useInfiniteData } from '../../hooks/useInfiniteData';

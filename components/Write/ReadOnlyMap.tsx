@@ -1,6 +1,12 @@
-import React, { useEffect, useRef } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import Script from 'next/script';
-import { InputBox } from '@/styles/write';
+import { InputBox, StyledAuthInput } from '@/styles/write';
 
 interface Location {
   name: string;

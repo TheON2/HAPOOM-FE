@@ -1,12 +1,37 @@
-import React, { useEffect, useState } from 'react';
+import React, {
+  ReactNode,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
+import styled from 'styled-components';
+import Image from 'next/image';
 import SideNav from './SideNav';
 import Link from 'next/link';
-import { AccountActionsContainer, HeaderLayout, LogoBox, MobileBox, ProfileButton } from '@/styles/header';
+import {
+  HeaderLayout,
+  LogoBox,
+  SearchInputBox,
+  IconBox,
+  AccountActionsContainer,
+  GoWriteLink,
+  ProfileButton,
+  AuthButtonBox,
+  MobileBox,
+} from '@/styles/header';
+import useInput from '@/hooks/useInput';
 import IconButton from './IconButton';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
-import { TOGGLE_PUSH, UserState } from '@/redux/reducers/userSlice';
-import { Bell, Cloud } from '@/components/common/SVG';
+import { useMutation, useQueryClient } from 'react-query';
+import { userLogOut } from '@/api/user';
+import {
+  LOGOUT_USER,
+  TOGGLE_PUSH,
+  UserState,
+} from '@/redux/reducers/userSlice';
+import { SearchIcon, Bell, EditIcon, Cloud } from '@/components/common/SVG';
 import { setCookie } from 'nookies';
 import ProfileImage from '@/components/common/ProfileImage';
 import { RootState } from '@/redux/config/configStore';
@@ -28,9 +53,9 @@ const Header = ({ $sticky, ...restProps }: any) => {
   const [isShowMenu, setIsShowMenu] = useState<boolean>(false);
   const BellColor = () => {
     if (isTrend) {
-      return $sticky ? 'var(--primary-color)' : '#fff';
+      return $sticky ? 'var(--header-nav-active-color)' : '#fff';
     } else {
-      return '#2797FF';
+      return 'var(--header-nav-active-color)';
     }
   };
 
@@ -155,7 +180,6 @@ const Header = ({ $sticky, ...restProps }: any) => {
               href={'/search'}
               className={isSearch ? 'active search' : ' search'}
             >
-              {/* <SearchIcon fillColor={$sticky ? '#fff' : '#9acfff'} /> */}
               검색
             </Link>
             |
@@ -164,7 +188,6 @@ const Header = ({ $sticky, ...restProps }: any) => {
               className={isWrite ? 'active edit' : ' edit'}
             >
               글쓰기
-              {/* <EditIcon fillColor={$sticky ? '#fff' : '#9acfff'} /> */}
             </button>
             |
             <Link href={'/'} className={isTrend ? 'active' : ''}>
@@ -214,9 +237,6 @@ const Header = ({ $sticky, ...restProps }: any) => {
           </MobileBox>
         </div>
       </HeaderLayout>
-      {/* <GoWriteLink onClick={goToWritePage} href={'/post/Write'}>
-        <EditIcon />
-      </GoWriteLink> */}
       {isShowMenu && (
         <SideNav setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu} />
       )}

@@ -1,13 +1,20 @@
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import axios from 'axios';
 import Script from 'next/script';
-import { InputBox } from '@/styles/write';
+import { InputBox, StyledAuthInput } from '@/styles/write';
 import styled from 'styled-components';
 import { debounce } from 'lodash';
 import Button from '../common/Button';
 import nookies from 'nookies';
 import Modal from '../common/Modal';
 import useModal from '@/hooks/useModal';
+import { Mappin } from '../common/SVG';
 import {
   CustomSelect,
   DropdownIcon,

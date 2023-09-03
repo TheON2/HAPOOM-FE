@@ -9,14 +9,15 @@ import PopularContentsCarousel from '@/components/Home/PopularContentsCarousel';
 import { sliderImages } from '../public/data';
 import { GetStaticProps, NextPage, GetServerSideProps } from 'next';
 import { useQuery, useQueryClient } from 'react-query';
-import { getMain, getSearch } from '@/apis/post';
+import { getMain, getSearch } from '@/api/post';
 import axios from 'axios';
-import { getAuthToken } from '@/apis/user';
+import { getAuthToken } from '@/api/user';
 import { AUTH_USER, UserResponse } from '@/redux/reducers/userSlice';
 import { useDispatch } from 'react-redux';
 import { setCookie } from 'nookies';
 import { HomePageLayout, MainLayout, TrendGlobalStyle } from '@/styles/home';
 import { MainPageProps } from '@/types/home';
+import StartPage from './startpage/StartPage';
 
 const Home: NextPage<MainPageProps> = ({
   data,
@@ -91,6 +92,7 @@ const Home: NextPage<MainPageProps> = ({
 
   return (
     <>
+      <StartPage />
       <TrendGlobalStyle />
       <Header className={'trend'} $sticky={!isClick} />
       <HomePageLayout>

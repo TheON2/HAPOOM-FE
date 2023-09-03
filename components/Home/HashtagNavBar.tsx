@@ -2,14 +2,14 @@ import Image from 'next/image';
 import React, { useRef, useState } from 'react';
 import { HashtagNavBarProps } from '@/types/home';
 import {
-  ButtonBox,
-  HashtagAll,
-  HashtagItem,
+  HashtagNavBarLayout,
   HashtagList,
+  HashtagItem,
+  ScrollBar,
   HashtagListContainer,
   HashtagListOther,
-  HashtagNavBarLayout,
-  ScrollBar,
+  ButtonBox,
+  HashtagAll,
 } from '@/styles/home';
 import { ArrowLong } from '../common/SVG';
 

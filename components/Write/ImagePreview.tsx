@@ -1,7 +1,7 @@
 import Image from 'next/image';
+import { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import { Xmark } from '@/components/common/SVG';
-
 interface ImagePreviewProps {
   images: File[];
   imageURLs: string[];

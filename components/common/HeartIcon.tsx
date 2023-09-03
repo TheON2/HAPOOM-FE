@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useMutation, useQueryClient } from 'react-query';
-import { likePost } from '@/apis/post';
+import { likePost } from '@/api/post';
 import { LikeCloud } from './SVG';
 import { UserState } from '@/redux/reducers/userSlice';
 import { RootState } from '@/redux/config/configStore';

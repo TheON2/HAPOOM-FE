@@ -12,7 +12,7 @@ import { useDispatch } from 'react-redux';
 import { useMutation } from 'react-query';
 import { NextRouter } from 'next/router';
 import { LOGIN_USER } from '@/redux/reducers/userSlice';
-import { userLogin } from '@/apis/user';
+import { userLogin } from '@/api/user';
 import { AxiosError } from 'axios';
 import SignInControls from './SignInControls';
 
@@ -126,7 +126,8 @@ const SignInUi = () => {
 
         <SignInControls signInState={signInState} />
 
-        {shouldShowSocialLogin && <SocialLogin />}
+        {/* {shouldShowSocialLogin && <SocialLogin />} */}
+        <SocialLogin />
       </SignInContainer>
     </SignInSection>
   );

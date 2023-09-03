@@ -1,15 +1,17 @@
 import React, { useCallback, useState } from 'react';
 import {
-  FindPwdBtn,
-  FindPwdSection,
   MainHeadText,
-  StyledInput,
-  StyledInputBox,
   SubHeadText,
+  StyledInputBox,
+  StyledInput,
   TextErrorParagraph,
   TextParagraphInfo,
   TextParagrapValidate,
+  FindPwdSection,
+  FindPwdBtn,
 } from '@/styles/findpassword';
+import { useMutation } from 'react-query';
+import { addUser } from '@/api/user';
 import { NextRouter, useRouter } from 'next/router';
 
 const validateEmail = (email: string) => {

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import AccordianMenu from '@/components/common/AccordianMenu';
 import { useMutation, useQueryClient } from 'react-query';
-import { updateUserSetting } from '@/apis/user';
+import { updateUserSetting } from '@/api/user';
 import { ThemesBox } from '@/styles/setting';
 import { useDispatch } from 'react-redux';
 import { setThemeAll } from '@/redux/reducers/themeSlice';
