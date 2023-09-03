@@ -18,6 +18,7 @@ export const useAuth = () => {
       },
       enabled: tokenExists,
       cacheTime: 0,
+      // refetchOnWindowFocus: false,
     }
   );
 

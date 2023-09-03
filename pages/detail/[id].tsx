@@ -22,12 +22,11 @@ import {
 } from '@/styles/detail';
 import { MapComponent } from '@/components/Write/MapComponent';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { addPost, deletePost, getPost, updatePost } from '@/apis/post';
+import { addPost, deletePost, getPost, updatePost } from '@/api/post';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '@/redux/config/configStore';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
-import { getAuthToken } from '@/apis/user';
+import { getAuthToken } from '@/api/user';
 import { AUTH_USER, UserResponse } from '@/redux/reducers/userSlice';
 import MainBannerSlider from '@/components/Home/InfiniteCarousel';
 import DetailProfile from '@/components/Detail/DetailProfile';
@@ -40,7 +39,7 @@ import KebabMenuUI, {
   KebabMenuAptionButton,
 } from '@/components/common/KebabMenuUI';
 import DetailKebabMenu from '@/components/Detail/DetailKebabMenu';
-import { getComment, reportPost } from '@/apis/post';
+import { getComment, reportPost } from '@/api/post';
 import { identity } from 'lodash';
 import Link from 'next/link';
 import CustomPlayer from '@/components/Write/CustomPlayer';
@@ -90,40 +89,34 @@ const Detail: NextPage = () => {
       },
       enabled: tokenExists,
       cacheTime: 0,
+      // refetchOnWindowFocus: false,
     }
   );
 
-  const { isError, data, isSuccess } = useQuery(
-    ['post', id],
-    () => getPost(id),
-    {
-      enabled: id !== '',
-      refetchOnWindowFocus: false,
-      onSuccess: async (data) => {
-        setMusicChoose(data.post.musicType);
-        setImages(data.images);
-        setContent(data.post.content);
-        setSelectedTitle(data.post.musicTitle);
-        setVideoId(data.post.musicUrl);
-        setAudioURL(data.post.musicUrl);
-        setTags(data.tag);
-        setMusicTitle(data.post.musicTitle);
-        setLocation({
-          name: data.post.placeName,
-          x: data.post.latitude,
-          y: data.post.longitude,
-        });
-        setCookie(null, 'userId', data.post.userId, { path: '/' });
-      },
-    }
-  );
-  const { data: commentsData } = useQuery(
-    ['comment', id],
-    () => getComment(id),
-    {
-      enabled: id !== '',
-    }
-  );
+  const { isError, data, isSuccess } = useQuery(['users'], () => getPost(id), {
+    enabled: id !== '',
+    // refetchOnWindowFocus: false,
+    onSuccess: async (data) => {
+      setMusicChoose(data.post.musicType);
+      setImages(data.images);
+      setContent(data.post.content);
+      setSelectedTitle(data.post.musicTitle);
+      setVideoId(data.post.musicUrl);
+      setAudioURL(data.post.musicUrl);
+      setTags(data.tag);
+      setMusicTitle(data.post.musicTitle);
+      setLocation({
+        name: data.post.placeName,
+        x: data.post.latitude,
+        y: data.post.longitude,
+      });
+      setCookie(null, 'userId', data.post.userId, { path: '/' });
+    },
+  });
+  const { data: commentsData } = useQuery(['comment'], () => getComment(id), {
+    enabled: id !== '',
+    // refetchOnWindowFocus: false,
+  });
   if (!isSuccess) return <div>Loading...</div>;
   return (
     <>

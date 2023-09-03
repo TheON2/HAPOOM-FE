@@ -117,7 +117,7 @@ const CommentLayout = ({ data, id, userData }: commentProps) => {
           onClickEvent: null,
         });
         setIsModalOpen(true);
-        queryClient.invalidateQueries(['comment', id]);
+        queryClient.invalidateQueries(['comment']);
       },
     }
   );

@@ -157,6 +157,7 @@ const Write: NextPage<Props> = ({ update = '1', updateId }) => {
         dispatch(AUTH_USER(userData));
       },
       cacheTime: 0,
+      // refetchOnWindowFocus: false,
     }
   );
 
