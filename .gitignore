@@ -1,0 +1,67 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+
+/public/sw.js.map
+/public/ws.js.map
+/public/service-worker.js
+/public/sw-custom.js
+**/public/service-*.js
+**/public/sw-*.js
+**/public/sw.js
+**/public/sw-custom.js
+**/public/service-worker.js
+
+# yarn.lock
+.map
+
+## pwa
+
+**/public/precache.*.*.js
+**/public/workbox-*.js
+**/public/worker-*.js
+**/public/fallback-*.js
+**/public/precache.*.*.js.map
+**/public/workbox-*.js.map
+**/public/worker-*.js.map
+**/public/fallback-*.js
+
+
+examples/**/yarn.lock
+examples/**/package-lock.json
+examples/**/pnpm-lock.yaml
+
+# production
+/build
+/docs
+# misc
+.DS_Store
+*.pem
+
+.env
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# local env files
+.env*.local
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+package-lock.json

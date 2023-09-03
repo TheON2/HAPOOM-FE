@@ -1,0 +1,96 @@
+{
+  "login": {
+    "nicknameLoggedIn": "{{nickname}}님이 로그인하였습니다.",
+    "failedLogin": "로그인에 실패하였습니다. 아이디나 비밀번호를 확인해주세요.",
+    "loginPrompt": "로그인 후 사용 가능합니다. 로그인 하시겠습니까?",
+    "googleLogin": "구글 로그인",
+    "kakaoLogin": "카카오톡 로그인",
+    "naverLogin": "네이버 로그인",
+    "signUp": "회원가입",
+    "signIn": "로그인",
+    "logOutSuccess": "성공적으로 로그아웃되었습니다.",
+    "alreadyInHapoom": "Hapoom 회원이신가요? 로그인",
+    "goToLogin": "로그인하기",
+    "youAreLoggedOut": "로그아웃 되었습니다."
+  },
+  "comments": {
+    "commentPlaceholder": "댓글을 입력해주세요....",
+    "noComments": "댓글이 없습니다.",
+    "beFirst": "댓글을 처음으로 달아보세요!",
+    "wouldYouDelete": "댓글을 삭제하시겠습니까?",
+    "savePrompt": "댓글을 저장하시겠습니까?",
+    "editPrompt": "댓글을 수정하시겠습니까?"
+  },
+  "post": {
+    "newPost": "게시글 작성하기",
+    "updatePost": "게시글 수정",
+    "newPostCreated": "새로운 게시글이 생성되었습니다!",
+    "wouldYouDeletePost": "이 게시글을 삭제하시겠습니까?",
+    "reportPostPrompt": "이 게시글을 신고하시겠습니까?",
+    "editPost": "수정하기",
+    "deletePrompt": "이 게시글을 삭제하시겠습니까?"
+  },
+  "general": {
+    "yes": "예",
+    "cancel": "취소",
+    "update": "업데이트",
+    "edit": "수정",
+    "deletedSuccessfully": "성공적으로 삭제되었습니다.",
+    "somethingWentWrong": "문제가 발생하였습니다.",
+    "unexpectedError": "예상치 못한 오류가 발생하였습니다.",
+    "pleaseTryAgain": "다시 시도해주세요.",
+    "done": "완료",
+    "upload": "업로드",
+    "save": "저장",
+    "location": "위치",
+    "close": "닫기",
+    "find": "찾기",
+    "comment": "댓글",
+    "post": "게시글",
+    "like": "좋아요",
+    "report": "신고",
+    "tag": "태그",
+    "share": "공유하기"
+  },
+  "search": {
+    "noResults": "검색결과가 없습니다.",
+    "errorSearching": "검색 중 문제가 발생하였습니다.",
+    "searchPrompt": "어떤 하늘을 오늘 찾고 계신가요?",
+    "pleaseLookAround": "더 넓은 하늘을 둘러보세요!"
+  },
+  "settings": {
+    "changeNickname": "닉네임 변경",
+    "editProfile": "프로필 수정",
+    "editPassword": "비밀번호 수정",
+    "logout": "로그아웃",
+    "originalMode": "기본 모드",
+    "midnightMode": "미드나잇 모드"
+  },
+  "registration": {
+    "failedRegistration": "회원가입에 실패하였습니다. 아이디나 비밀번호를 확인해주세요.",
+    "nicknameExists": "닉네임이 이미 존재합니다.",
+    "termsPrompt": "회원가입 약관을 확인해주세요.",
+    "invalidEmail": "이메일 형식이 올바르지 않습니다.",
+    "passwordGuidance": "비밀번호는 최소 8자리이며, 문자와 숫자를 모두 포함해야 합니다.",
+    "confirmPassword": "비밀번호를 확인해주세요.",
+    "enterNickname": "닉네임을 입력해주세요.",
+    "registrationComplete": "회원가입이 완료되었습니다!"
+  },
+  "profile": {
+    "nicknameGuidance": "닉네임은 2~15자 사이로 입력해주세요.",
+    "passwordMismatch": "비밀번호가 일치하지 않습니다.",
+    "passwordChangeSuccess": "비밀번호 변경이 완료되었습니다."
+  },
+  "others": {
+    "follower": "팔로워",
+    "following": "팔로잉",
+    "wouldYouUnfollow": "팔로우를 취소하시겠습니까?",
+    "reportUserPrompt": "이 사용자를 신고하시겠습니까?",
+    "hashtagsLength": "해시태그는 5자를 초과할 수 없습니다!",
+    "hashtagsMinimum": "해시태그는 최소 2자 이상이어야 합니다!",
+    "maximumTags": "태그는 최대 5개까지 업로드 가능합니다.",
+    "locationInfo": "위치 정보",
+    "recordInfo": "녹음 정보",
+    "recordingTime": "녹음 시간"
+  }
+}
