@@ -126,8 +126,7 @@ const SignInUi = () => {
 
         <SignInControls signInState={signInState} />
 
-        {/* {shouldShowSocialLogin && <SocialLogin />} */}
-        <SocialLogin />
+        {shouldShowSocialLogin && <SocialLogin />}
       </SignInContainer>
     </SignInSection>
   );

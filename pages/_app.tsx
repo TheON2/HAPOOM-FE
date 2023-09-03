@@ -13,7 +13,6 @@ import { Provider, useDispatch, useSelector } from 'react-redux';
 import SocketManager from '@/components/common/Socket';
 import { appWithTranslation } from 'next-i18next';
 import Head from 'next/head';
-import { SessionProvider } from 'next-auth/react';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const queryClient = new QueryClient();
@@ -31,47 +30,45 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <>
-      <SessionProvider>
-        <Head>
-          <title>하늘을 품다. 하품</title>
-        </Head>
-        <Provider store={store}>
-          {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS && (
-            <>
-              <SocketManager
-                setNotification={setNotification}
-                setRandomPosts={setRandomPosts}
-              />
-              <Script
-                strategy="afterInteractive"
-                src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`}
-              />
-              <Script id="ga-gtag" strategy="afterInteractive">
-                {`
+      <Head>
+        <title>하늘을 품다. 하품</title>
+      </Head>
+      <Provider store={store}>
+        {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS && (
+          <>
+            <SocketManager
+              setNotification={setNotification}
+              setRandomPosts={setRandomPosts}
+            />
+            <Script
+              strategy="afterInteractive"
+              src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`}
+            />
+            <Script id="ga-gtag" strategy="afterInteractive">
+              {`
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
               gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}');
             `}
-              </Script>
+            </Script>
+          </>
+        )}
+        <QueryClientProvider client={queryClient}>
+          {!isExcludedPage ? (
+            <>
+              <AlarmContainer />
+              <Layout>
+                <Component {...pageProps} randomPosts={randomPosts} />
+              </Layout>
+              <MobileBottomNav />
             </>
+          ) : (
+            <Component {...pageProps} />
           )}
-          <QueryClientProvider client={queryClient}>
-            {!isExcludedPage ? (
-              <>
-                <AlarmContainer />
-                <Layout>
-                  <Component {...pageProps} randomPosts={randomPosts} />
-                </Layout>
-                <MobileBottomNav />
-              </>
-            ) : (
-              <Component {...pageProps} />
-            )}
-            <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
-          </QueryClientProvider>
-        </Provider>
-      </SessionProvider>
+          <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
+        </QueryClientProvider>
+      </Provider>
     </>
   );
 }

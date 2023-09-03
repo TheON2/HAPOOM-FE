@@ -27,8 +27,7 @@ const Setting = () => {
     onSuccess: () => {
       queryClient.invalidateQueries('user');
       dispatch(LOGOUT_USER());
-      window.location.reload();
-      window.location.href = '/';
+      router.push('/');
     },
   });
 
