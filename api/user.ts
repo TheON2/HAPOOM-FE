@@ -15,13 +15,6 @@ interface NewUser {
   nickname: string;
 }
 
-interface SocialUser {
-  email: string | null | undefined;
-  password: string;
-  nickname: string | null | undefined;
-  method: string | null;
-}
-
 export interface LoginUser {
   email: string;
   password: string;
@@ -34,11 +27,6 @@ export interface AuthUser {
 
 const addUser = async (newUser: NewUser): Promise<void> => {
   await api.post(`/api/auth/signup`, newUser);
-};
-
-const addSocialUser = async (socialUser: SocialUser): Promise<void> => {
-  const response = await api.post(`/api/auth/social`, socialUser);
-  return response.data;
 };
 
 const getUser = async (userEmail: string): Promise<UserResponse> => {
@@ -159,5 +147,4 @@ export {
   getFollowings,
   getPush,
   togglePush,
-  addSocialUser,
 };
