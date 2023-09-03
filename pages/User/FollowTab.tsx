@@ -1,4 +1,4 @@
-import { getFollowers, getFollowings, unFollow } from '@/apis/user';
+import { getFollowers, getFollowings, unFollow } from '@/api/user';
 import {
   Email,
   FollowButtonStyled,

@@ -1,9 +1,15 @@
-import { InputBox, InputContainer, LimitNumBox, TagBox } from '@/styles/write';
-import React, { KeyboardEvent, useCallback, useState } from 'react';
+import {
+  Box,
+  InputBox,
+  InputContainer,
+  LimitNumBox,
+  TagBox,
+} from '@/styles/write';
+import React, { KeyboardEvent, useState, useCallback } from 'react';
 import Tag from './Tag';
+import { styled } from 'styled-components';
 import useModal from '@/hooks/useModal';
 import Modal from '@/components/common/Modal';
-
 interface TagInputProps {
   tags: string[];
   setTags: (tags: string[]) => void;

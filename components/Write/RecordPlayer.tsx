@@ -2,13 +2,18 @@ import React, { useEffect, useRef, useState } from 'react';
 import Recorder from 'recorder-js';
 import Slider from 'react-slider';
 import toWav from 'audiobuffer-to-wav';
+import { PlayerControls, TitleBox } from '@/styles/youtubeplayer';
 import styled from 'styled-components';
 import CustomPlayer from './CustomPlayer';
 import RecordingInfo from './RecordingInfo';
+import { GetServerSidePropsContext } from 'next';
+import { parseCookies } from 'nookies';
+import record1 from '@/public/voice1.png';
+import record2 from '@/public/voice2.png';
+import Image from 'next/image';
 import RecordButton from '../common/RecordButton';
 import Button from '@/components/common/Button';
-import { RecordButtonBox, RecordEditBox } from '@/styles/write';
-
+import { Box, RecordButtonBox, RecordEditBox } from '@/styles/write';
 const CloseButton = styled.button`
   position: absolute;
   top: 5px;

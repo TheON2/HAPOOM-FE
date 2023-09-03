@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { FeedSection } from '../../styles/feed';
 import { useInfiniteQuery, useMutation } from 'react-query';
-import { getFeed, reportPost } from '@/apis/post';
+import { getFeed, reportPost } from '@/api/post';
 import Modal from '../common/Modal';
 import { InView, useInView } from 'react-intersection-observer';
 import FeedPost from './FeedPost';

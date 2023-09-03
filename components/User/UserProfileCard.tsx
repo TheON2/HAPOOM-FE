@@ -12,7 +12,6 @@ import { UserState } from '@/redux/reducers/userSlice';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/config/configStore';
 import ProfileImage from '../common/ProfileImage';
-
 interface UserProfileCardProps {
   data: UserPageData | undefined;
   userId: string;

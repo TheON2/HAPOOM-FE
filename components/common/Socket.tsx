@@ -1,8 +1,12 @@
 import { RootState } from '@/redux/config/configStore';
-import { ADD_NOTIFICATION, CLEAR_NOTIFICATION, LOAD_POST } from '@/redux/reducers/notificationSlice';
+import {
+  ADD_NOTIFICATION,
+  CLEAR_NOTIFICATION,
+  LOAD_POST,
+} from '@/redux/reducers/notificationSlice';
 import { UserState } from '@/redux/reducers/userSlice';
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import socketIOClient from 'socket.io-client';
 
 const ENDPOINT = `${process.env.NEXT_PUBLIC_LOCAL_SERVER}`;

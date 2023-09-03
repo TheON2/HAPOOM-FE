@@ -2,7 +2,7 @@ import { UserPageContainer, UserPageSection } from '@/styles/user';
 import UserProfileCard from './UserProfileCard';
 import PostLike from './PostLike';
 import { useQuery } from 'react-query';
-import { getMyProfile, getUserProfile } from '@/apis/user';
+import { getMyProfile, getUserProfile } from '@/api/user';
 import FollowButton from './FollowButton';
 
 interface UserUiProps {

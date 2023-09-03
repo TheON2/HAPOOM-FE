@@ -2,9 +2,12 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Bell } from '@/components/common/SVG';
 import useSwipe from '@/hooks/useSwipe';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/redux/config/configStore';
-
+import {
+  ADD_NOTIFICATION,
+  CLEAR_NOTIFICATION,
+} from '@/redux/reducers/notificationSlice';
 const AlarmContainerStyle = styled.div`
   max-width: 320px;
   width: 90%;

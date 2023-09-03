@@ -1,11 +1,11 @@
 import { useDropzone } from 'react-dropzone';
 import NextImage from 'next/image';
 import { useCallback } from 'react';
+import plus from '../../public/addImage.png';
 import styled from 'styled-components';
 import useModal from '@/hooks/useModal';
 import Modal from '../common/Modal';
 import { DropzoneIcon } from '../common/SVG';
-
 interface DropzoneProps {
   images: File[];
   setImages: (images: any) => void;

@@ -1,5 +1,10 @@
-import { ModalBackground, ModalButtons, ModalContainer, WarningContainer } from '@/styles/modal';
-import React, { ReactNode } from 'react';
+import {
+  ModalBackground,
+  ModalButtons,
+  ModalContainer,
+  WarningContainer,
+} from '@/styles/modal';
+import React, { ReactNode, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { ModalWarning } from './SVG';
 import Button from '@/components/common/Button';

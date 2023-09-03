@@ -12,7 +12,7 @@ import {
   TextParagraphInfo,
 } from '@/styles/signUp';
 import { useMutation } from 'react-query';
-import { addUser } from '@/apis/user';
+import { addUser } from '@/api/user';
 import { NextRouter, useRouter } from 'next/router';
 import MobileBottomNav from '../common/MobileBottomNav';
 import SocialLogin from '../SignIn/SocialLogIn';
@@ -82,7 +82,7 @@ const SignUpUi = () => {
   const [serverError, setServerError] = useState<string>('');
   const [serverNicknameError, setServerNicknameError] = useState<string>('');
   const getForgotPwd = async (email: string) => {
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_LOCAL_SERVER}/api/auth/${email}`);
+    const response = await axios.get(`http://localhost:3001/api/auth/${email}`);
     return response.data;
   };
   // const forgotPwdMutaion = useMutation(getForgotPwd, {

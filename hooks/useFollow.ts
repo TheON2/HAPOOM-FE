@@ -1,5 +1,5 @@
 import { useQuery, useMutation } from 'react-query';
-import { follow, unFollow, getFollowers, getFollowings } from '../apis/user';
+import { follow, unFollow, getFollowers, getFollowings } from '../api/user';
 
 export const useFollow = (userId: string) => {
   const { data: followers, refetch: refetchFollowers } = useQuery(

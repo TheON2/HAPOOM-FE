@@ -17,7 +17,6 @@ import HeartIcon from '../common/HeartIcon';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/config/configStore';
 import Link from 'next/link';
-
 const sentences = [
   '힘들고 지칠 땐 하늘을 바라봐요',
   '당신의 하늘을 공유해주세요',

@@ -1,7 +1,6 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
 import { Box, LimitNumBox } from '@/styles/write';
-
 interface ContentAreaProps {
   content: string;
   setContent: React.Dispatch<React.SetStateAction<string>>;

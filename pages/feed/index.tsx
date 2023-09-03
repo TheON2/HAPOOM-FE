@@ -2,7 +2,7 @@ import React from 'react';
 import FeedUi from '@/components/Feed/FeedUi';
 import { useDispatch } from 'react-redux';
 import { useQuery } from 'react-query';
-import { getAuthToken } from '@/apis/user';
+import { getAuthToken } from '@/api/user';
 import { AUTH_USER, UserResponse } from '@/redux/reducers/userSlice';
 
 const Feed = () => {

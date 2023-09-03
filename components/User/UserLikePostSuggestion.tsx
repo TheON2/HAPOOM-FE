@@ -1,5 +1,11 @@
 import React from 'react';
-import { ImageBox, InfoContainer, InfoNumber, InfoText, LikePostSuggestionBox } from '@/styles/user';
+import {
+  LikePostSuggestionBox,
+  ImageBox,
+  InfoContainer,
+  InfoText,
+  InfoNumber,
+} from '@/styles/user';
 import { UserPageData } from './UserUi';
 
 interface postsCountProps {
