@@ -67,7 +67,7 @@ const SocialButton = ({ provider, image, onClick }: any) => (
       alt={`${provider}로그인`}
       quality={80}
       style={{ borderRadius: '50%', cursor: 'pointer' }}
-      onClick={() => onClick(provider)}
+      onClick={(e) => onClick(provider, e)}
     />
   </Link>
 );
