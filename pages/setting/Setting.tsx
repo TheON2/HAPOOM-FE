@@ -46,12 +46,14 @@ const Setting = () => {
         dispatch(AUTH_USER(userData));
       },
       cacheTime: 0,
+      // refetchOnWindowFocus: false,
     }
   );
 
   const { data: userSetting } = useQuery('userSetting', getUserSetting, {
     onSuccess: (data) => {},
     cacheTime: 0,
+    // refetchOnWindowFocus: false,
   });
   return (
     <>

@@ -1,5 +1,10 @@
 import React from 'react';
-import { FollowBox, NicknameBox, ProfileContentsBox, UserProfileCardBox } from '@/styles/user';
+import {
+  FollowBox,
+  NicknameBox,
+  ProfileContentsBox,
+  UserProfileCardBox,
+} from '@/styles/user';
 import b1 from '../../public/b1.png';
 import { UserPageData } from './UserUi';
 import Link from 'next/link';

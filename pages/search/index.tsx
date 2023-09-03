@@ -121,6 +121,7 @@ const Search = () => {
       onSuccess: (data) => {
         setIsSearch(false);
       },
+      // refetchOnWindowFocus: false,
     }
   );
   const IntroMessage = () => {
