@@ -12,11 +12,11 @@
 /.next/
 /out/
 
-**/public/service-*.js
-**/public/sw-*.js
-**/public/sw.js
-**/public/sw-custom.js
-**/public/service-worker.js
+# **/public/service-*.js
+# **/public/sw-*.js
+# **/public/sw.js
+# **/public/sw-custom.js
+# **/public/service-worker.js
 
 # yarn.lock
 .map
