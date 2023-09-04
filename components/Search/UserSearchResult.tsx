@@ -23,6 +23,7 @@ const UserSearchResult: React.FC<User> = ({
   preset,
   userId,
 }) => {
+  const emailId = email ? email.match(/[^@]+/)?.[0] + '@' || '' : '';
   return (
     <UserListItemStyled>
       <UserProfileImageBox>
@@ -30,7 +31,7 @@ const UserSearchResult: React.FC<User> = ({
       </UserProfileImageBox>
       <UserInfo>
         <Nickname>{nickname}</Nickname>
-        <Email>{email}</Email>
+        <Email>{emailId}</Email>
       </UserInfo>
     </UserListItemStyled>
   );
