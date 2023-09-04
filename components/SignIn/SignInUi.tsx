@@ -62,7 +62,6 @@ const SignInUi = () => {
         alert(
           '로그인에 실패하였습니다. 아이디 혹은 비밀번호를 다시 한번 확인해주세요'
         );
-        // console.error('로그인 실패:', error);
       }
     },
   });
@@ -127,7 +126,8 @@ const SignInUi = () => {
 
         <SignInControls signInState={signInState} />
 
-        {shouldShowSocialLogin && <SocialLogin />}
+        {/* {shouldShowSocialLogin && <SocialLogin />} */}
+        <SocialLogin />
       </SignInContainer>
     </SignInSection>
   );

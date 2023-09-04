@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { getAuthToken } from '@/api/user';
-import { AUTH_USER, UserResponse } from '@/redux/reducers/userSlice';
+import { AUTH_USER, UserResponse, UserState } from '@/redux/reducers/userSlice';
 import { NextPage } from 'next';
 import RecordPlayer from '@/components/Write/RecordPlayer';
 import MusicSelector from '@/components/Write/MusicSelector';
@@ -31,6 +31,7 @@ import useModal from '@/hooks/useModal';
 import Modal from '@/components/common/Modal';
 import OneButtonModal from '@/components/common/OneButtonModal';
 import { useTranslation } from 'next-i18next';
+import { RootState } from '@/redux/config/configStore';
 
 const ReadOnlyYoutube = dynamic(
   () => import('@/components/Write/ReadOnlyYoutube'),
@@ -134,6 +135,9 @@ const Write: NextPage<Props> = ({ update = '1', updateId }) => {
   const [slicedAudioURL, setSlicedAudioURL] = useState<string | undefined>(
     undefined
   );
+  const { user }: { user: UserState['user'] } = useSelector(
+    (state: RootState) => state.user
+  );
   const [musicURL, setMusicURL] = useState<string | undefined>(undefined);
   const [videoId, setVideoId] = useState<string>('');
   const [selectedTitle, setSelectedTitle] = useState<string>('');
@@ -153,6 +157,7 @@ const Write: NextPage<Props> = ({ update = '1', updateId }) => {
         dispatch(AUTH_USER(userData));
       },
       cacheTime: 0,
+      // refetchOnWindowFocus: false,
     }
   );
 
@@ -239,6 +244,9 @@ const Write: NextPage<Props> = ({ update = '1', updateId }) => {
     formData.append('latitude', String(location.x));
     formData.append('longitude', String(location.y));
     formData.append('placeName', location.name);
+    if (user.userId !== null) {
+      formData.append('userId', user.userId.toString());
+    }
 
     // console.log(images);
     postMutation({ formData, updateId });

@@ -18,6 +18,7 @@ const Feed = () => {
       },
       enabled: tokenExists,
       cacheTime: 0,
+      // refetchOnWindowFocus: false,
     }
   );
   return <FeedUi />;

@@ -1,4 +1,4 @@
-import api from '../axios/api';
+import api from '@/axios/api';
 import { UserResponse } from '../redux/reducers/userSlice';
 
 interface User {

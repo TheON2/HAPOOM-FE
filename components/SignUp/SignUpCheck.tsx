@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Checkbox,
   SignUpCheckBox,
@@ -7,10 +7,11 @@ import {
   StyledLabelAll,
   Line,
   TextErrorParagraph,
-  StyledLabelEssential,
   SignUpCheckBoxAll,
+  StyledLabelAtag,
 } from '@/styles/signUp';
 import { CheckBoxInterface } from './SingUpUi';
+import Link from 'next/link';
 
 interface SignUpCheckProps {
   checkboxes: CheckBoxInterface;
@@ -52,7 +53,16 @@ const SignUpCheck: React.FC<SignUpCheckProps> = ({
               onChange={handleCheckboxChange}
             />
             <label htmlFor="check-terms"></label>
-            <StyledLabelEssential>이용약관 (필수)</StyledLabelEssential>
+            <Link
+              href={
+                'https://hungry-mascara-804.notion.site/3f44c3052bf14803a9999af89e578b2c?pvs=4'
+              }
+              legacyBehavior
+            >
+              <StyledLabelAtag target="_blank" rel="noopener noreferrer">
+                이용약관 (필수)
+              </StyledLabelAtag>
+            </Link>
           </SignUpCheckBox>
 
           <SignUpCheckBox>
@@ -64,9 +74,16 @@ const SignUpCheck: React.FC<SignUpCheckProps> = ({
               onChange={handleCheckboxChange}
             />
             <label htmlFor="check-personalInfo"></label>
-            <StyledLabelEssential>
-              개인정보 수집/이용 동의 (필수)
-            </StyledLabelEssential>
+            <Link
+              href={
+                ' https://hungry-mascara-804.notion.site/1601cff46be942969916a72d2e5050b6?pvs=4'
+              }
+              legacyBehavior
+            >
+              <StyledLabelAtag target="_blank" rel="noopener noreferrer">
+                개인정보 수집/이용 동의 (필수)
+              </StyledLabelAtag>
+            </Link>
           </SignUpCheckBox>
 
           <SignUpCheckBox>
@@ -78,9 +95,15 @@ const SignUpCheck: React.FC<SignUpCheckProps> = ({
               onChange={handleCheckboxChange}
             />
             <label htmlFor="check-newsletter"></label>
-            <StyledLabelEssential>
-              개인정보 마케팅 활용 동의 (필수)
-            </StyledLabelEssential>
+            <Link
+              href={
+                'https://hungry-mascara-804.notion.site/96c59fa9494c499daf950ca561bed497?pvs=4'
+              }
+            >
+              <StyledLabelAtag target="_blank" rel="noopener noreferrer">
+                개인정보 마케팅 활용 동의 (선택)
+              </StyledLabelAtag>
+            </Link>
           </SignUpCheckBox>
         </div>
       </SignUpCheckBoxLayout>
