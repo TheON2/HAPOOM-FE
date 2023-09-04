@@ -1,7 +1,7 @@
 import React from 'react';
 import { styled } from 'styled-components';
 import { StartPageCloud } from './SVG';
-
+import { useRouter } from 'next/router';
 const HeadText = styled.h1`
   color: #2d74ff;
   font-size: 30px;
@@ -28,6 +28,14 @@ const StartPageSection = styled.p`
 `;
 
 const MoveStartpage = () => {
+  const router = useRouter();
+  React.useEffect(() => {
+    const timer = setTimeout(() => {
+      router.push('/');
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, []);
   return (
     <StartPageSection>
       <StartPageCloud />
