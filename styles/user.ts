@@ -210,7 +210,7 @@ export const TabIndicator = styled.span<{ width: number; $left: number }>`
   bottom: -7px;
   transition: 0.2s;
   height: 5px;
-  background-color: #2797ff;
+  background-color: var(--indicator-color);
   width: ${({ width }) => `${width}px`};
   left: ${({ $left }) => `${$left}px`};
   z-index: 1;

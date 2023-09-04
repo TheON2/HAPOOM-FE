@@ -4,7 +4,9 @@ import { follow, unFollow, getFollowers, getFollowings } from '../api/user';
 export const useFollow = (userId: string) => {
   const { data: followers, refetch: refetchFollowers } = useQuery(
     ['followers', userId],
-    () => getFollowers(userId),{
+    () => getFollowers(userId),
+    {
+
       // refetchOnWindowFocus: false,
     }
   );
