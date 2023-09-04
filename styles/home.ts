@@ -50,7 +50,7 @@ export const MainLayout = styled.main`
 export const SectionTitle = styled.h2`
   max-width: 768px;
   padding: 26px 36px 24px;
-  color: var(--primary-color);
+  color: var(--section-text-color);
   position: relative;
   &::after {
     content: '';
@@ -61,7 +61,7 @@ export const SectionTitle = styled.h2`
     top: 50%;
     left: 24px;
     transform: translateY(-50%);
-    background-color: var(--primary-color);
+    background-color: var(--section-text-color);
   }
   @media screen and (min-width: 786px) {
     padding: 26px 16px 24px;
@@ -140,12 +140,14 @@ export const NewContentBox = styled.div`
   background-color: #fff;
   box-shadow: var(--shadow-color);
   position: absolute;
-  bottom: 30px;
   left: 50%;
+  top: 70px;
   transform: translateX(-50%);
+  /* bottom: 50%;
+  transform: translate(-50%, 55%); */
   figure {
     width: 100%;
-    height: 75%;
+    height: 78%;
     /* margin: 0 auto; */
     img {
       width: 100%;

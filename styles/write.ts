@@ -31,7 +31,7 @@ export const Box = styled.div`
     font-weight: 900;
     margin-bottom: 8px;
     /* text-align: center; */
-    padding: 12px 0;
+    padding: 24px 0 12px;
     /* background-color: var(--blue-bg-color); */
     border-radius: 30px;
     /* border: var(--blue-border); */
