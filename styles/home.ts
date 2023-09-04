@@ -148,7 +148,7 @@ export const NewContentBox = styled.div`
   transform: translate(-50%, 55%); */
   figure {
     width: 100%;
-    height: 75%;
+    height: 78%;
     /* margin: 0 auto; */
     img {
       width: 100%;
