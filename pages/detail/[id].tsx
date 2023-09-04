@@ -91,6 +91,7 @@ const Detail: NextPage = () => {
       cacheTime: 0,
       // refetchOnWindowFocus: false,
     }
+
   );
 
   const { isError, data, isSuccess } = useQuery(['users'], () => getPost(id), {

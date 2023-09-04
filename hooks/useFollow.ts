@@ -6,6 +6,7 @@ export const useFollow = (userId: string) => {
     ['followers', userId],
     () => getFollowers(userId),
     {
+
       // refetchOnWindowFocus: false,
     }
   );
