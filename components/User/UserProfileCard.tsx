@@ -10,6 +10,7 @@ import { UserPageData } from './UserUi';
 
 interface postsCountProps {
   data: UserPageData | undefined;
+  userId: string;
 }
 
 const UserLikePostSuggestion: React.FC<postsCountProps> = ({ data }) => {
