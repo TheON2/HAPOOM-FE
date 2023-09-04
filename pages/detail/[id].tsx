@@ -1,27 +1,55 @@
-import React, { FormEvent, useEffect, useState } from 'react';
+import React, {
+  ChangeEvent,
+  FormEvent,
+  ReactNode,
+  useEffect,
+  useState,
+} from 'react';
 import {
-  GlobalStyle,
   ImageContainer,
   PreviewContainer,
   StyledButton,
 } from '../../styles/write';
+import {
+  DetialContentSection,
+  OtherProfileBox,
+  ContentsContainer,
+  HashtagBox,
+  Hashtag,
+  CommentForm,
+  DetailContentBox,
+  HeartConut,
+} from '@/styles/detail';
 import { MapComponent } from '@/components/Write/MapComponent';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { addPost, deletePost, getPost, updatePost } from '@/api/post';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState, wrapper } from '@/redux/config/configStore';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
-import Header from '@/components/common/Header';
-import Footer from '@/components/common/Footer';
 import { getAuthToken } from '@/api/user';
 import { AUTH_USER, UserResponse } from '@/redux/reducers/userSlice';
-import MainBannerSlider from '@/components/Home/MainBannerSlider';
+import MainBannerSlider from '@/components/Home/InfiniteCarousel';
 import DetailProfile from '@/components/Detail/DetailProfile';
-import MobileBottomNav from '@/components/common/MobileBottomNav';
 import { parseCookies, setCookie } from 'nookies';
 import { GetServerSidePropsContext, NextPage } from 'next';
+import HeartIcon from '@/components/common/HeartIcon';
+import Comment from '@/components/Detail/DetailComments';
+import KebabMenuUI, {
+  KebabMenuStyle,
+  KebabMenuAptionButton,
+} from '@/components/common/KebabMenuUI';
+import DetailKebabMenu from '@/components/Detail/DetailKebabMenu';
+import { getComment, reportPost } from '@/api/post';
+import { identity } from 'lodash';
+import Link from 'next/link';
+import CustomPlayer from '@/components/Write/CustomPlayer';
+import Modal from '@/components/common/Modal';
+import { ReadOnlyMap } from '@/components/Write/ReadOnlyMap';
+import ReadOnlyYoutube from '@/components/Write/ReadOnlyYoutube';
 
+import { BannerSliderProps } from '@/types/home';
+import useModal from '@/hooks/useModal';
+import OneButtonModal from '@/components/common/OneButtonModal';
 const DynamicComponentWithNoSSR = dynamic(
   () => import('@/components/Write/YoutubePlayer'),
   { ssr: false }
@@ -34,37 +62,24 @@ interface Props {
   update: string;
   updateId: string;
 }
-
-const Detail: NextPage<Props> = ({ update, updateId }) => {
+const Detail: NextPage = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
   const id = typeof router.query.id === 'string' ? router.query.id : '';
-  const [images, setImages] = useState<File[]>([]);
+  const [images, setImages] = useState<BannerSliderProps[]>([]);
   const [content, setContent] = useState<string>('');
   const [selectedTitle, setSelectedTitle] = useState<string>('');
+  const [musicTitle, setMusicTitle] = useState<string>('');
+  const [musicType, setMusicType] = useState<number>(0);
+  const [musicChoose, setMusicChoose] = useState<number>(0);
+  const [audioURL, setAudioURL] = useState<string | undefined>(undefined);
   const [videoId, setVideoId] = useState<string>('');
-  const [tags, setTags] = useState<string>('');
+  const [tags, setTags] = useState<string[]>([]);
   const [location, setLocation] = useState({ name: '', x: 0, y: 0 });
-  const queryClient = useQueryClient();
 
-  const { mutate: delete_mutate } = useMutation(deletePost, {
-    onSuccess: () => {
-      queryClient.invalidateQueries('posts');
-      alert('Post deleted');
-      router.push('/');
-    },
-  });
+  const isClientSide = typeof window !== 'undefined';
+  const tokenExists = isClientSide ? !!localStorage.getItem('token') : false;
 
-  const handleEditClick = () => {
-    setCookie(null, 'updateId', id, { path: '/' });
-    setCookie(null, 'update', '2', { path: '/' });
-    router.push('/post/Write');
-  };
-
-  const handleDeleteClick = () => {
-    delete_mutate(id);
-  };
-
-  const dispatch = useDispatch();
   const { data: userData, isSuccess: tokenSuccess } = useQuery(
     'user',
     getAuthToken,
@@ -72,119 +87,110 @@ const Detail: NextPage<Props> = ({ update, updateId }) => {
       onSuccess: (userData: UserResponse) => {
         dispatch(AUTH_USER(userData));
       },
+      enabled: tokenExists,
       cacheTime: 0,
-    }
+      // refetchOnWindowFocus: false,
+    },
   );
 
-  const { isError, data, isSuccess } = useQuery(
-    ['post', id],
-    () => getPost(id),
-    {
-      onSuccess: async (data) => {
-        setImages(data.images);
-        setContent(data.post.content);
-        setSelectedTitle(data.post.musicTitle);
-        setVideoId(data.post.musicUrl);
-        setTags(data.post.tag);
-        setLocation({
-          name: data.post.placeName,
-          x: data.post.latitude,
-          y: data.post.longitude,
-        });
-      },
-    }
-  );
-
+  const { isError, data, isSuccess } = useQuery(['users'], () => getPost(id), {
+    enabled: id !== '',
+    // refetchOnWindowFocus: false,
+    onSuccess: async (data) => {
+      setMusicChoose(data.post.musicType);
+      setImages(data.images);
+      setContent(data.post.content);
+      setSelectedTitle(data.post.musicTitle);
+      setVideoId(data.post.musicUrl);
+      setAudioURL(data.post.musicUrl);
+      setTags(data.tag);
+      setMusicTitle(data.post.musicTitle);
+      setLocation({
+        name: data.post.placeName,
+        x: data.post.latitude,
+        y: data.post.longitude,
+      });
+      setCookie(null, 'userId', data.post.userId, { path: '/' });
+    },
+  });
+  const { data: commentsData } = useQuery(['comment'], () => getComment(id), {
+    enabled: id !== '',
+    // refetchOnWindowFocus: false,
+  });
   if (!isSuccess) return <div>Loading...</div>;
   return (
     <>
-      <Header />
-      <GlobalStyle />
-      <div
-        style={{
-          display: 'block',
-          textAlign: 'center',
-        }}
-      >
-        <ImageContainer>
-          <button onClick={handleEditClick}>글 수정하기</button>
-          <button type="button" onClick={handleDeleteClick}>
-            글 삭제하기
-          </button>
-          <div style={{ width: '100%' }}>
+      <ContentsContainer>
+        <OtherProfileBox>
+          <Link href={`/User/${data?.user?.userId}`}>
             <DetailProfile
-              userImage={userData?.userImage}
-              preset={userData?.preset}
-              nick={userData?.nickname}
+              userImage={data?.user?.userImage}
+              preset={data?.user?.preset}
+              nick={data?.user?.nickname}
             />
-          </div>
+          </Link>
+          <DetailKebabMenu
+            data={data?.user.email}
+            userData={userData?.email}
+            id={id}
+          />
+        </OtherProfileBox>
+        <div className="carousel-box">
           <MainBannerSlider data={images} />
-          <div
-            style={{
-              width: '400px',
-              height: '100px',
-              textAlign: 'left',
-              margin: '20px',
-            }}
-          >
-            {content}
-          </div>
-          <div style={{ width: '400px', textAlign: 'center', margin: '20px' }}>
-            {tags.split(',').map((tag, index) => (
-              <span
-                key={index}
-                style={{
-                  display: 'inline-block',
-                  padding: '5px',
-                  border: '1px solid #000',
-                  marginRight: '5px',
-                  borderRadius: '5px',
-                }}
-              >
-                #{tag.trim()}
-              </span>
-            ))}
-          </div>
-          <ImageContainer>
-            {/* <DynamicComponentWithNoSSR
-              videoId={videoId}
-              setVideoId={setVideoId}
-              setSelectedTitle={setSelectedTitle}
-            /> */}
-            <MapComponent
-              setLocation={setLocation}
-              location={location}
-              update={update}
-            />
-            <h4>댓글</h4>
-            <div>
-              <div>
-                
-              </div>
+          <HeartConut>{data?.likeCount}</HeartConut>
+          <HeartIcon postId={parseInt(id)} />
+        </div>
 
-            </div>
-          </ImageContainer>
-        </ImageContainer>
-      </div>
-      <Footer />
-      <MobileBottomNav />
+        {musicChoose === 1 && (
+          <DetialContentSection>
+            <ReadOnlyYoutube videoId={videoId} update={'3'} />
+          </DetialContentSection>
+        )}
+        {musicChoose === 2 && (
+          <DetialContentSection>
+            <CustomPlayer
+              setAudioUrl={setAudioURL}
+              audioUrl={audioURL}
+              title={musicTitle}
+              setMusicChoose={setMusicChoose}
+              setMusicType={setMusicType}
+              update={'3'}
+            />
+          </DetialContentSection>
+        )}
+        {musicChoose === 3 && (
+          <DetialContentSection>
+            <CustomPlayer
+              setAudioUrl={setAudioURL}
+              audioUrl={audioURL}
+              title={musicTitle}
+              setMusicChoose={setMusicChoose}
+              setMusicType={setMusicType}
+              update={'3'}
+            />
+          </DetialContentSection>
+        )}
+        <DetialContentSection className="content-box">
+          {content && <DetailContentBox>{content}</DetailContentBox>}
+          {tags.length !== 0 && (
+            <HashtagBox>
+              {tags.map((tag, index) => (
+                <Hashtag key={index}>#{tag.trim()}</Hashtag>
+              ))}
+            </HashtagBox>
+          )}
+        </DetialContentSection>
+        <DetialContentSection>
+          <h3 style={{ marginBottom: '20px' }}>위치 정보</h3>
+          {!(location.x === 0) && <ReadOnlyMap location={location} />}
+        </DetialContentSection>
+        <DetialContentSection>
+          <h3>댓글</h3>
+          <Comment data={commentsData?.comments} id={id} userData={userData} />
+        </DetialContentSection>
+      </ContentsContainer>
     </>
   );
 };
 
 export default Detail;
-
-export const getServerSideProps = async (
-  context: GetServerSidePropsContext
-) => {
-  const cookies = parseCookies(context);
-  const update = cookies.update || '';
-  const updateId = cookies.updateId || '';
-
-  return {
-    props: {
-      update,
-      updateId,
-    },
-  };
-};

@@ -3,44 +3,41 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 export const UserPageSection = styled.section`
+  padding-top: 15px;
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: 0 auto;
 
-  @media screen and (max-width: 1260px) {
-  }
+  margin: 0 auto;
 `;
 export const UserPageContainer = styled.div`
   width: 100%;
 
   p {
-    font-family: Inter;
+    font-family: 'Pretendard', 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif;
     font-size: 16px;
     font-weight: 700;
-    text-align: left;
+    text-align: center;
     /* margin-top: 20px; */
-  }
-
-  @media screen and (max-width: 1260px) {
   }
 `;
 export const UserProfileCardBox = styled.div`
   margin: auto;
-  width: 100%;
+  width: 300px;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 24px;
 
-  @media screen and (max-width: 1260px) {
-    padding: 24px;
-  }
-
-  img {
+  .img {
     border-radius: 50%;
-    height: 51px;
+    width: 90px;
+    height: 90px;
+    background-image: url('/nonepreset.png');
+    background-size: cover;
+    overflow: hidden;
   }
 `;
 export const UserImage = styled(Image)`
@@ -52,8 +49,7 @@ export const ProfileContentsBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start; /* 왼쪽 정렬 */
-  width: 200px;
-  padding-left: 17px; /* 왼쪽 여백 추가 */
+  width: 150px;
   gap: 12px;
 
   @media screen and (max-width: 500px) {
@@ -65,17 +61,19 @@ export const NicknameBox = styled.div`
   display: flex;
   align-items: center; /* 세로 중앙 정렬 */
   justify-content: center; /* 내부 내용 중앙 정렬 */
-  gap: 10px; /* 닉네임과 설정 링크 사이의 간격 */
+  margin: auto;
 
   .nickName {
-    font-size: 20px;
+    font-size: 24px;
   }
 `;
 
 export const FollowBox = styled.div`
   display: flex;
-  gap: 14px;
+  gap: 6px;
   align-items: center;
+  margin: auto;
+
   p {
     font-size: 16px;
     color: #c2c2c2;
@@ -98,11 +96,11 @@ export const SettingPageLink = styled(Link)`
 
 export const LikePostSuggestionBox = styled.div`
   width: 100%;
-  height: 90px;
+  height: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 30px;
+  gap: 10px;
 `;
 
 export const InfoContainer = styled.div`
@@ -112,18 +110,12 @@ export const InfoContainer = styled.div`
 `;
 
 export const InfoText = styled.div`
-  font-size: 12px;
-  font-weight: 700;
+  font-size: 16px;
 `;
 
 export const InfoNumber = styled.div`
-  font-size: 12px;
-  font-weight: 700;
-  color: white;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background-color: #0084ff;
+  font-size: 16px;
+  /* color: black; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -131,6 +123,7 @@ export const InfoNumber = styled.div`
 
 export const ImageBox = styled.div`
   display: flex;
+  justify-content: center;
   flex-direction: column;
   align-items: center;
 
@@ -142,8 +135,7 @@ export const ImageBox = styled.div`
 `;
 
 export const PostBox = styled.div`
-  max-width: 320px;
-  padding: 0 24px;
+  padding-top: 12px;
   text-align: center;
   margin: auto;
 `;
@@ -161,20 +153,23 @@ export const PostParagraph = styled.p`
   cursor: pointer;
 `;
 export const Line = styled.div`
-  margin: 10px 0;
+  margin: 4px;
   border-bottom: 1px solid black;
 `;
-export const PostImageBox = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  justify-content: flex-start;
-  align-items: center;
-  @media (max-width: 1260px) {
+
+export const UserImageContainer = styled.div`
+  max-width: 1200px;
+  width: 100%;
+  height: 100%;
+
+  img {
+    height: 100%;
     width: 100%;
-    justify-content: center;
+    overflow: hidden;
+    object-fit: cover;
   }
 `;
+
 export const PostImage = styled(Image)`
   width: 232px;
   height: 228px;
@@ -183,19 +178,19 @@ export const PostImage = styled(Image)`
 `;
 export const TabContainer = styled.div`
   display: flex;
-  width: 320px;
+  width: 100%;
 `;
 export const TabButton = styled.div`
   flex: 1;
-  padding: 12px;
-  color: #83818c;
+  font-size: 16px;
+  padding: 30px 0 15px 0px;
+  color: var(--text-none-active);
   text-decoration: none;
   cursor: pointer;
   transition: 0.3s;
-  margin: 0 6px;
+  margin: 0 1px;
   z-index: 1;
-  font-family: 'DM Sans', sans-serif;
-  font-weight: 500;
+  font-weight: 700;
   position: relative;
   &:before {
     content: '';
@@ -210,31 +205,100 @@ export const TabButton = styled.div`
     transition: 0.3s;
   }
 `;
-export const TabIndicator = styled.span<{ width: number; left: number }>`
+export const TabIndicator = styled.span<{ width: number; $left: number }>`
   position: absolute;
-  bottom: -13px;
-  height: 4px;
-  transition: 0.4s;
+  bottom: -7px;
+  transition: 0.2s;
   height: 5px;
-  background-color: #0084ff;
+  background-color: #2797ff;
   width: ${({ width }) => `${width}px`};
-  left: ${({ left }) => `${left}px`};
+  left: ${({ $left }) => `${$left}px`};
   z-index: 1;
 `;
 
-export const FollowContainer = styled.div`
+interface ButtonProps {
+  $status: '팔로우' | '팔로잉' | '언팔로우' | '설정';
+}
+
+export const FollowBtn = styled.div<ButtonProps>`
+  max-width: 300px;
+  height: 46px;
   width: 100%;
-  height: 50px;
+  border: none;
+  padding: 10px 0;
+  text-align: center;
+  border: none;
+  font-weight: 700;
+  border-radius: 3px;
+  box-shadow: 1px 2px 3px 0px rgba(0, 0, 0, 0.3);
+  font-size: 20px;
+  margin: 0 auto;
+
+  background-color: ${({ $status }) => {
+    switch ($status) {
+      case '팔로우':
+        return '#2797ff';
+      case '팔로잉':
+        return '#D9D9D9';
+      case '언팔로우':
+        return '#FF6666';
+      case '설정':
+        return '#2797ff';
+      default:
+        return '#2797ff';
+    }
+  }};
+  color: white;
+
+  &:hover {
+    cursor: pointer;
+    filter: brightness(0.8);
+  }
+`;
+
+export const SettingBtn = styled.div`
+  width: 100%;
   text-align: center;
 
   button {
-    width: 261px;
+    width: 251px;
     height: 36px;
-    background-color: #0084ff;
-    border: 0px;
-    border-radius: 4px;
-    color: #ffffff;
-    font-size: 16px;
+    border: none;
+    color: white;
+    font-weight: 700px;
+    border-radius: 3px;
+    background-color: #2797ff;
+    box-shadow: 1px 2px 3px 0px rgba(0, 0, 0, 0.3);
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+`;
+
+export const Nothing = styled.div`
+  width: 100%;
+  padding-top: 220px;
+  text-align: center;
+  font-weight: 500;
+  line-height: 1.8;
+
+  span {
     font-weight: 600;
+    font-size: 20px;
+  }
+`;
+
+export const NothingLike = styled.div`
+  width: 100%;
+  padding-top: 220px;
+  justify-content: flex-end;
+  text-align: center;
+  font-weight: 500;
+  line-height: 1.8;
+
+  span {
+    font-weight: 600;
+    font-size: 20px;
   }
 `;

@@ -1,40 +1,40 @@
-import React, { ChangeEvent, FormEvent, useState } from 'react';
+import React, { ChangeEvent, FormEvent, useCallback, useState } from 'react';
 import Image from 'next/image';
 import { useMutation, useQueryClient } from 'react-query';
 import Button from '@/components/common/Button';
 import { updateUserSetting } from '@/api/user';
 import { ProfilePresetList, ProfileItem, ButtonBox } from '@/styles/setting';
 import { profilePreset } from '@/public/presetData';
-const profileData = ['/inflearn.jpg', '/inflearn.jpg', '/inflearn.jpg'];
+import Modal from '../common/Modal';
 
-type profileType = {
+type ProfileType = {
   profileImage?: string;
   preset?: number;
 };
 
-const UserProfileImageUpdate = ({ profileImage, preset }: profileType) => {
+const UserProfileImageUpdate = ({ profileImage, preset }: ProfileType) => {
   const [selectPreset, setSelectPreset] = useState<number>(preset ? preset : 5);
-  const [userProfile, setUserProfile] = useState<any>(profileImage);
+  const [userProfile, setUserProfile] = useState<string | undefined>(
+    profileImage
+  );
 
-  const onClickProfileHandler = (idx: number) => {
+  const onClickProfileHandler = useCallback((idx: number) => {
     setSelectPreset(idx + 1);
-  };
+  }, []);
   const queryClient = useQueryClient();
 
   const mutate = useMutation(
     (formData: FormData) => updateUserSetting(formData),
     {
       onSuccess: () => {
-        alert('수정되었습니다.');
+        alert('업로드되었습니다.');
         queryClient.invalidateQueries('userSetting');
       },
     }
   );
 
-  const onChangeProfileUpdate = async (
-    event: ChangeEvent<HTMLInputElement>
-  ) => {
-    const file = event.target.files;
+  const onChangeProfileUpdate = async (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files;
     const imageData = new FormData();
 
     if (file) {
@@ -46,7 +46,6 @@ const UserProfileImageUpdate = ({ profileImage, preset }: profileType) => {
       imageData.append('image', file[0]);
       imageData.append('preset', '1');
       await mutate.mutateAsync(imageData);
-      console.log('업로드');
     }
   };
 
@@ -54,19 +53,21 @@ const UserProfileImageUpdate = ({ profileImage, preset }: profileType) => {
     (formData: FormData) => updateUserSetting(formData),
     {
       onSuccess: () => {
-        alert('수정되었습니다.');
         queryClient.invalidateQueries('userSetting');
       },
     }
   );
 
-  const onSubmitUserProfile = async (e: FormEvent) => {
-    e.preventDefault();
-    const presetData = new FormData();
+  const onSubmitUserProfile = useCallback(
+    async (e: FormEvent) => {
+      e.preventDefault();
+      const presetData = new FormData();
 
-    presetData.append('preset', selectPreset.toString());
-    await presetMutate.mutateAsync(presetData);
-  };
+      presetData.append('preset', selectPreset.toString());
+      await presetMutate.mutateAsync(presetData);
+    },
+    [selectPreset, presetMutate]
+  );
 
   return (
     <>
@@ -75,7 +76,7 @@ const UserProfileImageUpdate = ({ profileImage, preset }: profileType) => {
           <ProfileItem onClick={() => onClickProfileHandler(0)}>
             <figure className={selectPreset === 1 ? 'active' : ''}>
               <Image
-                src={userProfile ? userProfile : '/inflearn.jpg'}
+                src={userProfile ? userProfile : '/favicon.png'}
                 alt="preset"
                 width={100}
                 height={100}
@@ -101,11 +102,6 @@ const UserProfileImageUpdate = ({ profileImage, preset }: profileType) => {
               </ProfileItem>
             );
           })}
-          {/* <ProfileItem onClick={() => onClickProfileHandler(4)}>
-            <figure className={selectPreset === 5 ? 'active' : ''}>
-              <Image src={'/addImage.png'} alt="preset" fill />
-            </figure>
-          </ProfileItem> */}
         </ProfilePresetList>
         <div
           style={{
@@ -118,7 +114,7 @@ const UserProfileImageUpdate = ({ profileImage, preset }: profileType) => {
               프로필 업로드
             </label>
             <input id="profile" type="file" onChange={onChangeProfileUpdate} />
-            <Button marginTop={'0'} type="submit" className="profile-button">
+            <Button $marginTop={'0'} type="submit" className="profile-button">
               프로필 변경
             </Button>
           </ButtonBox>
@@ -128,4 +124,4 @@ const UserProfileImageUpdate = ({ profileImage, preset }: profileType) => {
   );
 };
 
-export default UserProfileImageUpdate;
+export default React.memo(UserProfileImageUpdate);

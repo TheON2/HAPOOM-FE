@@ -5,10 +5,10 @@ import React from 'react';
 const SignIn = () => {
   return (
     <>
-      <GlobalStyle />
+      {/* <GlobalStyle /> */}
       <SignInUi />
     </>
   );
 };
 
-export default SignIn;
+export default React.memo(SignIn);

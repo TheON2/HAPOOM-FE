@@ -1,7 +1,8 @@
-import api from '../axios/api';
+import api from '@/axios/api';
 import { UserResponse } from '../redux/reducers/userSlice';
 
 interface User {
+  userId: number;
   email: string | null;
   nickName: string | null;
   userImage: string | null;
@@ -34,19 +35,28 @@ const getUser = async (userEmail: string): Promise<UserResponse> => {
 };
 
 const getUserSetting = async () => {
-  const response = await api.get(`/test/user`);
+  const response = await api.get(`/api/user`);
   return response.data;
 };
 
 const updateUserSetting = async (userData: FormData) => {
-  const response = await api.patch(`/test/user`, userData, {
+  const response = await api.put(`/api/user`, userData, {
     headers: { 'Content-Type': 'multipart/form-data' },
   });
   return response.data;
 };
 
-const getUserProfile = async () => {
-  const response = await api.get(`/test/user/profile`);
+type getUserProps = {
+  UserId: string;
+};
+
+const getUserProfile = async ({ UserId: userId }: getUserProps) => {
+  const response = await api.get(`/api/user/profile/${userId}`);
+  return response.data;
+};
+
+const getMyProfile = async () => {
+  const response = await api.get(`/api/user/myprofile`);
   return response.data;
 };
 
@@ -86,6 +96,37 @@ const test = async () => {
   await api.get(`/test/test`);
 };
 
+const follow = async (userId: string) => {
+  const response = await api.post(`/api/user/${userId}/follow`);
+  return response.data;
+};
+
+const unFollow = async (userId: string) => {
+  const response = await api.post(`/api/user/${userId}/unfollow`);
+  return response.data;
+};
+
+const getFollowers = async (userId: string): Promise<User[]> => {
+  const response = await api.get(`/api/user/${userId}/follower`);
+  // console.log('Followers Response:', response.data); // 이 줄을 추가
+  return response.data.followers;
+};
+
+const getFollowings = async (userId: string): Promise<User[]> => {
+  const response = await api.get(`/api/user/${userId}/following`);
+  // console.log('Followings Response:', response.data); // 이 줄을 추가
+  return response.data.following;
+};
+
+const getPush = async () => {
+  const response = await api.get(`/api/util/push`);
+  return response.data;
+};
+
+const togglePush = async () => {
+  const response = await api.post(`/api/util/togglepush`);
+};
+
 export {
   addUser,
   getUser,
@@ -98,5 +139,12 @@ export {
   getUserSetting,
   updateUserSetting,
   getUserProfile,
+  getMyProfile,
   test,
+  follow,
+  unFollow,
+  getFollowers,
+  getFollowings,
+  getPush,
+  togglePush,
 };

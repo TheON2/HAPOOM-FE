@@ -25,7 +25,7 @@ const OverlayBox = styled.div`
   opacity: 0.4;
   position: fixed;
   top: 0;
-  z-index: 19;
+  z-index: 119;
   cursor: pointer;
 `;
 
@@ -51,7 +51,7 @@ const SideNav = ({ isShowMenu, setIsShowMenu }: sideNavProps) => {
     onSuccess: () => {
       queryClient.invalidateQueries('user');
       dispatch(LOGOUT_USER());
-      router.push('/');
+      router.push('/auth/SignIn');
     },
   });
 
@@ -81,7 +81,7 @@ const SideNav = ({ isShowMenu, setIsShowMenu }: sideNavProps) => {
           email={user?.email || ''}
           userImage={user?.userImage || ''}
           preset={user?.preset || 5}
-          nickname={user?.nickName || ''}
+          nick={user?.nickName || ''}
         />
         <SideNavMenuBox>
           {user?.email !== null ? (

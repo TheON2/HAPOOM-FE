@@ -1,38 +1,45 @@
 import {
   MainHeadText,
-  PwdSignUpSettingPageLink,
-  Separator,
-  SignInBtn,
   SignInContainer,
   SignInSection,
-  StyledEmailInput,
-  StyledInputBox,
-  StyledPasswordInput,
   TextErrorParagraph,
-  TextSnsParagraph,
-  TextPwSetParagraph,
-  TextSignUpLinkParagraph,
 } from '@/styles/signIn';
-import React, { FormEvent, useState } from 'react';
+import React, { FormEvent, useEffect, useState } from 'react';
 import SocialLogin from './SocialLogIn';
-
+import SignInInput from './SignInInput';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 import { useMutation } from 'react-query';
 import { NextRouter } from 'next/router';
 import { LOGIN_USER } from '@/redux/reducers/userSlice';
 import { userLogin } from '@/api/user';
+import { AxiosError } from 'axios';
+import SignInControls from './SignInControls';
 
-interface SignIn {
+export interface SignIn {
   email: string;
   password: string;
 }
 interface ErrorMessage {
-  message: string;
+  message?: string;
 }
+const validateEmail = (email: string): boolean => {
+  const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
+  return emailRegex.test(email);
+};
+const validatePassword = (password: string): boolean => {
+  const passwordPattern = /^(?=.*\d)(?=.*[a-zA-Z]).{8,}$/;
+  return passwordPattern.test(password);
+};
+const isWindowsOrAndroid = () => {
+  if (typeof window !== 'undefined' && window.navigator) {
+    return /Windows|Android/.test(window.navigator.userAgent);
+  }
+  return false;
+};
 
 const SignInUi = () => {
-  const dispatch: any = useDispatch();
+  const dispatch = useDispatch();
   const router: NextRouter = useRouter();
   const [signInState, setSignInState] = useState<SignIn>({
     email: '',
@@ -41,45 +48,46 @@ const SignInUi = () => {
   const [error, setError] = useState<ErrorMessage>({
     message: '',
   });
-
+  const [serverError, setServerError] = useState<string>('');
   const signInMutation = useMutation(userLogin, {
     onSuccess: (data) => {
       dispatch(LOGIN_USER(data));
       router.push('/');
     },
-    onError: (error: any) => {
-      if (error.response && error.response.data) {
-        setError((prev) => ({ ...prev, password: error.response.data }));
+    onError: (error: AxiosError) => {
+      const message = error?.response?.data as string;
+      if (message) {
+        setServerError(message);
+      } else {
+        alert(
+          '로그인에 실패하였습니다. 아이디 혹은 비밀번호를 다시 한번 확인해주세요'
+        );
       }
     },
   });
 
-  const moveSignUpBtn = () => {
-    router.push('/auth/SignUp');
-  };
-  const validateEmail = (email: string): boolean => {
-    const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
-    return emailRegex.test(email);
-  };
-  const validatePassword = (password: string): boolean => {
-    const passwordPattern = /^(?=.*\d)(?=.*[a-zA-Z]).{8,}$/;
-    return passwordPattern.test(password);
-  };
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setSignInState((prevSignInState) => ({
-      ...prevSignInState,
-      [name]: value,
-    }));
-  };
+  const moveHomeBtn = React.useCallback(() => {
+    router.push('/');
+  }, [router]);
+
+  const handleInputChange = React.useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const { name, value } = e.target;
+      setSignInState((prevSignInState) => ({
+        ...prevSignInState,
+        [name]: value,
+      }));
+    },
+    []
+  );
 
   const handleLogin = (e: FormEvent) => {
     e.preventDefault();
-    let errors: any = {};
+    let errors: ErrorMessage = {};
 
     if (!validateEmail(signInState.email)) {
       if (!validatePassword(signInState.password)) {
-        errors.message = '아이디와 비밀번호를 다시 확인해주세요 ';
+        errors.message = '아이디와 비밀번호를 다시 확인해주세요';
       }
     }
 
@@ -96,46 +104,33 @@ const SignInUi = () => {
     signInMutation.mutate(sendData);
   };
 
+  const [shouldShowSocialLogin, setShouldShowSocialLogin] = useState(false);
+
+  useEffect(() => {
+    setShouldShowSocialLogin(isWindowsOrAndroid());
+  }, []);
+
   return (
     <SignInSection>
-      <SignInContainer>
-        <MainHeadText>HAPOOM</MainHeadText>
-        <StyledInputBox>
-          <StyledEmailInput
-            type="email"
-            name="email"
-            placeholder="이메일을 입력해 주세요"
-            onChange={handleInputChange}
-          />
-        </StyledInputBox>
+      <SignInContainer onSubmit={handleLogin}>
+        <MainHeadText onClick={moveHomeBtn}>HAPOOM</MainHeadText>
 
-        <StyledInputBox>
-          <StyledPasswordInput
-            type="password"
-            name="password"
-            placeholder="비밀번호를 입력해 주세요"
-            onChange={handleInputChange}
-          />
-        </StyledInputBox>
-
+        <SignInInput
+          signInState={signInState}
+          handleInputChange={handleInputChange}
+        />
         {error.message && (
           <TextErrorParagraph>{error.message}</TextErrorParagraph>
         )}
-        <SignInBtn onClick={handleLogin}>로그인</SignInBtn>
-        <PwdSignUpSettingPageLink>
-          <TextPwSetParagraph onClick={() => alert('준비중입니다.')}>
-            비밀번호 찾기
-          </TextPwSetParagraph>
-          <Separator />
-          <TextSignUpLinkParagraph onClick={moveSignUpBtn}>
-            회원가입
-          </TextSignUpLinkParagraph>
-        </PwdSignUpSettingPageLink>
-        <TextSnsParagraph>SNS계정으로 간편 로그인/회원가입</TextSnsParagraph>
+        {serverError && <TextErrorParagraph>{serverError}</TextErrorParagraph>}
+
+        <SignInControls signInState={signInState} />
+
+        {/* {shouldShowSocialLogin && <SocialLogin />} */}
         <SocialLogin />
       </SignInContainer>
     </SignInSection>
   );
 };
 
-export default SignInUi;
+export default React.memo(SignInUi);

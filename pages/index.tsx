@@ -17,6 +17,7 @@ import { useDispatch } from 'react-redux';
 import { setCookie } from 'nookies';
 import { HomePageLayout, MainLayout, TrendGlobalStyle } from '@/styles/home';
 import { MainPageProps } from '@/types/home';
+import StartPage from './startpage/StartPage';
 
 const Home: NextPage<MainPageProps> = ({
   data,
@@ -91,6 +92,7 @@ const Home: NextPage<MainPageProps> = ({
 
   return (
     <>
+      <StartPage />
       <TrendGlobalStyle />
       <Header className={'trend'} $sticky={!isClick} />
       <HomePageLayout>

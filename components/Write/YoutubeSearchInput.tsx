@@ -8,7 +8,7 @@ import React, {
 import axios from 'axios';
 import { debounce } from 'lodash';
 import styled from 'styled-components';
-import { StyledAuthInput } from '@/styles/write';
+import { InputBox, StyledAuthInput } from '@/styles/write';
 import Image from 'next/image';
 
 interface Suggestion {
@@ -19,15 +19,22 @@ interface Suggestion {
 
 interface YouTubeSearchProps {
   setVideoId: React.Dispatch<React.SetStateAction<string>>;
-  selectedTitle: string;
   setSelectedTitle: React.Dispatch<React.SetStateAction<string>>;
   update: string;
   videoId: string;
 }
 
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+`;
+
 const InputContainer = styled.div`
-  position: relative;
-  width: 400px;
+  position: flex;
+  width: 100%;
+  align-items: center;
 `;
 
 const ClearButton = styled.button`
@@ -48,7 +55,7 @@ const SuggestionBox = styled.ul`
   list-style-type: none;
   padding: 0;
   margin: 0;
-  width: 400px;
+  width: 100%;
   box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
   border-radius: 4px;
   overflow: hidden;
@@ -57,7 +64,7 @@ const SuggestionBox = styled.ul`
 
 const SuggestionItem = styled.li`
   padding: 10px;
-  background-color: white;
+  background-color: var(--bg-color);
   border-bottom: 1px solid #f1f1f1;
   cursor: pointer;
   &:hover {
@@ -70,7 +77,6 @@ const SuggestionItem = styled.li`
 
 export const YouTubeSearch = ({
   setVideoId,
-  selectedTitle,
   setSelectedTitle,
   update,
   videoId,
@@ -88,9 +94,9 @@ export const YouTubeSearch = ({
   );
 
   const searchYoutube = async (term: string) => {
-    if (term.length >= 2) {
+    if (term.length >= 1) {
       const response = await axios.get(
-        `http://localhost:3001/api/util/youtube/search`,
+        `${process.env.NEXT_PUBLIC_LOCAL_SERVER}/api/util/youtube/search`,
         {
           params: {
             term: term,
@@ -161,27 +167,19 @@ export const YouTubeSearch = ({
 
   return (
     <>
-      <label>
-        <h3 style={{ float: 'left', margin: '10px 0' }}>음악추가</h3>
-      </label>
       {!isSearchComplete && (
         <InputContainer>
-          <StyledAuthInput
+          <InputBox
             type="text"
-            placeholder="음악 제목"
-            value={isInputActive ? searchTerm : selectedTitle}
+            placeholder="Youtube 검색하기"
+            value={searchTerm}
             onChange={handleChange}
             onKeyUp={isInputActive ? handleKeyUp : undefined}
             style={{
               width: '100%',
-              margin: '5px 0',
-              border: '2px solid #0084ff',
             }}
             disabled={!isInputActive}
           />
-          {selectedTitle && !isInputActive && (
-            <ClearButton onClick={handleClear}>X</ClearButton>
-          )}
         </InputContainer>
       )}
       {isInputActive && (
@@ -195,8 +193,8 @@ export const YouTubeSearch = ({
                 src={suggestion.thumbnail}
                 alt={suggestion.title}
                 style={{ marginRight: '10px' }}
-                width={100}
-                height={100}
+                width={50}
+                height={50}
               />
               {suggestion.title}
             </SuggestionItem>

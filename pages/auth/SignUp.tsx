@@ -5,10 +5,10 @@ import React from 'react';
 const SignUp = () => {
   return (
     <>
-      <GlobalStyle />
+      {/* <GlobalStyle /> */}
       <SignUpUi />
     </>
   );
 };
 
-export default SignUp;
+export default React.memo(SignUp);

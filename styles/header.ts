@@ -2,50 +2,129 @@ import styled from 'styled-components';
 import Link from 'next/link';
 
 type HeaderProps = {
-  sticky: string;
+  $sticky: string;
 };
+
+const NONE_ROUTE_COLOR = '#7DC1FF';
+const ROUTE_ACTION_COLOR = '#2790F6';
 
 export const HeaderLayout = styled.header<HeaderProps>`
   width: 100%;
-  height: 58px;
+  height: 70px;
   padding: 0 24px;
-  position: ${(props) => (props.sticky ? 'fixed' : 'sticky')};
-  background: ${(props) => (props.sticky ? 'none' : '#fff')};
-  z-index: 15;
+  /* position: fixed; */
+  position: sticky;
+  z-index: 150;
   top: 0;
-  /* background: linear-gradient(
-    180deg,
-    rgba(0, 0, 0, 0.1) 0%,
-    rgba(255, 255, 255, 0) 100%
-  ); */
+  background: var(--header-bg-color);
+  backdrop-filter: blur(1px);
+  border-bottom: var(--header-border);
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 12px;
-  @media screen and (max-width: 1260px) {
-    padding: 0 24px;
+  color: var(--button-hover-color);
+  font-weight: 700;
+  h1 {
+    /* color: #2797ff; */
+    color: var(--primary-color);
   }
-  /* @media screen and (max-width: 786px) {
+  .active {
+    color: var(--primary-color);
+  }
+
+  @media screen and (min-width: 768px) {
+    backdrop-filter: blur(5px);
+  }
+  .center {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .header-icon {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &:hover {
+      background-color: #00000020;
+      border-radius: 50%;
+    }
+  }
+  .search {
+    color: var(--button-hover-color);
+
+    svg {
+      width: 68%;
+      height: 68%;
+      path {
+        stroke: var(--button-hover-color);
+      }
+    }
+    &.active {
+      color: var(--primary-color);
+      path {
+        stroke: ${(props) => (props.$sticky ? '#fff' : 'var(--primary-color)')};
+      }
+    }
+  }
+  .edit {
+    color: var(--button-hover-color);
+    font-weight: 700;
+    svg {
+      width: 68%;
+      height: 68%;
+      path {
+        fill: var(--button-hover-color);
+      }
+    }
+    &.active {
+      color: var(--primary-color);
+      path {
+        fill: ${(props) => (props.$sticky ? '#fff' : 'var(--primary-color)')};
+      }
+    }
+  }
+  &.trend {
     position: fixed;
     background: none;
-  } */
+    backdrop-filter: blur(0px);
+    border-bottom: var(--header-bg-color);
+    color: ${(props) =>
+      props.$sticky ? 'var(--button-hover-color)' : '#C6E2FC'};
+    /* path {
+      fill: ${(props) => (props.$sticky ? ROUTE_ACTION_COLOR : '#C6E2FC')};
+    } */
+    h1 {
+      color: ${(props) => (props.$sticky ? 'var(--primary-color)' : '#fff')};
+    }
+    .active {
+      color: ${(props) => (props.$sticky ? 'var(--primary-color)' : '#fff')};
+    }
+
+    .search {
+      color: ${(props) =>
+        props.$sticky ? 'var(--button-hover-color)' : '#C6E2FC'};
+    }
+    .edit {
+      color: ${(props) =>
+        props.$sticky ? 'var(--button-hover-color)' : '#C6E2FC'};
+    }
+  }
 `;
 
-export const LogoBox = styled(Link)`
+export const LogoBox = styled(Link)<HeaderProps>`
   /* width: 20%; */
-  height: 46px;
+  /* height: 100%; */
   display: flex;
   justify-content: center;
   align-items: center;
-  font-weight: 700;
+
   /* border: 1px solid #000; */
   h1 {
-    font-size: 24px;
-  }
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
+    font-size: 25px;
+    font-weight: 900;
   }
 `;
 
@@ -101,41 +180,79 @@ export const IconBox = styled.button`
 export const AccountActionsContainer = styled.div`
   display: flex;
   justify-content: flex-end;
-  gap: 12px;
+  align-items: center;
+  gap: 16px;
   width: 80%;
   @media screen and (max-width: 786px) {
     display: none;
   }
 `;
 export const GoWriteLink = styled(Link)`
-  width: 100px;
+  width: 80px;
+  height: 80px;
   padding: 12px 18px;
-  border-radius: 25px;
+  border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
+  position: fixed;
+  bottom: 10vh;
+  right: 24px;
+  background-color: var(--search-bg-color);
+  z-index: 114;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.16);
+  svg {
+    transform: scale(0.8) translate(2px, -1px);
+  }
+  &:hover {
+    background-color: #d4eaff;
+  }
+  &:active {
+    background-color: #7dc1ff;
+  }
+  @media screen and (max-width: 786px) {
+    display: none;
+  }
 `;
-export const ProfileButton = styled.button`
-  width: 50px;
-  height: 50px;
+export const ProfileButton = styled.button<HeaderProps>`
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   position: relative;
   overflow: hidden;
-  border: none;
+  border: ${(props) =>
+    props.$sticky ? '2px solid var(--primary-color)' : '2px solid #C0D8EF'};
+  background-color: ${(props) =>
+    props.$sticky ? 'var(--primary-opcity-color)' : '#C0D8EF70'};
   cursor: pointer;
   img {
     object-fit: cover;
+  }
+  svg {
+    width: 70%;
+    height: auto;
+    object-fit: contain;
   }
 `;
 
 export const AuthButtonBox = styled.div`
   display: flex;
   align-items: center;
-  gap: 8px;
+  /* gap: 8px; */
+  font-weight: 700;
   button {
     border: none;
     background: none;
   }
+  a {
+    padding: 20px 8px;
+    &:hover {
+      color: var(--primary-hover-color);
+    }
+  }
+  /* .active {
+    color: #2797ff;
+  } */
 `;
 
 export const MobileBox = styled.div`

@@ -18,11 +18,91 @@ export const GlobalStyle = createGlobalStyle`
   }
   `;
 
+export const Box = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: start;
+  margin-bottom: 36px;
+  position: relative;
+  h2 {
+    font-size: 20px;
+    font-weight: 900;
+    margin-bottom: 8px;
+    /* text-align: center; */
+    padding: 12px 0;
+    /* background-color: var(--blue-bg-color); */
+    border-radius: 30px;
+    /* border: var(--blue-border); */
+    /* color: var(--text-blue-color); */
+  }
+  label {
+    margin-bottom: 16px;
+    font-weight: 700;
+  }
+  .small {
+    font-size: 14px;
+    padding: 4px 0;
+  }
+`;
+type limitProps = {
+  $color: boolean;
+};
+export const InputContainer = styled.div`
+  width: 100%;
+  position: relative;
+  label {
+    font-weight: 700;
+  }
+  input {
+    margin-top: 16px;
+  }
+`;
+export const LimitNumBox = styled.span<limitProps>`
+  position: absolute;
+  bottom: 15px;
+  right: 24px;
+  line-height: 14px;
+  color: ${(props) => props.$color && '#FF5D5D'};
+`;
+export const InputBox = styled.input`
+  display: block;
+  width: 100%;
+  /* color: #051619; */
+  outline: none;
+  padding: 16px 24px;
+  border: none;
+  border-radius: 4px;
+  background-color: var(--input-bg-color);
+  font-size: 0.915rem;
+`;
+export const TagBox = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 12px;
+`;
+export const RecordButtonBox = styled.div`
+  width: 100%;
+  display: flex;
+  margin-top: 16px;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 12px;
+`;
+export const RecordEditBox = styled.div`
+  max-width: 360px;
+  width: 100%;
+  margin: 8px auto;
+  padding: 8px 0;
+`;
 export const PreviewContainer = styled.div`
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  max-width: 400px;
+  /* max-width: 400px; */
 `;
 
 export const ImageContainer = styled.div`
@@ -85,6 +165,7 @@ export const StyledA = styled.a`
 
 export const StyledButton = styled.button`
   min-width: 104px;
+  width: 100%;
   padding: 11px 1.3rem;
   cursor: pointer;
   position: relative;
@@ -93,8 +174,7 @@ export const StyledButton = styled.button`
   box-sizing: border-box;
   background: #0084ff;
   color: white;
-  width: 400px;
-  margin: 2rem 0;
+  /* margin: 2rem 0; */
   text-align: center;
 `;
 

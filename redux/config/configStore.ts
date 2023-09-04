@@ -2,43 +2,23 @@ import {
   combineReducers,
   configureStore,
   PayloadAction,
-  Store,
 } from '@reduxjs/toolkit';
-import { createWrapper, HYDRATE } from 'next-redux-wrapper';
 import userReducer from '../reducers/userSlice';
 import postReducer from '../reducers/postSlice';
-
+import notificationReducer from '../reducers/notificationSlice';
+import themeReducer from '../reducers/themeSlice';
 const rootReducer = combineReducers({
   user: userReducer,
   post: postReducer,
+  notification: notificationReducer,
+  theme: themeReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
-export type RootAction = ReturnType<typeof rootReducer>;
-export type HydrateAction = PayloadAction<RootState, typeof HYDRATE>;
 
-const reducer = (
-  state: RootState | undefined,
-  action: PayloadAction<any> | HydrateAction
-): RootState => {
-  if (action.type === HYDRATE) {
-    const nextState = {
-      ...state,
-      ...action.payload,
-    };
-    return nextState;
-  } else {
-    return rootReducer(state, action);
-  }
-};
+const store = configureStore({
+  reducer: rootReducer,
+  devTools: process.env.NODE_ENV !== 'production',
+});
 
-const makeStore = (): Store =>
-  configureStore({
-    reducer,
-    devTools: process.env.NODE_ENV !== 'production',
-  });
-const store = makeStore();
-
-export type AppDispatch = ReturnType<typeof makeStore>['dispatch'];
-export const wrapper = createWrapper(makeStore);
 export default store;

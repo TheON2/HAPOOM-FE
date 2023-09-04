@@ -1,7 +1,7 @@
-import React from 'react';
-import { styled } from 'styled-components';
+import React, { useRef } from 'react';
+import styled from 'styled-components';
 import { StartPageCloud } from './SVG';
-import { useRouter } from 'next/router';
+
 const HeadText = styled.h1`
   color: #2d74ff;
   font-size: 30px;
@@ -28,16 +28,16 @@ const StartPageSection = styled.p`
 `;
 
 const MoveStartpage = () => {
-  const router = useRouter();
+  const noneStartPage = useRef<any>();
   React.useEffect(() => {
     const timer = setTimeout(() => {
-      router.push('/');
-    }, 3000);
+      noneStartPage.current.style.display = 'none';
+    }, 10000);
 
     return () => clearTimeout(timer);
   }, []);
   return (
-    <StartPageSection>
+    <StartPageSection ref={noneStartPage}>
       <StartPageCloud />
       <HeadText>HAPOOM</HeadText>
       <GrayText>틈틈이 하늘 보는 습관, 하품</GrayText>

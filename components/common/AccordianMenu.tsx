@@ -1,10 +1,10 @@
 import React, { ReactNode, useState } from 'react';
-import Image from 'next/image';
 import styled from 'styled-components';
 import { Line } from '@/styles/signUp';
+import { RightArrow } from './SVG';
 
 type accordianProps = {
-  isOpen?: boolean;
+  $isOpen?: boolean;
 };
 
 const AccordianLayout = styled.div`
@@ -15,7 +15,8 @@ const AccordianLayout = styled.div`
 export const AccordianTab = styled.button<accordianProps>`
   width: 100%;
   padding: 20px 0 16px;
-  color: ${(props) => (props.isOpen ? '#000' : '#8995A7')};
+  color: ${(props) =>
+    props.$isOpen ? 'var(--primary-second-color)' : 'var(--text-tab-gray)'};
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -23,12 +24,6 @@ export const AccordianTab = styled.button<accordianProps>`
   border: none;
   font-weight: 700;
 `;
-
-const Icon = () => {
-  return (
-    <Image src={'/🦆 icon _cloud_.svg'} alt={'icon'} width={20} height={20} />
-  );
-};
 
 type DroptabProps = {
   tabText: string;
@@ -46,21 +41,25 @@ const AccordianMenu = ({ tabText, children }: DroptabProps) => {
   return (
     <>
       <AccordianLayout>
-        <AccordianTab onClick={onClickDropTabHandler} isOpen={isOpen}>
-          {tabText} <Icon />
+        <AccordianTab onClick={onClickDropTabHandler} $isOpen={isOpen}>
+          {tabText}
+          <RightArrow
+            rotation={isOpen}
+            fillColor={isOpen ? '#0084FF' : '#8995a7'}
+          />
         </AccordianTab>
         {isOpen ? children : null}
       </AccordianLayout>
       {isOpen ? (
         <Line
-          width={'327px'}
-          borderColor={'#A9A9A9'}
+          width={'100%'}
+          $borderColor={'var(--text-tab-gray)'}
           style={{ display: 'none' }}
         ></Line>
       ) : (
         <Line
-          width={'327px'}
-          borderColor={'#A9A9A9'}
+          width={'100%'}
+          $borderColor={'var(--text-tab-gray)'}
           style={{ marginTop: '-20px' }}
         ></Line>
       )}

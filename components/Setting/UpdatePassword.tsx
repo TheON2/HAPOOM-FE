@@ -1,25 +1,16 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import Button from '@/components/common/Button';
-import {
-  StyledInput,
-  TextErrorParagraph,
-  TextParagraphSns,
-} from '@/styles/signUp';
+import { StyledInput, TextErrorParagraph } from '@/styles/signUp';
 import { useMutation, useQueryClient } from 'react-query';
 import { updateUserSetting } from '@/api/user';
 import { TextParagraph } from '@/styles/signIn';
-import { TextParagraphPwdCheck } from '@/styles/setting';
+import { SettingButton, TextParagraphPwdCheck } from '@/styles/setting';
+import Modal from '../common/Modal';
+import { modalState } from '@/types/comment';
 
 export interface Signup {
   password: string;
   passwordConfirm: string;
-}
-export interface CheckBoxInterface {
-  checkAll: boolean;
-  checkTerms: boolean;
-  checkPersonalInfo: boolean;
-  checkNewsletter: boolean;
 }
 
 type TextInputType = 'email' | 'password' | 'passwordConfirm' | 'nickname';
@@ -34,11 +25,16 @@ const UpdatePassword = () => {
     password: '',
     passwordConfirm: '',
   });
-
   const [error, setError] = useState<Signup>({
     password: '',
     passwordConfirm: '',
   });
+  const [modalMessge, setModalMessge] = useState<modalState>({
+    actionText: '',
+    modalMessge: '',
+    onClickEvent: null,
+  });
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement & { name: TextInputType }>
@@ -67,10 +63,12 @@ const UpdatePassword = () => {
     }
   );
 
-  const submitUser = async (event: any) => {
-    event.preventDefault();
-
-    let errors: any = {};
+  const submitUser = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    let errors: Signup = {
+      password: '',
+      passwordConfirm: '',
+    };
 
     if (!signUpState.password) {
       errors.password = '비밀번호를 입력해주세요.';
@@ -85,21 +83,38 @@ const UpdatePassword = () => {
 
     if (Object.keys(errors).length > 0) {
       setError(errors);
-      return;
     } else {
       setError({ password: '', passwordConfirm: '' });
     }
 
-    if (Object.keys(errors).length === 0) {
-      const formData = new FormData();
-      formData.append('password', signUpState.password);
-      await mutate.mutateAsync(formData);
+    const formData = new FormData();
+    formData.append('password', signUpState.password);
+    if (error) {
+      setSignUpState({ password: '', passwordConfirm: '' });
+      return;
     }
+    await mutate.mutateAsync(formData);
   };
-
+  const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setModalMessge({
+      actionText: '확인',
+      modalMessge: '비밀번호를 수정하시겠습니까?',
+      onClickEvent: () => submitUser(e),
+    });
+    setIsModalOpen(true);
+  };
   return (
     <>
-      <form action="" onSubmit={submitUser}>
+      <Modal
+        isOpen={isModalOpen}
+        setIsOpen={setIsModalOpen}
+        actionText={modalMessge.actionText}
+        onClickEvent={modalMessge.onClickEvent}
+      >
+        {modalMessge.modalMessge}
+      </Modal>
+      <form action="" onSubmit={onSubmitHandler}>
         <InputBox>
           <TextParagraph>비밀번호</TextParagraph>
           <TextParagraphPwdCheck>
@@ -129,12 +144,12 @@ const UpdatePassword = () => {
             <TextErrorParagraph>{error.passwordConfirm}</TextErrorParagraph>
           )}
         </InputBox>
-        <Button type="submit" marginTop={'10px'}>
+        <SettingButton type="submit" $marginTop={'10px'}>
           비밀번호 수정
-        </Button>
+        </SettingButton>
       </form>
     </>
   );
 };
 
-export default UpdatePassword;
+export default React.memo(UpdatePassword);

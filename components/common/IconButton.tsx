@@ -1,7 +1,11 @@
 import React, { ReactNode } from 'react';
 import { styled } from 'styled-components';
 
-const IconButtonStyle = styled.button`
+type IconProps = {
+  $noneEdge?: boolean;
+};
+
+const IconButtonStyle = styled.button<IconProps>`
   width: 36px;
   height: 36px;
   display: flex;
@@ -9,16 +13,24 @@ const IconButtonStyle = styled.button`
   align-items: center;
   background: none;
   border: none;
-  transform: translateX(10px);
+  transform: ${(props) => (props.$noneEdge ? 'none' : 'translateX(10px)')};
+  cursor: pointer;
   svg {
     width: 20px;
     height: 20px;
+  }
+  &:hover {
+    background-color: #00000020;
+    border-radius: 50%;
   }
 `;
 
 type buttonProps = {
   children: ReactNode;
   onClick?: () => void;
+  className?: string;
+  type?: 'button' | 'submit';
+  $noneEdge?: boolean;
 };
 
 const IconButton = ({ children, ...restProps }: buttonProps) => {

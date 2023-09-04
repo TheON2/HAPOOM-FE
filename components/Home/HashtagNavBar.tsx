@@ -1,61 +1,165 @@
 import Image from 'next/image';
-import React from 'react';
-import styled from 'styled-components';
-import { SliderImage } from '@/public/data';
-import { HashtagNavBarLayout, HashtagList, HashtagItem } from '@/styles/home';
-// import { ScrollBar } from '@/components/common/SVG';
+import React, { useRef, useState } from 'react';
+import { HashtagNavBarProps } from '@/types/home';
+import {
+  HashtagNavBarLayout,
+  HashtagList,
+  HashtagItem,
+  ScrollBar,
+  HashtagListContainer,
+  HashtagListOther,
+  ButtonBox,
+  HashtagAll,
+} from '@/styles/home';
+import { ArrowLong } from '../common/SVG';
 
-type Props = {
-  data: SliderImage[];
-  isClick?: any;
-  onClickEvent?: any;
-};
-
-const ScrollBar = styled.div`
-  width: 30px;
-  /* height: 14px; */
-  padding: 8px 0 10px;
-  span {
-    display: block;
-    background-color: #e4e1e1;
-    width: 100%;
-    height: 2px;
-    margin-bottom: 1px;
-    border-radius: 1px;
-  }
-`;
-
-const HashtagNavBar: React.FC<Props> = ({ data, onClickEvent, isClick }) => {
-  // const onClickBottomNavHandler = () => {
-  //   setIsClick(!isClick);
-  // };
+const HashtagNavBar: React.FC<HashtagNavBarProps> = ({
+  data,
+  onClickEvent,
+  HashTagScrollTopHandler,
+  $isClick,
+  setIsClick,
+  hashTag,
+  setHashTag,
+  setTagCategory,
+  undefindeTagThumbnail,
+  allTagThumbnail,
+}) => {
+  const [active, setActive] = useState<number>(0);
+  const scrollContainerRef = useRef<HTMLUListElement | null>(null);
+  const otherIndex = data.length + 1;
+  const getUniqueHashtags = (arr: any[]) => {
+    const seenTags = new Set();
+    return arr.filter((item) => {
+      if (seenTags.has(item.tag)) {
+        return false;
+      }
+      seenTags.add(item.tag);
+      return true;
+    });
+  };
+  const uniqueData = getUniqueHashtags(data);
+  const onClickAllTagHandler = () => {
+    setHashTag('');
+    setTagCategory('모든태그');
+    setActive(0);
+    HashTagScrollTopHandler();
+    setIsClick(true);
+  };
+  const onClickhashtagHandler = (hashtag: string, index: number) => {
+    setHashTag(hashtag);
+    setTagCategory('unique');
+    setActive(index);
+    HashTagScrollTopHandler();
+    setIsClick(true);
+  };
+  const onClickOtherHandler = () => {
+    setTagCategory('기타');
+    setActive(otherIndex);
+    HashTagScrollTopHandler();
+    setIsClick(true);
+  };
+  const onClickHashSlideRightHandler = () => {
+    const scrollContainer = scrollContainerRef.current;
+    if (scrollContainer) {
+      scrollContainer.scrollLeft =
+        scrollContainer.scrollWidth - scrollContainer.clientWidth;
+    }
+  };
+  const onClickHashSlideLeftHandler = () => {
+    const scrollContainer = scrollContainerRef.current;
+    if (scrollContainer) {
+      scrollContainer.scrollLeft = 0; // 왼쪽 끝으로 스크롤
+    }
+  };
   return (
-    <HashtagNavBarLayout onClick={onClickEvent} isClick={isClick}>
-      <ScrollBar>
-        <span></span>
-        <span></span>
-        <span></span>
-      </ScrollBar>
-      <HashtagList>
-        {data.map((hashtag, index) => {
-          return (
-            <HashtagItem key={index}>
+    <HashtagNavBarLayout $isClick={$isClick}>
+      {/* {$isClick ? (
+        <div className="button-wrap">
+          <ButtonBox className="hash">
+            <button className="left" onClick={onClickHashSlideLeftHandler}>
+              <ArrowLong />
+            </button>
+            <button onClick={onClickHashSlideRightHandler}>
+              <ArrowLong />
+            </button>
+          </ButtonBox>
+        </div>
+      ) : null} */}
+      <div className="background">
+        <ScrollBar onClick={onClickEvent}>
+          <span></span>
+        </ScrollBar>
+        <HashtagListContainer>
+          <HashtagListOther>
+            <HashtagAll
+              onClick={onClickAllTagHandler}
+              className={active === 0 ? 'active' : ''}
+            >
               <figure>
                 <Image
-                  src={hashtag.src}
-                  alt="v13 image"
+                  src={allTagThumbnail}
+                  alt="hashtag thumbnail image"
                   width={100}
                   height={100}
                   loading="eager"
-                  // placeholder="blur"
-                  // blurDataURL={hashtag.src}
                 />
               </figure>
-              <figcaption>#해시태그</figcaption>
+              <figcaption>#모든태그</figcaption>
+            </HashtagAll>
+            <span className="line"></span>
+          </HashtagListOther>
+          <HashtagList ref={scrollContainerRef}>
+            {uniqueData?.map((hashtag, index) => {
+              return (
+                <HashtagItem
+                  key={index}
+                  onClick={() => onClickhashtagHandler(hashtag.tag, index + 1)}
+                  className={active === index + 1 ? 'active' : ''}
+                >
+                  <figure>
+                    <Image
+                      src={hashtag.image}
+                      alt="hashtag thumbnail imagee"
+                      width={100}
+                      height={100}
+                      loading="eager"
+                    />
+                  </figure>
+                  <figcaption>{`#${hashtag.tag}`}</figcaption>
+                </HashtagItem>
+              );
+            })}
+            <HashtagItem
+              onClick={onClickOtherHandler}
+              className={active === otherIndex ? 'active' : ''}
+            >
+              <figure>
+                <Image
+                  src={undefindeTagThumbnail}
+                  alt="hashtag thumbnail image"
+                  width={100}
+                  height={100}
+                  loading="eager"
+                />
+              </figure>
+              <figcaption>#기타</figcaption>
             </HashtagItem>
-          );
-        })}
-      </HashtagList>
+          </HashtagList>
+          {$isClick ? (
+            // <div className="button-wrap">
+            <ButtonBox className="hash">
+              <button className="left" onClick={onClickHashSlideLeftHandler}>
+                <ArrowLong />
+              </button>
+              <button className="right" onClick={onClickHashSlideRightHandler}>
+                <ArrowLong />
+              </button>
+            </ButtonBox>
+          ) : // </div>
+          null}
+        </HashtagListContainer>
+      </div>
     </HashtagNavBarLayout>
   );
 };

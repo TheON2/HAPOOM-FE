@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import {
   SignUpSection,
   MainHeadText,
@@ -6,24 +6,36 @@ import {
   SignUpBtn,
   StyledInputBox,
   StyledInput,
-  Checkbox,
-  SignUpCheckBox,
-  SignUpCheckBoxLayout,
-  StyledLabel,
-  StyledLabelAll,
-  Line,
   TextErrorParagraph,
-  StyledLabelEssential,
   TextParagraphSns,
   SnsLine,
   TextParagraphInfo,
-  TextParagrapValidate,
 } from '@/styles/signUp';
 import { useMutation } from 'react-query';
 import { addUser } from '@/api/user';
-import { useRouter } from 'next/router';
+import { NextRouter, useRouter } from 'next/router';
 import MobileBottomNav from '../common/MobileBottomNav';
 import SocialLogin from '../SignIn/SocialLogIn';
+import SignUpPwd from './SignUpPwd';
+import SignUpNickname from './SignUpNickname';
+import SignUpCheck from './SignUpCheck';
+import SignUpcontrol from './SignUpControl';
+import axios from 'axios';
+
+const validateEmail = (email: string) => {
+  const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
+  return emailRegex.test(email);
+};
+
+const validatePassword = (password: string) => {
+  const passwordPattern = /^(?=.*\d)(?=.*[a-zA-Z]).{8,}$/;
+  return passwordPattern.test(password);
+};
+
+const validateNickname = (nickname: string) => {
+  const nicknamePattern = /^.{2,8}$/;
+  return nicknamePattern.test(nickname);
+};
 
 export interface Signup {
   email: string;
@@ -44,10 +56,9 @@ export interface CheckBoxInterface {
   checkPersonalInfo: boolean;
   checkNewsletter: boolean;
 }
-type TextInputType = 'email' | 'password' | 'passwordConfirm' | 'nickname';
 
 const SignUpUi = () => {
-  const router = useRouter();
+  const router: NextRouter = useRouter();
   const [signUpState, setSignUpState] = useState<Signup>({
     email: '',
     password: '',
@@ -68,82 +79,99 @@ const SignUpUi = () => {
     checkNewsletter: false,
   });
   const [checkboxErrorMessage, setCheckboxErrorMessage] = useState('');
-
+  const [serverError, setServerError] = useState<string>('');
+  const [serverNicknameError, setServerNicknameError] = useState<string>('');
+  const getForgotPwd = async (email: string) => {
+    const response = await axios.get(`http://localhost:3001/api/auth/${email}`);
+    return response.data;
+  };
+  // const forgotPwdMutaion = useMutation(getForgotPwd, {
+  //   onSuccess: () => {
+  //     // console.log('성공');
+  //   },
+  //   onError: (error) => {
+  //     // console.log('실패', error);
+  //   },
+  // });
   const addUserMutation = useMutation(addUser, {
     onSuccess: () => {
       router.push('/signUpComplete/SignUpComplete');
     },
-    onError: (error) => {
-      console.error('회원가입 실패:', error);
+    onError: (error: any) => {
+      const message = error?.response?.data.errorMessage;
+      if (message) {
+        setServerError(message);
+      } else {
+        alert(
+          '회원가입에 실패하였습니다. 아이디 혹은 비밀번호를 다시 한번 확인해주세요'
+        );
+      }
+      if (
+        error?.response?.data.errorMessage === '이미 존재하는 닉네임입니다.'
+      ) {
+        setServerNicknameError(error?.response?.data.errorMessage);
+      }
     },
   });
 
-  const moveSignInPageHandeler = () => {
+  const moveSignInPageHandeler = useCallback(() => {
     router.push('/auth/SignIn');
-  };
+  }, [router]);
+
+  const moveHomePageHandeler = useCallback(() => {
+    router.push('/');
+  }, [router]);
+
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement & { name: TextInputType }>
+    e: React.ChangeEvent<HTMLInputElement & { name: string }>
   ) => {
-    const { name, value } = e.target;
-
-    setSignUpState((prevSignUpState) => ({
-      ...prevSignUpState,
-      [name]: value,
-    }));
-  };
-
-  const validateEmail = (email: string) => {
-    const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
-    return emailRegex.test(email);
-  };
-
-  const validatePassword = (password: string) => {
-    const passwordPattern = /^(?=.*\d)(?=.*[a-zA-Z]).{8,}$/;
-    return passwordPattern.test(password);
-  };
-
-  const validateNickname = (nickname: string) => {
-    const nicknamePattern = /^.{2,15}$/;
-    return nicknamePattern.test(nickname);
-  };
-
-  const handleCheckboxChange = (
-    e: React.ChangeEvent<HTMLInputElement & { name: keyof CheckBoxInterface }>
-  ) => {
-    const { name, checked } = e.target;
-
-    setCheckboxes((prevState) => {
-      const newState = {
-        ...prevState,
-        [name]: checked,
-      };
-
-      if (name === 'checkAll') {
-        newState.checkTerms = checked;
-        newState.checkPersonalInfo = checked;
-        newState.checkNewsletter = checked;
-      } else {
-        newState.checkAll =
-          newState.checkTerms &&
-          newState.checkPersonalInfo &&
-          newState.checkNewsletter;
-      }
-
-      if (
-        newState.checkTerms ||
-        newState.checkPersonalInfo ||
-        newState.checkNewsletter
-      ) {
-        setCheckboxErrorMessage('');
-      } else {
-        setCheckboxErrorMessage('필수 동의사항에 체크해주세요.');
-      }
-
-      return newState;
+    setSignUpState({
+      ...signUpState,
+      [e.target.name]: e.target.value,
     });
+    setError({ ...error, [e.target.name]: '' });
   };
 
-  const submitUser = (event: any) => {
+  const handleCheckboxChange = useCallback(
+    (
+      e: React.ChangeEvent<HTMLInputElement & { name: keyof CheckBoxInterface }>
+    ) => {
+      const { name, checked } = e.target;
+
+      setCheckboxes((prevState) => {
+        const newState = {
+          ...prevState,
+          [name]: checked,
+        };
+
+        if (name === 'checkAll') {
+          newState.checkTerms = checked;
+          newState.checkPersonalInfo = checked;
+          newState.checkNewsletter = false;
+        } else {
+          newState.checkAll =
+            newState.checkTerms &&
+            newState.checkPersonalInfo &&
+            newState.checkNewsletter;
+        }
+
+        if (
+          newState.checkTerms ||
+          newState.checkPersonalInfo ||
+          newState.checkNewsletter
+        ) {
+          setCheckboxErrorMessage('');
+        } else {
+          setCheckboxErrorMessage('필수 동의사항에 체크해주세요.');
+        }
+
+        return newState;
+      });
+    },
+    []
+  );
+
+  const submitUser = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     let errors: any = {};
@@ -154,27 +182,21 @@ const SignUpUi = () => {
       errors.email = '이메일을 확인해주세요.';
     }
 
-    if (!signUpState.password) {
-      errors.password = '비밀번호를 입력해주세요.';
+    if (
+      !signUpState.password &&
+      signUpState.password !== signUpState.passwordConfirm
+    ) {
+      errors.password = '비밀번호를 확인해주세요';
     } else if (!validatePassword(signUpState.password)) {
-      errors.password =
-        '비밀번호는 영문, 숫자를 포함하여 8자 이상이어야합니다.';
-    }
-
-    if (signUpState.password !== signUpState.passwordConfirm) {
-      errors.passwordConfirm = '비밀번호가 일치하지 않습니다.';
+      errors.password = '비밀번호를 확인해주세요';
     }
 
     if (!signUpState.nickname) {
       errors.nickname = '닉네임을 입력해주세요.';
     } else if (!validateNickname(signUpState.nickname)) {
-      errors.nickname = '2~15자를 입력해주세요.';
+      errors.nickname = '2~8자를 입력해주세요.';
     }
-    if (
-      !checkboxes.checkTerms ||
-      !checkboxes.checkPersonalInfo ||
-      !checkboxes.checkNewsletter
-    ) {
+    if (!checkboxes.checkTerms || !checkboxes.checkPersonalInfo) {
       setCheckboxErrorMessage('필수 동의사항에 체크해주세요.');
       return;
     }
@@ -202,19 +224,26 @@ const SignUpUi = () => {
     }
   };
 
+  // const handleEmailValidateSubmit = (
+  //   event: React.MouseEvent<HTMLButtonElement>
+  // ) => {
+  //   event.preventDefault();
+  //   forgotPwdMutaion.mutate(signUpState.email);
+  // };
+
   return (
     <SignUpSection>
-      <MainHeadText>HAPOOM</MainHeadText>
-      <SubHeadText color="#000" marginBottom="12px">
+      <MainHeadText onClick={moveHomePageHandeler}>HAPOOM</MainHeadText>
+      <SubHeadText color="#000" $marginBottom="12px">
         회원가입
       </SubHeadText>
-      <SocialLogin />
-      <TextParagraphSns>SNS계정으로 간편 로그인/회원가입</TextParagraphSns>
+      {/* <SocialLogin /> */}
+      {/* <TextParagraphSns>SNS계정으로 간편 로그인/회원가입</TextParagraphSns> */}
       <SnsLine></SnsLine>
 
       <form name="register" onSubmit={submitUser}>
         <StyledInputBox>
-          <TextParagraphInfo marginBottom="12px">이메일</TextParagraphInfo>
+          <TextParagraphInfo $marginBottom="12px">이메일</TextParagraphInfo>
           <StyledInput
             type="email"
             name="email"
@@ -223,159 +252,55 @@ const SignUpUi = () => {
             onChange={handleInputChange}
           />
           {error.email && (
-            <TextErrorParagraph style={{ marginBottom: '-12px' }}>
-              {error.email}
-            </TextErrorParagraph>
+            <TextErrorParagraph>{error.email}</TextErrorParagraph>
           )}
-          <SignUpBtn
+          {serverError && (
+            <TextErrorParagraph>{serverError}</TextErrorParagraph>
+          )}
+          {/* <SignUpBtn
             style={{
-              margin: '12px 0 20px 0',
+              margin: '8px 0 20px 0',
               backgroundColor: signUpState.email ? '#0078FF' : '#B3B3B3',
               borderColor: signUpState.email ? '#0078FF' : '#B3B3B3',
             }}
-            onClick={() => alert('준비 중 입니다.')}
+            onClick={handleEmailValidateSubmit}
             disabled={!signUpState.email}
           >
             이메일 인증하기
-          </SignUpBtn>
+          </SignUpBtn> */}
         </StyledInputBox>
 
-        <StyledInputBox>
-          <TextParagraphInfo marginBottom="7px">비밀번호</TextParagraphInfo>
-          <TextParagrapValidate>
-            영문, 숫자를 포함한 8자 이상의 비밀번호를 입력해주세요.
-          </TextParagrapValidate>
-          <StyledInput
-            type="password"
-            name="password"
-            value={signUpState.password}
-            placeholder="비밀번호"
-            onChange={handleInputChange}
-          />
-          {error.password && (
-            <TextErrorParagraph>{error.password}</TextErrorParagraph>
-          )}
-          <TextParagraphInfo>비밀번호 확인</TextParagraphInfo>
-          <StyledInput
-            type="password"
-            name="passwordConfirm"
-            value={signUpState.passwordConfirm}
-            placeholder="비밀번호 확인"
-            onChange={handleInputChange}
-          />
-          {error.passwordConfirm && (
-            <TextErrorParagraph>{error.passwordConfirm}</TextErrorParagraph>
-          )}
-        </StyledInputBox>
-
-        <StyledInputBox>
-          <TextParagraphInfo>닉네임</TextParagraphInfo>
-          <TextParagrapValidate>
-            다른 유저와 겹치지 않도록 입력해주세요.(2~15자)
-          </TextParagrapValidate>
-          <StyledInput
-            type="text"
-            name="nickname"
-            value={signUpState.nickname}
-            placeholder="닉네임은 2자에서 15자입니다."
-            onChange={handleInputChange}
-          />
-          {error.nickname && (
-            <TextErrorParagraph>{error.nickname}</TextErrorParagraph>
-          )}
-        </StyledInputBox>
-
-        <SignUpCheckBoxLayout>
-          <SignUpCheckBox>
-            <Checkbox
-              id="checkAll"
-              type="checkbox"
-              name="checkAll"
-              checked={checkboxes.checkAll}
-              onChange={handleCheckboxChange}
-            />
-            <label htmlFor="checkAll"></label>
-            <StyledLabelAll>전체동의</StyledLabelAll>
-            <StyledLabel>선택항목에 대한 동의 포함</StyledLabel>
-          </SignUpCheckBox>
-          <Line></Line>
-
-          <SignUpCheckBox>
-            <Checkbox
-              id="check-terms"
-              type="checkbox"
-              name="checkTerms"
-              checked={checkboxes.checkTerms}
-              onChange={handleCheckboxChange}
-            />
-            <label htmlFor="check-terms"></label>
-            <StyledLabelEssential>이용약관 (필수)</StyledLabelEssential>
-          </SignUpCheckBox>
-
-          <SignUpCheckBox>
-            <Checkbox
-              id="check-personalInfo"
-              type="checkbox"
-              name="checkPersonalInfo"
-              checked={checkboxes.checkPersonalInfo}
-              onChange={handleCheckboxChange}
-            />
-            <label htmlFor="check-personalInfo"></label>
-            <StyledLabelEssential>
-              개인정보 수집/이용 동의 (필수)
-            </StyledLabelEssential>
-          </SignUpCheckBox>
-
-          <SignUpCheckBox>
-            <Checkbox
-              id="check-newsletter"
-              type="checkbox"
-              name="checkNewsletter"
-              checked={checkboxes.checkNewsletter}
-              onChange={handleCheckboxChange}
-            />
-            <label htmlFor="check-newsletter"></label>
-            <StyledLabelEssential>
-              개인정보 마케팅 활용 동의 (필수)
-            </StyledLabelEssential>
-          </SignUpCheckBox>
-        </SignUpCheckBoxLayout>
-        {checkboxErrorMessage && (
-          <TextErrorParagraph style={{ marginTop: '10px' }}>
-            {checkboxErrorMessage}
-          </TextErrorParagraph>
-        )}
-
-        <SignUpBtn
-          style={{
-            margin: '12px 0 20px 0',
-            backgroundColor:
-              signUpState.email &&
-              signUpState.password &&
-              signUpState.passwordConfirm &&
-              signUpState.nickname
-                ? '#0078FF'
-                : '#B3B3B3',
-            borderColor:
-              signUpState.email &&
-              signUpState.password &&
-              signUpState.passwordConfirm &&
-              signUpState.nickname
-                ? '#0078FF'
-                : '#B3B3B3',
+        <SignUpPwd
+          signUpState={signUpState}
+          handleInputChange={handleInputChange}
+          error={{
+            password: error.password,
+            passwordConfirm: error.passwordConfirm,
           }}
-          disabled={
-            !signUpState.email &&
-            !signUpState.password &&
-            !signUpState.passwordConfirm &&
-            !signUpState.nickname
-          }
-          type="submit"
-        >
-          회원가입하기
-        </SignUpBtn>
+        />
+        <SignUpNickname
+          signUpState={signUpState}
+          handleInputChange={handleInputChange}
+          error={{
+            nickname: error.nickname,
+          }}
+        />
+        {serverNicknameError && (
+          <TextErrorParagraph>{serverNicknameError}</TextErrorParagraph>
+        )}
+        <SignUpCheck
+          checkboxErrorMessage={checkboxErrorMessage}
+          checkboxes={checkboxes}
+          handleCheckboxChange={handleCheckboxChange}
+        />
+        <SignUpcontrol signUpState={signUpState} />
       </form>
-      <SubHeadText color="#0084FF" onClick={moveSignInPageHandeler}>
+
+      <SubHeadText
+        color="#0084FF"
+        style={{ cursor: 'pointer' }}
+        onClick={moveSignInPageHandeler}
+      >
         이미 아이디가 있으신가요? 로그인
       </SubHeadText>
       <MobileBottomNav />
@@ -383,4 +308,4 @@ const SignUpUi = () => {
   );
 };
 
-export default SignUpUi;
+export default React.memo(SignUpUi);

@@ -7,45 +7,90 @@ export const MobileBottomNavLayout = styled.nav`
   bottom: 0;
   width: 100%;
   display: flex;
-  justify-content: center;
-  background: #fff;
-  border-top: 1px solid #000;
-  z-index: 15;
-  color: #0084ff;
+  /* justify-content: center; */
+  background: var(--bg-color);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+  z-index: 115;
+  color: var(--primary-second-color);
+  font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
+  @media screen and (min-width: 768px) {
+    display: none;
+  }
 `;
 
 export const BottomNavList = styled.ul`
-  max-width: 500px;
+  /* max-width: 500px; */
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
 `;
 
 export const BottomNavItem = styled.li`
-  width: 36px;
+  width: 20%;
   height: 36px;
   display: flex;
   justify-content: center;
   align-items: center;
+  p {
+    line-height: 7px;
+  }
 `;
 
-export const IconBox = styled(Link)`
-  display: block;
-  width: 24px;
+export const IconBox = styled.button`
+  width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   font-size: 10px;
-  /* position: relative; */
+  border: none;
+  background: none;
+  color: var(--nav-icon-color);
+  font-weight: 700;
+  cursor: pointer;
+  path {
+    stroke: var(--nav-icon-color);
+  }
+  .image-box {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 2px solid #777;
+    overflow: hidden;
+    svg {
+      width: 90%;
+      height: 90%;
+      object-fit: contain;
+    }
+  }
+
   img {
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover;
+  }
+  &:hover {
+    filter: brightness(0.7);
+    color: var(--primary-second-color);
+    path {
+      stroke: var(--primary-second-color);
+    }
+    .image-box {
+      border: 2px solid var(--primary-second-color);
+    }
+  }
+  &.active {
+    color: var(--primary-second-color);
+    path {
+      stroke: var(--primary-second-color);
+    }
+    .image-box {
+      border: 2px solid var(--primary-second-color);
+    }
   }
 `;
 
@@ -57,7 +102,7 @@ export const SideNavLayout = styled.nav`
   height: 100vh;
   /* padding: 0 24px 50px; */
   background-color: #fff;
-  z-index: 20;
+  z-index: 120;
   display: flex;
   top: 0;
 

@@ -12,10 +12,30 @@
 /.next/
 /out/
 
-/public/sw.js
-/public/ws.js.map
-yarn.lock
+# **/public/service-*.js
+# **/public/sw-*.js
+# **/public/sw.js
+# **/public/sw-custom.js
+# **/public/service-worker.js
+
+# yarn.lock
 .map
+
+## pwa
+
+**/public/precache.*.*.js
+**/public/workbox-*.js
+**/public/worker-*.js
+**/public/fallback-*.js
+**/public/precache.*.*.js.map
+**/public/workbox-*.js.map
+**/public/worker-*.js.map
+**/public/fallback-*.js
+
+
+examples/**/yarn.lock
+examples/**/package-lock.json
+examples/**/pnpm-lock.yaml
 
 # production
 /build
@@ -32,6 +52,7 @@ yarn-error.log*
 
 # local env files
 .env*.local
+.env
 
 # vercel
 .vercel
@@ -39,3 +60,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+package-lock.json
+
+jest.config.js
+jest.setup.js
+__mocks__/
+test/

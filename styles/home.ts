@@ -1,21 +1,345 @@
-import styled from 'styled-components';
+import Link from 'next/link';
+import styled, { createGlobalStyle } from 'styled-components';
 
-// main banner style
-export const MainBannerLayout = styled.section`
+export const TrendGlobalStyle = createGlobalStyle`
+  body{
+    overflow: hidden;
+  }
+  `;
+
+export const HomePageLayout = styled.div`
   width: 100%;
+  height: 100vh;
+  height: 100svh;
   overflow: hidden;
-  position: relative;
+  /* @media screen and (min-width: 768px) {
+    overflow: auto;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  } */
 `;
 
-type SliderListProps = {
+export const MainLayout = styled.main`
+  width: 100%;
+  height: calc(100vh - 230px);
+  height: calc(100svh - 230px);
+  overflow-y: auto;
+  transform: translateY(-103px);
+  background-color: var(--bg-color);
+  padding: 0;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  @media screen and (min-width: 768px) {
+    height: calc(100vh - 240px);
+    transform: translateY(0);
+  }
+  .center {
+    margin: 0 auto;
+    max-width: 768px;
+    width: 100%;
+  }
+`;
+
+// main comment section styled
+export const SectionTitle = styled.h2`
+  max-width: 768px;
+  padding: 26px 36px 24px;
+  color: var(--primary-color);
+  position: relative;
+  &::after {
+    content: '';
+    display: block;
+    width: 5px;
+    height: 20px;
+    position: absolute;
+    top: 50%;
+    left: 24px;
+    transform: translateY(-50%);
+    background-color: var(--primary-color);
+  }
+  @media screen and (min-width: 786px) {
+    padding: 26px 16px 24px;
+    &::after {
+      left: 0;
+    }
+  }
+`;
+
+// main banner style
+type mainBannerProps = {
+  $isClick: boolean;
+};
+
+export const MainBannerContainer = styled.div<mainBannerProps>`
+  width: 100%;
+  height: ${(props) => (props.$isClick ? '230px' : 'calc(100svh - 58px)')};
+  background-color: ${(props) =>
+    props.$isClick ? 'var(--point-bg)' : 'var(--bg-color)'};
+  transition: all 0.8s ease-in-out;
+  position: relative;
+  @media screen and (min-width: 768px) {
+    height: ${(props) => (props.$isClick ? '120px' : '100vh')};
+    p {
+      bottom: ${(props) => (props.$isClick ? '6px' : '12vh')};
+      max-width: 768px;
+      font-size: ${(props) => (props.$isClick ? '14px' : '16px')};
+      line-height: ${(props) => (props.$isClick ? '18px' : '36px')};
+    }
+  }
+`;
+export const RandomContentContainer = styled.div<mainBannerProps>`
+  width: 100%;
+  transition: all 0.3s ease-in-out;
+  opacity: ${(props) => (props.$isClick ? '0' : '1')};
+  animation: ${(props) => (props.$isClick ? 'out' : 'on')} 0.3s ease-in-out
+    forwards;
+  @keyframes off {
+    0% {
+      opacity: 1;
+    }
+    99% {
+      opacity: 0;
+    }
+    100% {
+      display: none;
+    }
+  }
+  @keyframes on {
+    0% {
+      display: none;
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+      display: block;
+    }
+  }
+`;
+export const IntroduceText = styled.p`
+  color: var(--primary-color);
+  font-weight: 500;
+  font-size: 16px;
+  text-align: center;
+  padding: 12px 0;
+  width: 100%;
+`;
+export const NewContentBox = styled.div`
+  max-width: 560px;
+  width: 86%;
+  height: 73vh;
+  height: 73svh;
+  margin: 0 auto;
+  padding: 0 12px 60px;
+  background-color: #fff;
+  box-shadow: var(--shadow-color);
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  figure {
+    width: 100%;
+    height: 75%;
+    /* margin: 0 auto; */
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: all 0.8s ease-in-out;
+    }
+  }
+  @media screen and (min-width: 768px) {
+    height: 75vh;
+    height: 75svh;
+    padding: 0 12px 80px;
+    bottom: 50%;
+    transform: translate(-50%, 50%);
+    figure {
+      height: 86%;
+    }
+  }
+`;
+export const ProfileLink = styled(Link)`
+  align-items: center;
+  gap: 8px;
+  display: flex;
+`;
+export const MainCardInfo = styled.div`
+  padding: 12px 0;
+  margin: 4px 0 0 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  a {
+    display: flex;
+  }
+  img {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+  }
+  p {
+    font-weight: 400;
+    font-size: 14px;
+    color: #777;
+    .nickname-hightlight {
+      /* color: #333; */
+      font-weight: 700;
+    }
+  }
+  @media screen and (min-width: 768px) {
+    margin: 0;
+    .heart {
+      top: 13px;
+      right: 0;
+    }
+  }
+`;
+export const MainBannerBox = styled.div<mainBannerProps>`
+  max-width: 768px;
+  width: 100%;
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  gap: 46px;
+  align-items: center;
+  position: absolute;
+  bottom: 90px;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: all 0.3s ease-in-out;
+  color: #fff;
+
+  @media screen and (min-width: 768px) {
+    padding: 0;
+    justify-content: flex-start;
+    gap: 16px;
+    bottom: ${(props) => (props.$isClick ? '12px' : '12vh')};
+  }
+`;
+export const RandomText = styled.p<mainBannerProps>`
+  width: 100%;
+  display: flex;
+  padding: 8px 24px;
+  border-radius: 30px;
+  flex-direction: column;
+  word-wrap: break-word;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 28px;
+  text-align: center;
+  background-color: var(--random-text-color);
+  color: #fff;
+  transition: all 0.3s ease-in-out;
+  @media screen and (min-width: 768px) {
+    padding: 0;
+    background: none;
+    text-align: start;
+    max-width: 768px;
+    font-size: ${(props) => (props.$isClick ? '14px' : '28px')};
+    flex-direction: ${(props) => (props.$isClick ? 'row' : 'column')};
+    line-height: ${(props) => (props.$isClick ? '18px' : '36px')};
+  }
+`;
+
+export const ButtonTouchBox = styled.div<mainBannerProps>`
+  text-align: center;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  /* position: absolute; */
+  bottom: 120px;
+  right: 50%;
+  color: #fff;
+  transition: all 0.3s ease-in-out;
+
+  button {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: none;
+    border: 2px solid #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: rotate(90deg);
+    transition: all 0.3s ease-in-out;
+
+    cursor: pointer;
+    svg {
+      animation: bounce 1.2s ease-in-out infinite;
+      /* transform: scale(60%); */
+    }
+    path {
+      fill: #fff;
+    }
+    @keyframes bounce {
+      0% {
+        transform: scale(60%) translateX(10%);
+      }
+      50% {
+        transform: scale(60%) translateX(-10%);
+      }
+      100% {
+        transform: scale(60%) translateX(10%);
+      }
+    }
+  }
+  @media screen and (min-width: 768px) {
+    display: flex;
+    flex-direction: ${(props) => (props.$isClick ? 'row' : 'column')};
+    color: ${(props) => (props.$isClick ? '#fff' : '#52acff')};
+    gap: 4px;
+    button {
+      width: 26px;
+      height: 26px;
+      border: ${(props) =>
+        props.$isClick ? '2px solid #fff' : '2px solid #52acff'};
+      transform: ${(props) =>
+        props.$isClick ? 'rotate(-90deg)' : 'rotate(90deg)'};
+      path {
+        fill: ${(props) => (props.$isClick ? '#fff' : '#52acff')};
+      }
+    }
+  }
+`;
+// main banner slide style
+interface SliderListProps {
   $slideindex: number;
   width?: number;
   $sliedsum: number;
+}
+
+type WidthOnly = Pick<SliderListProps, 'width'>;
+type infiniteCarouselProps = {
+  $width?: string;
 };
+export const MainBannerLayout = styled.div<infiniteCarouselProps>`
+  width: ${(props) => (props.$width ? props.$width : '100%')};
+  height: 100%;
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: 12px;
+  position: relative;
+  background-color: var(--detail-img-bg-color);
+  .sigle-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+`;
 
 export const SliderList = styled.ul<SliderListProps>`
   width: ${(props) =>
     props.width ? `${props.width * props.$sliedsum}px` : `500vw`};
+  height: 100%;
   display: flex;
   transform: ${(props) =>
     props.width
@@ -25,17 +349,17 @@ export const SliderList = styled.ul<SliderListProps>`
   list-style: none;
 `;
 
-type SliderItemProps = {
-  width?: number;
-};
-
-export const SliderItem = styled.li<SliderItemProps>`
+export const SliderItem = styled.li<WidthOnly>`
   width: ${(props) => (props.width ? `${props.width}px` : `100vw`)};
-  height: 70vh;
+  height: 100%;
   position: relative;
+
   /* padding: 50px 100px; */
   img {
-    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    /* box-shadow: 0 0 20px rgba(0, 0, 0, 1); */
   }
   p {
     position: absolute;
@@ -47,30 +371,61 @@ export const SliderItem = styled.li<SliderItemProps>`
     line-height: 30px;
     color: #fff;
   }
-  @media screen and (max-width: 786px) {
-    height: 335px;
-    padding: 100px 30px;
+`;
+export const SlideSum = styled.div`
+  padding: 4px 8px 2px;
+  border-radius: 12px;
+  background-color: #ffffff99;
+  color: #538cc0;
+  svg {
+    margin-right: 4px;
+    path {
+      fill: #538cc0;
+    }
+  }
+  @media screen and (min-width: 786px) {
+    margin-right: 12px;
   }
 `;
-
 export const SlideDotBox = styled.div`
   width: 100%;
   display: flex;
-  justify-content: flex-end;
-  padding: 0 24px;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 24px;
   gap: 4px;
-  position: absolute;
-  bottom: 24px;
+  /* position: absolute; */
+  /* bottom: -100%; */
   span {
     display: block;
     width: 8px;
     height: 8px;
-    background-color: #fff;
-    border-radius: 4px;
+    background-color: #8e8e8e;
+    border-radius: 50%;
     cursor: pointer;
     &.active {
-      background-color: #0084ff;
+      background-color: #0084ff99;
     }
+  }
+  /* @media screen and (max-width: 786px) {
+    gap: 12px;
+    span {
+      width: 20px;
+      height: 20px;
+    }
+  } */
+`;
+export const SlideArrowBox = styled.div`
+  width: 106%;
+  position: absolute;
+  top: calc(50% - 20px);
+  left: calc(50%);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transform: translateX(-50%);
+  .right {
+    transform: rotate(180deg);
   }
 `;
 
@@ -78,78 +433,53 @@ export const SlideDotBox = styled.div`
 
 export const HashtagContentsLayout = styled.section`
   width: 100%;
-  /* padding: 50px 100px; */
-  @media screen and (max-width: 786px) {
-    /* padding: 20px 24px; */
+  min-height: 30vh;
+  @media screen and (min-width: 786px) {
+    min-height: 40vh;
   }
 `;
 
-export const HashtagContentsContainer = styled.div`
-  max-width: 1200px;
+export const ScrollBar = styled.div`
   width: 100%;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(3, 1fr);
-  place-items: center;
-  justify-content: center;
-  align-items: center;
-  grid-gap: 4px;
-  @media screen and (max-width: 1260px) {
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(4, 1fr);
+  padding: 8px 0 10px;
+  cursor: pointer;
+  span {
+    display: block;
+    background-color: #e4e1e1;
+    width: 30px;
+    height: 4px;
+    margin: 0 auto 1px;
+    border-radius: 2px;
   }
-  @media screen and (max-width: 768px) {
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(6, 1fr);
+  @media screen and (min-width: 768px) {
+    display: none;
   }
 `;
 
 //popular contents section style
-export const SectionTitle = styled.h2`
-  max-width: 1200px;
-  padding: 26px 36px 24px;
-  color: #0084ff;
-  position: relative;
-  &::after {
-    content: '';
-    display: block;
-    width: 5px;
-    height: 20px;
-    position: absolute;
-    top: 50%;
-    left: 24px;
-    transform: translateY(-50%);
-    background-color: #0084ff;
-  }
-  /* margin: 0 auto 30px; */
-`;
-
+interface PropularSliderListProps {
+  $slideindex: number;
+  $slideListWidth?: number;
+  $slideItemWidth?: number;
+}
+type Slideitemwidth = Pick<PropularSliderListProps, '$slideItemWidth'>;
+type hashtagNavbarProps = {
+  $isClick?: boolean;
+};
 export const PopularContentsLayout = styled.section`
   width: 100%;
-  /* padding: 50px 100px; */
   position: relative;
   @media screen and (max-width: 786px) {
     padding: 20px 0;
   }
 `;
 
-type SliderContainerProps = {
-  $slideitemwidth?: number;
-};
-
-export const ProularContentContainer = styled.div<SliderContainerProps>`
+export const ProularContentContainer = styled.div<Slideitemwidth>`
   max-width: 1200px;
   margin: 0 auto;
   width: 100%;
   overflow: hidden;
 `;
-
-type PropularSliderListProps = {
-  $slideindex: number;
-  $slideListWidth?: number;
-  $slideitemwidth?: number;
-};
 
 export const PopularContentsList = styled.ul<PropularSliderListProps>`
   width: ${(props) =>
@@ -160,17 +490,13 @@ export const PopularContentsList = styled.ul<PropularSliderListProps>`
   gap: 16px;
 
   transform: ${(props) =>
-    props.$slideitemwidth
-      ? `translateX(${props.$slideindex * (props.$slideitemwidth + 4) * -1}px)`
+    props.$slideItemWidth
+      ? `translateX(${props.$slideindex * (props.$slideItemWidth + 4) * -1}px)`
       : 'translateX(0px)'};
   transition: all 0.3s ease-in-out;
 `;
 
-type SliderProps = {
-  $slideItemWidth?: number;
-};
-
-export const PopularContentItem = styled.li<SliderProps>`
+export const PopularContentItem = styled.li<Slideitemwidth>`
   width: ${(props) =>
     props.$slideItemWidth ? `${props.$slideItemWidth - 12}px` : `25px`};
 `;
@@ -188,76 +514,374 @@ export const SlideButtonBox = styled.div`
   }
 `;
 
-type hashtagNavbarProps = {
-  isClick: boolean;
-};
-
 //hashtag navbar style
 export const HashtagNavBarLayout = styled.nav<hashtagNavbarProps>`
   width: 100%;
-  padding: 0px 24px 20px;
   border-radius: 30px 30px 0 0;
-  /* height: 10vh; */
-  /* opacity: 0.5; */
-  /* background-color: #fff; */
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  /* justify-content: space-between; */
-  align-items: center;
-  /* gap: 54px; */
-  transform: translateY(-95%);
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.22) 80%,
-    #fff 90%,
-    #fff 95%,
-    rgba(255, 255, 255, 0.1) 100%
-  );
-
+  transform: translateY(-93%);
   position: relative;
-  /* top: 54px; */
-  z-index: 10;
+  z-index: 110;
   font-size: 10px;
-  color: #fff;
-`;
+  font-weight: 700;
+  color: ${(props) => (props.$isClick ? '#fff' : 'var(--primary-color)')};
+  box-shadow: ${(props) =>
+    props.$isClick ? '0 -5px 16px agba(0,0,0,0.5)' : 'var(--shadow-color)'};
+  overflow: hidden;
+  .button-wrap {
+    max-width: 768px;
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+  }
+  .background {
+    width: 100%;
+    padding: 0px 24px 8px;
+    background: var(--hashtag-bg-gradient);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  @media screen and (min-width: 768px) {
+    transform: translateY(0);
+    border-radius: 0;
+    color: #aaa;
+    overflow: visible;
 
-export const HashtagList = styled.ul`
+    .background {
+      width: 100%;
+      padding: 12px 24px 12px;
+      background: var(--bg-color);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      z-index: -2;
+    }
+  }
+`;
+export const HashtagListContainer = styled.div`
+  max-width: 768px;
   width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  position: relative;
+  gap: 8px;
+`;
+export const HashtagList = styled.ul`
+  flex: 7;
+  max-width: 768px;
+  width: 100%;
+  padding: 6px 8px 4px;
+  border-radius: 12px;
+  display: flex;
+  justify-content: flex-start;
   gap: 12px;
   list-style: none;
-
-  /* @media screen and (max-width: 786px) {
-    gap: 2%;
-  } */
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+  scroll-behavior: smooth;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 `;
-
-export const HashtagItem = styled.li`
-  /* width: 100px; */
+export const HashtagListOther = styled.div`
+  padding: 6px 20px 4px 0px;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  .line {
+    width: 2px;
+    height: 52px;
+    border-radius: 1px;
+    background-color: #deefff90;
+    position: absolute;
+    top: 2px;
+    right: -1px;
+    @media screen and (min-width: 768px) {
+      height: 72px;
+    }
+  }
+`;
+export const HashtagAll = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
   font-size: 9px;
-  /* text-align: center; */
   cursor: pointer;
+  /* width: 44px; */
   figure {
     position: relative;
-    width: 100px;
-    height: 100px;
-    margin-bottom: 2px;
+    margin-bottom: 8px;
     overflow: hidden;
-    border-radius: 8px;
-    /* border: 2px solid #fff; */
-    @media screen and (max-width: 786px) {
-      width: 44px;
-      height: 44px;
-    }
+    border-radius: 12px;
+    width: 44px;
+    height: 44px;
+    /* box-shadow: 0 1px 2px #17417280; */
     img {
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
+  }
+  &.active {
+    /* color: #52acff; */
+    font-weight: 700;
+  }
+  &.active::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 52px;
+    height: 52px;
+    transform: translate(-50%, -69%);
+    border-radius: 16px;
+    border: 5px solid transparent;
+    background-image: var(--hashtag-active);
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+    box-sizing: border-box;
+    z-index: -1;
+  }
+
+  @media screen and (min-width: 768px) {
+    font-size: 12px;
+    font-weight: 500;
+    figure {
+      width: 90px;
+      height: 64px;
+      box-shadow: 0 2px 3px #33476550;
+    }
+    &.active::after {
+      content: '';
+      position: absolute;
+      transform: translate(-50%, -66%);
+      width: 98px;
+      height: 72px;
+      border-radius: 16px;
+    }
+  }
+  &:hover {
+    /* filter: brightness(0.8); */
+  }
+`;
+export const HashtagItem = styled.li`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  font-size: 9px;
+  cursor: pointer;
+  /* width: 44px; */
+  figure {
+    position: relative;
+    margin-bottom: 8px;
+    overflow: hidden;
+    border-radius: 12px;
+    width: 44px;
+    height: 44px;
+    /* box-shadow: 0 1px 2px #17417280; */
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+  &.active {
+    /* color: #52acff; */
+    font-weight: 700;
+  }
+  &.active::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 52px;
+    height: 52px;
+    transform: translate(-50%, -69%);
+    border-radius: 16px;
+    border: 5px solid transparent;
+    background-image: var(--hashtag-active);
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+    box-sizing: border-box;
+    z-index: -1;
+  }
+
+  @media screen and (min-width: 768px) {
+    font-size: 12px;
+    font-weight: 500;
+    figure {
+      width: 90px;
+      height: 64px;
+      box-shadow: 0 2px 5px #33476550;
+    }
+    &.active::after {
+      content: '';
+      position: absolute;
+      transform: translate(-50%, -66%);
+      width: 98px;
+      height: 72px;
+      border-radius: 16px;
+    }
+  }
+  &:hover {
+    /* filter: brightness(0.8); */
+  }
+`;
+
+// popular contents carousel styles
+interface CarouselStyleprops {
+  $active: number;
+  $i: number;
+}
+const MAX_VISIBILITY = 3;
+
+export const HomeMainSection = styled.section`
+  background-color: var(--section-gray);
+  margin-top: 24px;
+  padding-bottom: 36px;
+  @media screen and (min-width: 786px) {
+    padding-top: 24px;
+    padding-bottom: 60px;
+  }
+`;
+
+export const PopularContentsContainer = styled.div`
+  width: 100%;
+  padding: 24px 24px 56px;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+`;
+
+export const CarouselStyle = styled.div`
+  --size: 210px;
+  position: relative;
+  width: var(--size);
+  height: var(--size);
+
+  perspective: 500px;
+  transform-style: preserve-3d;
+  & > div {
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  }
+  @media screen and (min-width: 460px) {
+    --size: 260px;
+  }
+  @media screen and (min-width: 768px) {
+    --size: 320px;
+  }
+`;
+export const CarouselHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+export const ButtonBox = styled.div`
+  /* width: 100%; */
+  display: flex;
+  padding: 0 24px;
+  gap: 12px;
+
+  button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff80;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    cursor: pointer;
+    &.left {
+      transform: rotate(180deg);
+    }
+    &:hover {
+      path {
+        fill: var(--slide-button-fill-color);
+      }
+    }
+  }
+  &.hash {
+    display: none;
+    @media screen and (min-width: 768px) {
+      max-width: calc(100% - 110px);
+      width: 100%;
+      position: absolute;
+      right: 0;
+      top: 0;
+      padding: 0 4px;
+      padding-bottom: 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      /* z-index: -1; */
+      button {
+        width: 32px;
+        height: 32px;
+        background-color: #fff;
+        border: none;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        position: absolute;
+        top: 100%;
+        z-index: 114;
+        &.right {
+          right: 4px;
+        }
+        svg {
+          transform: scale(70%);
+        }
+        path {
+          fill: var(--primary-color);
+        }
+        &:hover path {
+          fill: #2797ff;
+        }
+      }
+    }
+  }
+`;
+export const CardContainer = styled.div<CarouselStyleprops>`
+  position: absolute;
+  width: 100%;
+  /* height: 100%; */
+  border-radius: 8px;
+  overflow: hidden;
+  pointer-events: auto;
+  --max-visibility: 3;
+  --active: ${({ $active, $i }) => ($i === $active ? 1 : 0)};
+  --offset: ${({ $active, $i }) => ($active - $i) / 3};
+  --direction: ${({ $active, $i }) => $active - $i};
+  --abs-offset: ${({ $active, $i }) => Math.abs($active - $i) / 3};
+
+  opacity: ${({ $active, $i }) =>
+    Math.abs($active - $i) / MAX_VISIBILITY >= 1 ? 0 : 1};
+  display: ${({ $active, $i }) =>
+    Math.abs($active - $i) / MAX_VISIBILITY > 1 ? 'none' : 'block'};
+  transform: rotateY(calc(0 * 50deg)) scaleY(calc(1 + var(--abs-offset) * -0.4))
+    translateZ(calc(var(--abs-offset) * -30rem))
+    translateX(calc(var(--direction) * -5.5rem));
+  transition: all 0.3s ease-out;
+  .heart {
+    display: ${({ $active, $i }) => ($i === $active ? 'flex' : 'none')};
+  }
+  @media screen and (min-width: 460px) {
+    transform: rotateY(calc(0 * 50deg))
+      scaleY(calc(1 + var(--abs-offset) * -0.4))
+      translateZ(calc(var(--abs-offset) * -30rem))
+      translateX(calc(var(--direction) * -8rem));
+  }
+  @media screen and (min-width: 768px) {
+    transform: rotateY(calc(0 * 50deg))
+      scaleY(calc(1 + var(--abs-offset) * -0.4))
+      translateZ(calc(var(--abs-offset) * -30rem))
+      translateX(calc(var(--direction) * -14rem));
   }
 `;

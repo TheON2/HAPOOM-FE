@@ -8,10 +8,12 @@ type FlexProps = {
 export const SettingLayout = styled.section`
   display: flex;
   flex-direction: column;
-  height: 1000px;
+  height: auto;
   align-items: center;
-  max-width: 1360px;
+  max-width: 768px;
+  margin: 0 auto;
   padding: 0 24px;
+  border-radius: 25px 25px 0 0;
 `;
 
 export const AccordianContent = styled.div`
@@ -25,13 +27,13 @@ export const ProfileBox = styled.div<FlexProps>`
   padding: 20px 30px;
   gap: 30px;
   h2{
-    color: #000;
+    color: var(--text-color);
     text-align: center;
     font-size: 20px;
     font-weight: 700;
   }
   p {
-    color: rgba(0, 0, 0, 0.40);
+    color: ar(--text-color);
     font-size: 8px;
     font-weight: 400;
     text-align: center;
@@ -111,10 +113,13 @@ export const ButtonBox = styled.div`
     padding: 12px 16px 8px;
     border-radius: 3px;
     color: #fff;
-    border: 1px solid #0084ff;
-    background-color: #0084ff;
+    border: 1px solid #2797FF;
+    background-color: #2797FF;
     text-align: center;
     cursor: pointer;
+    &:hover {
+      filter: brightness(0.8)
+    }
   }
   input {
     width: 0;
@@ -181,3 +186,43 @@ export const TextParagraphPwdCheck = styled.p`
   font-size: 10px;
   font-weight: 400;
 `;
+export const LogOutBtn = styled.button`
+  color: var( --text-color);
+  text-align: center;
+  font-size: 14px;
+  background-color: transparent;
+  border: none;
+  margin: 40px 0;
+  cursor: pointer;
+`;
+
+interface Button {
+  $marginTop?: string;
+}
+export const SettingButton = styled.button<Button>`
+  width: 100%;
+  padding: 10px 16px 8px;
+  margin-top: ${({ $marginTop }) => $marginTop};
+  border-radius: 3px;
+  border: none;
+  color: #fff;
+  background-color: #52acff;
+  cursor: pointer;
+  &.secondary {
+    color: #818181;
+    background-color: #e1e1e1;
+    border: none;
+    &:hover {
+      background-color: #f1f1f1;
+    }
+    &:active {
+      background-color: #d9d9d9;
+    }
+  }
+  &:hover {
+    background-color: #7dc1ff;
+  }
+  &:active {
+    background-color: #2797ff;
+  }
+`

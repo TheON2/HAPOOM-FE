@@ -1,43 +1,34 @@
 import {
-  CloseButton,
-  PlayButton,
-  PlayButtonGroup,
-  PlayerControls,
-  PlayerWrapper,
-  SeekSlider,
-  SeekSliderGroup,
-  TimeLabel,
-  Title,
-  VolumeSlider,
-  VolumeSliderGroup,
-} from '@/styles/youtubeplayer';
+  StyledAuthInput,
+  InputBox,
+  Box,
+  RecordButtonBox,
+} from '@/styles/write';
+import { CloseButton, PlayerWrapper } from '@/styles/youtubeplayer';
 import Script from 'next/script';
 import React, { FormEvent, useEffect, useRef, useState } from 'react';
-import Image from 'next/image';
-
-import playImage from '@/public/play.png';
-import pauseImage from '@/public/pause.png';
+import Button from '../common/Button';
+import { Xmark } from '../common/SVG';
+import { YouTubeSearch } from './YoutubeSearchInput';
 
 interface YoutubePlayerProps {
   videoId: string;
   setVideoId: React.Dispatch<React.SetStateAction<string>>;
   setSelectedTitle: React.Dispatch<React.SetStateAction<string>>;
+  setAudioSubmit: React.Dispatch<React.SetStateAction<boolean>>;
+  update: string;
 }
 
 interface Windows extends Window {
   onYouTubeIframeAPIReady: () => void;
 }
 
-const formatTime = (time: number) => {
-  const minutes = Math.floor(time / 60);
-  const seconds = Math.floor(time % 60);
-  return `${minutes}:${seconds.toString().padStart(2, '0')}`;
-};
-
 const YoutubePlayer = ({
   videoId,
   setVideoId,
   setSelectedTitle,
+  setAudioSubmit,
+  update,
 }: YoutubePlayerProps) => {
   const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null);
   const [player, setPlayer] = useState<YT.Player | null>(null);
@@ -46,28 +37,24 @@ const YoutubePlayer = ({
   const [seek, setSeek] = useState(0);
   const [duration, setDuration] = useState(0);
   const [title, setTitle] = useState<string | null>(null);
+  const [inputURL, setInputURL] = useState(''); // 입력된 URL을 추적
+  const [validURL, setValidURL] = useState(true); // URL 유효성을 추적
 
-  const handlePlayPause = (e: React.MouseEvent) => {
-    e.preventDefault();
-    if (player) {
-      if (player.getPlayerState() === YT.PlayerState.PLAYING) {
-        player.pauseVideo();
+  // URL 유효성 검사 함수
+  const handleURLValidation = () => {
+    setValidURL(true);
+    try {
+      const url = new URL(inputURL);
+      const videoIdParam = url.searchParams.get('v');
+      if (videoIdParam) {
+        setVideoId(inputURL); // 일단 영상 ID를 설정
+        //setAudioSubmit(true);
+        // setValidURL(true); // 여기에서는 유효성을 설정하지 않습니다.
       } else {
-        player.playVideo();
+        throw new Error('Invalid URL');
       }
-    }
-  };
-
-  const handleSeekChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (player) {
-      const time = +e.target.value;
-      player.seekTo(time, true); // 두 번째 매개변수를 true로 설정
-    }
-  };
-
-  const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (player) {
-      player.setVolume(+e.target.value);
+    } catch (error) {
+      setValidURL(false);
     }
   };
 
@@ -76,6 +63,7 @@ const YoutubePlayer = ({
     if (intervalId) {
       clearInterval(intervalId); // 인터벌 종료
     }
+    setAudioSubmit(false);
     setVideoId(''); // 비디오 ID를 지워 플레이어를 닫습니다.
     setTitle('');
     setSelectedTitle('');
@@ -92,12 +80,11 @@ const YoutubePlayer = ({
       if (videoId && !player && playerRef.current) {
         const url = new URL(videoId);
         const videoIdParam = url.searchParams.get('v');
-
         if (videoIdParam) {
           const newPlayer = new YT.Player(playerRef.current, {
             videoId: videoIdParam,
-            height: '0',
-            width: '0',
+            height: '150',
+            width: '400',
             playerVars: {
               autoplay: 1,
             },
@@ -105,22 +92,31 @@ const YoutubePlayer = ({
               onReady: (event) => {
                 const playerInstance = event.target;
                 setTitle(playerInstance.getVideoData().title);
-                const interval = setInterval(() => {
-                  if (
-                    playerInstance.getPlayerState() === YT.PlayerState.PLAYING
-                  ) {
-                    setSeek(playerInstance.getCurrentTime());
-                    setDuration(playerInstance.getDuration());
-                  }
-                }, 1000);
-                setIntervalId(interval);
                 setPlayer(playerInstance);
               },
               onStateChange: (event) => {
                 if (event.data === YT.PlayerState.PLAYING) {
+                  setAudioSubmit(true);
                   setPlaying(true);
                 } else if (event.data === YT.PlayerState.PAUSED) {
                   setPlaying(false);
+                } else if (event.data === YT.PlayerState.ENDED) {
+                  setPlaying(false);
+                  setSeek(duration); // 플레이가 종료되면 Seek을 duration으로 설정
+                }
+              },
+              onError: (event) => {
+                if ([2, 5, 100, 101, 150].includes(event.data)) {
+                  setValidURL(false); // 여기에서 비디오의 유효성을 다시 검사
+                  setAudioSubmit(false);
+                  if (intervalId) {
+                    clearInterval(intervalId);
+                  }
+                  setVideoId('');
+                  setTitle('');
+                  setSelectedTitle('');
+                  setSeek(0);
+                  setDuration(0);
                 }
               },
             },
@@ -141,45 +137,42 @@ const YoutubePlayer = ({
   }, [videoId, player]);
 
   return (
-    <>
+    <RecordButtonBox>
+      <InputBox
+        type="text"
+        placeholder="YouTube URL로 공유하기"
+        value={inputURL}
+        onChange={(e) => setInputURL(e.target.value)}
+      />
+      <YouTubeSearch
+        setVideoId={setVideoId}
+        setSelectedTitle={setSelectedTitle}
+        update={update}
+        videoId={videoId}
+      />
+      {!validURL && <div>URL이 유효하지 않습니다.</div>}
       <PlayerWrapper videoId={videoId}>
-        <CloseButton onClick={handleClosePlayer}>X</CloseButton>
-        <Title>{title}</Title>
-        <div id="player" ref={playerRef} style={{ display: 'none' }} />
-
-        <PlayerControls>
-          <PlayButtonGroup>
-            <PlayButton onClick={handlePlayPause}>
-              {playing ? (
-                <Image src={pauseImage} alt="Pause" width={25} height={25} />
-              ) : (
-                <Image src={playImage} alt="Play" width={25} height={25} />
-              )}
-            </PlayButton>
-          </PlayButtonGroup>
-          <SeekSliderGroup>
-            <TimeLabel>{formatTime(seek)}</TimeLabel>
-            <SeekSlider
-              type="range"
-              min="0"
-              max={duration}
-              value={seek}
-              onChange={handleSeekChange}
-            />
-            <TimeLabel>{formatTime(duration)}</TimeLabel>
-          </SeekSliderGroup>
-          <VolumeSliderGroup>
-            <VolumeSlider
-              type="range"
-              min="0"
-              max="100"
-              onChange={handleVolumeChange}
-            />
-          </VolumeSliderGroup>
-        </PlayerControls>
+        {update !== '3' && (
+          <CloseButton onClick={handleClosePlayer}>
+            <Xmark />
+          </CloseButton>
+        )}
+        <div id="player" ref={playerRef} />
         <Script src="https://www.youtube.com/iframe_api" />
       </PlayerWrapper>
-    </>
+      {videoId ? (
+        <Button type="button" onClick={handleClosePlayer}>
+          취소
+        </Button>
+      ) : (
+        <Button type="button" onClick={handleURLValidation}>
+          확인
+        </Button>
+      )}
+      {/* <Button type="button" onClick={handleURLValidation}>
+        확인
+      </Button> */}
+    </RecordButtonBox>
   );
 };
 

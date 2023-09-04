@@ -3,45 +3,71 @@ import {
   FollowBox,
   NicknameBox,
   ProfileContentsBox,
-  SettingPageLink,
   UserProfileCardBox,
 } from '@/styles/user';
-import Image from 'next/image';
 import b1 from '../../public/b1.png';
 import { UserPageData } from './UserUi';
-
+import Link from 'next/link';
+import { UserState } from '@/redux/reducers/userSlice';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/redux/config/configStore';
+import ProfileImage from '../common/ProfileImage';
 interface UserProfileCardProps {
   data: UserPageData | undefined;
+  userId: string;
 }
 
-const UserProfileCard: React.FC<UserProfileCardProps> = ({ data }) => {
+interface FollowLinkProps {
+  type: 'followers' | 'followings';
+  count: number;
+  userId: number | null;
+}
+
+const FollowLink: React.FC<FollowLinkProps> = ({ type, count, userId }) => (
+  <Link href={`/User/FollowTab?tab=${type}&userId=${userId}`}>
+    {type === 'followers' ? '팔로워' : '팔로잉'} {count}
+  </Link>
+);
+
+const UserProfileCard: React.FC<UserProfileCardProps> = ({ data, userId }) => {
+  const { user }: { user: UserState['user'] } = useSelector(
+    (state: RootState) => state.user
+  );
   if (!data) {
     return null;
   }
+
+  const followerCount = data.followerCount || 0;
+  const followingCount = data.followingCount || 0;
+
+  const userImageSrc = data.user.userImage?.startsWith('http')
+    ? data.user.userImage
+    : b1;
+
   return (
     <UserProfileCardBox>
-      <Image
-        src={
-          data?.user.userImage && data.user.userImage.startsWith('http')
-            ? data.user.userImage
-            : b1
-        }
-        alt={'프로필사진'}
-        width={51}
-        height={51}
-        objectFit={'cover'}
-        quality={70}
-        loading="eager"
-      />
+      <div className="img">
+        <ProfileImage
+          userImage={data?.user?.userImage}
+          preset={data?.user?.preset}
+        />
+      </div>
       <ProfileContentsBox>
         <NicknameBox>
-          <p className="nickName">{data?.user.nickname}</p>
-          <SettingPageLink href={'/setting/Setting'}>설정</SettingPageLink>
+          <p className="nickName">{data.user.nickname}</p>
         </NicknameBox>
         <FollowBox>
-          <p>팔로워 3</p>
+          <FollowLink
+            type="followers"
+            count={followerCount}
+            userId={data.user.userId}
+          />
           <span>|</span>
-          <p>팔로잉 3</p>
+          <FollowLink
+            type="followings"
+            count={followingCount}
+            userId={data.user.userId}
+          />
         </FollowBox>
       </ProfileContentsBox>
     </UserProfileCardBox>

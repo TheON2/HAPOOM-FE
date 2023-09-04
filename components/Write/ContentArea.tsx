@@ -1,11 +1,32 @@
-import React, { useState, useCallback } from 'react';
-
+import React, { useState, useCallback, useEffect } from 'react';
+import styled from 'styled-components';
+import { Box, LimitNumBox } from '@/styles/write';
 interface ContentAreaProps {
   content: string;
   setContent: React.Dispatch<React.SetStateAction<string>>;
 }
 
+const TextArea = styled.textarea`
+  width: 100%;
+  height: 240px;
+
+  resize: none;
+  padding: 15px 24px;
+  /* border: var(--input-border); */
+  border: none;
+  border-radius: 4px;
+  background-color: var(--input-bg-color);
+  font-size: 15px;
+  outline: none;
+  line-height: 24px;
+  @media (min-width: 768px) {
+    height: 165px;
+  }
+`;
+
 const ContentArea: React.FC<ContentAreaProps> = ({ content, setContent }) => {
+  const [isMaxLength, setIsMaxLength] = useState<boolean>(false);
+
   const maxLength = 140;
 
   const handleInputChange = useCallback(
@@ -16,44 +37,26 @@ const ContentArea: React.FC<ContentAreaProps> = ({ content, setContent }) => {
     },
     [setContent]
   );
-
-  const isMaxLength = content.length >= maxLength;
-  const color = isMaxLength ? 'red' : 'black';
-
+  useEffect(() => {
+    if (content.length >= maxLength) {
+      setIsMaxLength(true);
+    } else {
+      setIsMaxLength(false);
+    }
+  }, [content]);
   return (
     <>
-      <label>
-        <h3 style={{ float: 'left', margin: '10px 0' }}>문구입력</h3>
-      </label>
-      <div
-        style={{
-          position: 'relative',
-          width: 400,
-          height: 100,
-        }}
-      >
-        <textarea
-          style={{
-            width: '100%',
-            height: '100%',
-            resize: 'none',
-            padding: '5px',
-            border: '2px solid #0084ff',
-          }}
+      <Box>
+        <label>문구입력</label>
+        <TextArea
           value={content}
           onChange={handleInputChange}
+          placeholder="문구를 입력해주세요"
         />
-        <div
-          style={{
-            position: 'absolute',
-            bottom: 5,
-            right: 10,
-            color: color,
-          }}
-        >
+        <LimitNumBox $color={isMaxLength}>
           {content.length}/{maxLength}
-        </div>
-      </div>
+        </LimitNumBox>
+      </Box>
     </>
   );
 };

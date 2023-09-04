@@ -3,11 +3,11 @@ import Image from 'next/image';
 import { ProfileBox } from '@/styles/setting';
 import { profilePreset } from '@/public/presetData';
 
-type profileProps = {
-  userImage: string;
-  preset: number;
-  nick: string;
-  email: string;
+type ProfileProps = {
+  userImage?: string;
+  preset?: number;
+  nick?: string;
+  email?: string;
   direction?: 'column' | 'row';
 };
 
@@ -17,7 +17,7 @@ const Profile = ({
   nick,
   email,
   direction,
-}: profileProps) => {
+}: ProfileProps) => {
   const [profileImage, setProfileImage] = useState<string | undefined>();
   const [nickname, setNickname] = useState<string>('nick');
 
@@ -33,7 +33,7 @@ const Profile = ({
   }, [preset]);
 
   useEffect(() => {
-    setNickname(nick);
+    setNickname(nick || '');
   }, [nick]);
 
   return (
@@ -45,17 +45,16 @@ const Profile = ({
             alt={'image'}
             width={74}
             height={74}
-            objectFit="cover"
+            priority
           />
         )}
       </div>
       <div>
         <h2>{nickname}</h2>
         <span></span>
-        <p>{email}</p>
+        <p style={{ fontSize: '12px' }}>{email}</p>
       </div>
     </ProfileBox>
   );
 };
-
-export default Profile;
+export default React.memo(Profile);

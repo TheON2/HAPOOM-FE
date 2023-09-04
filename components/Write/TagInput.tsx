@@ -1,7 +1,15 @@
-import { StyledAuthInput } from '@/styles/write';
+import {
+  Box,
+  InputBox,
+  InputContainer,
+  LimitNumBox,
+  TagBox,
+} from '@/styles/write';
 import React, { KeyboardEvent, useState, useCallback } from 'react';
 import Tag from './Tag';
-
+import { styled } from 'styled-components';
+import useModal from '@/hooks/useModal';
+import Modal from '@/components/common/Modal';
 interface TagInputProps {
   tags: string[];
   setTags: (tags: string[]) => void;
@@ -11,6 +19,8 @@ const MAX_TAGS = 5;
 
 const TagInput: React.FC<TagInputProps> = ({ tags, setTags }) => {
   const [inputValue, setInputValue] = useState('');
+  const { isModalOpen, modalMessge, openModal, closeModal } = useModal();
+  const [isMaxLength, setIsMaxLength] = useState<boolean>(false);
 
   const handleDelete = useCallback(
     (tagToDelete: string) => {
@@ -21,29 +31,55 @@ const TagInput: React.FC<TagInputProps> = ({ tags, setTags }) => {
 
   const handleTagChange = useCallback(
     (e: KeyboardEvent<HTMLInputElement>) => {
-      if (e.key === 'Enter' || e.key === ',') {
+      if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
 
         const newTag = e.currentTarget.value.trim();
-
+        const hasSpecialCharacters =
+          /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/.test(newTag);
+        if (hasSpecialCharacters) {
+          openModal({
+            actionText: '확인',
+            modalMessge: '해시태그에는 특수문자를 사용할 수 없습니다!',
+          });
+          return;
+        }
+        if (newTag === '전체' || newTag === '기타') {
+          openModal({
+            actionText: '확인',
+            modalMessge: '해시태그에 "전체" 또는 "기타"를 사용할 수 없습니다!',
+          });
+          return;
+        }
         if (newTag && !tags.includes(newTag)) {
           if (newTag.length > 5) {
-            alert('해시태그는 5글자를 넘길 수 없습니다!');
+            openModal({
+              actionText: '확인',
+              modalMessge: '해시태그는 5글자를 넘길 수 없습니다!',
+            });
             return;
           }
 
           if (newTag.length < 2) {
-            alert('해시태그는 최소 2글자 이상이어야 합니다!');
+            openModal({
+              actionText: '확인',
+              modalMessge: '해시태그는 최소 2글자 이상 이어야 합니다!',
+            });
             return;
           }
 
           if (tags.length >= MAX_TAGS) {
-            alert(`You can only have up to ${MAX_TAGS} tags.`);
+            setIsMaxLength(true);
+            openModal({
+              actionText: '확인',
+              modalMessge: `태그는 최대 ${MAX_TAGS}까지 업로드할 수 있습니다.`,
+            });
             return;
+          } else {
+            setIsMaxLength(false);
           }
 
           setTags([...tags, newTag]);
-
           setInputValue('');
         }
       }
@@ -52,39 +88,39 @@ const TagInput: React.FC<TagInputProps> = ({ tags, setTags }) => {
   );
 
   const isMaxTags = tags.length >= MAX_TAGS;
-  const color = isMaxTags ? 'red' : 'black';
 
   return (
     <>
-      <label>
-        <h3 style={{ float: 'left', margin: '10px 0' }}>태그</h3>
-      </label>
-      <StyledAuthInput
-        type="text"
-        placeholder="#태그"
-        value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
-        onKeyDown={handleTagChange}
-        style={{ width: '400px', border: '2px solid #0084ff' }}
-        disabled={isMaxTags}
-      />
-      <div style={{ position: 'relative', width: 400 }}>
-        <div
-          style={{
-            position: 'absolute',
-            bottom: 5,
-            right: 10,
-            color: color,
-          }}
-        >
+      <InputContainer>
+        <label>태그</label>
+        <InputBox
+          type="text"
+          placeholder="태그를 입력해주세요"
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+          onKeyUp={handleTagChange}
+          disabled={isMaxTags}
+        />
+        <LimitNumBox $color={isMaxTags}>
           {tags.length}/{MAX_TAGS}
-        </div>
-      </div>
-      <div style={{ display: 'flex', gap: '10px' }}>
+        </LimitNumBox>
+      </InputContainer>
+      <p className="small">태그 입력후 ENTER or SPACE 를 눌러주세요!</p>
+      <TagBox>
         {tags.map((tag, index) => (
           <Tag key={index} tag={tag} onDelete={handleDelete} />
         ))}
-      </div>
+      </TagBox>
+      {isModalOpen && (
+        <Modal
+          isOpen={isModalOpen}
+          setIsOpen={closeModal}
+          actionText={modalMessge.actionText}
+          onClickEvent={modalMessge.onClickEvent || null}
+        >
+          {modalMessge.modalMessge}
+        </Modal>
+      )}
     </>
   );
 };
