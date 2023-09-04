@@ -81,10 +81,10 @@ const SignUpUi = () => {
   const [checkboxErrorMessage, setCheckboxErrorMessage] = useState('');
   const [serverError, setServerError] = useState<string>('');
   const [serverNicknameError, setServerNicknameError] = useState<string>('');
-  const getForgotPwd = async (email: string) => {
-    const response = await axios.get(`http://localhost:3001/api/auth/${email}`);
-    return response.data;
-  };
+  // const getForgotPwd = async (email: string) => {
+  //   const response = await axios.get(`http://localhost:3001/api/auth/${email}`);
+  //   return response.data;
+  // };
   // const forgotPwdMutaion = useMutation(getForgotPwd, {
   //   onSuccess: () => {
   //     // console.log('성공');

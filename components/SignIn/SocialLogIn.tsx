@@ -41,8 +41,8 @@ const SocialLogin = () => {
         <Image
           width={64}
           height={64}
-          src={google}
-          alt="구글로그인"
+          src={naver}
+          alt="네이버로그인"
           quality={80}
           style={{ borderRadius: '50%', cursor: 'pointer' }}
         />
@@ -69,8 +69,8 @@ const SocialLogin = () => {
         <Image
           width={64}
           height={64}
-          src={naver}
-          alt="네이버로그인"
+          src={google}
+          alt="구글로그인"
           quality={80}
           style={{ borderRadius: '50%', cursor: 'pointer' }}
         />
