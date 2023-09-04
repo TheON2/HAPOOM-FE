@@ -63,16 +63,9 @@ const PopularContentsCarousel: React.FC<populerCarouselProps> = ({ data }) => {
       <div className="center">
         <CarouselHeader>
           <SectionTitle>#오늘의 좋아요</SectionTitle>
-          {/* <ButtonBox>
-            <button className="left" onClick={() => onClickArrowHandler(-1)}>
-              <ArrowLong />
-            </button>
-            <button onClick={() => onClickArrowHandler(+1)}>
-              <ArrowLong />
-            </button>
-          </ButtonBox> */}
         </CarouselHeader>
         <PopularContentsContainer
+          data-testid="carousel-container"
           onMouseDown={handleMouseDown}
           onMouseMove={handleMouseMove}
           onMouseUp={handleMouseUp}
@@ -84,6 +77,7 @@ const PopularContentsCarousel: React.FC<populerCarouselProps> = ({ data }) => {
           <Carousel $active={active}>
             {data.map((item: ImageContentProps, idx: number) => (
               <ImageContent
+                data-testid={idx === active ? 'active-item' : undefined}
                 key={idx}
                 src={item.image}
                 alt={'popular content image'}

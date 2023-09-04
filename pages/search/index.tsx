@@ -131,19 +131,21 @@ const Search = () => {
         {searchData ? (
           <SearchResult option={option} data={searchData} />
         ) : !isSuccess ? (
-          <RecommendedSearchList>
+          <>
             <p>현재 인기 있는 검색어입니다</p>
-            {recommended.map((keyword, idx) => {
-              return (
-                <RecommendedSearchItem
-                  key={idx}
-                  onClick={() => onClickKeywordHanlder(keyword.searchText)}
-                >
-                  {keyword.viewText}
-                </RecommendedSearchItem>
-              );
-            })}
-          </RecommendedSearchList>
+            <RecommendedSearchList>
+              {recommended.map((keyword, idx) => {
+                return (
+                  <RecommendedSearchItem
+                    key={idx}
+                    onClick={() => onClickKeywordHanlder(keyword.searchText)}
+                  >
+                    {keyword.viewText}
+                  </RecommendedSearchItem>
+                );
+              })}
+            </RecommendedSearchList>
+          </>
         ) : (
           <NoneSearchResult>잠시만 기다려주세요</NoneSearchResult>
         )}

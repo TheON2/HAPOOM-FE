@@ -45,6 +45,7 @@ const StartPageSection = styled.section`
 const MoveStartpage = () => {
   const noneStartPage = useRef<any>();
   React.useEffect(() => {
+    sessionStorage.setItem('startPageShown', 'true');
     const timer = setTimeout(() => {
       noneStartPage.current.style.display = 'none';
     }, 3500);
