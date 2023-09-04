@@ -5,7 +5,7 @@ const createJestConfig = nextJest({
 });
 
 const customJestConfig = {
-  setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
+  setupFilesAfterEnv: ['@testing-library/jest-dom/extend-expect'],
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
     '^@components/(.*)$': '<rootDir>/src/components/$1',
@@ -15,6 +15,8 @@ const customJestConfig = {
     '^next/router$': '<rootDir>/__mocks__/next/router.js',
   },
   testEnvironment: 'jsdom',
+  moduleFileExtensions: ['js', 'json', 'jsx', 'ts', 'tsx', 'json'],
+  transformIgnorePatterns: ['<rootDir>/node_modules/'],
 };
 
 module.exports = createJestConfig(customJestConfig);
