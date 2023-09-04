@@ -63,3 +63,8 @@ yarn-error.log*
 next-env.d.ts
 
 package-lock.json
+
+jest.config.js
+jest.setup.js
+__mocks__/
+test/
