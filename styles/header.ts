@@ -27,10 +27,10 @@ export const HeaderLayout = styled.header<HeaderProps>`
   font-weight: 700;
   h1 {
     /* color: #2797ff; */
-    color: var(--primary-color);
+    color: var(--logo-color);
   }
   .active {
-    color: var(--primary-color);
+    color: var(--header-nav-active-color);
   }
 
   @media screen and (min-width: 768px) {
@@ -54,33 +54,19 @@ export const HeaderLayout = styled.header<HeaderProps>`
   }
   .search {
     color: var(--button-hover-color);
-
-    svg {
-      width: 68%;
-      height: 68%;
-      path {
-        stroke: var(--button-hover-color);
-      }
-    }
     &.active {
-      color: var(--primary-color);
+      color: var(--header-nav-active-color);
       path {
-        stroke: ${(props) => (props.$sticky ? '#fff' : 'var(--primary-color)')};
+        stroke: ${(props) =>
+          props.$sticky ? '#fff' : 'var(--header-nav-active-color)'};
       }
     }
   }
   .edit {
     color: var(--button-hover-color);
     font-weight: 700;
-    svg {
-      width: 68%;
-      height: 68%;
-      path {
-        fill: var(--button-hover-color);
-      }
-    }
     &.active {
-      color: var(--primary-color);
+      color: var(--header-nav-active-color);
       path {
         fill: ${(props) => (props.$sticky ? '#fff' : 'var(--primary-color)')};
       }
@@ -92,24 +78,31 @@ export const HeaderLayout = styled.header<HeaderProps>`
     backdrop-filter: blur(0px);
     border-bottom: var(--header-bg-color);
     color: ${(props) =>
-      props.$sticky ? 'var(--button-hover-color)' : '#C6E2FC'};
+      props.$sticky
+        ? 'var(--button-hover-color)'
+        : 'var(--header-nav-sticky-color)'};
     /* path {
       fill: ${(props) => (props.$sticky ? ROUTE_ACTION_COLOR : '#C6E2FC')};
     } */
     h1 {
-      color: ${(props) => (props.$sticky ? 'var(--primary-color)' : '#fff')};
+      color: ${(props) => (props.$sticky ? 'var(--logo-color)' : '#fff')};
     }
     .active {
-      color: ${(props) => (props.$sticky ? 'var(--primary-color)' : '#fff')};
+      color: ${(props) =>
+        props.$sticky ? 'var(--header-nav-active-color)' : '#fff'};
     }
 
     .search {
       color: ${(props) =>
-        props.$sticky ? 'var(--button-hover-color)' : '#C6E2FC'};
+        props.$sticky
+          ? 'var(--button-hover-color)'
+          : 'var(--header-nav-sticky-color)'};
     }
     .edit {
       color: ${(props) =>
-        props.$sticky ? 'var(--button-hover-color)' : '#C6E2FC'};
+        props.$sticky
+          ? 'var(--button-hover-color)'
+          : 'var(--header-nav-sticky-color)'};
     }
   }
 `;

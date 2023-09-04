@@ -50,8 +50,9 @@ export const MainLayout = styled.main`
 export const SectionTitle = styled.h2`
   max-width: 768px;
   padding: 26px 36px 24px;
-  color: var(--primary-color);
+  color: var(--section-text-color);
   position: relative;
+  font-size: 20px;
   &::after {
     content: '';
     display: block;
@@ -61,7 +62,7 @@ export const SectionTitle = styled.h2`
     top: 50%;
     left: 24px;
     transform: translateY(-50%);
-    background-color: var(--primary-color);
+    background-color: var(--section-text-color);
   }
   @media screen and (min-width: 786px) {
     padding: 26px 16px 24px;
@@ -133,16 +134,18 @@ export const IntroduceText = styled.p`
 export const NewContentBox = styled.div`
   max-width: 560px;
   width: 86%;
-  height: 73vh;
-  height: 73svh;
+  height: 75vh;
+  height: 75svh;
   margin: 0 auto;
   padding: 0 12px 60px;
   background-color: #fff;
   box-shadow: var(--shadow-color);
   position: absolute;
-  bottom: 30px;
   left: 50%;
+  top: 70px;
   transform: translateX(-50%);
+  /* bottom: 50%;
+  transform: translate(-50%, 55%); */
   figure {
     width: 100%;
     height: 75%;
@@ -155,10 +158,9 @@ export const NewContentBox = styled.div`
     }
   }
   @media screen and (min-width: 768px) {
-    height: 75vh;
-    height: 75svh;
     padding: 0 12px 80px;
     bottom: 50%;
+    top: auto;
     transform: translate(-50%, 50%);
     figure {
       height: 86%;
@@ -205,19 +207,21 @@ export const MainCardInfo = styled.div`
 export const MainBannerBox = styled.div<mainBannerProps>`
   max-width: 768px;
   width: 100%;
-  padding: 16px 24px;
+  padding: 0px 24px;
   display: flex;
   justify-content: space-between;
   gap: 46px;
   align-items: center;
   position: absolute;
-  bottom: 90px;
+  top: 70px;
   left: 50%;
   transform: translateX(-50%);
   transition: all 0.3s ease-in-out;
   color: #fff;
 
   @media screen and (min-width: 768px) {
+    bottom: 90px;
+    top: auto;
     padding: 0;
     justify-content: flex-start;
     gap: 16px;
@@ -227,13 +231,13 @@ export const MainBannerBox = styled.div<mainBannerProps>`
 export const RandomText = styled.p<mainBannerProps>`
   width: 100%;
   display: flex;
-  padding: 8px 24px;
+  padding: 8px 16px;
   border-radius: 30px;
   flex-direction: column;
   word-wrap: break-word;
   font-size: 14px;
   font-weight: 700;
-  line-height: 28px;
+  line-height: 1.4;
   text-align: center;
   background-color: var(--random-text-color);
   color: #fff;

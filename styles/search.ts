@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const SearchLayout = styled.main`
   width: 100%;
-  padding: 46px 24px 20px;
+  padding: 100px 24px 20px;
 
   .search-button {
     width: 32px;
@@ -25,8 +25,8 @@ export const SearchLayout = styled.main`
     font-size: 16px;
     font-weight: bold;
     text-align: center;
-    padding: 0px 0 20px;
-    margin: 0px 0 20px;
+    padding: 0px 0 25px;
+    margin: 0px 0 35px;
     &::after {
       content: '';
       display: block;
