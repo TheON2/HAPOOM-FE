@@ -5,6 +5,8 @@ import google from '../../public/google.png';
 import kakao from '../../public/kakao.png';
 import naver from '../../public/naver.png';
 import { SignUpSocialSignUpBox } from '@/styles/signIn';
+import axios from 'axios';
+import instance from '@/axios/api';
 
 const SocialLogin = () => {
   const temporaryClick = () => {
@@ -12,22 +14,8 @@ const SocialLogin = () => {
   };
 
   const handleLogin = (loginUrl: string) => {
-    if (typeof window === 'undefined') {
-      return;
-    }
-
-    if (window.document.hasStorageAccess) {
-      window.document.hasStorageAccess().then((hasAccess) => {
-        if (!hasAccess) {
-          window.document.requestStorageAccess().then(() => {
-            window.location.href = loginUrl;
-          });
-        } else {
-          window.location.href = loginUrl;
-        }
-      });
-    } else {
-      window.location.href = loginUrl;
+    if (typeof window !== 'undefined') {
+      window.location.href = loginUrl; // 사용자를 해당 로그인 URL로 리다이렉트
     }
   };
 
