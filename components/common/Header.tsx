@@ -53,9 +53,9 @@ const Header = ({ $sticky, ...restProps }: any) => {
   const [isShowMenu, setIsShowMenu] = useState<boolean>(false);
   const BellColor = () => {
     if (isTrend) {
-      return $sticky ? 'var(--primary-color)' : '#fff';
+      return $sticky ? 'var(--header-nav-active-color)' : '#fff';
     } else {
-      return '#2797FF';
+      return 'var(--header-nav-active-color)';
     }
   };
 
@@ -180,7 +180,6 @@ const Header = ({ $sticky, ...restProps }: any) => {
               href={'/search'}
               className={isSearch ? 'active search' : ' search'}
             >
-              {/* <SearchIcon fillColor={$sticky ? '#fff' : '#9acfff'} /> */}
               검색
             </Link>
             |
@@ -189,7 +188,6 @@ const Header = ({ $sticky, ...restProps }: any) => {
               className={isWrite ? 'active edit' : ' edit'}
             >
               글쓰기
-              {/* <EditIcon fillColor={$sticky ? '#fff' : '#9acfff'} /> */}
             </button>
             |
             <Link href={'/'} className={isTrend ? 'active' : ''}>
@@ -239,9 +237,6 @@ const Header = ({ $sticky, ...restProps }: any) => {
           </MobileBox>
         </div>
       </HeaderLayout>
-      {/* <GoWriteLink onClick={goToWritePage} href={'/post/Write'}>
-        <EditIcon />
-      </GoWriteLink> */}
       {isShowMenu && (
         <SideNav setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu} />
       )}

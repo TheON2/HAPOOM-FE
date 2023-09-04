@@ -54,14 +54,6 @@ export const HeaderLayout = styled.header<HeaderProps>`
   }
   .search {
     color: var(--button-hover-color);
-
-    svg {
-      width: 68%;
-      height: 68%;
-      path {
-        stroke: var(--button-hover-color);
-      }
-    }
     &.active {
       color: var(--header-nav-active-color);
       path {
@@ -73,13 +65,6 @@ export const HeaderLayout = styled.header<HeaderProps>`
   .edit {
     color: var(--button-hover-color);
     font-weight: 700;
-    svg {
-      width: 68%;
-      height: 68%;
-      path {
-        fill: var(--button-hover-color);
-      }
-    }
     &.active {
       color: var(--header-nav-active-color);
       path {
