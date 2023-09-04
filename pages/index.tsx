@@ -18,6 +18,7 @@ import { setCookie } from 'nookies';
 import { HomePageLayout, MainLayout, TrendGlobalStyle } from '@/styles/home';
 import { MainPageProps } from '@/types/home';
 import StartPage from './startpage/StartPage';
+import { useRouter } from 'next/router';
 
 const Home: NextPage<MainPageProps> = ({
   data,
@@ -48,6 +49,7 @@ const Home: NextPage<MainPageProps> = ({
   const [hashTag, setHashTag] = useState<string>(tagFilter[0].tag);
   const [tagCategory, setTagCategory] = useState<string>('모든태그');
   const [isClick, setIsClick] = useState<boolean>(false);
+  const [isStart, setIsStart] = useState<boolean>(false);
   const mainRef = useRef<HTMLDivElement | null>(null);
   const onClickBottomNavHandler = () => {
     setIsClick(!isClick);
@@ -90,41 +92,55 @@ const Home: NextPage<MainPageProps> = ({
     setCookie(null, 'updateId', '0', { path: '/' });
   }
 
+  useEffect(() => {
+    if (sessionStorage.getItem('startPageShown') !== 'true') {
+      setIsStart(true);
+    }
+    const timer = setTimeout(() => {
+      setIsStart(false);
+    }, 3500);
+    return () => clearTimeout(timer);
+  }, []);
   return (
     <>
-      <StartPage />
-      <TrendGlobalStyle />
-      <Header className={'trend'} $sticky={!isClick} />
-      <HomePageLayout>
-        <MainBanner
-          data={data}
-          $isClick={isClick}
-          randomPosts={randomPosts}
-          onClickBottomNavHandler={onClickBottomNavHandler}
-        />
-        <HashtagNavBar
-          data={tagFilter}
-          $isClick={isClick}
-          setIsClick={setIsClick}
-          onClickEvent={onClickBottomNavHandler}
-          HashTagScrollTopHandler={HashTagScrollTopHandler}
-          hashTag={hashTag}
-          setHashTag={setHashTag}
-          setTagCategory={setTagCategory}
-          undefindeTagThumbnail={undefindeTagThumbnail}
-          allTagThumbnail={allTagThumbnail}
-        />
-        <MainLayout ref={mainRef}>
-          <HashtagContents
-            serverPropData={hashContent}
-            tagData={hashtagSearch}
-            undefindeTag={undefindeTag}
-            hashTag={hashTag}
-            tagCategory={tagCategory}
-          />
-          <PopularContentsCarousel data={popularContent} />
-        </MainLayout>
-      </HomePageLayout>
+      {isStart ? (
+        <StartPage />
+      ) : (
+        <>
+          <TrendGlobalStyle />
+          <Header className={'trend'} $sticky={!isClick} />
+          <HomePageLayout>
+            <MainBanner
+              data={data}
+              $isClick={isClick}
+              randomPosts={randomPosts}
+              onClickBottomNavHandler={onClickBottomNavHandler}
+            />
+            <HashtagNavBar
+              data={tagFilter}
+              $isClick={isClick}
+              setIsClick={setIsClick}
+              onClickEvent={onClickBottomNavHandler}
+              HashTagScrollTopHandler={HashTagScrollTopHandler}
+              hashTag={hashTag}
+              setHashTag={setHashTag}
+              setTagCategory={setTagCategory}
+              undefindeTagThumbnail={undefindeTagThumbnail}
+              allTagThumbnail={allTagThumbnail}
+            />
+            <MainLayout ref={mainRef}>
+              <HashtagContents
+                serverPropData={hashContent}
+                tagData={hashtagSearch}
+                undefindeTag={undefindeTag}
+                hashTag={hashTag}
+                tagCategory={tagCategory}
+              />
+              <PopularContentsCarousel data={popularContent} />
+            </MainLayout>
+          </HomePageLayout>
+        </>
+      )}
     </>
   );
 };
@@ -137,7 +153,6 @@ export const getStaticProps: GetStaticProps = async () => {
   );
 
   const data = sliderImages;
-  // const hashtagData = hashtagImages;
 
   return {
     props: {

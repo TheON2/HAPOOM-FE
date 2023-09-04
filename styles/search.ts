@@ -97,11 +97,6 @@ export const RecommendedSearchList = styled.ul`
   padding: 0 24px;
   width: 100%;
   text-align: center;
-  p {
-    color: var(--primary-color);
-    font-weight: 700;
-    margin-bottom: 20px;
-  }
 `;
 export const RecommendedSearchItem = styled.li`
   width: 80%;
@@ -120,4 +115,10 @@ export const RecommendedSearchItem = styled.li`
 export const SearchResultBox = styled.div`
   width: 100%;
   min-height: 60vh;
+  p {
+    color: var(--primary-color);
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-align: center;
+  }
 `;
