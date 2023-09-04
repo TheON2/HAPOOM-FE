@@ -85,6 +85,8 @@ const darkModeStyles = css`
   --setting-font-weight: 900;
   /* login color start */
   --text-gray-second: #b1b1b1;
+  /* Userpage */
+  --indicator-color: #fff;
   input,
   textarea {
     &::placeholder {
@@ -181,6 +183,8 @@ const lightModeStyles = css`
   --setting-font-weight: 900;
   /* login color start */
   --text-gray-second: #b1b1b1;
+  /* Userpage */
+  --indicator-color: #2797ff;
   input,
   textarea {
     &::placeholder {
