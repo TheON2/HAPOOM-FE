@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
-@import url('https://webfontworld.github.io/pretendard/Pretendard.css');
+/* @import url('https://webfontworld.github.io/pretendard/Pretendard.css'); */
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/variable/pretendardvariable-dynamic-subset.css");
 
 * {
   box-sizing: border-box;
@@ -17,7 +18,7 @@ body {
 
 body{
   color: #051619;
-  font-family: 'Pretendard',"Noto Sans KR","Apple SD Gothic Neo",sans-serif;
+  font-family: "Pretendard Variable","Pretendard","Noto Sans KR","Apple SD Gothic Neo",sans-serif;
   -webkit-text-size-adjust: 100%;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;

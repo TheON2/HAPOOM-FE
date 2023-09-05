@@ -64,7 +64,10 @@ const MainBanner = ({
       <MainBannerBox $isClick={$isClick}>
         <ButtonTouchBox $isClick={$isClick}>
           {$isClick ? 'now' : 'popular'}
-          <button onClick={onClickBottomNavHandler}>
+          <button
+            onClick={onClickBottomNavHandler}
+            aria-label="scroll up and down button"
+          >
             <ArrowLong />
           </button>
         </ButtonTouchBox>
