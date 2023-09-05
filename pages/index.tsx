@@ -92,56 +92,56 @@ const Home: NextPage<MainPageProps> = ({
     setCookie(null, 'updateId', '0', { path: '/' });
   }
 
-  useEffect(() => {
-    if (sessionStorage.getItem('startPageShown') !== 'true') {
-      setIsStart(true);
-    }
-    const timer = setTimeout(() => {
-      setIsStart(false);
-    }, 3500);
-    return () => clearTimeout(timer);
-  }, []);
+  // useEffect(() => {
+  //   if (sessionStorage.getItem('startPageShown') !== 'true') {
+  //     setIsStart(true);
+  //   }
+  //   const timer = setTimeout(() => {
+  //     setIsStart(false);
+  //   }, 3500);
+  //   return () => clearTimeout(timer);
+  // }, []);
   return (
     <>
-      {isStart ? (
+      {/* {isStart ? (
         <StartPage />
       ) : (
-        <>
-          <TrendGlobalStyle />
-          <Header className={'trend'} $sticky={!isClick} />
-          <HomePageLayout>
-            <MainBanner
-              data={data}
-              $isClick={isClick}
-              randomPosts={randomPosts}
-              onClickBottomNavHandler={onClickBottomNavHandler}
-            />
-            <HashtagNavBar
-              data={tagFilter}
-              $isClick={isClick}
-              setIsClick={setIsClick}
-              onClickEvent={onClickBottomNavHandler}
-              HashTagScrollTopHandler={HashTagScrollTopHandler}
-              hashTag={hashTag}
-              setHashTag={setHashTag}
-              setTagCategory={setTagCategory}
-              undefindeTagThumbnail={undefindeTagThumbnail}
-              allTagThumbnail={allTagThumbnail}
-            />
-            <MainLayout ref={mainRef}>
-              <HashtagContents
-                serverPropData={hashContent}
-                tagData={hashtagSearch}
-                undefindeTag={undefindeTag}
-                hashTag={hashTag}
-                tagCategory={tagCategory}
-              />
-              <PopularContentsCarousel data={popularContent} />
-            </MainLayout>
-          </HomePageLayout>
-        </>
-      )}
+        <> */}
+      <TrendGlobalStyle />
+      <Header className={'trend'} $sticky={!isClick} />
+      <HomePageLayout>
+        <MainBanner
+          data={data}
+          $isClick={isClick}
+          randomPosts={randomPosts}
+          onClickBottomNavHandler={onClickBottomNavHandler}
+        />
+        <HashtagNavBar
+          data={tagFilter}
+          $isClick={isClick}
+          setIsClick={setIsClick}
+          onClickEvent={onClickBottomNavHandler}
+          HashTagScrollTopHandler={HashTagScrollTopHandler}
+          hashTag={hashTag}
+          setHashTag={setHashTag}
+          setTagCategory={setTagCategory}
+          undefindeTagThumbnail={undefindeTagThumbnail}
+          allTagThumbnail={allTagThumbnail}
+        />
+        <MainLayout ref={mainRef}>
+          <HashtagContents
+            serverPropData={hashContent}
+            tagData={hashtagSearch}
+            undefindeTag={undefindeTag}
+            hashTag={hashTag}
+            tagCategory={tagCategory}
+          />
+          <PopularContentsCarousel data={popularContent} />
+        </MainLayout>
+      </HomePageLayout>
     </>
+    // )}
+    // </>
   );
 };
 
