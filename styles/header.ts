@@ -12,7 +12,6 @@ export const HeaderLayout = styled.header<HeaderProps>`
   width: 100%;
   height: 70px;
   padding: 0 24px;
-  /* position: fixed; */
   position: sticky;
   z-index: 150;
   top: 0;
@@ -26,7 +25,6 @@ export const HeaderLayout = styled.header<HeaderProps>`
   color: var(--button-hover-color);
   font-weight: 700;
   h1 {
-    /* color: #2797ff; */
     color: var(--logo-color);
   }
   .active {

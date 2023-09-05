@@ -12,14 +12,6 @@ export const HomePageLayout = styled.div`
   height: 100vh;
   height: 100svh;
   overflow: hidden;
-  /* @media screen and (min-width: 768px) {
-    overflow: auto;
-    &::-webkit-scrollbar {
-      display: none;
-    }
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  } */
 `;
 
 export const MainLayout = styled.main`
