@@ -162,11 +162,7 @@ const getSearch = async ({
     });
     return response.data;
   } catch (error: any) {
-    if (error.response.status === 400) {
-      return '400';
-    } else {
-      return 'otherError';
-    }
+    throw error;
   }
 };
 
