@@ -2,7 +2,6 @@ import React, { useRef } from 'react';
 import styled from 'styled-components';
 import { StartPageCloud } from './SVG';
 import { identity } from 'lodash';
-
 const HeadText = styled.h1`
   color: #2790f6;
   font-size: 40px;

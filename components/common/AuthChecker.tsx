@@ -23,7 +23,6 @@ const AuthChecker: React.FC<{ children: ReactNode }> = ({ children }) => {
     }
   );
 
-
   return <>{children}</>;
 };
 

@@ -90,7 +90,8 @@ const Detail: NextPage = () => {
       enabled: tokenExists,
       cacheTime: 0,
       // refetchOnWindowFocus: false,
-    },
+    }
+
   );
 
   const { isError, data, isSuccess } = useQuery(['users'], () => getPost(id), {

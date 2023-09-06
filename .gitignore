@@ -40,6 +40,7 @@ examples/**/pnpm-lock.yaml
 # production
 /build
 /docs
+/test
 # misc
 .DS_Store
 *.pem

@@ -11,6 +11,13 @@ declare module 'styled-components' {
 const darkModeStyles = css`
   background-color: #132b4f;
   color: #fff;
+  /* header color start */
+  --logo-color: #fff;
+  --header-nav-active-color: #fff;
+  --header-nav-sticky-color: #7dc1ff;
+  /* --header-nav-sticky-color: #C6E2FC; */
+  /* --logo-color: #2790f6; */
+  /* --header-nav-color:#2790f6; */
   /* common color start */
   --color: #fff;
   --bg-color: #1b3863;
@@ -42,6 +49,7 @@ const darkModeStyles = css`
   --feed-border: 2px solid #334765;
   /* feed color end */
   /* trend color start */
+  --section-text-color: #fff;
   --random-picture-bg-color: #fff;
   --shadow-color: 0 16px 60px #174172;
   --text-hightligth-color: #777;
@@ -85,6 +93,8 @@ const darkModeStyles = css`
   --setting-font-weight: 900;
   /* login color start */
   --text-gray-second: #b1b1b1;
+  /* Userpage */
+  --indicator-color: #fff;
   input,
   textarea {
     &::placeholder {
@@ -103,6 +113,11 @@ const darkModeStyles = css`
 const lightModeStyles = css`
   background-color: #fff;
   color: #334765;
+  /* header color start */
+  --header-nav-sticky-color: #c6e2fc;
+  --logo-color: #2790f6;
+  --header-nav-color: #2790f6;
+  --header-nav-active-color: #2790f6;
   /* common color start */
   --color: #334765;
   --bg-color: #fff;
@@ -133,6 +148,7 @@ const lightModeStyles = css`
   --feed-border: 2px solid #efefef;
   /* feed color end */
   /* trend color start */
+  --section-text-color: #2790f6;
   --random-picture-bg-color: #fff;
   --shadow-color: 0 16px 60px #a8b5c890;
   --text-hightligth-color: #777;
@@ -181,6 +197,8 @@ const lightModeStyles = css`
   --setting-font-weight: 900;
   /* login color start */
   --text-gray-second: #b1b1b1;
+  /* Userpage */
+  --indicator-color: #2797ff;
   input,
   textarea {
     &::placeholder {
