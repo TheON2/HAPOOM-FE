@@ -6,14 +6,14 @@ import UserSearchResult from '@/components/Search/UserSearchResult';
 import Link from 'next/link';
 type searchProps = {
   option: string;
-  data: any[] | string;
+  data: any[] | string | any;
 };
 
 const SearchResult = ({ option, data }: searchProps) => {
-  if (data === '400') {
+  if (data?.response?.status === 400) {
     return <NoneSearchResult>검색 결과가 없습니다</NoneSearchResult>;
   }
-  if (data === 'otherError' || !Array.isArray(data)) {
+  if (!Array.isArray(data)) {
     return (
       <NoneSearchResult>
         예상치 못한 오류가 발생하였습니다.
