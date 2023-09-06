@@ -72,7 +72,7 @@ const Search = () => {
       onSuccess: (data) => {
         setIsSearch(false);
       },
-      // refetchOnWindowFocus: false,
+      refetchOnWindowFocus: false,
     }
   );
   const IntroMessage = () => {

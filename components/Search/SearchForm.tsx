@@ -34,7 +34,7 @@ const SearchFormComponent = ({
   submitEvent,
 }: searchFormProps) => {
   return (
-    <SearchForm onSubmit={submitEvent}>
+    <SearchForm onSubmit={submitEvent} data-testid={`search-form`}>
       <SelectBox>
         <Selecter
           selectOption={SELECT_OPTION}
