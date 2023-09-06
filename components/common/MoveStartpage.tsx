@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import styled from 'styled-components';
 import { StartPageCloud } from './SVG';
 import { identity } from 'lodash';
+import { useRouter } from 'next/router';
 
 const HeadText = styled.h1`
   color: #2790f6;
@@ -44,10 +45,11 @@ const StartPageSection = styled.section`
 
 const MoveStartpage = () => {
   const noneStartPage = useRef<any>();
+  const route = useRouter();
   React.useEffect(() => {
-    sessionStorage.setItem('startPageShown', 'true');
     const timer = setTimeout(() => {
       noneStartPage.current.style.display = 'none';
+      // route.push('/');
     }, 3500);
 
     return () => clearTimeout(timer);
