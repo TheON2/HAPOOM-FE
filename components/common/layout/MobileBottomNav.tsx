@@ -23,8 +23,8 @@ import { setCookie, parseCookies } from 'nookies';
 import { useSelector } from 'react-redux';
 import { UserState } from '@/redux/reducers/userSlice';
 import { RootState } from '@/redux/config/configStore';
-import ProfileImage from './ProfileImage';
-import Modal from './Modal';
+import ProfileImage from '../ProfileImage';
+import Modal from '../Modal';
 
 type mobileBottomNavProps = {
   onClickEvent: () => void;

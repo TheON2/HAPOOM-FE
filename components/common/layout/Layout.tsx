@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
-import Header from '@/components/common/Header';
-import MobileBottomNav from '@/components/common/MobileBottomNav';
+import Header from '@/components/common/layout/Header';
+import MobileBottomNav from '@/components/common/layout/MobileBottomNav';
 import Footer from '@/components/common/Footer';
 import AlarmBar from '../AlarmBar';
 import { useRouter } from 'next/router';
