@@ -204,7 +204,11 @@ const Header = ({ $sticky, ...restProps }: any) => {
                 <Link href={'/auth/SignIn'}>로그인</Link>|
                 <Link href={'/auth/SignUp'}>회원가입</Link>
                 {/* </AuthButtonBox> */}
-                <ProfileButton onClick={LoginHandler} $sticky={$sticky}>
+                <ProfileButton
+                  onClick={LoginHandler}
+                  $sticky={$sticky}
+                  aria-label="go profile page"
+                >
                   <Cloud />
                 </ProfileButton>
               </>
