@@ -7,7 +7,7 @@ import React, {
 } from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
-import SideNav from './SideNav';
+import SideNav from '../SideNav';
 import Link from 'next/link';
 import {
   HeaderLayout,
@@ -21,7 +21,7 @@ import {
   MobileBox,
 } from '@/styles/header';
 import useInput from '@/hooks/useInput';
-import IconButton from './IconButton';
+import IconButton from '../IconButton';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { useMutation, useQueryClient } from 'react-query';
@@ -35,7 +35,7 @@ import { SearchIcon, Bell, EditIcon, Cloud } from '@/components/common/SVG';
 import { setCookie } from 'nookies';
 import ProfileImage from '@/components/common/ProfileImage';
 import { RootState } from '@/redux/config/configStore';
-import Modal from './Modal';
+import Modal from '../Modal';
 
 const ENDPOINT = `${process.env.NEXT_PUBLIC_LOCAL_SERVER}`;
 

@@ -56,12 +56,8 @@ export const Selecter = ({
     </SelectBox>
   );
 };
-// 이게 꼭 필요한 것인가?
-// const SelectItemNonHidden = ({ children }) => {
-//     return <ItemNonHidden>{children}</ItemNonHidden>;
-// };
+
 const SelectBarButton = styled.button`
-  /* width: 250px; */
   width: 100%;
   height: 36px;
   padding: 0px 16px;
@@ -71,12 +67,10 @@ const SelectBarButton = styled.button`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* gap: 16px; */
   color: #fff;
   font-size: 13px;
   font-weight: 700;
   transition: all 0.3s ease-in-out;
-
   svg {
     transform: scale(0.8) rotate(90deg);
     path {
@@ -122,7 +116,4 @@ const SelectBox = styled.div<Props>`
   position: absolute;
   z-index: 114;
   transition: all 0.3s ease-in-out;
-  /* top: 4px; */
-  /* left: 12px; */
-  /* transform: translateY(-50%); */
 `;

@@ -34,7 +34,7 @@ const SearchFormComponent = ({
   submitEvent,
 }: searchFormProps) => {
   return (
-    <SearchForm onSubmit={submitEvent}>
+    <SearchForm onSubmit={submitEvent} data-testid={`search-form`}>
       <SelectBox>
         <Selecter
           selectOption={SELECT_OPTION}
@@ -49,7 +49,11 @@ const SearchFormComponent = ({
         onChange={searchEvent}
         placeholder="검색 내용을 입력해주세요"
       />
-      <IconButton type="submit" className="search-button">
+      <IconButton
+        type="submit"
+        className="search-button"
+        aria-label="search button"
+      >
         <Cloud />
       </IconButton>
     </SearchForm>

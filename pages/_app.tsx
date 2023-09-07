@@ -5,7 +5,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { useState } from 'react';
 import Layout from '@/components/common/layout/Layout';
-import MobileBottomNav from '@/components/common/MobileBottomNav';
+import MobileBottomNav from '@/components/common/layout/MobileBottomNav';
 import { useRouter } from 'next/router';
 import Script from 'next/script';
 import AlarmContainer, { AlarmBar } from '@/components/common/AlarmBar';

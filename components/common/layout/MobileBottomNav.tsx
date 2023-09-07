@@ -23,8 +23,8 @@ import { setCookie, parseCookies } from 'nookies';
 import { useSelector } from 'react-redux';
 import { UserState } from '@/redux/reducers/userSlice';
 import { RootState } from '@/redux/config/configStore';
-import ProfileImage from './ProfileImage';
-import Modal from './Modal';
+import ProfileImage from '../ProfileImage';
+import Modal from '../Modal';
 
 type mobileBottomNavProps = {
   onClickEvent: () => void;
@@ -111,6 +111,7 @@ const MobileBottomNav = () => {
               <IconBox
                 onClick={() => routerHandler(nav.route, text)}
                 className={active === idx ? 'active' : ''}
+                data-testid={`nav-${nav.text}`}
               >
                 <Icon />
                 <p>{text}</p>
@@ -122,6 +123,7 @@ const MobileBottomNav = () => {
           <IconBox
             onClick={() => routerHandler(`/User/${user.email}`, 'my')}
             className={active === 4 ? 'active' : ''}
+            data-testid={`nav-user`}
           >
             {user.email !== null ? (
               <>

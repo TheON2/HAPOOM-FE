@@ -14,7 +14,7 @@ import {
 import { useMutation } from 'react-query';
 import { addUser } from '@/api/user';
 import { NextRouter, useRouter } from 'next/router';
-import MobileBottomNav from '../common/MobileBottomNav';
+import MobileBottomNav from '../common/layout/MobileBottomNav';
 import SocialLogin from '../SignIn/SocialLogIn';
 import SignUpPwd from './SignUpPwd';
 import SignUpNickname from './SignUpNickname';
