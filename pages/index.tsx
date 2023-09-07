@@ -4,7 +4,7 @@ import HashtagNavBar from '@/components/Home/HashtagNavBar';
 import HashtagContents from '@/components/Home/HashtagContents';
 // import Main from '@/components/Home/HomeMain';
 import MainBanner from '@/components/Home/MainBanner';
-import Header from '@/components/common/Header';
+import Header from '@/components/common/layout/Header';
 import PopularContentsCarousel from '@/components/Home/PopularContentsCarousel';
 import { sliderImages } from '../public/data';
 import { GetStaticProps, NextPage, GetServerSideProps } from 'next';

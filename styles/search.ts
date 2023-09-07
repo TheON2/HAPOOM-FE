@@ -115,7 +115,7 @@ export const RecommendedSearchItem = styled.li`
 export const SearchResultBox = styled.div`
   width: 100%;
   min-height: 60vh;
-  p {
+  p.recommended {
     color: var(--primary-color);
     font-weight: 700;
     margin-bottom: 20px;

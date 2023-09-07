@@ -30,14 +30,14 @@ const Search = () => {
     RECOMMENDED_KEYWORD_USER
   );
   const { isModalOpen, modalMessge, openModal, closeModal } = useModal();
-  useEffect(() => {
-    if (isSearch) {
-      const timer = setTimeout(() => {
-        setIsSearch(false);
-      }, 1000);
-      return () => clearTimeout(timer);
-    }
-  }, [isSearch]);
+  // useEffect(() => {
+  //   if (isSearch) {
+  //     const timer = setTimeout(() => {
+  //       setIsSearch(false);
+  //     }, 1000);
+  //     return () => clearTimeout(timer);
+  //   }
+  // }, [isSearch]);
   const onClickKeywordHanlder = (keyword: string) => {
     setSearch(keyword);
     setIsSearch(true);
@@ -63,18 +63,27 @@ const Search = () => {
     }
   };
   // const
-  const { data: searchData, isSuccess } = useQuery(
+  const {
+    data: searchData,
+    isLoading,
+    error,
+  } = useQuery(
     ['searchResults', option, search],
     () => getSearch({ search, option }),
     {
       enabled: isSearch && !!search,
       staleTime: 60 * 1000,
+      retry: 1,
       onSuccess: (data) => {
         setIsSearch(false);
       },
-      // refetchOnWindowFocus: false,
+      onError: (error: any) => {
+        setIsSearch(false);
+      },
+      refetchOnWindowFocus: false,
     }
   );
+
   const IntroMessage = () => {
     if (searchData) {
       return (
@@ -128,11 +137,11 @@ const Search = () => {
         />
       </SearchLayout>
       <SearchResultBox>
-        {searchData ? (
-          <SearchResult option={option} data={searchData} />
-        ) : !isSuccess ? (
+        {searchData || error ? (
+          <SearchResult option={option} data={error ? error : searchData} />
+        ) : !isLoading ? (
           <>
-            <p>현재 인기 있는 검색어입니다</p>
+            <p className="recommended">현재 인기 있는 검색어입니다</p>
             <RecommendedSearchList>
               {recommended.map((keyword, idx) => {
                 return (
