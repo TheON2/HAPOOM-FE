@@ -7,6 +7,7 @@ import Link from 'next/link';
 type SearchProps = {
   option: string;
 
+
   data: { response: { status: number; }; } | string | any[];
 };
 
