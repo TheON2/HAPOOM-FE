@@ -4,13 +4,15 @@ import { ImageContentsContainer } from '@/styles/imageContainer';
 import { NoneSearchResult } from '@/styles/search';
 import UserSearchResult from '@/components/Search/UserSearchResult';
 import Link from 'next/link';
-type searchProps = {
+type SearchProps = {
   option: string;
-  data: any[] | string | any;
+
+  data: { response: { status: number; }; } | string | any[];
 };
 
-const SearchResult = ({ option, data }: searchProps) => {
-  if (data?.response?.status === 400) {
+const SearchResult: React.FC<SearchProps> = ({ option, data }) => {
+  if (data === '400') {
+
     return <NoneSearchResult>검색 결과가 없습니다</NoneSearchResult>;
   }
   if (!Array.isArray(data)) {

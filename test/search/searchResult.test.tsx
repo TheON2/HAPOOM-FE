@@ -1,3 +1,4 @@
+
 // SearchResult.test.tsx
 import React from 'react';
 import { render, screen } from '@testing-library/react';
@@ -38,3 +39,4 @@ describe('검색 결과 컴포넌트', () => {
     });
   });
 });
+

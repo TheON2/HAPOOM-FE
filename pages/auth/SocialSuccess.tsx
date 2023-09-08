@@ -16,22 +16,9 @@ const SocialSuccess = () => {
       // 로컬 스토리지에 토큰을 저장합니다.
       window.localStorage.setItem('token', token as string);
       router.push('/');
-      // 이후 다른 라우트로 이동하거나 추가 작업을 수행할 수 있습니다.
-      // 예: router.push('/');
     }
   }, [router.query, router]);
 
-  // const { data: userData, isSuccess: tokenSuccess } = useQuery(
-  //   'user',
-  //   getAuthToken,
-  //   {
-  //     onSuccess: (userData: UserResponse) => {
-  //       dispatch(AUTH_USER(userData));
-  //       router.push('/');
-  //     },
-  //     cacheTime: 0,
-  //   }
-  // );
   return <></>;
 };
 

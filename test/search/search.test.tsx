@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { render, fireEvent, waitFor, act } from '@testing-library/react';
 import { Provider } from 'react-redux';
@@ -8,22 +9,6 @@ import axios, { AxiosRequestConfig, CreateAxiosDefaults } from 'axios';
 import { QueryClient, useQuery, QueryClientProvider } from 'react-query';
 
 const queryClient = new QueryClient();
-
-// jest.mock('axios', () => {
-//   return {
-//     create: () => ({
-//       get: jest.fn(() => Promise.resolve({ data: {} })),
-//       interceptors: {
-//         request: { use: jest.fn() },
-//         response: { use: jest.fn() },
-//       },
-//     }),
-//   };
-// });
-
-// Now we can get the mocked version of get:
-// const axiosInstance = axios.create();
-// const mockAxiosGet = axiosInstance.get;
 
 describe('검색 페이지', () => {
   let store: EnhancedStore;
@@ -68,3 +53,4 @@ describe('검색 페이지', () => {
     expect(searchInput.value).toBe('test');
   });
 });
+
