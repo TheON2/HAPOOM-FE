@@ -1,1 +1,117 @@
-importScripts("https://storage.googleapis.com/workbox-cdn/releases/6.1.5/workbox-sw.js"),workbox?console.log("Yay! Workbox is loaded \uD83C\uDF89"):console.log("Boo! Workbox didn't load \uD83D\uDE2C"),self.addEventListener("push",function(o){if(console.log("진입함 푸시"),!(self.Notification&&"granted"===self.Notification.permission))return;let n=o.data.json();console.log(n);let i={body:n.content,icon:"./logomain.png",badge:"./logomain.png",data:{url:n.url}};o.waitUntil(self.registration.showNotification(n.title,i))}),self.addEventListener("notificationclick",function(o){o.notification.close();var n=o.notification.data.url;o.waitUntil(clients.matchAll({type:"window"}).then(function(o){for(var i=0;i<o.length;i++){var t=o[i];if(t.url===n&&"focus"in t)return t.focus()}if(clients.openWindow)return clients.openWindow(n)}))}),workbox.precaching.precacheAndRoute([{'revision':'f4ff96609d7ed5dcac9a3c4845bfae5d','url':'/Line 11.svg'},{'revision':'80345f44cc0fd6132167e501d33dafa4','url':'/_next/static/PXaNcb-VzwUzCC_w9X5qv/_buildManifest.js'},{'revision':'b6652df95db52feb4daf4eca35380933','url':'/_next/static/PXaNcb-VzwUzCC_w9X5qv/_ssgManifest.js'},{'revision':'2614880cda55cd30','url':'/_next/static/chunks/29-2614880cda55cd30.js'},{'revision':'9e5972120e942dc1','url':'/_next/static/chunks/414-9e5972120e942dc1.js'},{'revision':'1f9d1b8ad0cfad32','url':'/_next/static/chunks/452-1f9d1b8ad0cfad32.js'},{'revision':'1db1f0b2e89534f6','url':'/_next/static/chunks/570.1db1f0b2e89534f6.js'},{'revision':'d988558c682bfa90','url':'/_next/static/chunks/589.d988558c682bfa90.js'},{'revision':'205879701a4d2186','url':'/_next/static/chunks/654-205879701a4d2186.js'},{'revision':'be30265f8d614576','url':'/_next/static/chunks/739-be30265f8d614576.js'},{'revision':'7a7e500878b44665','url':'/_next/static/chunks/framework-7a7e500878b44665.js'},{'revision':'75ebbf1ceb9e72c7','url':'/_next/static/chunks/main-75ebbf1ceb9e72c7.js'},{'revision':'39753f7215ceaca5','url':'/_next/static/chunks/pages/User/%5Bid%5D-39753f7215ceaca5.js'},{'revision':'debc3206c043bdbe','url':'/_next/static/chunks/pages/User/FollowTab-debc3206c043bdbe.js'},{'revision':'39b3347abac4c96d','url':'/_next/static/chunks/pages/_app-39b3347abac4c96d.js'},{'revision':'54de1933a164a1ff','url':'/_next/static/chunks/pages/_error-54de1933a164a1ff.js'},{'revision':'893fff029d69ae94','url':'/_next/static/chunks/pages/auth/SignIn-893fff029d69ae94.js'},{'revision':'13dcf114f14ae5c0','url':'/_next/static/chunks/pages/auth/SignUp-13dcf114f14ae5c0.js'},{'revision':'49ad051867dddb9e','url':'/_next/static/chunks/pages/auth/SocialSuccess-49ad051867dddb9e.js'},{'revision':'cf335eeda6b62c08','url':'/_next/static/chunks/pages/detail/%5Bid%5D-cf335eeda6b62c08.js'},{'revision':'9794079f76d8d7c7','url':'/_next/static/chunks/pages/feed-9794079f76d8d7c7.js'},{'revision':'eec2a4ff85888e99','url':'/_next/static/chunks/pages/findPassword/FindPwd-eec2a4ff85888e99.js'},{'revision':'a1073540d7adab8b','url':'/_next/static/chunks/pages/findPwdComplete/FindPwdComplete-a1073540d7adab8b.js'},{'revision':'38333ee28293689c','url':'/_next/static/chunks/pages/index-38333ee28293689c.js'},{'revision':'e7f869725b96b662','url':'/_next/static/chunks/pages/post/Write-e7f869725b96b662.js'},{'revision':'a8eccaf9bb9e9f58','url':'/_next/static/chunks/pages/search-a8eccaf9bb9e9f58.js'},{'revision':'ba0ffd675ccd52ce','url':'/_next/static/chunks/pages/setting/Setting-ba0ffd675ccd52ce.js'},{'revision':'7f05697937637c08','url':'/_next/static/chunks/pages/signUpComplete/SignUpComplete-7f05697937637c08.js'},{'revision':'c9122b222d2e949f','url':'/_next/static/chunks/pages/startpage/StartPage-c9122b222d2e949f.js'},{'revision':'7a5d9ac73617daab','url':'/_next/static/chunks/pages/update/%5Bid%5D-7a5d9ac73617daab.js'},{'revision':'79330112775102f91e1010318bae2bd3','url':'/_next/static/chunks/polyfills-78c92fac7aa8fdd8.js'},{'revision':'87e1527877f154a4','url':'/_next/static/chunks/webpack-87e1527877f154a4.js'},{'revision':'6282dc91cb61b454','url':'/_next/static/css/6282dc91cb61b454.css'},{'revision':'c123d947f320f98588e49e7aa23b46ea','url':'/_next/static/media/b1.e39974f4.png'},{'revision':'51b9838cb78e4a526e85c799f74430b4','url':'/_next/static/media/google.a88402d8.png'},{'revision':'012bc2f98785c9a8cb2205b9ef640d28','url':'/_next/static/media/kakao.a3f0f075.png'},{'revision':'205910ad3a7b9cf6a29654ff43535602','url':'/_next/static/media/musiclibrary.3d192dd6.png'},{'revision':'73b708a40dff3b407bc6f2118b05822d','url':'/_next/static/media/naver.5f1f6f2f.png'},{'revision':'22c949772e46d931ce3207fb451b0e06','url':'/_next/static/media/pause.c9c9e111.png'},{'revision':'27bb96b70386f3ca30ec75108e583306','url':'/_next/static/media/play.58972bc8.png'},{'revision':'d6e69b74129de5adcb84910b3847478a','url':'/_next/static/media/record.13dab437.png'},{'revision':'7156541289c203140d9c0151c8e9849c','url':'/_next/static/media/youtube.c2797cc4.png'},{'revision':'e811d3204e74ff8f57c20424b0e5e6ab','url':'/addImage.png'},{'revision':'697eca19aa41d5422c2a68f986ade0a0','url':'/addpicture.svg'},{'revision':'c123d947f320f98588e49e7aa23b46ea','url':'/b1.png'},{'revision':'7b8929d17fac1687459f2098f5ff60da','url':'/b2.png'},{'revision':'7ec97bda668640236735829ca411bb23','url':'/b3.png'},{'revision':'8704c02a63a50b1ed5390466f4053281','url':'/c1.jpeg'},{'revision':'c123d947f320f98588e49e7aa23b46ea','url':'/c2.jpeg'},{'revision':'7b8929d17fac1687459f2098f5ff60da','url':'/c3.jpeg'},{'revision':'7ec97bda668640236735829ca411bb23','url':'/c4.jpeg'},{'revision':'cb981f4199ffdef95c26b53964b5a770','url':'/c5.jpeg'},{'revision':'2d29181a87b82e3ae68c341f3f8d4d51','url':'/data.ts'},{'revision':'dc88abb2430be4cc5f0bd8c28963ef3a','url':'/deletecomment.svg'},{'revision':'ff3937360c689c862dc746482a0ad32e','url':'/editcomment.svg'},{'revision':'74cfb88bc4ec62a5606712fd8e52c0d2','url':'/exclamationmark.svg'},{'revision':'18aa68899a524d35fe9a50096f192d7a','url':'/favicon.png'},{'revision':'51b9838cb78e4a526e85c799f74430b4','url':'/google.png'},{'revision':'b4eaebdd0346348280c7b5b799013a4e','url':'/inflearn.jpg'},{'revision':'012bc2f98785c9a8cb2205b9ef640d28','url':'/kakao.png'},{'revision':'573007fe8723fbd7b36fa4b8e8a1b698','url':'/locales/en/common.json'},{'revision':'d41d8cd98f00b204e9800998ecf8427e','url':'/locales/i18n.js'},{'revision':'f46811f78fafd050e23e17bfdfae2926','url':'/locales/ko/common.json'},{'revision':'caf4154b2b32dc7f911be2f52b2ac56f','url':'/logomain.png'},{'revision':'95d9e11f2a26ee2f6774a045ed79efa7','url':'/mainlogo.png'},{'revision':'aa812e8de7a38721f1db3432d4417c2e','url':'/manifest.json'},{'revision':'883ea328a5c09e9abdd28384a36b13cb','url':'/marker.svg'},{'revision':'d8ac79e035c632623c998a4ebb22985b','url':'/movecloud.gif'},{'revision':'8cf4f390a040f619dcd7cf3664acef71','url':'/music.png'},{'revision':'205910ad3a7b9cf6a29654ff43535602','url':'/musiclibrary.png'},{'revision':'73b708a40dff3b407bc6f2118b05822d','url':'/naver.png'},{'revision':'bc0e62f7d58be5a9fe8ae849393c20bd','url':'/nonepreset.png'},{'revision':'22c949772e46d931ce3207fb451b0e06','url':'/pause.png'},{'revision':'27bb96b70386f3ca30ec75108e583306','url':'/play.png'},{'revision':'ca0dc2e3e13d94680dda34e61f2d0163','url':'/preset1.PNG'},{'revision':'ab667751de06bfd98faeaf3554026b9d','url':'/preset2.PNG'},{'revision':'b493adcad3bf5dc18662060821613ab7','url':'/preset3.PNG'},{'revision':'ac3cbdd2839ca1addcf1689f89c2d8ca','url':'/presetData.ts'},{'revision':'48a06607738d229cc0731e33d393467e','url':'/profile.jpg'},{'revision':'d6e69b74129de5adcb84910b3847478a','url':'/record.png'},{'revision':'89a41f45acd8971797aa1da1626bea3e','url':'/secreteye.svg'},{'revision':'2d587aa23207119f07b7437df0f86954','url':'/service-worker.js'},{'revision':'167e5f5fa3968c9567a7ec9e643f5567','url':'/star.svg'},{'revision':'86f9eec10eae39594ac796e157c74832','url':'/startpagecloude.svg'},{'revision':'fa99ac663b6aa5734db015275afdbfa5','url':'/sw-custom.js'},{'revision':'a43b1e238b834f4f9ee84600ecc85ed9','url':'/sw.js'},{'revision':'50854bd889526f6d3af93e6223ebdc5d','url':'/userlike.svg'},{'revision':'aa3dbc9349a64fd8341cf19b4595271d','url':'/userpost.svg'},{'revision':'e6880399fa131bc79e3f616bdbfebaec','url':'/voice1.png'},{'revision':'eb073b0e485f6948eac2e5677f0981ad','url':'/voice2.png'},{'revision':'7156541289c203140d9c0151c8e9849c','url':'/youtube.png'},{'revision':'d41d8cd98f00b204e9800998ecf8427e','url':'/youtube.svg'},{'revision':'ecd944f5a841b813cc1d05eced317e20','url':'/🦆 icon _cloud_.svg'},{'revision':'6da3ca5d27abc708899300adbf139a1b','url':'/🦆 icon _image_.svg'},{'revision':'61dc8a3cda9b0354bdc06d144eabe56d','url':'/🦆 icon _star_.svg'}]);
+/*
+ * ATTENTION: An "eval-source-map" devtool has been used.
+ * This devtool is neither made for production nor for readable output files.
+ * It uses "eval()" calls to create a separate source file with attached SourceMaps in the browser devtools.
+ * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
+ * or disable the default devtool with "devtool: false".
+ * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
+ */
+/******/ (function() { // webpackBootstrap
+/******/ 	var __webpack_modules__ = ({
+
+/***/ "./public/sw-custom.js":
+/*!*****************************!*\
+  !*** ./public/sw-custom.js ***!
+  \*****************************/
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+eval(__webpack_require__.ts("importScripts(\"https://storage.googleapis.com/workbox-cdn/releases/6.1.5/workbox-sw.js\");\nif (workbox) {\n    console.log(\"Yay! Workbox is loaded \\uD83C\\uDF89\");\n} else {\n    console.log(\"Boo! Workbox didn't load \\uD83D\\uDE2C\");\n}\nself.addEventListener(\"push\", function(event) {\n    console.log(\"진입함 푸시\");\n    if (!(self.Notification && self.Notification.permission === \"granted\")) {\n        return;\n    }\n    const data = event.data.json();\n    console.log(data);\n    const options = {\n        body: data.content,\n        icon: \"./logomain.png\",\n        badge: \"./logomain.png\",\n        data: {\n            url: data.url\n        }\n    };\n    event.waitUntil(self.registration.showNotification(data.title, options));\n});\nself.addEventListener(\"notificationclick\", function(event) {\n    // 알림 클릭 이벤트 처리\n    event.notification.close(); // 클릭한 알림 닫기\n    // 알림 데이터에서 URL 가져오기 (서버에서 보낸 알림 데이터에 url을 포함시켜야 함)\n    var url = event.notification.data.url;\n    // 해당 URL로 이동\n    event.waitUntil(clients.matchAll({\n        type: \"window\"\n    }).then(function(clientList) {\n        for(var i = 0; i < clientList.length; i++){\n            var client = clientList[i];\n            if (client.url === url && \"focus\" in client) {\n                return client.focus();\n            }\n        }\n        if (clients.openWindow) {\n            return clients.openWindow(url);\n        }\n    }));\n});\nworkbox.precaching.precacheAndRoute([]);\n\n\n;\n    // Wrapped in an IIFE to avoid polluting the global scope\n    ;\n    (function () {\n        var _a, _b;\n        // Legacy CSS implementations will `eval` browser code in a Node.js context\n        // to extract CSS. For backwards compatibility, we need to check we're in a\n        // browser context before continuing.\n        if (typeof self !== 'undefined' &&\n            // AMP / No-JS mode does not inject these helpers:\n            '$RefreshHelpers$' in self) {\n            // @ts-ignore __webpack_module__ is global\n            var currentExports = module.exports;\n            // @ts-ignore __webpack_module__ is global\n            var prevExports = (_b = (_a = module.hot.data) === null || _a === void 0 ? void 0 : _a.prevExports) !== null && _b !== void 0 ? _b : null;\n            // This cannot happen in MainTemplate because the exports mismatch between\n            // templating and execution.\n            self.$RefreshHelpers$.registerExportsForReactRefresh(currentExports, module.id);\n            // A module can be accepted automatically based on its exports, e.g. when\n            // it is a Refresh Boundary.\n            if (self.$RefreshHelpers$.isReactRefreshBoundary(currentExports)) {\n                // Save the previous exports on update so we can compare the boundary\n                // signatures.\n                module.hot.dispose(function (data) {\n                    data.prevExports = currentExports;\n                });\n                // Unconditionally accept an update to this module, we'll check if it's\n                // still a Refresh Boundary later.\n                // @ts-ignore importMeta is replaced in the loader\n                /* unsupported import.meta.webpackHot */ undefined.accept();\n                // This field is set when the previous version of this module was a\n                // Refresh Boundary, letting us know we need to check for invalidation or\n                // enqueue an update.\n                if (prevExports !== null) {\n                    // A boundary can become ineligible if its exports are incompatible\n                    // with the previous exports.\n                    //\n                    // For example, if you add/remove/change exports, we'll want to\n                    // re-execute the importing modules, and force those components to\n                    // re-render. Similarly, if you convert a class component to a\n                    // function, we want to invalidate the boundary.\n                    if (self.$RefreshHelpers$.shouldInvalidateReactRefreshBoundary(prevExports, currentExports)) {\n                        module.hot.invalidate();\n                    }\n                    else {\n                        self.$RefreshHelpers$.scheduleUpdate();\n                    }\n                }\n            }\n            else {\n                // Since we just executed the code for the module, it's possible that the\n                // new exports made it ineligible for being a boundary.\n                // We only care about the case when we were _previously_ a boundary,\n                // because we already accepted this update (accidental side effect).\n                var isNoLongerABoundary = prevExports !== null;\n                if (isNoLongerABoundary) {\n                    module.hot.invalidate();\n                }\n            }\n        }\n    })();\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9wdWJsaWMvc3ctY3VzdG9tLmpzIiwibWFwcGluZ3MiOiJBQUFBQSxjQUNFO0FBR0YsSUFBSUMsU0FBUztJQUNYQyxRQUFRQyxHQUFHLENBQUU7QUFDZixPQUFPO0lBQ0xELFFBQVFDLEdBQUcsQ0FBRTtBQUNmO0FBRUFDLEtBQUtDLGdCQUFnQixDQUFDLFFBQVEsU0FBVUMsS0FBSztJQUMzQ0osUUFBUUMsR0FBRyxDQUFDO0lBQ1osSUFBSSxDQUFFQyxDQUFBQSxLQUFLRyxZQUFZLElBQUlILEtBQUtHLFlBQVksQ0FBQ0MsVUFBVSxLQUFLLFNBQVEsR0FBSTtRQUN0RTtJQUNGO0lBRUEsTUFBTUMsT0FBT0gsTUFBTUcsSUFBSSxDQUFDQyxJQUFJO0lBRTVCUixRQUFRQyxHQUFHLENBQUNNO0lBRVosTUFBTUUsVUFBVTtRQUNkQyxNQUFNSCxLQUFLSSxPQUFPO1FBQ2xCQyxNQUFNO1FBQ05DLE9BQU87UUFDUE4sTUFBTTtZQUFFTyxLQUFLUCxLQUFLTyxHQUFHO1FBQUM7SUFDeEI7SUFFQVYsTUFBTVcsU0FBUyxDQUFDYixLQUFLYyxZQUFZLENBQUNDLGdCQUFnQixDQUFDVixLQUFLVyxLQUFLLEVBQUVUO0FBQ2pFO0FBRUFQLEtBQUtDLGdCQUFnQixDQUFDLHFCQUFxQixTQUFVQyxLQUFLO0lBQ3hELGVBQWU7SUFDZkEsTUFBTWUsWUFBWSxDQUFDQyxLQUFLLElBQUksWUFBWTtJQUV4QyxtREFBbUQ7SUFDbkQsSUFBSU4sTUFBTVYsTUFBTWUsWUFBWSxDQUFDWixJQUFJLENBQUNPLEdBQUc7SUFFckMsYUFBYTtJQUNiVixNQUFNVyxTQUFTLENBQ2JNLFFBQ0dDLFFBQVEsQ0FBQztRQUNSQyxNQUFNO0lBQ1IsR0FDQ0MsSUFBSSxDQUFDLFNBQVVDLFVBQVU7UUFDeEIsSUFBSyxJQUFJQyxJQUFJLEdBQUdBLElBQUlELFdBQVdFLE1BQU0sRUFBRUQsSUFBSztZQUMxQyxJQUFJRSxTQUFTSCxVQUFVLENBQUNDLEVBQUU7WUFDMUIsSUFBSUUsT0FBT2QsR0FBRyxLQUFLQSxPQUFPLFdBQVdjLFFBQVE7Z0JBQzNDLE9BQU9BLE9BQU9DLEtBQUs7WUFDckI7UUFDRjtRQUNBLElBQUlSLFFBQVFTLFVBQVUsRUFBRTtZQUN0QixPQUFPVCxRQUFRUyxVQUFVLENBQUNoQjtRQUM1QjtJQUNGO0FBRU47QUFFQWYsUUFBUWdDLFVBQVUsQ0FBQ0MsZ0JBQWdCLENBQUM5QixLQUFLK0IsYUFBYSIsInNvdXJjZXMiOlsid2VicGFjazovL19OX0UvLi9wdWJsaWMvc3ctY3VzdG9tLmpzPzc5N2MiXSwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0U2NyaXB0cyhcclxuICAnaHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL3dvcmtib3gtY2RuL3JlbGVhc2VzLzYuMS41L3dvcmtib3gtc3cuanMnXHJcbik7XHJcblxyXG5pZiAod29ya2JveCkge1xyXG4gIGNvbnNvbGUubG9nKGBZYXkhIFdvcmtib3ggaXMgbG9hZGVkIPCfjolgKTtcclxufSBlbHNlIHtcclxuICBjb25zb2xlLmxvZyhgQm9vISBXb3JrYm94IGRpZG4ndCBsb2FkIPCfmKxgKTtcclxufVxyXG5cclxuc2VsZi5hZGRFdmVudExpc3RlbmVyKCdwdXNoJywgZnVuY3Rpb24gKGV2ZW50KSB7XHJcbiAgY29uc29sZS5sb2coJ+ynhOyehe2VqCDtkbjsi5wnKTtcclxuICBpZiAoIShzZWxmLk5vdGlmaWNhdGlvbiAmJiBzZWxmLk5vdGlmaWNhdGlvbi5wZXJtaXNzaW9uID09PSAnZ3JhbnRlZCcpKSB7XHJcbiAgICByZXR1cm47XHJcbiAgfVxyXG5cclxuICBjb25zdCBkYXRhID0gZXZlbnQuZGF0YS5qc29uKCk7XHJcblxyXG4gIGNvbnNvbGUubG9nKGRhdGEpO1xyXG5cclxuICBjb25zdCBvcHRpb25zID0ge1xyXG4gICAgYm9keTogZGF0YS5jb250ZW50LFxyXG4gICAgaWNvbjogJy4vbG9nb21haW4ucG5nJyxcclxuICAgIGJhZGdlOiAnLi9sb2dvbWFpbi5wbmcnLFxyXG4gICAgZGF0YTogeyB1cmw6IGRhdGEudXJsIH0sIC8vIFVSTOydhCBvcHRpb25z7JeQIOy2lOqwgFxyXG4gIH07XHJcblxyXG4gIGV2ZW50LndhaXRVbnRpbChzZWxmLnJlZ2lzdHJhdGlvbi5zaG93Tm90aWZpY2F0aW9uKGRhdGEudGl0bGUsIG9wdGlvbnMpKTtcclxufSk7XHJcblxyXG5zZWxmLmFkZEV2ZW50TGlzdGVuZXIoJ25vdGlmaWNhdGlvbmNsaWNrJywgZnVuY3Rpb24gKGV2ZW50KSB7XHJcbiAgLy8g7JWM66a8IO2BtOumrSDsnbTrsqTtirgg7LKY66asXHJcbiAgZXZlbnQubm90aWZpY2F0aW9uLmNsb3NlKCk7IC8vIO2BtOumre2VnCDslYzrprwg64ur6riwXHJcblxyXG4gIC8vIOyVjOumvCDrjbDsnbTthLDsl5DshJwgVVJMIOqwgOyguOyYpOq4sCAo7ISc67KE7JeQ7IScIOuztOuCuCDslYzrprwg642w7J207YSw7JeQIHVybOydhCDtj6ztlajsi5zsvJzslbwg7ZWoKVxyXG4gIHZhciB1cmwgPSBldmVudC5ub3RpZmljYXRpb24uZGF0YS51cmw7XHJcblxyXG4gIC8vIO2VtOuLuSBVUkzroZwg7J2064+ZXHJcbiAgZXZlbnQud2FpdFVudGlsKFxyXG4gICAgY2xpZW50c1xyXG4gICAgICAubWF0Y2hBbGwoe1xyXG4gICAgICAgIHR5cGU6ICd3aW5kb3cnLFxyXG4gICAgICB9KVxyXG4gICAgICAudGhlbihmdW5jdGlvbiAoY2xpZW50TGlzdCkge1xyXG4gICAgICAgIGZvciAodmFyIGkgPSAwOyBpIDwgY2xpZW50TGlzdC5sZW5ndGg7IGkrKykge1xyXG4gICAgICAgICAgdmFyIGNsaWVudCA9IGNsaWVudExpc3RbaV07XHJcbiAgICAgICAgICBpZiAoY2xpZW50LnVybCA9PT0gdXJsICYmICdmb2N1cycgaW4gY2xpZW50KSB7XHJcbiAgICAgICAgICAgIHJldHVybiBjbGllbnQuZm9jdXMoKTtcclxuICAgICAgICAgIH1cclxuICAgICAgICB9XHJcbiAgICAgICAgaWYgKGNsaWVudHMub3BlbldpbmRvdykge1xyXG4gICAgICAgICAgcmV0dXJuIGNsaWVudHMub3BlbldpbmRvdyh1cmwpO1xyXG4gICAgICAgIH1cclxuICAgICAgfSlcclxuICApO1xyXG59KTtcclxuXHJcbndvcmtib3gucHJlY2FjaGluZy5wcmVjYWNoZUFuZFJvdXRlKHNlbGYuX19XQl9NQU5JRkVTVCk7Il0sIm5hbWVzIjpbImltcG9ydFNjcmlwdHMiLCJ3b3JrYm94IiwiY29uc29sZSIsImxvZyIsInNlbGYiLCJhZGRFdmVudExpc3RlbmVyIiwiZXZlbnQiLCJOb3RpZmljYXRpb24iLCJwZXJtaXNzaW9uIiwiZGF0YSIsImpzb24iLCJvcHRpb25zIiwiYm9keSIsImNvbnRlbnQiLCJpY29uIiwiYmFkZ2UiLCJ1cmwiLCJ3YWl0VW50aWwiLCJyZWdpc3RyYXRpb24iLCJzaG93Tm90aWZpY2F0aW9uIiwidGl0bGUiLCJub3RpZmljYXRpb24iLCJjbG9zZSIsImNsaWVudHMiLCJtYXRjaEFsbCIsInR5cGUiLCJ0aGVuIiwiY2xpZW50TGlzdCIsImkiLCJsZW5ndGgiLCJjbGllbnQiLCJmb2N1cyIsIm9wZW5XaW5kb3ciLCJwcmVjYWNoaW5nIiwicHJlY2FjaGVBbmRSb3V0ZSIsIl9fV0JfTUFOSUZFU1QiXSwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///./public/sw-custom.js\n"));
+
+/***/ })
+
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			if (cachedModule.error !== undefined) throw cachedModule.error;
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			id: moduleId,
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		var threw = true;
+/******/ 		try {
+/******/ 			__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 			threw = false;
+/******/ 		} finally {
+/******/ 			if(threw) delete __webpack_module_cache__[moduleId];
+/******/ 		}
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+/******/ 	/* webpack/runtime/trusted types policy */
+/******/ 	!function() {
+/******/ 		var policy;
+/******/ 		__webpack_require__.tt = function() {
+/******/ 			// Create Trusted Type policy if Trusted Types are available and the policy doesn't exist yet.
+/******/ 			if (policy === undefined) {
+/******/ 				policy = {
+/******/ 					createScript: function(script) { return script; }
+/******/ 				};
+/******/ 				if (typeof trustedTypes !== "undefined" && trustedTypes.createPolicy) {
+/******/ 					policy = trustedTypes.createPolicy("nextjs#bundler", policy);
+/******/ 				}
+/******/ 			}
+/******/ 			return policy;
+/******/ 		};
+/******/ 	}();
+/******/ 	
+/******/ 	/* webpack/runtime/trusted types script */
+/******/ 	!function() {
+/******/ 		__webpack_require__.ts = function(script) { return __webpack_require__.tt().createScript(script); };
+/******/ 	}();
+/******/ 	
+/******/ 	/* webpack/runtime/react refresh */
+/******/ 	!function() {
+/******/ 		if (__webpack_require__.i) {
+/******/ 		__webpack_require__.i.push(function(options) {
+/******/ 			var originalFactory = options.factory;
+/******/ 			options.factory = function(moduleObject, moduleExports, webpackRequire) {
+/******/ 				var hasRefresh = typeof self !== "undefined" && !!self.$RefreshInterceptModuleExecution$;
+/******/ 				var cleanup = hasRefresh ? self.$RefreshInterceptModuleExecution$(moduleObject.id) : function() {};
+/******/ 				try {
+/******/ 					originalFactory.call(this, moduleObject, moduleExports, webpackRequire);
+/******/ 				} finally {
+/******/ 					cleanup();
+/******/ 				}
+/******/ 			}
+/******/ 		})
+/******/ 		}
+/******/ 	}();
+/******/ 	
+/******/ 	/* webpack/runtime/compat */
+/******/ 	
+/******/ 	
+/******/ 	// noop fns to prevent runtime errors during initialization
+/******/ 	if (typeof self !== "undefined") {
+/******/ 		self.$RefreshReg$ = function () {};
+/******/ 		self.$RefreshSig$ = function () {
+/******/ 			return function (type) {
+/******/ 				return type;
+/******/ 			};
+/******/ 		};
+/******/ 	}
+/******/ 	
+/************************************************************************/
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module can't be inlined because the eval-source-map devtool is used.
+/******/ 	var __webpack_exports__ = __webpack_require__("./public/sw-custom.js");
+/******/ 	
+/******/ })()
+;
