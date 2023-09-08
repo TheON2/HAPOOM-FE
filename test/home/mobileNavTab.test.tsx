@@ -1,9 +1,10 @@
+
+//mobileNavTab.test.tsx
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
-import MobileBottomNav from '@/components/common/layout/MobileBottomNav';
 import { useRouter } from 'next/router';
+import MobileBottomNav from '@/components/common/MobileBottomNav';
 
-// useSelector 함수를 목업(Mock)하여 테스트에 필요한 상태를 제공합니다.
 jest.mock('react-redux', () => ({
   useSelector: jest.fn(),
 }));
@@ -51,5 +52,6 @@ describe('MobileBottomNav 컴포넌트', () => {
     expect(getByTestId('nav-upload')).not.toHaveClass('active');
     expect(getByTestId('nav-user')).toHaveClass('active');
   });
-  // 필요에 따라 더 많은 테스트 케이스를 추가할 수 있습니다.
 });
+
+

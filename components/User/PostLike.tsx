@@ -55,9 +55,9 @@ const Posts: React.FC<PostProps> = ({
   };
 
   return (
-    <UserImageContainer onClick={onLikeClickHandler}>
-      <ImageContent src={image} alt="게시물 이미지" postId={postId} />
-    </UserImageContainer>
+    // <UserImageContainer onClick={onLikeClickHandler}>
+    <ImageContent src={image} alt="게시물 이미지" postId={postId} />
+    // </UserImageContainer>
   );
 };
 

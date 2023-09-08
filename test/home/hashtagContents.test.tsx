@@ -1,3 +1,5 @@
+
+
 import React from 'react';
 import { render } from '@testing-library/react';
 import HashtagContents from '@/components/Home/HashtagContents';
@@ -56,3 +58,4 @@ describe('해시태그 컨텐츠 컴포넌트', () => {
     expect(imageComponents).toHaveLength(2);
   });
 });
+
