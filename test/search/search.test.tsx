@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { render, fireEvent, waitFor, act } from '@testing-library/react';
 import { Provider } from 'react-redux';
@@ -52,3 +53,4 @@ describe('검색 페이지', () => {
     expect(searchInput.value).toBe('test');
   });
 });
+

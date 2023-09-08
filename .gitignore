@@ -40,6 +40,7 @@ examples/**/pnpm-lock.yaml
 # production
 /build
 /docs
+/test
 # misc
 .DS_Store
 *.pem
@@ -62,3 +63,8 @@ yarn-error.log*
 next-env.d.ts
 
 package-lock.json
+
+jest.config.js
+jest.setup.js
+__mocks__/
+test/

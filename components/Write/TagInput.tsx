@@ -31,7 +31,7 @@ const TagInput: React.FC<TagInputProps> = ({ tags, setTags }) => {
 
   const handleTagChange = useCallback(
     (e: KeyboardEvent<HTMLInputElement>) => {
-      if (e.key === 'Enter' || e.key === ' ') {
+      if (e.key === 'Enter') {
         e.preventDefault();
 
         const newTag = e.currentTarget.value.trim();
@@ -95,7 +95,7 @@ const TagInput: React.FC<TagInputProps> = ({ tags, setTags }) => {
         <label>태그</label>
         <InputBox
           type="text"
-          placeholder="태그를 입력해주세요"
+          placeholder="태그를 입력해주세요."
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
           onKeyUp={handleTagChange}
@@ -105,7 +105,10 @@ const TagInput: React.FC<TagInputProps> = ({ tags, setTags }) => {
           {tags.length}/{MAX_TAGS}
         </LimitNumBox>
       </InputContainer>
-      <p className="small">태그 입력후 ENTER or SPACE 를 눌러주세요!</p>
+      <p className="small">
+        태그 입력 후 ENTER를 눌러주세요!
+        <br /> 태그는 공백 포함 5자까지 입력할 수 있습니다.{' '}
+      </p>
       <TagBox>
         {tags.map((tag, index) => (
           <Tag key={index} tag={tag} onDelete={handleDelete} />

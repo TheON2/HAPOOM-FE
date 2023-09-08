@@ -16,10 +16,10 @@ export const UserPageContainer = styled.div`
   width: 100%;
 
   p {
-    font-family: Inter;
+    font-family: 'Pretendard', 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif;
     font-size: 16px;
     font-weight: 700;
-    text-align: left;
+    text-align: center;
     /* margin-top: 20px; */
   }
 `;
@@ -210,7 +210,7 @@ export const TabIndicator = styled.span<{ width: number; $left: number }>`
   bottom: -7px;
   transition: 0.2s;
   height: 5px;
-  background-color: #2797ff;
+  background-color: var(--indicator-color);
   width: ${({ width }) => `${width}px`};
   left: ${({ $left }) => `${$left}px`};
   z-index: 1;

@@ -1,3 +1,4 @@
+
 //mobileNavTab.test.tsx
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
@@ -52,3 +53,4 @@ describe('MobileBottomNav 컴포넌트', () => {
     expect(getByTestId('nav-user')).toHaveClass('active');
   });
 });
+

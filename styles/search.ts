@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const SearchLayout = styled.main`
   width: 100%;
-  padding: 46px 24px 20px;
+  padding: 100px 24px 20px;
 
   .search-button {
     width: 32px;
@@ -25,8 +25,8 @@ export const SearchLayout = styled.main`
     font-size: 16px;
     font-weight: bold;
     text-align: center;
-    padding: 0px 0 20px;
-    margin: 0px 0 20px;
+    padding: 0px 0 25px;
+    margin: 0px 0 35px;
     &::after {
       content: '';
       display: block;
@@ -97,11 +97,6 @@ export const RecommendedSearchList = styled.ul`
   padding: 0 24px;
   width: 100%;
   text-align: center;
-  p {
-    color: var(--primary-color);
-    font-weight: 700;
-    margin-bottom: 20px;
-  }
 `;
 export const RecommendedSearchItem = styled.li`
   width: 80%;
@@ -120,4 +115,10 @@ export const RecommendedSearchItem = styled.li`
 export const SearchResultBox = styled.div`
   width: 100%;
   min-height: 60vh;
+  p.recommended {
+    color: var(--primary-color);
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-align: center;
+  }
 `;

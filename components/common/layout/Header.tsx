@@ -7,7 +7,7 @@ import React, {
 } from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
-import SideNav from './SideNav';
+import SideNav from '../SideNav';
 import Link from 'next/link';
 import {
   HeaderLayout,
@@ -21,7 +21,7 @@ import {
   MobileBox,
 } from '@/styles/header';
 import useInput from '@/hooks/useInput';
-import IconButton from './IconButton';
+import IconButton from '../IconButton';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { useMutation, useQueryClient } from 'react-query';
@@ -35,7 +35,7 @@ import { SearchIcon, Bell, EditIcon, Cloud } from '@/components/common/SVG';
 import { setCookie } from 'nookies';
 import ProfileImage from '@/components/common/ProfileImage';
 import { RootState } from '@/redux/config/configStore';
-import Modal from './Modal';
+import Modal from '../Modal';
 
 const ENDPOINT = `${process.env.NEXT_PUBLIC_LOCAL_SERVER}`;
 
@@ -53,9 +53,9 @@ const Header = ({ $sticky, ...restProps }: any) => {
   const [isShowMenu, setIsShowMenu] = useState<boolean>(false);
   const BellColor = () => {
     if (isTrend) {
-      return $sticky ? 'var(--primary-color)' : '#fff';
+      return $sticky ? 'var(--header-nav-active-color)' : '#fff';
     } else {
-      return '#2797FF';
+      return 'var(--header-nav-active-color)';
     }
   };
 
@@ -127,8 +127,9 @@ const Header = ({ $sticky, ...restProps }: any) => {
       applicationServerKey: process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY,
     };
 
-    const pushSubscription =
-      await registration.pushManager.subscribe(subscribeOptions);
+    const pushSubscription = await registration.pushManager.subscribe(
+      subscribeOptions
+    );
 
     // 서버에 Push Subscription 저장
     await fetch(`${ENDPOINT}/api/util/subscribe`, {
@@ -179,7 +180,6 @@ const Header = ({ $sticky, ...restProps }: any) => {
               href={'/search'}
               className={isSearch ? 'active search' : ' search'}
             >
-              {/* <SearchIcon fillColor={$sticky ? '#fff' : '#9acfff'} /> */}
               검색
             </Link>
             |
@@ -188,7 +188,6 @@ const Header = ({ $sticky, ...restProps }: any) => {
               className={isWrite ? 'active edit' : ' edit'}
             >
               글쓰기
-              {/* <EditIcon fillColor={$sticky ? '#fff' : '#9acfff'} /> */}
             </button>
             |
             <Link href={'/'} className={isTrend ? 'active' : ''}>
@@ -205,13 +204,21 @@ const Header = ({ $sticky, ...restProps }: any) => {
                 <Link href={'/auth/SignIn'}>로그인</Link>|
                 <Link href={'/auth/SignUp'}>회원가입</Link>
                 {/* </AuthButtonBox> */}
-                <ProfileButton onClick={LoginHandler} $sticky={$sticky}>
+                <ProfileButton
+                  onClick={LoginHandler}
+                  $sticky={$sticky}
+                  aria-label="go profile page"
+                >
                   <Cloud />
                 </ProfileButton>
               </>
             ) : (
               <>
-                <IconButton onClick={clickBell} $noneEdge={true}>
+                <IconButton
+                  onClick={clickBell}
+                  $noneEdge={true}
+                  aria-label="alarm on off"
+                >
                   <Bell fillColor={BellColor()} $isPush={user?.push} />
                 </IconButton>
                 <ProfileButton
@@ -228,15 +235,12 @@ const Header = ({ $sticky, ...restProps }: any) => {
             )}
           </AccountActionsContainer>
           <MobileBox>
-            <IconButton onClick={clickBell}>
+            <IconButton onClick={clickBell} aria-label="alarm on off">
               <Bell fillColor={BellColor()} $isPush={user?.push} />
             </IconButton>
           </MobileBox>
         </div>
       </HeaderLayout>
-      {/* <GoWriteLink onClick={goToWritePage} href={'/post/Write'}>
-        <EditIcon />
-      </GoWriteLink> */}
       {isShowMenu && (
         <SideNav setIsShowMenu={setIsShowMenu} isShowMenu={isShowMenu} />
       )}

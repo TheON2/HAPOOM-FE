@@ -74,7 +74,6 @@ export const IconBox = styled.button`
     object-fit: cover;
   }
   &:hover {
-    filter: brightness(0.7);
     color: var(--primary-second-color);
     path {
       stroke: var(--primary-second-color);

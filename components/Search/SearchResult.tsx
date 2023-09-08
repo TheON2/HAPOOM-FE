@@ -6,14 +6,16 @@ import UserSearchResult from '@/components/Search/UserSearchResult';
 import Link from 'next/link';
 type SearchProps = {
   option: string;
+
   data: { response: { status: number; }; } | string | any[];
 };
 
 const SearchResult: React.FC<SearchProps> = ({ option, data }) => {
   if (data === '400') {
+
     return <NoneSearchResult>검색 결과가 없습니다</NoneSearchResult>;
   }
-  if (data === 'otherError' || !Array.isArray(data)) {
+  if (!Array.isArray(data)) {
     return (
       <NoneSearchResult>
         예상치 못한 오류가 발생하였습니다.
