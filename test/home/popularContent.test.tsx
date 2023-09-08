@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { render, fireEvent, waitFor } from '@testing-library/react';
 import PopularContentsCarousel from '@/components/Home/PopularContentsCarousel';
@@ -62,3 +63,4 @@ describe('오늘의 좋아요 캐러셀 컴포넌트', () => {
     expect(getAllByAltText('popular content image')).toHaveLength(3);
   });
 });
+

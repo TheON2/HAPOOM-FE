@@ -303,7 +303,7 @@ const SignUpUi = () => {
       >
         이미 아이디가 있으신가요? 로그인
       </SubHeadText>
-      <MobileBottomNav />
+      {/* <MobileBottomNav /> */}
     </SignUpSection>
   );
 };
