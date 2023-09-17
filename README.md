@@ -1,5 +1,7 @@
 # [HAPOOM] 하늘 사진 공유 소셜미디어
 
+![image](https://github.com/TheON2/HAPOOM-FE/assets/32028454/85321341-563f-4e35-b5a8-9e7d514a955d)
+
 ![팜플렛](https://github.com/06-ServiceTF/HAPOOM-FE/assets/84562770/05965cf0-93d6-4a13-a144-c58a5e103496)
 
 ## 💙 프로젝트 소개
